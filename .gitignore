@@ -19,3 +19,4 @@ temp.log
 temp.errors
 *.ini
 .d/
+.vscode/settings.json
