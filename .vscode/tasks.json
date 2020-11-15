@@ -61,6 +61,14 @@
             }
         },
         {
+            "label": "PROS V5HAL Clean",
+            "type": "shell",
+            "command": "prosv5 make clean",
+            "options": {
+                "cwd": "${workspaceFolder}/src/V5HAL"
+            }
+        },
+        {
             "label": "Upload PROS V5HAL",
             "type": "shell",
             "command": "prosv5 upload",
