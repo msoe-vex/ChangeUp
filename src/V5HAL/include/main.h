@@ -35,6 +35,7 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "MotorNode.h"
 
 /**
  * You should add more #includes here

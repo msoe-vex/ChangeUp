@@ -1,23 +1,8 @@
-#ifndef _NODE_MANAGER_H_
-#define _NODE_MANAGER_H_
+#pragma once
 
 #include <vector>
 
-#include "api.h"
-#include "constants.h"
-#include "ros_lib/V5Publisher.h"
-#include "ros_lib/ros.h"
-#include "ros_lib/std_msgs/Int16.h"
-
-class Node {
-   public:
-    Node(NodeManager * nodeManager, int intervalMilliseconds) {
-        nodeManager->addNode(this, intervalMilliseconds);
-    }
-    virtual ~Node() {}
-    virtual void initialize() {}
-    virtual void periodic() = 0;
-};
+class Node;
 
 class NodeManager {
    private:
@@ -43,4 +28,12 @@ class NodeManager {
     ~NodeManager();
 };
 
-#endif
+class Node {
+   public:
+    Node(NodeManager * nodeManager, int intervalMilliseconds) {
+        nodeManager->addNode(this, intervalMilliseconds);
+    }
+    virtual ~Node() {}
+    virtual void initialize() {}
+    virtual void periodic() = 0;
+};
