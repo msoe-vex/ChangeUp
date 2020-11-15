@@ -204,3 +204,10 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+################################
+## Custom PROS Build Commands ##
+################################
+
+add_custom_target(PROS_V5HAL_BUILD COMMAND prosv5 make COMMENT "Running prosv5 make")

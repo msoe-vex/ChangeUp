@@ -1,4 +1,4 @@
-#include "nodeManager.h"
+#include "NodeManager.h"
 
 NodeManager::NodeManager() {
 

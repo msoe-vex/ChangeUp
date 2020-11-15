@@ -5,7 +5,6 @@
 #include "constants.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/std_msgs/Int16.h"
-#include "ros_lib/V5Publisher.h"
 
 #include <vector>
 

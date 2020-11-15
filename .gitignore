@@ -1,6 +1,8 @@
 # Catkin build files
 build/
 devel/
+install/
+src/V5HAL/include/ros_lib/*
 
 # Compiled Object files
 *.o
