@@ -1,0 +1,6 @@
+[submodule "src/rosserial"]
+	path = src/rosserial
+	url = https://github.com/msoe-vex/rosserial
+[submodule "src/V5HAL"]
+	path = src/V5HAL
+	url = https://github.com/msoe-vex/V5HAL.git
