@@ -1,23 +1,27 @@
 #include "NodeManager.h"
 
-NodeManager::NodeManager() {
+NodeManager::NodeManager(long unsigned int (*getMilliseconds)(void)) { m_getMillis = getMilliseconds; }
 
+void NodeManager::addNode(Node* node, int intervalMilliseconds) {
+    NodeManager::NodeStructure nodeStructure = {node, intervalMilliseconds, 0};
+    m_nodeStructures.push_back(nodeStructure);
 }
 
-void NodeManager::addCallback(void (*callbackPtr)(void), int triggerMillis) {
-    Callback fnCallback = {callbackPtr, triggerMillis, 0};
-    _callbacks.push_back(fnCallback);
+void NodeManager::initialize() {
+    for (auto nodeStructure : m_nodeStructures) {
+        nodeStructure.node->initialize();
+    }
 }
 
-void NodeManager::execute(int elapsedMillis) {
-    for (auto callback : _callbacks) {
-        if (elapsedMillis - callback.lastExecutedMillis >= callback.triggerMillis) {
-            callback.callbackPtr();
-            callback.lastExecutedMillis = elapsedMillis;
+void NodeManager::execute() {
+    for (auto nodeStructure : m_nodeStructures) {
+        auto currentTime = m_getMillis();
+        if (currentTime - nodeStructure.lastExecutedMillis >=
+            nodeStructure.triggerMillis) {
+            nodeStructure.node->periodic();
+            nodeStructure.lastExecutedMillis = currentTime;
         }
     }
 }
 
-NodeManager::~NodeManager() {
-    _callbacks.clear();
-}
+NodeManager::~NodeManager() { m_nodeStructures.clear(); }
