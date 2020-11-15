@@ -14,7 +14,6 @@ src/V5HAL/include/ros_lib/*
 
 # PROS
 bin/
-.vscode/
 compile_commands.json
 temp.log
 temp.errors
