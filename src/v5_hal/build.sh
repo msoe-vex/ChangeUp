@@ -13,7 +13,7 @@ reload_includes() {
 
   # Update includes from ROS project
   source install/setup.bash
-  cd src/V5HAL/include
+  cd src/v5_hal/include
   rosrun rosserial_vex_v5 make_libraries.py .
 
   # unless the include is a special case

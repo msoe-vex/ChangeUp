@@ -2,7 +2,7 @@
 build/
 devel/
 install/
-src/V5HAL/include/ros_lib/*
+src/v5_hal/include/ros_lib/*
 
 # Compiled Object files
 *.o

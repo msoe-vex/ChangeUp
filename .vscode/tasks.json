@@ -11,7 +11,7 @@
             "type": "shell",
             "command": "./build.sh -q",
             "options": {
-                "cwd": "${workspaceFolder}/src/V5HAL"
+                "cwd": "${workspaceFolder}/src/v5_hal"
             },
             "problemMatcher": {
                 "owner": "prosv5",
@@ -38,7 +38,7 @@
             "type": "shell",
             "command": "./build.sh",
             "options": {
-                "cwd": "${workspaceFolder}/src/V5HAL"
+                "cwd": "${workspaceFolder}/src/v5_hal"
             },
             "problemMatcher": {
                 "owner": "prosv5",
@@ -65,7 +65,7 @@
             "type": "shell",
             "command": "prosv5 make clean",
             "options": {
-                "cwd": "${workspaceFolder}/src/V5HAL"
+                "cwd": "${workspaceFolder}/src/v5_hal"
             }
         },
         {
@@ -73,7 +73,7 @@
             "type": "shell",
             "command": "prosv5 upload",
             "options": {
-                "cwd": "${workspaceFolder}/src/V5HAL"
+                "cwd": "${workspaceFolder}/src/v5_hal"
             },
             "problemMatcher": {
                 "owner": "prosv5",
