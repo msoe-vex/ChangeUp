@@ -223,4 +223,17 @@ include_directories(
 ## Custom PROS Build Commands ##
 ################################
 
-add_custom_target(PROS_V5HAL_BUILD COMMAND prosv5 make COMMENT "Running prosv5 make")
+rosserial_generate_ros_lib (
+  PACKAGE rosserial_vex_v5
+  SCRIPT make_libraries.py
+)
+
+rosserial_configure_client (
+  DIRECTORY firmware
+)
+
+rosserial_add_client_target(firmware build)
+add_dependencies(${PROJECT_NAME}_firmware_build ${PROJECT_NAME}_generate_messages)
+
+rosserial_add_client_target(firmware clean_all)
+rosserial_add_client_target(firmware upload)

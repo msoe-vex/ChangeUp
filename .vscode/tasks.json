@@ -7,11 +7,11 @@
     },
     "tasks": [
         {
-            "label": "Quick PROS V5HAL Build",
+            "label": "v5_hal Firmware Build",
             "type": "shell",
-            "command": "./build.sh -q",
+            "command": "catkin_make v5_hal_firmware_build",
             "options": {
-                "cwd": "${workspaceFolder}/src/v5_hal"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": {
                 "owner": "prosv5",
@@ -34,46 +34,19 @@
             }
         },
         {
-            "label": "Full PROS V5HAL Build",
+            "label": "v5_hal Firmware Clean",
             "type": "shell",
-            "command": "./build.sh",
+            "command": "catkin_make v5_hal_firmware_clean_all",
             "options": {
-                "cwd": "${workspaceFolder}/src/v5_hal"
-            },
-            "problemMatcher": {
-                "owner": "prosv5",
-                "fileLocation": [
-                    "relative",
-                    "${workspaceRoot}"
-                ],
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+): +(warning|error): +(.*)",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
+                "cwd": "${workspaceFolder}"
             }
         },
         {
-            "label": "PROS V5HAL Clean",
+            "label": "v5_hal Firmware Upload",
             "type": "shell",
-            "command": "prosv5 make clean",
+            "command": "catkin_make v5_hal_firmware_upload",
             "options": {
-                "cwd": "${workspaceFolder}/src/v5_hal"
-            }
-        },
-        {
-            "label": "Upload PROS V5HAL",
-            "type": "shell",
-            "command": "prosv5 upload",
-            "options": {
-                "cwd": "${workspaceFolder}/src/v5_hal"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": {
                 "owner": "prosv5",
