@@ -1,0 +1,16 @@
+int32 analog_left_x
+int32 analog_left_y
+int32 analog_right_x
+int32 analog_right_y
+int32 btn_right
+int32 btn_down
+int32 btn_left
+int32 btn_up
+int32 btn_a
+int32 btn_b
+int32 btn_x
+int32 btn_y
+int32 btn_r1
+int32 btn_r2
+int32 btn_l1
+int32 btn_l2

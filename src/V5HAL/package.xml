@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>change_up_robot_code</name>
+  <name>v5_hal</name>
   <version>0.0.0</version>
-  <description>The change_up_robot_code package</description>
+  <description>The V5HAL package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

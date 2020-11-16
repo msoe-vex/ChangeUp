@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(change_up_robot_code)
+project(v5_hal)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -50,7 +50,20 @@ find_package(catkin REQUIRED COMPONENTS
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   testmessage.msg
+   ADIAnalogIn_Data.msg
+   ADIDigitalIn_Data.msg
+   ADIEncoder_Data.msg
+   ADIGyro_Data.msg
+   ADIUltrasonic_Data.msg
+   Competition_Status.msg
+   ProsTime_Data.msg
+   V5Battery_Status.msg
+   V5Controller_Data.msg
+   V5Controller_Status.msg
+   V5InertialSensor_Data.msg
+   V5Motor_Data.msg
+   V5Motor_Status.msg
+   V5RotationSensor_Data.msg
  )
 
 ## Generate services in the 'srv' folder

@@ -1,0 +1,11 @@
+float64 current_draw
+int32 direction
+int32 efficiency
+int32 is_stopped
+float64 position
+int32 port
+float64 power_draw
+float64 temperature
+float64 torque
+float64 velocity
+float64 voltage

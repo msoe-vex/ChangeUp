@@ -1,0 +1,3 @@
+int32 is_connected
+int32 battery_capacity
+int32 battery_level
