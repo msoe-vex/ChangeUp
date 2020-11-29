@@ -50,20 +50,18 @@ find_package(catkin REQUIRED COMPONENTS
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   ADIAnalogIn_Data.msg
-   ADIDigitalIn_Data.msg
-   ADIEncoder_Data.msg
-   ADIGyro_Data.msg
-   ADIUltrasonic_Data.msg
-   Competition_Status.msg
-   ProsTime_Data.msg
-   V5Battery_Status.msg
-   V5Controller_Data.msg
-   V5Controller_Status.msg
-   V5InertialSensor_Data.msg
-   V5Motor_Data.msg
-   V5Motor_Status.msg
-   V5RotationSensor_Data.msg
+   ADIAnalogIn.msg
+   ADIDigitalIn.msg
+   ADIEncoder.msg
+   ADIGyro.msg
+   ADIUltrasonic.msg
+   CompetitionStatus.msg
+   ProsTime.msg
+   V5Battery.msg
+   V5Controller.msg
+   V5InertialSensor.msg
+   V5Motor.msg
+   V5RotationSensor.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -237,3 +235,4 @@ add_dependencies(${PROJECT_NAME}_firmware_build ${PROJECT_NAME}_generate_message
 
 rosserial_add_client_target(firmware clean_all)
 rosserial_add_client_target(firmware upload)
+

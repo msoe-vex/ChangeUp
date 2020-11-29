@@ -8,7 +8,7 @@
             "includePath": [
                 "/opt/ros/noetic/include/**",
                 "/usr/include/**",
-                "src/V5HAL/include/**"
+                "src/v5_hal/include/**"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",
