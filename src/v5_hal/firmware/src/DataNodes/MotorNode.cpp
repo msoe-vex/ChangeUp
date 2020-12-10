@@ -23,7 +23,7 @@ void MotorNode::initialize() {
     m_handle->advertise(*m_publisher);
 }
 
-void MotorNode::execute() {
+void MotorNode::periodic() {
     populateMotorMsg();
     m_publisher->publish(m_motor_msg);
 }

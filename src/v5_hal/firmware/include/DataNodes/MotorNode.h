@@ -20,7 +20,7 @@ public:
 
     void initialize();
 
-    void execute();
+    void periodic();
 
     ~MotorNode();
 };
