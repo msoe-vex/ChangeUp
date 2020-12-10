@@ -11,12 +11,13 @@ private:
     v5_hal::V5Motor* m_motor_msg;
     ros::NodeHandle* m_handle;
     ros::Publisher* m_publisher;
+    std::string m_handle_name;
 
     void populateMotorMsg();
 
 public:
-    MotorNode(NodeManager* nodeManager, int portNumber, std::string handle, 
-        pros::motor_gearset_e_t gearset=pros::E_MOTOR_GEARSET_18, bool reverse=false);
+    MotorNode(NodeManager* nodeManager, int portNumber, std::string handleName, 
+        bool reverse=false, pros::motor_gearset_e_t gearset=pros::E_MOTOR_GEARSET_18);
 
     void initialize();
 

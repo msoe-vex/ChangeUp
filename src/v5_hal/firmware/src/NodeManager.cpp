@@ -1,6 +1,8 @@
 #include "NodeManager.h"
 
-NodeManager::NodeManager(long unsigned int (*getMilliseconds)(void)) { m_getMillis = getMilliseconds; }
+NodeManager::NodeManager(long unsigned int (*getMilliseconds)(void)) { 
+    m_getMillis = getMilliseconds; 
+}
 
 void NodeManager::addNode(Node* node, int intervalMilliseconds) {
     NodeManager::NodeStructure nodeStructure = {node, intervalMilliseconds, 0};

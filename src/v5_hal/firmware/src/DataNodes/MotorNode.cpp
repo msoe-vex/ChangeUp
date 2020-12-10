@@ -1,22 +1,20 @@
 #include "DataNodes/MotorNode.h"
 
-MotorNode::MotorNode(NodeManager* nodeManager, int portNumber, std::string handle, 
-    pros::motor_gearset_e_t gearset, bool reverse):Node(nodeManager, 200) {
+// By default, this constructor calls the constructor for the Node object in NodeManager.h
+MotorNode::MotorNode(NodeManager* nodeManager, int portNumber, std::string handleName, 
+    bool reverse, pros::motor_gearset_e_t gearset):Node(nodeManager, 200) {
     m_motor = new pros::Motor(portNumber, gearset, reverse);
     m_motor_msg = new v5_hal::V5Motor();
     m_handle = new ros::NodeHandle();
+    m_handle_name = handleName;
 }
 
 void MotorNode::initialize() {
-    // Define a topic we will publish to, and where the value will be stored
-    char* data_str_buf;
-
-    // Make a title with the port number 
-    sprintf(data_str_buf, "Motor_Port%d_Pub", m_motor->get_port());
-
+    // Define a string handle for the motor
+    std::string motor_handle = "Motor_" + m_handle_name;
 
     // Create a publisher with the custom title, and message location
-    m_publisher = new ros::Publisher(data_str_buf, m_motor_msg);
+    m_publisher = new ros::Publisher(motor_handle.c_str(), m_motor_msg);
     
     // Initialize the handler, and set up data relating to what this node publishes
     m_handle->initNode();
