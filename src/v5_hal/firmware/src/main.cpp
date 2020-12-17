@@ -12,9 +12,9 @@ NodeManager* nodeManager = new NodeManager(pros::millis);
 void initialize() {
 	// Create all nodes used by the robot here
 	MotorNode* leftFrontDriveMotorNode = new MotorNode(nodeManager, 1, "LeftFrontDrive", false);
-	MotorNode* leftRearDriveMotorNode = new MotorNode(nodeManager, 1, "LeftRearDrive", false);
-	MotorNode* rightFrontDriveMotorNode = new MotorNode(nodeManager, 1, "RightFrontDrive", false);
-	MotorNode* rightRearDriveMotorNode = new MotorNode(nodeManager, 1, "RightRearDrive", false);
+	MotorNode* leftRearDriveMotorNode = new MotorNode(nodeManager, 2, "LeftRearDrive", false);
+	MotorNode* rightFrontDriveMotorNode = new MotorNode(nodeManager, 3, "RightFrontDrive", false);
+	MotorNode* rightRearDriveMotorNode = new MotorNode(nodeManager, 4, "RightRearDrive", false);
 
 	// Call the node manager to initialize all of the nodes above
 	nodeManager->initialize();
