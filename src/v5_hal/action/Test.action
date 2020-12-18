@@ -1,0 +1,8 @@
+# Define the goal
+int32 test_goal
+---
+# Define the result
+int32 test_result
+---
+# Define a feedback message
+int32 test_feedback
