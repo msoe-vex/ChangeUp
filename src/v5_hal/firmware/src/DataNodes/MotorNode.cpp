@@ -17,11 +17,17 @@ void MotorNode::initialize() {
 }
 
 void MotorNode::periodic() {
+<<<<<<< HEAD
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
     populateMessage();
     m_publisher.publish(&m_motor_msg);
     Node::m_handle->spinOnce();
+=======
+    populateMotorMsg();
+    m_publisher->publish(m_motor_msg);
+    m_handle->spinOnce();
+>>>>>>> WIP in adding action servers
 }
 
 void MotorNode::populateMessage() {

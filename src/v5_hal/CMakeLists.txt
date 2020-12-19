@@ -74,9 +74,16 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate actions in the 'action' folder
+<<<<<<< HEAD
 # add_action_files(
 #  FILES
 #)
+=======
+add_action_files(
+  FILES
+  MoveMotorVoltage.action
+)
+>>>>>>> WIP in adding action servers
 
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
