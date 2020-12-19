@@ -24,6 +24,7 @@ void MotorNode::initialize() {
 void MotorNode::periodic() {
     populateMotorMsg();
     m_publisher->publish(m_motor_msg);
+    m_handle->spinOnce();
 }
 
 void MotorNode::populateMotorMsg() {
