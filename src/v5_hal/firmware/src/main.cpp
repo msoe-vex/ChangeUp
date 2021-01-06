@@ -1,5 +1,7 @@
 #include "main.h"
-#include "ros_lib/rosserial_vex_v5/examples/helloworld.h"
+#include "NodeManager.h"
+
+NodeManager* nodeManager = new NodeManager(pros::millis);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -7,7 +9,16 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {}
+void initialize() {
+	// Create all nodes used by the robot here
+	MotorNode* leftFrontDriveMotorNode = new MotorNode(nodeManager, 1, "LeftFrontDrive", false);
+	MotorNode* leftRearDriveMotorNode = new MotorNode(nodeManager, 2, "LeftRearDrive", false);
+	MotorNode* rightFrontDriveMotorNode = new MotorNode(nodeManager, 3, "RightFrontDrive", false);
+	MotorNode* rightRearDriveMotorNode = new MotorNode(nodeManager, 4, "RightRearDrive", false);
+
+	// Call the node manager to initialize all of the nodes above
+	nodeManager->initialize();
+}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -52,11 +63,13 @@ void autonomous() {}
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
+ * 
+ * NOTE: If custom code is needed outside of the node manager, it should be put
+ * into a different task with a wait. Each node has an embedded timing control loop
+ * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
 	while (true) {
-		// setup();
-
-		pros::delay(20);
+		nodeManager->execute();
 	}
 }

@@ -9,3 +9,5 @@ float64 temperature
 float64 torque
 float64 velocity
 float64 voltage
+int32 is_over_current
+int32 is_over_temp

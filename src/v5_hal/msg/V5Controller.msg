@@ -14,3 +14,6 @@ int32 btn_r1
 int32 btn_r2
 int32 btn_l1
 int32 btn_l2
+int32 is_connected
+int32 battery_capacity
+int32 battery_level
