@@ -3,7 +3,7 @@
 // By default, this constructor calls the constructor for the Node object in NodeManager.h
 ADIGyroNode::ADIGyroNode(NodeManager* nodeManager, int port, double multiplier, 
  std::string handleName):Node(nodeManager, 200) {
-    m_gyro = new pros::ADIGyro::ADIGyro(port, multiplier);
+    m_gyro = new pros::ADIGyro(port, multiplier);
     m_gyro_msg = new v5_hal::ADIGyroData();
     m_handle = new ros::NodeHandle();
     m_handle_name = handleName;

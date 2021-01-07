@@ -2,7 +2,7 @@
 
 // By default, this constructor calls the constructor for the Node object in NodeManager.h
 ADIDigitalInNode::ADIDigitalInNode(NodeManager* nodeManager, int port, std::string handleName):Node(nodeManager, 200) {
-    m_digital_in = new pros::ADIDigitalIn::ADIDigitalIn(port);
+    m_digital_in = new pros::ADIDigitalIn(port);
     m_digital_in_msg = new v5_hal::ADIDigitalInData();
     m_handle = new ros::NodeHandle();
     m_handle_name = handleName;
