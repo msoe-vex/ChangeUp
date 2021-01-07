@@ -1,14 +1,14 @@
-#include "DataNodes/ADIDigitalIn.h"
+#include "DataNodes/ADIDigitalInNode.h"
 
 // By default, this constructor calls the constructor for the Node object in NodeManager.h
-ADIDigitalIn::ADIDigitalIn(NodeManager* nodeManager, int port, std::string handleName):Node(nodeManager, 200) {
+ADIDigitalInNode::ADIDigitalInNode(NodeManager* nodeManager, int port, std::string handleName):Node(nodeManager, 200) {
     m_digital_in = new pros::ADIDigitalIn::ADIDigitalIn(port);
-    m_digital_in_msg = new v5_hal::ADIDigitalIn();
+    m_digital_in_msg = new v5_hal::ADIDigitalInData();
     m_handle = new ros::NodeHandle();
     m_handle_name = handleName;
 }
 
-void ADIDigitalIn::initialize() {
+void ADIDigitalInNode::initialize() {
     // Define a string handle for the digital input
     std::string digital_in_handle = "DigitalIn_" + m_handle_name;
 
@@ -20,18 +20,18 @@ void ADIDigitalIn::initialize() {
     m_handle->advertise(*m_publisher);
 }
 
-void ADIDigitalIn::periodic() {
+void ADIDigitalInNode::periodic() {
     populateDigitalInMsg();
     m_publisher->publish(m_digital_in_msg);
 
     m_handle->spinOnce();
 }
 
-void ADIDigitalIn::populateDigitalInMsg() {
+void ADIDigitalInNode::populateDigitalInMsg() {
     m_digital_in_msg->value = m_digital_in->get_value();
 }
 
-ADIDigitalIn::~ADIDigitalIn() {
+ADIDigitalInNode::~ADIDigitalInNode() {
     delete m_digital_in;
     delete m_digital_in_msg;
     delete m_handle;

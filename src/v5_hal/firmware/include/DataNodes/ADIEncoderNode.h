@@ -3,12 +3,12 @@
 #include "api.h"
 #include "NodeManager.h"
 #include "ros_lib/ros.h"
-#include "ros_lib/v5_hal/ADIEncoder.h"
+#include "ros_lib/v5_hal/ADIEncoderData.h"
 
-class ADIEncoder : public Node {
+class ADIEncoderNode : public Node {
 private:
     pros::ADIEncoder* m_encoder;
-    v5_hal::ADIEncoder* m_encoder_msg;
+    v5_hal::ADIEncoderData* m_encoder_msg;
     ros::NodeHandle* m_handle;
     ros::Publisher* m_publisher;
     std::string m_handle_name;
@@ -16,11 +16,11 @@ private:
     void populateEncoderMsg();
 
 public:
-    ADIEncoder(NodeManager* nodeManager, int port_top, int port_bottom, bool reverse, std::string handleName);
+    ADIEncoderNode(NodeManager* nodeManager, int port_top, int port_bottom, bool reverse, std::string handleName);
 
     void initialize();
 
     void periodic();
 
-    ~ADIEncoder();
+    ~ADIEncoderNode();
 };
