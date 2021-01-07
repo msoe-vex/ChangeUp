@@ -9,6 +9,8 @@ project(v5_hal)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  genmsg
+  actionlib_msgs
   roscpp
   rosserial_vex_v5
   std_msgs
@@ -82,6 +84,7 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs  # Or other packages containing msgs
+   actionlib_msgs
  )
 
 ################################################
