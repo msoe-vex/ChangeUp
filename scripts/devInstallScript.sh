@@ -7,7 +7,7 @@ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main
 curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | sudo apt-key add -
 sudo apt update
 sudo apt upgrade -y
-sudo apt install python3-pip ros-noetic-desktop-full -y
+sudo apt install python3 python3-is-python python3-pip ros-noetic-desktop-full -y
 echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
 
 # Install gcc-arm compiler
