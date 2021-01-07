@@ -50,11 +50,11 @@ find_package(catkin REQUIRED COMPONENTS
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   ADIAnalogIn.msg
-   ADIDigitalIn.msg
-   ADIEncoder.msg
-   ADIGyro.msg
-   ADIUltrasonic.msg
+   ADIAnalogInData.msg
+   ADIDigitalInData.msg
+   ADIEncoderData.msg
+   ADIGyroData.msg
+   ADIUltrasonicData.msg
    CompetitionStatus.msg
    ProsTime.msg
    V5Battery.msg

@@ -1,15 +1,15 @@
-#include "DataNodes/ADIUltrasonic.h"
+#include "DataNodes/ADIUltrasonicNode.h"
 
 // By default, this constructor calls the constructor for the Node object in NodeManager.h
-ADIUltrasonic::ADIUltrasonic(NodeManager* nodeManager, int port_ping, int port_echo, 
+ADIUltrasonicNode::ADIUltrasonicNode(NodeManager* nodeManager, int port_ping, int port_echo, 
  std::string handleName):Node(nodeManager, 200) {
     m_ultrasonic = new pros::ADIUltrasonic::ADIUltrasonic(port_ping, port_echo);
-    m_ultrasonic_msg = new v5_hal::ADIUltrasonic();
+    m_ultrasonic_msg = new v5_hal::ADIUltrasonicData();
     m_handle = new ros::NodeHandle();
     m_handle_name = handleName;
 }
 
-void ADIUltrasonic::initialize() {
+void ADIUltrasonicNode::initialize() {
     // Define a string handle for the ultrasonic sensor
     std::string ultrasonic_handle = "Ultrasonic_" + m_handle_name;
 
@@ -21,18 +21,18 @@ void ADIUltrasonic::initialize() {
     m_handle->advertise(*m_publisher);
 }
 
-void ADIUltrasonic::periodic() {
+void ADIUltrasonicNode::periodic() {
     populateUltrasonicMsg();
     m_publisher->publish(m_ultrasonic_msg);
 
     m_handle->spinOnce();
 }
 
-void ADIUltrasonic::populateUltrasonicMsg() {
+void ADIUltrasonicNode::populateUltrasonicMsg() {
     m_ultrasoinic_msg->value = m_ultrasonic->get_value();
 }
 
-ADIUltrasonic::~ADIUltrasonic() {
+ADIUltrasonicNode::~ADIUltrasonicNode() {
     delete m_ultrasonic;
     delete m_ultrasoinic_msg;
     delete m_handle;
