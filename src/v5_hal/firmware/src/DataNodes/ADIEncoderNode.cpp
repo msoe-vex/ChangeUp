@@ -3,7 +3,7 @@
 // By default, this constructor calls the constructor for the Node object in NodeManager.h
 ADIEncoderNode::ADIEncoderNode(NodeManager* nodeManager, int port_top, int port_bottom, bool reverse,
  std::string handleName):Node(nodeManager, 200) {
-    m_encoder = new pros::ADIEncoder::ADIEncoder(port_top, port_bottom, reverse);
+    m_encoder = new pros::ADIEncoder(port_top, port_bottom, reverse);
     m_encoder_msg = new v5_hal::ADIEncoderData();
     m_handle = new ros::NodeHandle();
     m_handle_name = handleName;

@@ -1,9 +1,9 @@
-#include "DataNodes/ADIAnalogInNode.h"
+#include "ADIAnalogInNode.h"
 
 // By default, this constructor calls the constructor for the Node object in NodeManager.h
 ADIAnalogInNode::ADIAnalogInNode(NodeManager* nodeManager, int port, std::string handleName):Node(nodeManager, 200) {
-    m_analog_in = new pros::ADIAnalogIn::ADIAnalogIn(port);
-    m_analog_in_msg = new v5_hal::ADIAnalogInNodeData();
+    m_analog_in = new pros::ADIAnalogIn(port);
+    m_analog_in_msg = new v5_hal::ADIAnalogInData();
     m_handle = new ros::NodeHandle();
     m_handle_name = handleName;
 }
