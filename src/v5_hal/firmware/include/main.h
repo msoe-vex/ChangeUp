@@ -36,6 +36,11 @@
 
 #include "api.h"
 #include "DataNodes/MotorNode.h"
+#include "DataNodes/ADIAnalogInNode.h"
+#include "DataNodes/ADIDigitalInNode.h"
+#include "DataNodes/ADIEncoderNode.h"
+#include "DataNodes/ADIGyroNode.h"
+#include "DataNodes/ADIUltrasonicNode.h"
 
 /**
  * You should add more #includes here

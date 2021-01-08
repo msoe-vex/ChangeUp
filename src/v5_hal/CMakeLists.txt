@@ -9,6 +9,8 @@ project(v5_hal)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  genmsg
+  actionlib_msgs
   roscpp
   rosserial_vex_v5
   std_msgs
@@ -50,11 +52,11 @@ find_package(catkin REQUIRED COMPONENTS
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   ADIAnalogIn.msg
-   ADIDigitalIn.msg
-   ADIEncoder.msg
-   ADIGyro.msg
-   ADIUltrasonic.msg
+   ADIAnalogInData.msg
+   ADIDigitalInData.msg
+   ADIEncoderData.msg
+   ADIGyroData.msg
+   ADIUltrasonicData.msg
    CompetitionStatus.msg
    ProsTime.msg
    V5Battery.msg
@@ -82,6 +84,7 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs  # Or other packages containing msgs
+   actionlib_msgs
  )
 
 ################################################
