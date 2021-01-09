@@ -15,8 +15,8 @@ void ProsTimeNode::initialize() {
 
 void ProsTimeNode::periodic() {
     populateProsTimeMsg();
-    m_publish->publish(m_prostime_msg);
-    m_publish->spinOnce();
+    m_publisher->publish(m_prostime_msg);
+    m_handle->spinOnce();
 }
 
 void ProsTimeNode::populateProsTimeMsg() {

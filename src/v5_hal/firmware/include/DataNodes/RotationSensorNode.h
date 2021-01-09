@@ -1,10 +1,11 @@
 #pragma once
 
 #include "api.h"
+#include "NodeManager.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/V5RotationSensor.h"
 
-class RotationSesnorNode : public Node () {
+class RotationSensorNode : public Node {
 private:
     ros::NodeHandle* m_handle;
     ros::Publisher* m_publisher;
@@ -14,9 +15,9 @@ private:
     void m_populateRotationMsg();
 
 public:
-    RotationSesnorNode(NodeManager* nodeManager, std::string handldName, int rotationPort);
+    RotationSensorNode(NodeManager* nodeManager, std::string handldName, int rotationPort);
     void initialize();
     void periodic();
-    ~RotationSesnorNode();
+    ~RotationSensorNode();
 
 };

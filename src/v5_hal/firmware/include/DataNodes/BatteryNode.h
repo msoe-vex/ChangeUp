@@ -1,6 +1,7 @@
 #pragma once
 
 #include "api.h"
+#include "NodeManager.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/V5Battery.h"
 
