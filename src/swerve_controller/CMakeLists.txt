@@ -118,10 +118,6 @@ add_executable(${PROJECT_NAME}_node src/swerve_controller_node.cpp)
 ## same as for the library above
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME}_node
-  ${catkin_LIBRARIES}
-)
 
 ExternalProject_Add(wpilib
     PREFIX 3rdparty
@@ -137,6 +133,14 @@ include_directories(${SOURCE_DIR}/wpimath/src/main/native/include)
 include_directories(${SOURCE_DIR}/wpimath/src/main/native/eigeninclude)
 include_directories(${SOURCE_DIR}/wpiutil/src/main/native/include)
 
-message(${BINARY_DIR})
-
 add_dependencies(${PROJECT_NAME}_node wpilib)
+
+find_library (libwpimath NAMES libwpimath PATHS ${BINARY_DIR}/lib)
+find_library (libwpiutil NAMES libwpiutil PATHS ${BINARY_DIR}/lib)
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(${PROJECT_NAME}_node
+  ${catkin_LIBRARIES}
+  ${BINARY_DIR}/lib/libwpimath.a
+  ${BINARY_DIR}/lib/libwpiutil.a
+)
