@@ -3,10 +3,6 @@
 #include "geometry_msgs/Transform.h"
 
 
-struct SwerveModule {
-    int thing;
-};
-
 void processCallback(const geometry_msgs::Transform::ConstPtr& msg) {
 
 
