@@ -1,4 +1,4 @@
-#include "SwerveModule.h"
+#include "swerve_controller/SwerveModule.h"
 
 SwerveModule::SwerveModule(Eigen::Vector2d moduleLocation, double rotationAngleThreshold, double maxRotationSpeed, double maxVelocity, Eigen::Vector2d maxMotor1Vector) {
     m_moduleLocation = moduleLocation;

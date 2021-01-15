@@ -5,6 +5,8 @@
 
 TEST(Test_Vector_Math, Tangential_Velocity) {
     EXPECT_TRUE(true);
+
+    
 }
 
 int main(int argc, char** argv) {

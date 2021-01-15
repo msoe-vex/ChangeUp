@@ -124,7 +124,8 @@ include_directories(
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
-  src/${PROJECT_NAME}/SwerveController.cpp
+  src/${PROJECT_NAME}/SwerveController.cpp  
+  src/${PROJECT_NAME}/SwerveModule.cpp
 )
 
 ## Add cmake target dependencies of the library
