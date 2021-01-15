@@ -6,5 +6,4 @@ class SwerveController {
 public:
     SwerveController(std::vector<SwerveModule> swerveModules);
     void InverseKinematics(Eigen::Vector2d targetVelocity, Eigen::Rotation2Dd targetRotationVelocity);
-
 };
