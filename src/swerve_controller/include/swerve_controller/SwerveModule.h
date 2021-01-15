@@ -9,6 +9,7 @@ private:
     double m_rotationAngleThreshold;
     double m_maxRotaionSpeed;
     double m_maxVelocity;
+    Eigen::Vector2d m_maxMotor1Vector;
 
 public:
     SwerveModule (Eigen::Vector2d moduleLocation, double rotationAngleThreshold, double maxRotationSpeed, double maxVelocity);
