@@ -1,0 +1,3 @@
+<launch>
+  <node name="navx_publisher_node" pkg="navx_publisher" type="navx_publisher_node" />
+</launch>
