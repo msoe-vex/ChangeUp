@@ -10,6 +10,7 @@
     "ros.distro": "noetic",
     "cmake.configureOnOpen": false,
     "files.associations": {
+<<<<<<< HEAD
         "cctype": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
@@ -83,4 +84,9 @@
         "*.ipp": "cpp"
     },
     "C_Cpp.clang_format_fallbackStyle": "Google"
+=======
+        "core": "cpp",
+        "cmath": "cpp"
+    }
+>>>>>>> Fixed Edge case and math, now outputs -100 to 100
 }
