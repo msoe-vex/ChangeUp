@@ -1,8 +1,0 @@
-# Goal
-int16 desired_voltage
----
-# Result
-bool is_voltage_set
----
-# Feedback
-# This message is instantaneous, no feedback needed
