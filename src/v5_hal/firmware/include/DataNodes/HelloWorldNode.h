@@ -6,14 +6,14 @@
 #include "ros_lib/std_msgs/String.h"
 
 class HelloWorldNode : public Node {
-   private:
+private:
     std_msgs::String m_string_msg;
     ros::Publisher m_publisher;
     std::string* m_handle_name;
 
     void populateMessage();
 
-   public:
+public:
     HelloWorldNode(NodeManager* nodeManager, std::string* handleName);
 
     void initialize();

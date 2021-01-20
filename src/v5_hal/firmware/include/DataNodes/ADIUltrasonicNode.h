@@ -6,7 +6,7 @@
 #include "ros_lib/v5_hal/ADIUltrasonicData.h"
 
 class ADIUltrasonicNode : public Node {
-   private:
+private:
     pros::ADIUltrasonic m_ultrasonic;
     v5_hal::ADIUltrasonicData m_ultrasonic_msg;
     ros::Publisher m_publisher;
@@ -14,9 +14,9 @@ class ADIUltrasonicNode : public Node {
 
     void populateMessage();
 
-   public:
+public:
     ADIUltrasonicNode(NodeManager* nodeManager, int port_ping, int port_echo,
-                      std::string* handleName);
+        std::string* handleName);
 
     void initialize();
 

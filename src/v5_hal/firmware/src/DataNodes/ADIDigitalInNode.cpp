@@ -3,10 +3,10 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 ADIDigitalInNode::ADIDigitalInNode(NodeManager* nodeManager, int port,
-                                   std::string* handleName)
+    std::string* handleName)
     : Node(nodeManager, 20),
-      m_digital_in(port),
-      m_publisher(handleName->c_str(), &m_digital_in_msg) {
+    m_digital_in(port),
+    m_publisher(handleName->insert(0, "sensor_").c_str(), &m_digital_in_msg) {
     m_handle_name = handleName;
 }
 

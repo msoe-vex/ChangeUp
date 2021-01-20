@@ -80,5 +80,6 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp"
-    }
+    },
+    "C_Cpp.clang_format_fallbackStyle": "Google"
 }

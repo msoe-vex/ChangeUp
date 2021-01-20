@@ -3,11 +3,11 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 ADIEncoderNode::ADIEncoderNode(NodeManager* nodeManager, int port_top,
-                               int port_bottom, std::string* handleName,
-                               bool reverse)
+    int port_bottom, std::string* handleName,
+    bool reverse)
     : Node(nodeManager, 20),
-      m_encoder(port_top, port_bottom, reverse),
-      m_publisher(handleName->c_str(), &m_encoder_msg) {
+    m_encoder(port_top, port_bottom, reverse),
+    m_publisher(handleName->insert(0, "sensor_").c_str(), &m_encoder_msg) {
     m_handle_name = handleName;
 }
 

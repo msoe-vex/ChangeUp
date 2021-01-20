@@ -6,7 +6,7 @@
 #include "ros_lib/v5_hal/ADIGyroData.h"
 
 class ADIGyroNode : public Node {
-   private:
+private:
     pros::ADIGyro m_gyro;
     v5_hal::ADIGyroData m_gyro_msg;
     ros::Publisher m_publisher;
@@ -14,9 +14,9 @@ class ADIGyroNode : public Node {
 
     void populateMessage();
 
-   public:
+public:
     ADIGyroNode(NodeManager* nodeManager, int port, double multiplier,
-                std::string* handleName);
+        std::string* handleName);
 
     void initialize();
 

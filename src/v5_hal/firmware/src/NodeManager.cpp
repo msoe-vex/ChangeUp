@@ -1,13 +1,13 @@
 #include "NodeManager.h"
 
-NodeManager::NodeManager(uint32_t (*getMilliseconds)(void)) {
+NodeManager::NodeManager(uint32_t(*getMilliseconds)(void)) {
     m_getMillis = getMilliseconds;
     m_handle = new ros::NodeHandle();
 }
 
 ros::NodeHandle* NodeManager::addNode(Node* node,
-                                      uint32_t intervalMilliseconds) {
-    NodeManager::NodeStructure nodeStructure = {node, intervalMilliseconds, 0};
+    uint32_t intervalMilliseconds) {
+    NodeManager::NodeStructure nodeStructure = { node, intervalMilliseconds, 0 };
     m_nodeStructures.push_back(nodeStructure);
 
     return m_handle;

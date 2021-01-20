@@ -15,7 +15,7 @@ class Node;
 // inherit from the Node class below. This means you never should be calling
 // addNode() explicitly!
 class NodeManager {
-   private:
+private:
     struct NodeStructure {
         Node* node;
         uint32_t triggerMillis;
@@ -24,15 +24,15 @@ class NodeManager {
 
     std::vector<NodeStructure> m_nodeStructures;
 
-    uint32_t (*m_getMillis)(void);
+    uint32_t(*m_getMillis)(void);
 
     const uint32_t m_delayTimeMillis = 5;
 
-   protected:
+protected:
     ros::NodeHandle* m_handle;
 
-   public:
-    NodeManager(uint32_t (*getMilliseconds)(void));
+public:
+    NodeManager(uint32_t(*getMilliseconds)(void));
 
     ros::NodeHandle* addNode(Node* node, uint32_t intervalMilliseconds);
 
@@ -54,9 +54,10 @@ class NodeManager {
 // The interval at which a node is called is set within the Node's CPP file, in
 // the superclass constructor (should look like :Node([manager], [time]))
 class Node {
-   protected:
+protected:
     ros::NodeHandle* m_handle;
-   public:
+
+public:
     Node(NodeManager* nodeManager, uint32_t intervalMilliseconds) {
         m_handle = nodeManager->addNode(this, intervalMilliseconds);
     }

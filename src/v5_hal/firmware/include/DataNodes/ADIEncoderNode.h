@@ -6,7 +6,7 @@
 #include "ros_lib/v5_hal/ADIEncoderData.h"
 
 class ADIEncoderNode : public Node {
-   private:
+private:
     pros::ADIEncoder m_encoder;
     v5_hal::ADIEncoderData m_encoder_msg;
     ros::Publisher m_publisher;
@@ -14,9 +14,9 @@ class ADIEncoderNode : public Node {
 
     void populateMessage();
 
-   public:
+public:
     ADIEncoderNode(NodeManager* nodeManager, int port_top, int port_bottom,
-                   std::string* handleName, bool reverse = false);
+        std::string* handleName, bool reverse = false);
 
     void initialize();
 

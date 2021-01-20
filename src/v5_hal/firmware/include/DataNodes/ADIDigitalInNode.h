@@ -6,7 +6,7 @@
 #include "ros_lib/v5_hal/ADIDigitalInData.h"
 
 class ADIDigitalInNode : public Node {
-   private:
+private:
     pros::ADIDigitalIn m_digital_in;
     v5_hal::ADIDigitalInData m_digital_in_msg;
     ros::Publisher m_publisher;
@@ -14,9 +14,9 @@ class ADIDigitalInNode : public Node {
 
     void populateMessage();
 
-   public:
+public:
     ADIDigitalInNode(NodeManager* nodeManager, int port,
-                     std::string* handleName);
+        std::string* handleName);
 
     void initialize();
 

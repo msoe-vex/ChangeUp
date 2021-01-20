@@ -3,11 +3,10 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 MotorNode::MotorNode(NodeManager* nodeManager, int portNumber,
-                     std::string* handleName, bool reverse,
-                     pros::motor_gearset_e_t gearset)
-    : Node(nodeManager, 20),
-      m_motor(portNumber, gearset, reverse),
-      m_publisher(handleName->c_str(), &m_motor_msg) {
+    std::string* handleName, bool reverse,
+    pros::motor_gearset_e_t gearset) : Node(nodeManager, 20),
+    m_motor(portNumber, gearset, reverse),
+    m_publisher(handleName->insert(0, "motor_").c_str(), &m_motor_msg) {
     m_handle_name = handleName;
 }
 

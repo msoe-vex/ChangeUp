@@ -6,7 +6,7 @@
 #include "ros_lib/v5_hal/V5Motor.h"
 
 class MotorNode : public Node {
-   private:
+private:
     pros::Motor m_motor;
     v5_hal::V5Motor m_motor_msg;
     ros::Publisher m_publisher;
@@ -14,10 +14,10 @@ class MotorNode : public Node {
 
     void populateMessage();
 
-   public:
+public:
     MotorNode(NodeManager* nodeManager, int portNumber, std::string* handleName,
-              bool reverse = false,
-              pros::motor_gearset_e_t gearset = pros::E_MOTOR_GEARSET_18);
+        bool reverse = false,
+        pros::motor_gearset_e_t gearset = pros::E_MOTOR_GEARSET_18);
 
     void initialize();
 

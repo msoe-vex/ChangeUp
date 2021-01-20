@@ -3,8 +3,9 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 HelloWorldNode::HelloWorldNode(NodeManager* nodeManager,
-                               std::string* handleName)
-    : Node(nodeManager, 20), m_publisher(handleName->c_str(), &m_string_msg) {
+    std::string* handleName)
+    : Node(nodeManager, 20),
+    m_publisher(handleName->insert(0, "debug_").c_str(), &m_string_msg) {
     m_handle_name = handleName;
 }
 

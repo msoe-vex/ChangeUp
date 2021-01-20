@@ -3,10 +3,10 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 ADIGyroNode::ADIGyroNode(NodeManager* nodeManager, int port, double multiplier,
-                         std::string* handleName)
+    std::string* handleName)
     : Node(nodeManager, 20),
-      m_gyro(port, multiplier),
-      m_publisher(handleName->c_str(), &m_gyro_msg) {
+    m_gyro(port, multiplier),
+    m_publisher(handleName->insert(0, "sensor_").c_str(), &m_gyro_msg) {
     m_handle_name = handleName;
 }
 

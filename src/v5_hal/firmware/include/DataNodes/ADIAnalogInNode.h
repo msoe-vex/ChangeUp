@@ -6,7 +6,7 @@
 #include "ros_lib/v5_hal/ADIAnalogInData.h"
 
 class ADIAnalogInNode : public Node {
-   private:
+private:
     pros::ADIAnalogIn m_analog_in;
     v5_hal::ADIAnalogInData m_analog_in_msg;
     ros::Publisher m_publisher;
@@ -14,9 +14,9 @@ class ADIAnalogInNode : public Node {
 
     void populateMessage();
 
-   public:
+public:
     ADIAnalogInNode(NodeManager* nodeManager, int port,
-                    std::string* handleName);
+        std::string* handleName);
 
     void initialize();
 

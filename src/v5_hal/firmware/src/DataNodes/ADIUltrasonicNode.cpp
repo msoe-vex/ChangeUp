@@ -3,10 +3,10 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 ADIUltrasonicNode::ADIUltrasonicNode(NodeManager* nodeManager, int port_ping,
-                                     int port_echo, std::string* handleName)
+    int port_echo, std::string* handleName)
     : Node(nodeManager, 20),
-      m_ultrasonic(port_ping, port_echo),
-      m_publisher(handleName->c_str(), &m_ultrasonic_msg) {
+    m_ultrasonic(port_ping, port_echo),
+    m_publisher(handleName->insert(0, "sensor_").c_str(), &m_ultrasonic_msg) {
     m_handle_name = handleName;
 }
 
