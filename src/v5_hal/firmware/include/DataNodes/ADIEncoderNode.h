@@ -16,7 +16,7 @@ class ADIEncoderNode : public Node {
 
    public:
     ADIEncoderNode(NodeManager* nodeManager, int port_top, int port_bottom,
-                   bool reverse, std::string* handleName);
+                   std::string* handleName, bool reverse = false);
 
     void initialize();
 

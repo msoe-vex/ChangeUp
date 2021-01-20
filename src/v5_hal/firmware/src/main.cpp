@@ -14,6 +14,8 @@ MotorNode* leftIntake;
 MotorNode* rightIntake;
 MotorNode* bottomRollers;
 MotorNode* topRollers;
+ADIEncoderNode* xOdometryEncoder;
+ADIEncoderNode* yOdometryEncoder;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -35,6 +37,9 @@ void initialize() {
 
 	bottomRollers = new MotorNode(nodeManager, 9, new std::string("motor_bottomRollers"), false);
 	topRollers = new MotorNode(nodeManager, 10, new std::string("motor_topRollers"), false);
+
+	xOdometryEncoder = new ADIEncoderNode(nodeManager, 1, 2, new std::string("sensor_xOdometryEncoder"), false);
+	yOdometryEncoder = new ADIEncoderNode(nodeManager, 3, 4, new std::string("sensor_yOdometryEncoder"), false);
 
 	// Call the node manager to initialize all of the nodes above
 	nodeManager->initialize();
