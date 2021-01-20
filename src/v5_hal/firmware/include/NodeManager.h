@@ -18,23 +18,23 @@ class NodeManager {
    private:
     struct NodeStructure {
         Node* node;
-        unsigned long triggerMillis;
-        unsigned long lastExecutedMillis;
+        uint32_t triggerMillis;
+        uint32_t lastExecutedMillis;
     };
 
     std::vector<NodeStructure> m_nodeStructures;
 
-    long unsigned int (*m_getMillis)(void);
+    uint32_t (*m_getMillis)(void);
 
-    const int m_delayTimeMillis = 5UL;
+    const uint32_t m_delayTimeMillis = 5;
 
    protected:
     ros::NodeHandle* m_handle;
 
    public:
-    NodeManager(long unsigned int (*getMilliseconds)(void));
+    NodeManager(uint32_t (*getMilliseconds)(void));
 
-    ros::NodeHandle* addNode(Node* node, unsigned long intervalMilliseconds);
+    ros::NodeHandle* addNode(Node* node, uint32_t intervalMilliseconds);
 
     void initialize();
 
@@ -57,7 +57,7 @@ class Node {
    protected:
     ros::NodeHandle* m_handle;
    public:
-    Node(NodeManager* nodeManager, unsigned long intervalMilliseconds) {
+    Node(NodeManager* nodeManager, uint32_t intervalMilliseconds) {
         m_handle = nodeManager->addNode(this, intervalMilliseconds);
     }
     virtual ~Node() {}

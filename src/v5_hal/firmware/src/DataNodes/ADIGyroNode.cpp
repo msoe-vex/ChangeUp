@@ -1,39 +1,29 @@
 #include "DataNodes/ADIGyroNode.h"
 
-// By default, this constructor calls the constructor for the Node object in NodeManager.h
-ADIGyroNode::ADIGyroNode(NodeManager* nodeManager, int port, double multiplier, 
- std::string handleName):Node(nodeManager, 200) {
-    m_gyro = new pros::ADIGyro(port, multiplier);
-    m_gyro_msg = new v5_hal::ADIGyroData();
-    m_handle = new ros::NodeHandle();
+// By default, this constructor calls the constructor for the Node object in
+// NodeManager.h
+ADIGyroNode::ADIGyroNode(NodeManager* nodeManager, int port, double multiplier,
+                         std::string* handleName)
+    : Node(nodeManager, 20),
+      m_gyro(port, multiplier),
+      m_publisher(handleName->c_str(), &m_gyro_msg) {
     m_handle_name = handleName;
 }
 
 void ADIGyroNode::initialize() {
-    // Define a string handle for the gyro sensor
-    std::string gyro_handle = "Gyro_" + m_handle_name;
-
-    // Create a publisher with the custom title, and message location
-    m_publisher = new ros::Publisher(gyro_handle.c_str(), m_gyro_msg);
-    
-    // Initialize the handler, and set up data relating to what this node publishes
-    m_handle->initNode();
-    m_handle->advertise(*m_publisher);
+    // Initialize the handler, and set up data to publish
+    Node::m_handle->initNode();
+    Node::m_handle->advertise(m_publisher);
 }
 
 void ADIGyroNode::periodic() {
-    populateGyroMsg();
-    m_publisher->publish(m_gyro_msg);
-
-    m_handle->spinOnce();
+    // Publish data when called, and spin the handler to send data to the
+    // coprocessor on the published topic
+    populateMessage();
+    m_publisher.publish(&m_gyro_msg);
+    Node::m_handle->spinOnce();
 }
 
-void ADIGyroNode::populateGyroMsg() {
-    m_gyro_msg->degrees = m_gyro->get_value();
-}
+void ADIGyroNode::populateMessage() { m_gyro_msg.degrees = m_gyro.get_value(); }
 
-ADIGyroNode::~ADIGyroNode() {
-    delete m_gyro;
-    delete m_gyro_msg;
-    delete m_handle;
-}
+ADIGyroNode::~ADIGyroNode() { delete m_handle_name; }

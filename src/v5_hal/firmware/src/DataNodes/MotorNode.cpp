@@ -1,29 +1,31 @@
 #include "DataNodes/MotorNode.h"
 
-// By default, this constructor calls the constructor for the Node object in NodeManager.h
-MotorNode::MotorNode(NodeManager* nodeManager, int portNumber, std::string handleName, 
-    bool reverse, pros::motor_gearset_e_t gearset):Node(nodeManager, 20UL), 
-        m_motor(portNumber, gearset, reverse), 
-        m_publisher("motor_LeftDriveMotor", &m_motor_msg) {
+// By default, this constructor calls the constructor for the Node object in
+// NodeManager.h
+MotorNode::MotorNode(NodeManager* nodeManager, int portNumber,
+                     std::string* handleName, bool reverse,
+                     pros::motor_gearset_e_t gearset)
+    : Node(nodeManager, 20),
+      m_motor(portNumber, gearset, reverse),
+      m_publisher(handleName->c_str(), &m_motor_msg) {
     m_handle_name = handleName;
 }
 
 void MotorNode::initialize() {
-    // Define a string handle for the motor
-    std::string motor_handle = "motor_" + m_handle_name;
-    
-    // Initialize the handler, and set up data relating to what this node publishes
+    // Initialize the handler, and set up data to publish
     Node::m_handle->initNode();
     Node::m_handle->advertise(m_publisher);
 }
 
 void MotorNode::periodic() {
-    populateMotorMsg();
+    // Publish data when called, and spin the handler to send data to the
+    // coprocessor on the published topic
+    populateMessage();
     m_publisher.publish(&m_motor_msg);
     Node::m_handle->spinOnce();
 }
 
-void MotorNode::populateMotorMsg() {
+void MotorNode::populateMessage() {
     m_motor_msg.current_draw = m_motor.get_current_draw();
     m_motor_msg.direction = m_motor.get_direction();
     m_motor_msg.efficiency = m_motor.get_efficiency();
@@ -39,6 +41,4 @@ void MotorNode::populateMotorMsg() {
     m_motor_msg.is_over_temp = m_motor.is_over_temp();
 }
 
-MotorNode::~MotorNode() {
-    
-}
+MotorNode::~MotorNode() { delete m_handle_name; }
