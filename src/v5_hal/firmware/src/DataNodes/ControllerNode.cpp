@@ -8,24 +8,30 @@
 //CONTROLLER_MASTER and CONTROLLER_PARTNER are #define as their E_ counterparts
 ControllerNode::ControllerNode(NodeManager* nodeManager, std::string* handleName, 
     pros::controller_id_e_t controller_id) : Node(nodeManager, 20), 
-    m_controller(controller_id), m_publisher(handleName->insert(0, "controller/").c_str(), &m_controller_msg) {
+    m_controller(controller_id), 
+    m_publisher(handleName->insert(0, "controller/").c_str(), &m_controller_msg),
+    m_controllerRumbleSub("controller_Primary", &ControllerNode::m_rumbleController, this) {
     m_handle_name = handleName;
 }
 
+void ControllerNode::m_rumbleController(const v5_hal::V5Controller& msg) {
+    m_controller.rumble(".-. .-.");
+}
+
 void ControllerNode::initialize() {
-    //Initialize the hamdler and advertise the controller message
+    // Initialize the handler, and set up data to publish
     Node::m_handle->initNode();
     Node::m_handle->advertise(m_publisher);
 }
 
 void ControllerNode::periodic() {
-    populateMessage(); //populate each value in the message file with the current value
+    m_populateMessage(); //populate each value in the message file with the current value
     m_publisher.publish(&m_controller_msg); //Serializes the message and queue for procesing
     Node::m_handle->spinOnce(); //Send all queued messages
 }
 
 //Populates the V5Controller message object
-void ControllerNode::populateMessage() {
+void ControllerNode::m_populateMessage() {
     m_controller_msg.analog_left_x = m_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
     m_controller_msg.analog_left_y = m_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
     m_controller_msg.analog_right_x = m_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);

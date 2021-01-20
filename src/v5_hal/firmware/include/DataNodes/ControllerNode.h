@@ -1,7 +1,7 @@
 #pragma once
 
-#include "NodeManager.h"
 #include "api.h"
+#include "NodeManager.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/V5Controller.h"
 #include "pros/misc.h"
@@ -23,5 +23,5 @@ public:
 
     void periodic();
 
-    ~ControllerNode ();
+    ~ControllerNode();
 };

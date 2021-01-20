@@ -4,6 +4,8 @@
 NodeManager* nodeManager = new NodeManager(pros::millis);
 
 // Declare all nodes here
+ControllerNode* primaryController;
+
 MotorNode* leftSwerve1;
 MotorNode* leftSwerve2;
 MotorNode* rightSwerve1;
@@ -29,6 +31,8 @@ ProsTimeNode* prosTime;
  */
 void initialize() {
 	// Define all nodes used by the robot here
+	primaryController = new ControllerNode(nodeManager, new std::string("Primary"), pros::E_CONTROLLER_MASTER);
+
 	leftSwerve1 = new MotorNode(nodeManager, 1, new std::string("leftSwerve1"), false);
 	leftSwerve2 = new MotorNode(nodeManager, 2, new std::string("leftSwerve2"), false);
 	rightSwerve1 = new MotorNode(nodeManager, 3, new std::string("rightSwerve1"), false);

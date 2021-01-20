@@ -6,14 +6,22 @@ MotorNode::MotorNode(NodeManager* nodeManager, int portNumber,
     std::string* handleName, bool reverse,
     pros::motor_gearset_e_t gearset) : Node(nodeManager, 20),
     m_motor(portNumber, gearset, reverse),
-    m_publisher(handleName->insert(0, "motor_").c_str(), &m_motor_msg) {
+    m_publisher(handleName->insert(0, "motor_").c_str(), &m_motor_msg),
+    m_moveMotorVoltageSub("cmd_moveMotorVoltage", &MotorNode::moveMotorVoltage, this) {
     m_handle_name = handleName;
+}
+
+void MotorNode::moveMotorVoltage(const v5_hal::V5Controller& msg) {
+    float speed = (msg.analog_left_y / 127) * 12000.0; // Need to be a float so you don't truncate to 0 in the first part
+    m_motor.move_voltage((int)speed);
 }
 
 void MotorNode::initialize() {
     // Initialize the handler, and set up data to publish
     Node::m_handle->initNode();
     Node::m_handle->advertise(m_publisher);
+
+    Node::m_handle->subscribe(m_moveMotorVoltageSub);
 }
 
 void MotorNode::periodic() {
@@ -39,5 +47,6 @@ void MotorNode::populateMessage() {
     m_motor_msg.is_over_current = m_motor.is_over_current();
     m_motor_msg.is_over_temp = m_motor.is_over_temp();
 }
+
 
 MotorNode::~MotorNode() { delete m_handle_name; }
