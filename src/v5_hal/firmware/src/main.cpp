@@ -9,12 +9,13 @@ NodeManager* nodeManager = new NodeManager(pros::millis);
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
+void initialize() {	
 	// Create all nodes used by the robot here
-	MotorNode* leftFrontDriveMotorNode = new MotorNode(nodeManager, 1, "LeftFrontDrive", false);
-	MotorNode* leftRearDriveMotorNode = new MotorNode(nodeManager, 2, "LeftRearDrive", false);
-	MotorNode* rightFrontDriveMotorNode = new MotorNode(nodeManager, 3, "RightFrontDrive", false);
-	MotorNode* rightRearDriveMotorNode = new MotorNode(nodeManager, 4, "RightRearDrive", false);
+	//MotorNode* leftFrontDriveMotorNode = new MotorNode(nodeManager, 1, "LeftFrontDrive", false);
+	// MotorNode* leftRearDriveMotorNode = new MotorNode(nodeManager, 2, "LeftRearDrive", false);
+	// MotorNode* rightFrontDriveMotorNode = new MotorNode(nodeManager, 3, "RightFrontDrive", false);
+	// MotorNode* rightRearDriveMotorNode = new MotorNode(nodeManager, 4, "RightRearDrive", false);
+	HelloWorldNode* helloWorldNode = new HelloWorldNode(nodeManager, new std::string("diagnostic_helloWorldNode"));
 
 	// Call the node manager to initialize all of the nodes above
 	nodeManager->initialize();

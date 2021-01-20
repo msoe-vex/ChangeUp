@@ -41,6 +41,7 @@
 #include "DataNodes/ADIEncoderNode.h"
 #include "DataNodes/ADIGyroNode.h"
 #include "DataNodes/ADIUltrasonicNode.h"
+#include "DataNodes/HelloWorldNode.h"
 
 /**
  * You should add more #includes here
