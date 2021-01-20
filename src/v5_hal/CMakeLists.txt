@@ -10,7 +10,6 @@ project(v5_hal)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   genmsg
-  actionlib_msgs
   roscpp
   rosserial_vex_v5
   std_msgs
@@ -74,15 +73,14 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate actions in the 'action' folder
- add_action_files(
-  FILES
- )
+# add_action_files(
+#  FILES
+# )
 
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
    std_msgs  # Or other packages containing msgs
-   actionlib_msgs
  )
 
 ################################################

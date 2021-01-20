@@ -14,6 +14,7 @@ private:
 
     void populateMessage();
 
+
 public:
     MotorNode(NodeManager* nodeManager, int portNumber, std::string* handleName,
         bool reverse = false,
