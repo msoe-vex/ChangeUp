@@ -3,6 +3,20 @@
 
 NodeManager* nodeManager = new NodeManager(pros::millis);
 
+// Declare all nodes here
+MotorNode* leftSwerve1;
+MotorNode* leftSwerve2;
+MotorNode* rightSwerve1;
+MotorNode* rightSwerve2;
+MotorNode* rearSwerve1;
+MotorNode* rearSwerve2;
+MotorNode* leftIntake;
+MotorNode* rightIntake;
+MotorNode* bottomRollers;
+MotorNode* topRollers;
+ADIEncoderNode* xOdometryEncoder;
+ADIEncoderNode* yOdometryEncoder;
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -10,11 +24,22 @@ NodeManager* nodeManager = new NodeManager(pros::millis);
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// Create all nodes used by the robot here
-	MotorNode* leftFrontDriveMotorNode = new MotorNode(nodeManager, 1, "LeftFrontDrive", false);
-	MotorNode* leftRearDriveMotorNode = new MotorNode(nodeManager, 2, "LeftRearDrive", false);
-	MotorNode* rightFrontDriveMotorNode = new MotorNode(nodeManager, 3, "RightFrontDrive", false);
-	MotorNode* rightRearDriveMotorNode = new MotorNode(nodeManager, 4, "RightRearDrive", false);
+	// Define all nodes used by the robot here
+	leftSwerve1 = new MotorNode(nodeManager, 1, new std::string("leftSwerve1"), false);
+	leftSwerve2 = new MotorNode(nodeManager, 2, new std::string("leftSwerve2"), false);
+	rightSwerve1 = new MotorNode(nodeManager, 3, new std::string("rightSwerve1"), false);
+	rightSwerve2 = new MotorNode(nodeManager, 4, new std::string("rightSwerve2"), false);
+	rearSwerve1 = new MotorNode(nodeManager, 5, new std::string("rearSwerve1"), false);
+	rearSwerve2 = new MotorNode(nodeManager, 6, new std::string("rearSwerve2"), false);
+
+	leftIntake = new MotorNode(nodeManager, 7, new std::string("leftIntake"), false);
+	rightIntake = new MotorNode(nodeManager, 8, new std::string("rightIntake"), false);
+
+	bottomRollers = new MotorNode(nodeManager, 9, new std::string("bottomRollers"), false);
+	topRollers = new MotorNode(nodeManager, 10, new std::string("topRollers"), false);
+
+	xOdometryEncoder = new ADIEncoderNode(nodeManager, 1, 2, new std::string("xOdometryEncoder"), false);
+	yOdometryEncoder = new ADIEncoderNode(nodeManager, 3, 4, new std::string("yOdometryEncoder"), false);
 
 	// Call the node manager to initialize all of the nodes above
 	nodeManager->initialize();
@@ -63,7 +88,7 @@ void autonomous() {}
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
- * 
+ *
  * NOTE: If custom code is needed outside of the node manager, it should be put
  * into a different task with a wait. Each node has an embedded timing control loop
  * and adding a wait to this thread will disrupt the performance of all nodes.
