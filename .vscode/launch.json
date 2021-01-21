@@ -1,0 +1,9 @@
+{
+    "configurations": [
+        {
+            "name": "ROS: Attach",
+            "type": "ros",
+            "request": "attach"
+        }
+    ]
+}

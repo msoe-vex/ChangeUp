@@ -4,3 +4,6 @@
 [submodule "src/V5HAL"]
 	path = src/V5HAL
 	url = https://github.com/msoe-vex/V5HAL.git
+[submodule "src/navx_publisher/src/navXTimeSync"]
+	path = src/navx_publisher/src/navXTimeSync
+	url = git@github.com:FRC900/navXTimeSync.git
