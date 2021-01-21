@@ -12,7 +12,7 @@ SwerveModule::SwerveModule(Eigen::Vector2d moduleLocation, double rotationAngleT
 }
 
 motorMagnitudes* SwerveModule::InverseKinematics (Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle) {
-    if ((targetVelocity(0) == 0) && (targetVelocity(1) && (targetRotationVelocity == 0))) {
+    if ((targetVelocity(0) == 0) && (targetVelocity(1) == 0) && (targetRotationVelocity == 0)) { //not sure if this works, might need to be reworked
         double scaledMotor1Mag = 0;
         double scaledMotor2Mag = 0;
         
