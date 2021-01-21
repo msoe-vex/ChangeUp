@@ -12,10 +12,10 @@ private:
     v5_hal::V5RotationSensor m_rotation_msg;
     std::string* m_handle_name;
 
-    void populateyMessage();
+    void populateMessage();
 
 public:
-    RotationSensorNode(NodeManager* nodeManager, std::string handldName, int rotationPort);
+    RotationSensorNode(NodeManager* nodeManager, std::string* handldName, int rotationPort);
     void initialize();
     void periodic();
     ~RotationSensorNode();

@@ -16,6 +16,10 @@ MotorNode* bottomRollers;
 MotorNode* topRollers;
 ADIEncoderNode* xOdometryEncoder;
 ADIEncoderNode* yOdometryEncoder;
+BatteryNode* battery;
+CompetitionStatusNode* competitionStatus;
+ControllerNode* controllerPrimary;
+ProsTimeNode* prosTime;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -40,6 +44,14 @@ void initialize() {
 
 	xOdometryEncoder = new ADIEncoderNode(nodeManager, 1, 2, new std::string("xOdometryEncoder"), false);
 	yOdometryEncoder = new ADIEncoderNode(nodeManager, 3, 4, new std::string("yOdometryEncoder"), false);
+
+	battery = new BatteryNode(nodeManager, new std::string("v5battery"));
+
+	competitionStatus = new CompetitionStatusNode(nodeManager, new std::string("competitionStatus"));
+
+	controllerPrimary = new ControllerNode(nodeManager, new std::string("controllerPrimary"), CONTROLLER_MASTER);
+
+	prosTime = new ProsTimeNode(nodeManager, new std::string("prosTime"));
 
 	// Call the node manager to initialize all of the nodes above
 	nodeManager->initialize();

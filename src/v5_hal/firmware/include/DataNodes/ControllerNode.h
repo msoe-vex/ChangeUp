@@ -13,10 +13,10 @@ private:
     ros::Publisher m_publisher; //Creates a new publisher object that will prepare messages for sending
     std::string* m_handle_name; //Creates a handle name to specify between objects
 
-    void populateyMessage();
+    void populateMessage();
 
 public:
-    ControllerNode(NodeManager* nodeManager, std::string handle_name, 
+    ControllerNode(NodeManager* nodeManager, std::string* handle_name, 
         pros::controller_id_e_t controller_id);
 
     void initialize();

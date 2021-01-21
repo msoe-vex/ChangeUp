@@ -1,7 +1,7 @@
 #include "DataNodes/ProsTimeNode.h"
 
-ProsTimeNode::ProsTimeNode(NodeManager* nodeManager, std::string handleName) 
-    : Node (nodeManager, 200), m_publisher(handleName->insert(0, "motor_").c_str(), &m_motor_msg) {
+ProsTimeNode::ProsTimeNode(NodeManager* nodeManager, std::string* handleName) 
+    : Node (nodeManager, 200), m_publisher(handleName->insert(0, "prosTime/").c_str(), &m_prosTime_msg) {
     m_handle_name = handleName;
 }
 
@@ -12,12 +12,12 @@ void ProsTimeNode::initialize() {
 
 void ProsTimeNode::periodic() {
     populateMessage();
-    m_publisher->publish(&m_prostime_msg);
+    m_publisher.publish(&m_prosTime_msg);
     Node::m_handle->spinOnce();
 }
 
 void ProsTimeNode::populateMessage() {
-    m_prostime_msg.millis_since_boot = pros::millis();
+    m_prosTime_msg.millis_since_boot = pros::millis();
 }
 
 ProsTimeNode::~ProsTimeNode() {

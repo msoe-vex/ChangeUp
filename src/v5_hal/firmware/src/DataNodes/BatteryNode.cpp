@@ -1,7 +1,7 @@
 #include "DataNodes/BatteryNode.h"
 
 BatteryNode::BatteryNode (NodeManager* nodeManager, std::string* handleName)
-     : Node (nodeManager, 200), m_publisher(handleName->insert(0, "battery_").c_str(), &m_battery_msg) {
+     : Node (nodeManager, 200), m_publisher(handleName->insert(0, "battery/").c_str(), &m_battery_msg) {
     m_handle_name = handleName;
 }
 

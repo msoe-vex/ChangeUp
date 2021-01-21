@@ -8,13 +8,13 @@
 class ProsTimeNode : public Node {
 private:
     ros::Publisher m_publisher;
-    v5_hal::ProsTime m_prostime_msg;
-    std::strin*g m_handle_name;
+    v5_hal::ProsTime m_prosTime_msg;
+    std::string* m_handle_name;
 
-    void populateyMessage();
+    void populateMessage();
     
 public:
-    ProsTimeNode(NodeManager* nodeHandle, std::string handleName);
+    ProsTimeNode(NodeManager* nodeHandle, std::string* handleName);
 
     void initialize();
     

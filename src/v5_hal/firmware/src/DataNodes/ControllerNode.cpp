@@ -6,10 +6,10 @@
 //controller_id_e_t is a typedef'ed enum which can be located in the pros/misc.h file
 //It can only be E_CONTROLLER_MASTER or E_CONTROLLER_PARTNER 
 //CONTROLLER_MASTER and CONTROLLER_PARTNER are #define as their E_ counterparts
-ControllerNode::ControllerNode(NodeManager* nodeManager, std::string handle_name, 
+ControllerNode::ControllerNode(NodeManager* nodeManager, std::string* handleName, 
     pros::controller_id_e_t controller_id) : Node(nodeManager, 200), 
-    m_controller(controller_id), m_publisher(handleName->insert(0, "motor_").c_str(), &m_motor_msg) {
-    m_handle_name = handle_name;
+    m_controller(controller_id), m_publisher(handleName->insert(0, "controller/").c_str(), &m_controller_msg) {
+    m_handle_name = handleName;
 }
 
 void ControllerNode::initialize() {
@@ -20,7 +20,7 @@ void ControllerNode::initialize() {
 
 void ControllerNode::periodic() {
     populateMessage(); //populate each value in the message file with the current value
-    m_publisher->publish(&m_controller_msg); //Serializes the message and queue for procesing
+    m_publisher.publish(&m_controller_msg); //Serializes the message and queue for procesing
     Node::m_handle->spinOnce(); //Send all queued messages
 }
 

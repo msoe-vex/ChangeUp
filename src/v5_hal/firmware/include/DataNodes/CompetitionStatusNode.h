@@ -12,10 +12,10 @@ private:
     ros::Publisher m_publisher;
     std::string* m_handle_name;
 
-    void populateyMessage();
+    void populateMessage();
 
 public:
-    CompetitionStatusNode(NodeManager* nodeManager, std::string handleName);
+    CompetitionStatusNode(NodeManager* nodeManager, std::string* handleName);
 
     void initialize();
 

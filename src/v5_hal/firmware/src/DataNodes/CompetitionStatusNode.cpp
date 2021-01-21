@@ -1,7 +1,7 @@
 #include "DataNodes/CompetitionStatusNode.h"
 
-CompetitionStatusNode::CompetitionStatusNode (NodeManager* nodeManager, std::string handleName)
-     : Node(nodeManager, 200), m_publisher(handleName->insert(0, "compStatus_").c_str(), &m_comp_status_msg) {
+CompetitionStatusNode::CompetitionStatusNode (NodeManager* nodeManager, std::string* handleName)
+     : Node(nodeManager, 200), m_publisher(handleName->insert(0, "compStatus/").c_str(), &m_comp_status_msg) {
     m_handle_name = handleName;
 }
 
@@ -12,7 +12,7 @@ void CompetitionStatusNode::initialize() {
 
 void CompetitionStatusNode::periodic() {
     populateMessage();
-    m_publisher->publish(&m_comp_status_msg);
+    m_publisher.publish(&m_comp_status_msg);
     Node::m_handle->spinOnce();
 }
 
