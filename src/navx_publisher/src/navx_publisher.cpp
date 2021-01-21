@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 
 	ros::Rate loop_time(210);
 	ros::NodeHandle nh_local("~");
-	const std::string device(nh_local.param("device", std::string("/dev/ttyS18")));
+	const std::string device(nh_local.param("device", std::string("/dev/ttyACM0")));
 
 	AHRS nx(device, AHRS::SerialDataType::kProcessedData, 200);
 	nx.ZeroYaw();
