@@ -49,7 +49,7 @@ void initialize() {
 
 	competitionStatus = new CompetitionStatusNode(nodeManager, new std::string("competitionStatus"));
 
-	controllerPrimary = new ControllerNode(nodeManager, new std::string("controllerPrimary"), CONTROLLER_MASTER);
+	controllerPrimary = new ControllerNode(nodeManager, new std::string("controllerPrimary"));
 
 	prosTime = new ProsTimeNode(nodeManager, new std::string("prosTime"));
 
