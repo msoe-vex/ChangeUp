@@ -1,7 +1,7 @@
 #include "DataNodes/RotationSensorNode.h"
 
 RotationSensorNode::RotationSensorNode(NodeManager* nodeManager, std::string* handleName, int rotationPort)
-    : Node (nodeManager, 200), m_rotation(rotationPort), m_publisher(handleName->insert(0, "rotationSensor/").c_str(), &m_rotation_msg) {
+    : Node (nodeManager, 20), m_rotation(rotationPort), m_publisher(handleName->insert(0, "rotationSensor/").c_str(), &m_rotation_msg) {
     m_handle_name = handleName;
 }
 

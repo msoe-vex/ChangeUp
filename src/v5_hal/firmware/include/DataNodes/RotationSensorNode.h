@@ -15,7 +15,7 @@ private:
     void populateMessage();
 
 public:
-    RotationSensorNode(NodeManager* nodeManager, std::string* handldName, int rotationPort);
+    RotationSensorNode(NodeManager* nodeManager, std::string* handleName, int rotationPort);
     void initialize();
     void periodic();
     ~RotationSensorNode();

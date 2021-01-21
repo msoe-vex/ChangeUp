@@ -17,7 +17,7 @@ private:
 
 public:
     ControllerNode(NodeManager* nodeManager, std::string* handle_name, 
-        pros::controller_id_e_t controller_id);
+        pros::controller_id_e_t controller_id = pros::E_CONTROLLER_MASTER);
 
     void initialize();
 

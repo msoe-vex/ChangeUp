@@ -20,7 +20,5 @@ public:
     
     void periodic();
 
-    void populateProsTimeMsg();
-
     ~ProsTimeNode();
 };

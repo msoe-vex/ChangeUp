@@ -17,11 +17,10 @@ void BatteryNode::periodic() {
 }
 
 void BatteryNode::populateMessage () {
-    using namespace pros::battery;
-    m_battery_msg.capacity = get_capacity();
-    m_battery_msg.current = get_current();
-    m_battery_msg.temperature = get_temperature();
-    m_battery_msg.voltage = get_temperature();
+    m_battery_msg.capacity = pros::battery::get_capacity();
+    m_battery_msg.current = pros::battery::get_current();
+    m_battery_msg.temperature = pros::battery::get_temperature();
+    m_battery_msg.voltage = pros::battery::get_temperature();
 }
 
 BatteryNode::~BatteryNode() {

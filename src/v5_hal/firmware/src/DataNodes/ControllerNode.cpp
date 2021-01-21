@@ -7,7 +7,7 @@
 //It can only be E_CONTROLLER_MASTER or E_CONTROLLER_PARTNER 
 //CONTROLLER_MASTER and CONTROLLER_PARTNER are #define as their E_ counterparts
 ControllerNode::ControllerNode(NodeManager* nodeManager, std::string* handleName, 
-    pros::controller_id_e_t controller_id) : Node(nodeManager, 200), 
+    pros::controller_id_e_t controller_id) : Node(nodeManager, 20), 
     m_controller(controller_id), m_publisher(handleName->insert(0, "controller/").c_str(), &m_controller_msg) {
     m_handle_name = handleName;
 }

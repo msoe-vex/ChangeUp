@@ -1,7 +1,7 @@
 #include "DataNodes/ProsTimeNode.h"
 
 ProsTimeNode::ProsTimeNode(NodeManager* nodeManager, std::string* handleName) 
-    : Node (nodeManager, 200), m_publisher(handleName->insert(0, "prosTime/").c_str(), &m_prosTime_msg) {
+    : Node (nodeManager, 20), m_publisher(handleName->insert(0, "prosTime/").c_str(), &m_prosTime_msg) {
     m_handle_name = handleName;
 }
 
