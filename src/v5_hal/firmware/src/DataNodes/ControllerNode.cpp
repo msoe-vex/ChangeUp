@@ -6,27 +6,40 @@
 //controller_id_e_t is a typedef'ed enum which can be located in the pros/misc.h file
 //It can only be E_CONTROLLER_MASTER or E_CONTROLLER_PARTNER 
 //CONTROLLER_MASTER and CONTROLLER_PARTNER are #define as their E_ counterparts
-ControllerNode::ControllerNode(NodeManager* nodeManager, std::string* handleName, 
-    pros::controller_id_e_t controller_id) : Node(nodeManager, 20), 
-    m_controller(controller_id), 
-    m_publisher(handleName->insert(0, "controller/").c_str(), &m_controller_msg),
-    m_controllerRumbleSub("controller_Primary", &ControllerNode::m_rumbleController, this) {
-    m_handle_name = handleName;
+ControllerNode::ControllerNode(NodeManager* node_manager, std::string* handle_name,
+    pros::controller_id_e_t controller_id) : Node(node_manager, 20),
+    m_controller(controller_id) {
+    m_handle_name = handle_name->insert(0, "controller/");
+    m_sub_controller_rumble_name = m_handle_name + "/controllerRumble";
+
+    m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_controller_msg);
+    m_rumble_controller_sub = new ros::Subscriber<std_msgs::String, ControllerNode>
+        (m_sub_controller_rumble_name.c_str(), &ControllerNode::m_rumbleController, this);
+
+    delete handle_name;
 }
 
-void ControllerNode::m_rumbleController(const v5_hal::V5Controller& msg) {
-    m_controller.rumble(".-. .-.");
+void ControllerNode::m_rumbleController(const std_msgs::String& msg) {
+    std::string str = msg.data;
+    if (str.length() <= 8) {
+        m_controller.rumble(str.c_str());
+    } else {
+        // TODO Log to ROS
+    }
 }
 
 void ControllerNode::initialize() {
     // Initialize the handler, and set up data to publish
     Node::m_handle->initNode();
-    Node::m_handle->advertise(m_publisher);
+    Node::m_handle->advertise(*m_publisher);
+    Node::m_handle->subscribe(*m_rumble_controller_sub);
 }
 
 void ControllerNode::periodic() {
+    // Publish data when called, and spin the handler to send data to the
+    // coprocessor on the published topic
     m_populateMessage(); //populate each value in the message file with the current value
-    m_publisher.publish(&m_controller_msg); //Serializes the message and queue for procesing
+    m_publisher->publish(&m_controller_msg); //Serializes the message and queue for procesing
     Node::m_handle->spinOnce(); //Send all queued messages
 }
 
@@ -54,5 +67,6 @@ void ControllerNode::m_populateMessage() {
 }
 
 ControllerNode::~ControllerNode() {
-    delete m_handle_name;
+    delete m_publisher;
+    delete m_rumble_controller_sub;
 }

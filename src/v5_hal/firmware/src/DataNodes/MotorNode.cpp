@@ -2,37 +2,41 @@
 
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
-MotorNode::MotorNode(NodeManager* nodeManager, int portNumber,
-    std::string* handleName, bool reverse,
-    pros::motor_gearset_e_t gearset) : Node(nodeManager, 20),
-    m_motor(portNumber, gearset, reverse),
-    m_publisher(handleName->insert(0, "motor_").c_str(), &m_motor_msg),
-    m_moveMotorVoltageSub("cmd_moveMotorVoltage", &MotorNode::moveMotorVoltage, this) {
-    m_handle_name = handleName;
+MotorNode::MotorNode(NodeManager* node_manager, int port_number,
+    std::string* handle_name, bool reverse,
+    pros::motor_gearset_e_t gearset) : Node(node_manager, 20),
+    m_motor(port_number, gearset, reverse) {
+    m_handle_name = handle_name->insert(0, "motor/");
+    m_sub_move_motor_voltage_name = m_handle_name + "/moveMotorVoltage";
+
+    m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_motor_msg);
+    m_move_motor_voltage_sub = new ros::Subscriber<std_msgs::Int8, MotorNode>
+        (m_sub_move_motor_voltage_name.c_str(), &MotorNode::m_moveMotorVoltage, this);
+
+    delete handle_name;
 }
 
-void MotorNode::moveMotorVoltage(const v5_hal::V5Controller& msg) {
-    float speed = (msg.analog_left_y / 127) * 12000.0; // Need to be a float so you don't truncate to 0 in the first part
+void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
+    float speed = (msg.data / 127.0) * 12000.0;
     m_motor.move_voltage((int)speed);
 }
 
 void MotorNode::initialize() {
     // Initialize the handler, and set up data to publish
     Node::m_handle->initNode();
-    Node::m_handle->advertise(m_publisher);
-
-    Node::m_handle->subscribe(m_moveMotorVoltageSub);
+    Node::m_handle->advertise(*m_publisher);
+    Node::m_handle->subscribe(*m_move_motor_voltage_sub);
 }
 
 void MotorNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    populateMessage();
-    m_publisher.publish(&m_motor_msg);
+    m_populateMessage();
+    m_publisher->publish(&m_motor_msg);
     Node::m_handle->spinOnce();
 }
 
-void MotorNode::populateMessage() {
+void MotorNode::m_populateMessage() {
     m_motor_msg.current_draw = m_motor.get_current_draw();
     m_motor_msg.direction = m_motor.get_direction();
     m_motor_msg.efficiency = m_motor.get_efficiency();
@@ -49,4 +53,7 @@ void MotorNode::populateMessage() {
 }
 
 
-MotorNode::~MotorNode() { delete m_handle_name; }
+MotorNode::~MotorNode() {
+    delete m_publisher;
+    delete m_move_motor_voltage_sub;
+}

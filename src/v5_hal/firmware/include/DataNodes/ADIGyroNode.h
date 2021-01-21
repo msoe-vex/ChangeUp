@@ -3,20 +3,20 @@
 #include "NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
-#include "ros_lib/v5_hal/ADIGyroData.h"
+#include "ros_lib/std_msgs/Float32.h"
 
 class ADIGyroNode : public Node {
 private:
     pros::ADIGyro m_gyro;
-    v5_hal::ADIGyroData m_gyro_msg;
-    ros::Publisher m_publisher;
-    std::string* m_handle_name;
+    std_msgs::Float32 m_gyro_msg;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    ADIGyroNode(NodeManager* nodeManager, int port, double multiplier,
-        std::string* handleName);
+    ADIGyroNode(NodeManager* node_manager, int port, double multiplier,
+        std::string* handle_name);
 
     void initialize();
 

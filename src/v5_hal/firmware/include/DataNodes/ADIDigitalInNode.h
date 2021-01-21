@@ -3,20 +3,20 @@
 #include "NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
-#include "ros_lib/v5_hal/ADIDigitalInData.h"
+#include "ros_lib/std_msgs/Bool.h"
 
 class ADIDigitalInNode : public Node {
 private:
     pros::ADIDigitalIn m_digital_in;
-    v5_hal::ADIDigitalInData m_digital_in_msg;
-    ros::Publisher m_publisher;
-    std::string* m_handle_name;
+    std_msgs::Bool m_digital_in_msg;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    ADIDigitalInNode(NodeManager* nodeManager, int port,
-        std::string* handleName);
+    ADIDigitalInNode(NodeManager* node_manager, int port,
+        std::string* handle_name);
 
     void initialize();
 
