@@ -1,27 +1,32 @@
 #include "DataNodes/RotationSensorNode.h"
 
-RotationSensorNode::RotationSensorNode(NodeManager* nodeManager, std::string* handleName, int rotationPort)
-    : Node (nodeManager, 20), m_rotation(rotationPort), m_publisher(handleName->insert(0, "rotationSensor/").c_str(), &m_rotation_msg) {
-    m_handle_name = handleName;
+RotationSensorNode::RotationSensorNode(NodeManager* node_manager, 
+    std::string* handle_name, int rotation_port) : Node (node_manager, 20), 
+    m_rotation_sensor(rotation_port) {
+    m_handle_name = handle_name->insert(0, "sensor/");
+
+    m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_rotation_msg);
+
+    delete handle_name;
 }
 
 void RotationSensorNode::initialize() {
     Node::m_handle->initNode();
-    Node::m_handle->advertise(m_publisher);
+    Node::m_handle->advertise(*m_publisher);
 }
 
 void RotationSensorNode::periodic() {
-    populateMessage();
-    m_publisher.publish(&m_rotation_msg);
+    m_populateMessage();
+    m_publisher->publish(&m_rotation_msg);
     Node::m_handle->spinOnce();
 }
 
-void RotationSensorNode::populateMessage() {
-    m_rotation_msg.encoder_angle = m_rotation.get_angle();
-    m_rotation_msg.encoder_position = m_rotation.get_position();
-    m_rotation_msg.encoder_velocity = m_rotation.get_velocity();
+void RotationSensorNode::m_populateMessage() {
+    m_rotation_msg.encoder_angle = m_rotation_sensor.get_angle();
+    m_rotation_msg.encoder_position = m_rotation_sensor.get_position();
+    m_rotation_msg.encoder_velocity = m_rotation_sensor.get_velocity();
 }
 
 RotationSensorNode::~RotationSensorNode () {
-    delete m_handle_name;
+    delete m_publisher;
 }

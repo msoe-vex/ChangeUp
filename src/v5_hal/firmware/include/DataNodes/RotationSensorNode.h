@@ -7,17 +7,20 @@
 
 class RotationSensorNode : public Node {
 private:
-    ros::Publisher m_publisher;
-    pros::Rotation m_rotation;
+    pros::Rotation m_rotation_sensor;
     v5_hal::V5RotationSensor m_rotation_msg;
-    std::string* m_handle_name;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    RotationSensorNode(NodeManager* nodeManager, std::string* handleName, int rotationPort);
+    RotationSensorNode(NodeManager* node_manager, std::string* handle_name, 
+        int rotation_port);
+    
     void initialize();
+    
     void periodic();
+    
     ~RotationSensorNode();
-
 };
