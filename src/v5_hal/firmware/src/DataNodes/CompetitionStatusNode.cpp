@@ -17,7 +17,6 @@ void CompetitionStatusNode::periodic() {
 }
 
 void CompetitionStatusNode::populateMessage() {
-    using namespace pros::competition;
     m_comp_status_msg.status = pros::competition::get_status();
     m_comp_status_msg.is_autonomous = pros::competition::is_autonomous();
     m_comp_status_msg.is_comp_connected = pros::competition::is_connected();
