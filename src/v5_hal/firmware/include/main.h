@@ -42,6 +42,10 @@
 #include "DataNodes/ADIGyroNode.h"
 #include "DataNodes/ADIUltrasonicNode.h"
 #include "DataNodes/HelloWorldNode.h"
+#include "DataNodes/ControllerNode.h"
+#include "DataNodes/CompetitionStatusNode.h"
+#include "DataNodes/ProsTimeNode.h"
+#include "DataNodes/BatteryNode.h"
 
 /**
  * You should add more #includes here
