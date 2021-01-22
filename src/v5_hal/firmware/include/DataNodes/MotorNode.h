@@ -20,7 +20,7 @@ private:
     void m_moveMotorVoltage(const std_msgs::Int8& msg);
 
 public:
-    MotorNode(NodeManager* node_manager, int port_number, std::string* handle_name,
+    MotorNode(NodeManager* node_manager, int port_number, std::string handle_name,
         bool reverse=false, pros::motor_gearset_e_t gearset=pros::E_MOTOR_GEARSET_18);
 
     void initialize();

@@ -14,7 +14,7 @@ private:
     void m_populateMessage();
 
 public:
-    BatteryNode(NodeManager* node_manager, std::string* handle_name);
+    BatteryNode(NodeManager* node_manager, std::string handle_name);
 
     void initialize();
 

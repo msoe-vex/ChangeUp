@@ -15,7 +15,7 @@ private:
     void m_populateMessage();
 
 public:
-    CompetitionStatusNode(NodeManager* node_manager, std::string* handle_name);
+    CompetitionStatusNode(NodeManager* node_manager, std::string handle_name);
 
     void initialize();
 

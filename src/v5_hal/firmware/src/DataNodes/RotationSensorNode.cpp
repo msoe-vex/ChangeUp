@@ -1,13 +1,11 @@
 #include "DataNodes/RotationSensorNode.h"
 
 RotationSensorNode::RotationSensorNode(NodeManager* node_manager, 
-    std::string* handle_name, int rotation_port) : Node (node_manager, 20), 
+    std::string handle_name, int rotation_port) : Node (node_manager, 20), 
     m_rotation_sensor(rotation_port) {
-    m_handle_name = handle_name->insert(0, "sensor/");
+    m_handle_name = handle_name.insert(0, "sensor/");
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_rotation_msg);
-
-    delete handle_name;
 }
 
 void RotationSensorNode::initialize() {

@@ -1,12 +1,10 @@
 #include "DataNodes/BatteryNode.h"
 
-BatteryNode::BatteryNode (NodeManager* node_manager, std::string* handle_name)
+BatteryNode::BatteryNode (NodeManager* node_manager, std::string handle_name)
      : Node (node_manager, 200) {
-    m_handle_name = handle_name->insert(0, "battery/");
+    m_handle_name = handle_name.insert(0, "battery/");
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_battery_msg);
-
-    delete handle_name;
 }
 
 void BatteryNode::initialize() {

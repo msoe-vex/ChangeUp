@@ -16,7 +16,7 @@ private:
 
 public:
     ADIUltrasonicNode(NodeManager* node_manager, int port_ping, int port_echo,
-        std::string* handle_name);
+        std::string handle_name);
 
     void initialize();
 

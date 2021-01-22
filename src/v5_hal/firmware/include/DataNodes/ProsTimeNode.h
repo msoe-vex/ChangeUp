@@ -14,7 +14,7 @@ private:
     void m_populateMessage();
     
 public:
-    ProsTimeNode(NodeManager* node_handle, std::string* handle_name);
+    ProsTimeNode(NodeManager* node_handle, std::string handle_name);
 
     void initialize();
     

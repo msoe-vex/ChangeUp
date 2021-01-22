@@ -16,7 +16,7 @@ private:
 
 public:
     ADIAnalogInNode(NodeManager* node_manager, int port,
-        std::string* handle_name);
+        std::string handle_name);
 
     void initialize();
 
