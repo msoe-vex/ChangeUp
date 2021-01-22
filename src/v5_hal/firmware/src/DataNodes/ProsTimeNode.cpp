@@ -1,12 +1,10 @@
 #include "DataNodes/ProsTimeNode.h"
 
-ProsTimeNode::ProsTimeNode(NodeManager* node_manager, std::string* handle_name) 
+ProsTimeNode::ProsTimeNode(NodeManager* node_manager, std::string handle_name) 
     : Node (node_manager, 20) {
-    m_handle_name = handle_name->insert(0, "prosTime/");
+    m_handle_name = handle_name.insert(0, "prosTime/");
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_pros_time_msg);
-
-    delete handle_name;
 }
 
 void ProsTimeNode::initialize() {

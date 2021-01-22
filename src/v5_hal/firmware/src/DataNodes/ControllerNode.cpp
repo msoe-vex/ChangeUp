@@ -6,17 +6,15 @@
 //controller_id_e_t is a typedef'ed enum which can be located in the pros/misc.h file
 //It can only be E_CONTROLLER_MASTER or E_CONTROLLER_PARTNER 
 //CONTROLLER_MASTER and CONTROLLER_PARTNER are #define as their E_ counterparts
-ControllerNode::ControllerNode(NodeManager* node_manager, std::string* handle_name,
+ControllerNode::ControllerNode(NodeManager* node_manager, std::string handle_name,
     pros::controller_id_e_t controller_id) : Node(node_manager, 20),
     m_controller(controller_id) {
-    m_handle_name = handle_name->insert(0, "controller/");
+    m_handle_name = handle_name.insert(0, "controller/");
     m_sub_controller_rumble_name = m_handle_name + "/controllerRumble";
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_controller_msg);
     m_rumble_controller_sub = new ros::Subscriber<std_msgs::String, ControllerNode>
         (m_sub_controller_rumble_name.c_str(), &ControllerNode::m_rumbleController, this);
-
-    delete handle_name;
 }
 
 void ControllerNode::m_rumbleController(const std_msgs::String& msg) {

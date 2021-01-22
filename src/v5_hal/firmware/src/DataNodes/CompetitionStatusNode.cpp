@@ -1,12 +1,10 @@
 #include "DataNodes/CompetitionStatusNode.h"
 
 CompetitionStatusNode::CompetitionStatusNode (NodeManager* node_manager, 
-    std::string* handle_name) : Node(node_manager, 20) {
-    m_handle_name = handle_name->insert(0, "compStatus/");
+    std::string handle_name) : Node(node_manager, 20) {
+    m_handle_name = handle_name.insert(0, "compStatus/");
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_comp_status_msg);
-
-    delete handle_name;
 }
 
 void CompetitionStatusNode::initialize() {

@@ -14,7 +14,7 @@ private:
     void m_populateMessage();
 
 public:
-    HelloWorldNode(NodeManager* node_manager, std::string* handle_name);
+    HelloWorldNode(NodeManager* node_manager, std::string handle_name);
 
     void initialize();
 

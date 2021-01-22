@@ -3,12 +3,10 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 ADIGyroNode::ADIGyroNode(NodeManager* node_manager, int port, double multiplier,
-    std::string* handle_name) : Node(node_manager, 20), m_gyro(port, multiplier) {
-    m_handle_name = handle_name->insert(0, "sensor/");
+    std::string handle_name) : Node(node_manager, 20), m_gyro(port, multiplier) {
+    m_handle_name = handle_name.insert(0, "sensor/");
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_gyro_msg);
-
-    delete handle_name;
 }
 
 void ADIGyroNode::initialize() {

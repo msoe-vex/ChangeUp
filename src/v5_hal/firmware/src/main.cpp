@@ -29,22 +29,22 @@ ProsTimeNode* pros_time;
  */
 void initialize() {
 	// Define all nodes used by the robot here
-	primary_controller = new ControllerNode(node_manager, new std::string("primary"));
-	left_swerve_1 = new MotorNode(node_manager, 1, new std::string("leftSwerve1"), false);
-	left_swerve_2 = new MotorNode(node_manager, 2, new std::string("leftSwerve2"), false);
-	right_swerve_1 = new MotorNode(node_manager, 3, new std::string("rightSwerve1"), false);
-	right_swerve_2 = new MotorNode(node_manager, 4, new std::string("rightSwerve2"), false);
-	rear_swerve_1 = new MotorNode(node_manager, 5, new std::string("rearSwerve1"), false);
-	rear_swerve_2 = new MotorNode(node_manager, 6, new std::string("rearSwerve2"), false);
-	left_intake = new MotorNode(node_manager, 7, new std::string("leftIntake"), false);
-	right_intake = new MotorNode(node_manager, 8, new std::string("rightIntake"), false);
-	bottom_rollers = new MotorNode(node_manager, 9, new std::string("bottomRollers"), false);
-	top_rollers = new MotorNode(node_manager, 10, new std::string("topRollers"), false);
-	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, new std::string("xOdometryEncoder"), false);
-	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, new std::string("yOdometryEncoder"), false);
-	battery = new BatteryNode(node_manager, new std::string("v5battery"));
-	competition_status = new CompetitionStatusNode(node_manager, new std::string("competitionStatus"));
-	pros_time = new ProsTimeNode(node_manager, new std::string("prosTime"));
+	primary_controller = new ControllerNode(node_manager, "primary");
+	left_swerve_1 = new MotorNode(node_manager, 1, "leftSwerve1", false);
+	left_swerve_2 = new MotorNode(node_manager, 2, "leftSwerve2", false);
+	right_swerve_1 = new MotorNode(node_manager, 3, "rightSwerve1", false);
+	right_swerve_2 = new MotorNode(node_manager, 4, "rightSwerve2", false);
+	rear_swerve_1 = new MotorNode(node_manager, 5, "rearSwerve1", false);
+	rear_swerve_2 = new MotorNode(node_manager, 6, "rearSwerve2", false);
+	left_intake = new MotorNode(node_manager, 7, "leftIntake", false);
+	right_intake = new MotorNode(node_manager, 8, "rightIntake", false);
+	bottom_rollers = new MotorNode(node_manager, 9, "bottomRollers", false);
+	top_rollers = new MotorNode(node_manager, 10, "topRollers", false);
+	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
+	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
+	battery = new BatteryNode(node_manager, "v5battery");
+	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
+	pros_time = new ProsTimeNode(node_manager, "prosTime");
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

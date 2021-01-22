@@ -16,7 +16,7 @@ private:
 
 public:
     ADIEncoderNode(NodeManager* node_manager, int port_top, int port_bottom,
-        std::string* handle_name, bool reverse=false);
+        std::string handle_name, bool reverse=false);
 
     void initialize();
 

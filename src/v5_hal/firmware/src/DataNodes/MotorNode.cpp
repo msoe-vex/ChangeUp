@@ -3,22 +3,20 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 MotorNode::MotorNode(NodeManager* node_manager, int port_number,
-    std::string* handle_name, bool reverse,
+    std::string handle_name, bool reverse,
     pros::motor_gearset_e_t gearset) : Node(node_manager, 20),
     m_motor(port_number, gearset, reverse) {
-    m_handle_name = handle_name->insert(0, "motor/");
+    m_handle_name = handle_name.insert(0, "motor/");
     m_sub_move_motor_voltage_name = m_handle_name + "/moveMotorVoltage";
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_motor_msg);
     m_move_motor_voltage_sub = new ros::Subscriber<std_msgs::Int8, MotorNode>
         (m_sub_move_motor_voltage_name.c_str(), &MotorNode::m_moveMotorVoltage, this);
-
-    delete handle_name;
 }
 
 void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
-    float speed = (msg.data / 127.0) * 12000.0;
-    m_motor.move_voltage((int)speed);
+    float voltage = (msg.data / 127.0) * 12000.0;
+    m_motor.move_voltage((int)voltage);
 }
 
 void MotorNode::initialize() {
