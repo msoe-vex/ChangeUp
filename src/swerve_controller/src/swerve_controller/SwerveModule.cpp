@@ -1,14 +1,11 @@
 #include "swerve_controller/SwerveModule.h"
 #include <iostream>
 
-SwerveModule::SwerveModule(Eigen::Vector2d moduleLocation, double rotationAngleThreshold, double maxVelocity, double maxRotationVelocity
-    /*Eigen::Vector2d maxMotor1Vector, Eigen::Vector2d maxMotor2Vector*/) {
+SwerveModule::SwerveModule(Eigen::Vector2d moduleLocation, double rotationAngleThreshold, double maxVelocity, double maxRotationVelocity) {
     m_moduleLocation = moduleLocation;
     m_rotationAngleThreshold = rotationAngleThreshold;
     m_maxVelocity = maxVelocity;
     m_maxRotationVelocity = maxRotationVelocity;
-    /*m_maxMotor1Vector = maxMotor1Vector;
-    m_maxMotor2Vector = maxMotor2Vector;*/
 }
 
 motorMagnitudes* SwerveModule::InverseKinematics (Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle) {
