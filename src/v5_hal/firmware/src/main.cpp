@@ -7,6 +7,9 @@ NodeManager* node_manager = new NodeManager(pros::millis);
 ControllerNode* primary_controller;
 MotorNode* left_swerve_1;
 MotorNode* left_swerve_2;
+ADIAnalogInNode* left_swerve_pot;
+ADIAnalogInNode* right_swerve_pot;
+ADIAnalogInNode* rear_swerve_pot;
 MotorNode* right_swerve_1;
 MotorNode* right_swerve_2;
 MotorNode* rear_swerve_1;
@@ -30,18 +33,27 @@ ProsTimeNode* pros_time;
 void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
+
 	left_swerve_1 = new MotorNode(node_manager, 1, "leftSwerve1", false);
 	left_swerve_2 = new MotorNode(node_manager, 2, "leftSwerve2", false);
+	left_swerve_pot = new ADIAnalogInNode(node_manager, 8, "leftSwervePot");
+
 	right_swerve_1 = new MotorNode(node_manager, 3, "rightSwerve1", false);
 	right_swerve_2 = new MotorNode(node_manager, 4, "rightSwerve2", false);
+	right_swerve_pot = new ADIAnalogInNode(node_manager, 7, "rightSwervePot");
+
 	rear_swerve_1 = new MotorNode(node_manager, 5, "rearSwerve1", false);
 	rear_swerve_2 = new MotorNode(node_manager, 6, "rearSwerve2", false);
+	rear_swerve_pot = new ADIAnalogInNode(node_manager, 6, "rearSwervePot");
+	
 	left_intake = new MotorNode(node_manager, 7, "leftIntake", false);
 	right_intake = new MotorNode(node_manager, 8, "rightIntake", false);
 	bottom_rollers = new MotorNode(node_manager, 9, "bottomRollers", false);
 	top_rollers = new MotorNode(node_manager, 10, "topRollers", false);
+	
 	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
 	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
+	
 	battery = new BatteryNode(node_manager, "v5battery");
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
