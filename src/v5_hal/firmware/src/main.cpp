@@ -7,7 +7,9 @@ NodeManager* node_manager = new NodeManager(pros::millis);
 ControllerNode* primary_controller;
 MotorNode* left_swerve_1;
 MotorNode* left_swerve_2;
-ADIAnalogInNode* left_swerve_encoder;
+ADIAnalogInNode* left_swerve_pot;
+ADIAnalogInNode* right_swerve_pot;
+ADIAnalogInNode* rear_swerve_pot;
 MotorNode* right_swerve_1;
 MotorNode* right_swerve_2;
 MotorNode* rear_swerve_1;
@@ -34,13 +36,15 @@ void initialize() {
 
 	left_swerve_1 = new MotorNode(node_manager, 1, "leftSwerve1", false);
 	left_swerve_2 = new MotorNode(node_manager, 2, "leftSwerve2", false);
-	left_swerve_encoder = new ADIAnalogInNode(node_manager, 1, "leftSwerveEncoder");
+	left_swerve_pot = new ADIAnalogInNode(node_manager, 8, "leftSwervePot");
 
 	right_swerve_1 = new MotorNode(node_manager, 3, "rightSwerve1", false);
 	right_swerve_2 = new MotorNode(node_manager, 4, "rightSwerve2", false);
-	
+	right_swerve_pot = new ADIAnalogInNode(node_manager, 7, "rightSwervePot");
+
 	rear_swerve_1 = new MotorNode(node_manager, 5, "rearSwerve1", false);
 	rear_swerve_2 = new MotorNode(node_manager, 6, "rearSwerve2", false);
+	rear_swerve_pot = new ADIAnalogInNode(node_manager, 6, "rearSwervePot");
 	
 	left_intake = new MotorNode(node_manager, 7, "leftIntake", false);
 	right_intake = new MotorNode(node_manager, 8, "rightIntake", false);
