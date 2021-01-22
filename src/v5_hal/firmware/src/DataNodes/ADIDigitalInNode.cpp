@@ -2,30 +2,34 @@
 
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
-ADIDigitalInNode::ADIDigitalInNode(NodeManager* nodeManager, int port,
-    std::string* handleName)
-    : Node(nodeManager, 20),
-    m_digital_in(port),
-    m_publisher(handleName->insert(0, "sensor_").c_str(), &m_digital_in_msg) {
-    m_handle_name = handleName;
+ADIDigitalInNode::ADIDigitalInNode(NodeManager* node_manager, int port,
+    std::string* handle_name) : Node(node_manager, 20), m_digital_in(port) {
+    m_handle_name = handle_name->insert(0, "sensor/");
+
+    m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_digital_in_msg);
+
+    delete handle_name;
 }
 
 void ADIDigitalInNode::initialize() {
     // Initialize the handler, and set up data to publish
     Node::m_handle->initNode();
-    Node::m_handle->advertise(m_publisher);
+    Node::m_handle->advertise(*m_publisher);
 }
 
 void ADIDigitalInNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    populateMessage();
-    m_publisher.publish(&m_digital_in_msg);
+    m_populateMessage();
+    m_publisher->publish(&m_digital_in_msg);
     Node::m_handle->spinOnce();
 }
 
-void ADIDigitalInNode::populateMessage() {
-    m_digital_in_msg.value = m_digital_in.get_value();
+void ADIDigitalInNode::m_populateMessage() {
+    // By defalt, C++ maps 0 to false and 1 to true
+    m_digital_in_msg.data = (bool)m_digital_in.get_value();
 }
 
-ADIDigitalInNode::~ADIDigitalInNode() { delete m_handle_name; }
+ADIDigitalInNode::~ADIDigitalInNode() { 
+    delete m_publisher;
+ }

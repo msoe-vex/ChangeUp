@@ -1,34 +1,34 @@
 #include "NodeManager.h"
 
-NodeManager::NodeManager(uint32_t(*getMilliseconds)(void)) {
-    m_getMillis = getMilliseconds;
+NodeManager::NodeManager(uint32_t(*get_milliseconds)(void)) {
+    m_get_millis = get_milliseconds;
     m_handle = new ros::NodeHandle();
 }
 
 ros::NodeHandle* NodeManager::addNode(Node* node,
-    uint32_t intervalMilliseconds) {
-    NodeManager::NodeStructure nodeStructure = { node, intervalMilliseconds, 0 };
-    m_nodeStructures.push_back(nodeStructure);
+    uint32_t interval_milliseconds) {
+    NodeManager::NodeStructure node_structure = { node, interval_milliseconds, 0 };
+    m_node_structures.push_back(node_structure);
 
     return m_handle;
 }
 
 void NodeManager::initialize() {
-    for (auto nodeStructure : m_nodeStructures) {
-        nodeStructure.node->initialize();
+    for (auto node_structure : m_node_structures) {
+        node_structure.node->initialize();
     }
 }
 
 void NodeManager::execute() {
-    for (auto& nodeStructure : m_nodeStructures) {
-        auto currentTime = m_getMillis();
-        if (currentTime - nodeStructure.lastExecutedMillis >=
-            nodeStructure.triggerMillis) {
-            nodeStructure.node->periodic();
-            nodeStructure.lastExecutedMillis = currentTime;
+    for (auto& node_structure : m_node_structures) {
+        auto current_time = m_get_millis();
+        if (current_time - node_structure.last_executed_millis >=
+            node_structure.trigger_millis) {
+            node_structure.node->periodic();
+            node_structure.last_executed_millis = current_time;
         }
     }
-    pros::c::delay(m_delayTimeMillis);
+    pros::c::delay(m_delay_time_millis);
 }
 
-NodeManager::~NodeManager() { m_nodeStructures.clear(); }
+NodeManager::~NodeManager() { m_node_structures.clear(); }

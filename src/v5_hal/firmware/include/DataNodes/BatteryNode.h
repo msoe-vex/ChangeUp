@@ -7,14 +7,14 @@
 
 class BatteryNode : public Node {
 private:
-    ros::Publisher m_publisher;
     v5_hal::V5Battery m_battery_msg;
-    std::string* m_handle_name;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    BatteryNode(NodeManager* nodeManager, std::string* handleName);
+    BatteryNode(NodeManager* node_manager, std::string* handle_name);
 
     void initialize();
 

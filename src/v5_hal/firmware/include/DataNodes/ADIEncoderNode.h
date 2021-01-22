@@ -3,20 +3,20 @@
 #include "NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
-#include "ros_lib/v5_hal/ADIEncoderData.h"
+#include "ros_lib/std_msgs/Int32.h"
 
 class ADIEncoderNode : public Node {
 private:
     pros::ADIEncoder m_encoder;
-    v5_hal::ADIEncoderData m_encoder_msg;
-    ros::Publisher m_publisher;
-    std::string* m_handle_name;
+    std_msgs::Int32 m_encoder_msg;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    ADIEncoderNode(NodeManager* nodeManager, int port_top, int port_bottom,
-        std::string* handleName, bool reverse = false);
+    ADIEncoderNode(NodeManager* node_manager, int port_top, int port_bottom,
+        std::string* handle_name, bool reverse=false);
 
     void initialize();
 

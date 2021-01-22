@@ -8,13 +8,13 @@
 class HelloWorldNode : public Node {
 private:
     std_msgs::String m_string_msg;
-    ros::Publisher m_publisher;
-    std::string* m_handle_name;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    HelloWorldNode(NodeManager* nodeManager, std::string* handleName);
+    HelloWorldNode(NodeManager* node_manager, std::string* handle_name);
 
     void initialize();
 

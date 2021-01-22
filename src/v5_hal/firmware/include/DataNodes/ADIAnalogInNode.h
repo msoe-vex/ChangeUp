@@ -3,20 +3,20 @@
 #include "NodeManager.h"
 #include "api.h"
 #include "ros_lib/ros.h"
-#include "ros_lib/v5_hal/ADIAnalogInData.h"
+#include "ros_lib/std_msgs/Int16.h"
 
 class ADIAnalogInNode : public Node {
 private:
     pros::ADIAnalogIn m_analog_in;
-    v5_hal::ADIAnalogInData m_analog_in_msg;
-    ros::Publisher m_publisher;
-    std::string* m_handle_name;
+    std_msgs::Int16 m_analog_in_msg;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    ADIAnalogInNode(NodeManager* nodeManager, int port,
-        std::string* handleName);
+    ADIAnalogInNode(NodeManager* node_manager, int port,
+        std::string* handle_name);
 
     void initialize();
 

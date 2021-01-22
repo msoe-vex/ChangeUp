@@ -1,25 +1,25 @@
 #include "main.h"
 #include "NodeManager.h"
 
-NodeManager* nodeManager = new NodeManager(pros::millis);
+NodeManager* node_manager = new NodeManager(pros::millis);
 
 // Declare all nodes here
-MotorNode* leftSwerve1;
-MotorNode* leftSwerve2;
-MotorNode* rightSwerve1;
-MotorNode* rightSwerve2;
-MotorNode* rearSwerve1;
-MotorNode* rearSwerve2;
-MotorNode* leftIntake;
-MotorNode* rightIntake;
-MotorNode* bottomRollers;
-MotorNode* topRollers;
-ADIEncoderNode* xOdometryEncoder;
-ADIEncoderNode* yOdometryEncoder;
+ControllerNode* primary_controller;
+MotorNode* left_swerve_1;
+MotorNode* left_swerve_2;
+MotorNode* right_swerve_1;
+MotorNode* right_swerve_2;
+MotorNode* rear_swerve_1;
+MotorNode* rear_swerve_2;
+MotorNode* left_intake;
+MotorNode* right_intake;
+MotorNode* bottom_rollers;
+MotorNode* top_rollers;
+ADIEncoderNode* x_odometry_encoder;
+ADIEncoderNode* y_odometry_encoder;
 BatteryNode* battery;
-CompetitionStatusNode* competitionStatus;
-ControllerNode* controllerPrimary;
-ProsTimeNode* prosTime;
+CompetitionStatusNode* competition_status;
+ProsTimeNode* pros_time;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -29,32 +29,25 @@ ProsTimeNode* prosTime;
  */
 void initialize() {
 	// Define all nodes used by the robot here
-	leftSwerve1 = new MotorNode(nodeManager, 1, new std::string("leftSwerve1"), false);
-	leftSwerve2 = new MotorNode(nodeManager, 2, new std::string("leftSwerve2"), false);
-	rightSwerve1 = new MotorNode(nodeManager, 3, new std::string("rightSwerve1"), false);
-	rightSwerve2 = new MotorNode(nodeManager, 4, new std::string("rightSwerve2"), false);
-	rearSwerve1 = new MotorNode(nodeManager, 5, new std::string("rearSwerve1"), false);
-	rearSwerve2 = new MotorNode(nodeManager, 6, new std::string("rearSwerve2"), false);
-
-	leftIntake = new MotorNode(nodeManager, 7, new std::string("leftIntake"), false);
-	rightIntake = new MotorNode(nodeManager, 8, new std::string("rightIntake"), false);
-
-	bottomRollers = new MotorNode(nodeManager, 9, new std::string("bottomRollers"), false);
-	topRollers = new MotorNode(nodeManager, 10, new std::string("topRollers"), false);
-
-	xOdometryEncoder = new ADIEncoderNode(nodeManager, 1, 2, new std::string("xOdometryEncoder"), false);
-	yOdometryEncoder = new ADIEncoderNode(nodeManager, 3, 4, new std::string("yOdometryEncoder"), false);
-
-	battery = new BatteryNode(nodeManager, new std::string("v5battery"));
-
-	competitionStatus = new CompetitionStatusNode(nodeManager, new std::string("competitionStatus"));
-
-	controllerPrimary = new ControllerNode(nodeManager, new std::string("controllerPrimary"));
-
-	prosTime = new ProsTimeNode(nodeManager, new std::string("prosTime"));
+	primary_controller = new ControllerNode(node_manager, new std::string("primary"));
+	left_swerve_1 = new MotorNode(node_manager, 1, new std::string("leftSwerve1"), false);
+	left_swerve_2 = new MotorNode(node_manager, 2, new std::string("leftSwerve2"), false);
+	right_swerve_1 = new MotorNode(node_manager, 3, new std::string("rightSwerve1"), false);
+	right_swerve_2 = new MotorNode(node_manager, 4, new std::string("rightSwerve2"), false);
+	rear_swerve_1 = new MotorNode(node_manager, 5, new std::string("rearSwerve1"), false);
+	rear_swerve_2 = new MotorNode(node_manager, 6, new std::string("rearSwerve2"), false);
+	left_intake = new MotorNode(node_manager, 7, new std::string("leftIntake"), false);
+	right_intake = new MotorNode(node_manager, 8, new std::string("rightIntake"), false);
+	bottom_rollers = new MotorNode(node_manager, 9, new std::string("bottomRollers"), false);
+	top_rollers = new MotorNode(node_manager, 10, new std::string("topRollers"), false);
+	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, new std::string("xOdometryEncoder"), false);
+	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, new std::string("yOdometryEncoder"), false);
+	battery = new BatteryNode(node_manager, new std::string("v5battery"));
+	competition_status = new CompetitionStatusNode(node_manager, new std::string("competitionStatus"));
+	pros_time = new ProsTimeNode(node_manager, new std::string("prosTime"));
 
 	// Call the node manager to initialize all of the nodes above
-	nodeManager->initialize();
+	node_manager->initialize();
 }
 
 /**
@@ -107,6 +100,6 @@ void autonomous() {}
  */
 void opcontrol() {
 	while (true) {
-		nodeManager->execute();
+		node_manager->execute();
 	}
 }

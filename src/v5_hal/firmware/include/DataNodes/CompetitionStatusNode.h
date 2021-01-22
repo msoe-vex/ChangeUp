@@ -9,13 +9,13 @@
 class CompetitionStatusNode : public Node {
 private: 
     v5_hal::CompetitionStatus m_comp_status_msg;
-    ros::Publisher m_publisher;
-    std::string* m_handle_name;
+    std::string m_handle_name;
+    ros::Publisher* m_publisher;
 
-    void populateMessage();
+    void m_populateMessage();
 
 public:
-    CompetitionStatusNode(NodeManager* nodeManager, std::string* handleName);
+    CompetitionStatusNode(NodeManager* node_manager, std::string* handle_name);
 
     void initialize();
 

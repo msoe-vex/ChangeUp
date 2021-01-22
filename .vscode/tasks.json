@@ -39,7 +39,8 @@
             "command": "catkin_make v5_hal_firmware_clean_all",
             "options": {
                 "cwd": "${workspaceFolder}"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "v5_hal Firmware Upload",
