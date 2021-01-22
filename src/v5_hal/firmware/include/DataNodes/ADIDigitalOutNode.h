@@ -12,13 +12,15 @@ private:
     std::string m_sub_digital_out_name;
     ros::Subscriber<std_msgs::Bool, ADIDigitalOutNode>* m_digital_out_sub;
 
-    void m_setValue ();
+    void m_setValue(const std_msgs::Bool& msg);
 
 public:
-    ADIDigitalOutNode (NodeManager* node_manager, std::string handle_name,
+    ADIDigitalOutNode(NodeManager* node_manager, std::string handle_name,
     int port, bool initial_state = false);
 
-    void initialize ();
+    void initialize();
 
-    ~ADIDigitalOutNode ();
+    void periodic();
+
+    ~ADIDigitalOutNode();
 };
