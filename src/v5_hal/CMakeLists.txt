@@ -228,4 +228,3 @@ add_dependencies(${PROJECT_NAME}_firmware_build ${PROJECT_NAME}_generate_message
 
 rosserial_add_client_target(firmware clean_all)
 rosserial_add_client_target(firmware upload)
-
