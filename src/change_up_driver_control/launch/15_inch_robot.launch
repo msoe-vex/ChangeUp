@@ -16,5 +16,6 @@
 
   <node name="navx_publisher" type="navx_publisher" pkg="navx_publisher" output="screen"/>
   
+  <arg name="topicstolog" value="leftModulePot" />
   <node pkg="rostopic" type="rostopic" name="logresults" args="echo $(arg topicstolog)" output="screen" />
 </launch>
