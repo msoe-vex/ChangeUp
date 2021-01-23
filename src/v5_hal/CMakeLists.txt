@@ -72,10 +72,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   geometry_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -125,9 +125,9 @@ include_directories(
 )
 
 ## Declare a C++ library
-add_library(${PROJECT_NAME}
-  src/${PROJECT_NAME}/SwerveModule.cpp
-)
+# add_library(${PROJECT_NAME}
+#   src/${PROJECT_NAME}/change_up_robot_code.cpp
+# )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -228,4 +228,3 @@ add_dependencies(${PROJECT_NAME}_firmware_build ${PROJECT_NAME}_generate_message
 
 rosserial_add_client_target(firmware clean_all)
 rosserial_add_client_target(firmware upload)
-
