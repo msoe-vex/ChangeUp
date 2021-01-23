@@ -11,7 +11,7 @@
 
   <!--<node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" output="screen"/>-->
 
-  <node name="navx_publisher_node" type="navx_publisher_node" pkg="navx_publisher_node" output="screen">
+  <node name="navx_publisher_node" type="navx_publisher" pkg="navx_publisher_node" output="screen">
     <param name="device" value="/dev/ttyACM2"/>
   </node>
   
