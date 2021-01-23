@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
     handle.param("max_velocity", max_velocity, 1.31);
     handle.param("max_rotation_velocity", max_rotation_velocity, 100.0);
 
-    SwerveModule swerve_module(module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity);
+    SwerveModule swerveModule(module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity);
 
     ros::Subscriber swerve_controller_tf_sub = handle.subscribe("swerveCommandTf", 10, assignTargetVelocity);
     ros::Subscriber swerve_controller_rotate_sub = handle.subscribe("swerveCommandRotate", 10, assignRotationVelocity);
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     ros::Rate loop_rate(50);
 
     while (ros::ok()) {
-        motor_powers = swerve_module.InverseKinematics(target_velocity, rotation_velocity, actual_angle);
+        motor_powers = swerveModule.InverseKinematics(target_velocity, rotation_velocity, actual_angle);
 
         std_msgs::Int8 left_motor_power;
         std_msgs::Int8 right_motor_power;

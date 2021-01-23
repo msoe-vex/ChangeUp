@@ -85,8 +85,8 @@ MotorPowers* SwerveModule::InverseKinematics(Eigen::Vector2d targetVelocity, dou
     // Set and return the motor powers as a pointer
     MotorPowers* motorPowers = new MotorPowers;
 
-    MotorPowers->left_motor_power = (int8_t)scaledMotor1Mag;
-    MotorPowers->right_motor_power = (int8_t)scaledMotor2Mag;
+    motorPowers->left_motor_power = (int8_t)scaledMotor1Mag;
+    motorPowers->right_motor_power = (int8_t)scaledMotor2Mag;
 
     return motorPowers;
 }
