@@ -1,0 +1,18 @@
+<launch>
+  <!-- the primary port that allows rosserial to function -->
+  <arg name="mainport" default="/dev/ttyACM0" />
+  <arg name="mainbaud" default="57600" />
+
+  <!-- the degug port, using screen to interface with -->
+  <!-- <arg name="debugport" default="/dev/ttyUSB0" /> -->
+  <!-- <arg name="debugbaud" default="57600" /> -->
+
+  <node name="connector" type="serial_node.py" pkg="rosserial_arduino" output="screen">
+    <param name="port" value="$(arg mainport)" />
+    <param name="baud" value="$(arg mainbaud)" />
+  </node>
+
+  <node name="change_up_driver_control_node" pkg="change_up_driver_control" output="screen">
+
+  <node name="navx_publisher" pkg="navx_publisher" output="screen">
+</launch>
