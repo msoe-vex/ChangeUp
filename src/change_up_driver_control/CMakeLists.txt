@@ -10,6 +10,8 @@ project(change_up_driver_control)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   v5_hal
+  std_msgs
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -67,11 +69,12 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
-  v5_hal
-)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs  # Or other packages containing msgs
+#   geometry_msgs
+#   v5_hal
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -106,7 +109,6 @@ catkin_package(
  INCLUDE_DIRS include
  LIBRARIES change_up_driver_control
  CATKIN_DEPENDS roscpp
- DEPENDS system_lib
 )
 
 ###########
