@@ -1,21 +1,21 @@
 <launch>
   <!-- the primary port that allows rosserial to function -->
-  <arg name="mainport" default="/dev/ttyACM0" />
+  <arg name="mainport" default="/dev/ttyACM1" />
   <arg name="mainbaud" default="57600" />
 
   <!-- the degug port, using screen to interface with -->
   <!-- <arg name="debugport" default="/dev/ttyUSB0" /> -->
   <!-- <arg name="debugbaud" default="57600" /> -->
 
-  <node name="connector" type="serial_node.py" pkg="rosserial_arduino" output="screen">
-    <param name="port" value="$(arg mainport)" />
-    <param name="baud" value="$(arg mainbaud)" />
-  </node>
+  <!-- The topic to log, initially set up for the hello world demo -->
 
   <!--<node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" output="screen"/>-->
 
   <!--<node name="navx_publisher" type="navx_publisher" pkg="navx_publisher" output="screen"/>-->
   
-  <arg name="topicstolog" value="leftModulePot" />
-  <node pkg="rostopic" type="rostopic" name="logresults" args="echo $(arg topicstolog)" output="screen" />
+  <node name="connector" type="serial_node.py" pkg="rosserial_arduino" output="screen">
+    <param name="port" value="$(arg mainport)" />
+    <param name="baud" value="$(arg mainbaud)" />
+  </node>
+
 </launch>
