@@ -52,11 +52,11 @@ int main(int argc, char** argv) {
     handle.getParam("pot_offset", offset);
 
     // Create subscribers and link to callbacks
-    ros::Subscriber motor_pot_sub = handle.subscribe("input_pot", 100, potentiometerCallback);
-    ros::Subscriber zero_pot_sub = handle.subscribe("zero_pot", 100, zeroPotCallback);
+    ros::Subscriber motor_pot_sub = handle.subscribe("inputPot", 100, potentiometerCallback);
+    ros::Subscriber zero_pot_sub = handle.subscribe("zeroPot", 100, zeroPotCallback);
 
     // Create publishers
-    motor_pot_pub = handle.advertise<std_msgs::Int16>("output_pot", 100);
+    motor_pot_pub = handle.advertise<std_msgs::Int16>("outputPot", 100);
 
     ros::spin();
 
