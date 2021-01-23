@@ -72,17 +72,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-<<<<<<< HEAD:src/v5_hal/CMakeLists.txt
- generate_messages(
-   DEPENDENCIES
-   std_msgs  # Or other packages containing msgs
- )
-=======
 # generate_messages(
 #   DEPENDENCIES
 #   geometry_msgs  # Or other packages containing msgs
 # )
->>>>>>> Fixed build errors and naming conventions:src/swerve_controller/CMakeLists.txt
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -132,15 +125,9 @@ include_directories(
 )
 
 ## Declare a C++ library
-<<<<<<< HEAD:src/v5_hal/CMakeLists.txt
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/change_up_robot_code.cpp
-# )
-=======
 add_library(${PROJECT_NAME}
   src/${PROJECT_NAME}/SwerveModule.cpp
 )
->>>>>>> Fixed build errors and naming conventions:src/swerve_controller/CMakeLists.txt
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
