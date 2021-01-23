@@ -20,4 +20,7 @@
     <param name="baud" value="$(arg mainbaud)" />
   </node>
 
+  <arg name="topicstolog" value="sensor/leftModulePot" />
+  <node pkg="rostopic" type="rostopic" name="logresults" args="echo $(arg topicstolog)" output="screen" />
+
 </launch>
