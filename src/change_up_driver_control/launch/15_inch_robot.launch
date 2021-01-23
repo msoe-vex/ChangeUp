@@ -11,7 +11,11 @@
 
   <!--<node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" output="screen"/>-->
 
+<<<<<<< HEAD
   <!--<node name="navx_publisher" type="navx_publisher" pkg="navx_publisher" output="screen"/>-->
+=======
+  <node name="navx_publisher_node" type="navx_publisher_node" pkg="navx_publisher_node" output="screen"/>
+>>>>>>> Fixed navx node
   
   <node name="connector" type="serial_node.py" pkg="rosserial_arduino" output="screen">
     <param name="port" value="$(arg mainport)" />
