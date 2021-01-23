@@ -13,7 +13,11 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   roslaunch
+  sensor_msgs
 )
+
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -138,6 +142,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/change_up_driver_control_node.cpp)
 add_executable(zero_swerve_pot_node src/zero_swerve_pot_node.cpp)
+add_executable(field_oriented_control_node src/field_oriented_control_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -156,7 +161,9 @@ target_link_libraries(${PROJECT_NAME}_node
 target_link_libraries(zero_swerve_pot_node
   ${catkin_LIBRARIES}
 )
-
+target_link_libraries(field_oriented_control_node
+  ${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############
