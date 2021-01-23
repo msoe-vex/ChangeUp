@@ -17,7 +17,7 @@ std_msgs::Float32 robot_target_rotation_velocity_msg;
 /**
  * Spins the front intakes of the robot at the specified voltage
  * Parameters:
- * 		voltage: The voltage, from -127 to 127 
+ * 		voltage: The voltage, from -127 to 127
  */
 void spinIntakesVoltage(int voltage) {
 	left_intake_msg.data = voltage;
@@ -48,7 +48,7 @@ void spinTopRollersVoltage(int voltage) {
  * 		joystick: Message containing data from the joystick
  */
 void primaryJoystickCallback(const v5_hal::V5Controller& msg) {
-  	robot_target_velocity_msg.x = msg.analog_left_x;
+	robot_target_velocity_msg.x = msg.analog_left_x;
 	robot_target_velocity_msg.y = msg.analog_left_y;
 
 	robot_target_rotation_velocity_msg.data = msg.analog_right_x;
@@ -61,14 +61,15 @@ void primaryJoystickCallback(const v5_hal::V5Controller& msg) {
 		intake_voltage = 127;
 		bottom_rollers_voltage = 127;
 		top_rollers_voltage = 127;
-	} else if (msg.btn_r2) {
+
+		if (msg.btn_l1) {
+			top_rollers_voltage *= -1;
+		}
+	}
+	else if (msg.btn_r2) {
 		intake_voltage = -127;
 		bottom_rollers_voltage = -127;
 		top_rollers_voltage = -127;
-	} 
-
-	if (msg.btn_l1) {
-		top_rollers_voltage *= -1;
 	}
 
 	spinIntakesVoltage(intake_voltage);
@@ -98,7 +99,7 @@ int main(int argc, char** argv) {
 	ros::Publisher bottom_rollers_pub = handle.advertise<std_msgs::Int8>("/motor/bottomRollers/moveMotorVoltage", 100);
 	ros::Publisher top_rollers_pub = handle.advertise<std_msgs::Int8>("/motor/topRollers/moveMotorVoltage", 100);
 
-	ros::Publisher robot_target_velocity_pub = handle.advertise<geometry_msgs::Vector3>("swerve_command_tf", 100);
+	ros::Publisher robot_target_velocity_pub = handle.advertise<geometry_msgs::Vector3>("swerve_command_joystick", 100);
 	ros::Publisher robot_target_rotation_velocity_pub = handle.advertise<std_msgs::Float32>("swerve_command_rotate", 100);
 
 	ros::Rate loop_rate(50);
