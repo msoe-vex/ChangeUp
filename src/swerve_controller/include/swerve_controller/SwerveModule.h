@@ -2,9 +2,11 @@
 #include <Eigen/Geometry>
 #include <math.h>
 
-struct motorMagnitudes {
-    double motor1Magnitude;
-    double motor2Magnitude;
+//left motor -> motor1
+//right motor -> motor2
+struct motorPowers {
+    int8_t left_motor_power;
+    int8_t right_motor_power;
 };
 
 class SwerveModule {
@@ -17,7 +19,7 @@ private:
 public:
     SwerveModule (Eigen::Vector2d moduleLocation, double rotationAngleThreshold, double maxVelocity, double maxRotationVelocity);
 
-    motorMagnitudes* InverseKinematics (Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle);
+    motorPowers* InverseKinematics (Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle);
 
     Eigen::Rotation2Dd setActualAngle();
 };
