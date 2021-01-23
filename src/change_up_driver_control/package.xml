@@ -57,6 +57,8 @@
   <build_export_depend>v5_hal</build_export_depend>
   <exec_depend>v5_hal</exec_depend>
 
+  <build_depend>roslaunch</build_depend>
+
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->
