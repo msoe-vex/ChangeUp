@@ -15,4 +15,6 @@
   <node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" output="screen"/>
 
   <node name="navx_publisher" type="navx_publisher" pkg="navx_publisher" output="screen"/>
+  
+  <node pkg="rostopic" type="rostopic" name="logresults" args="echo $(arg topicstolog)" output="screen" />
 </launch>
