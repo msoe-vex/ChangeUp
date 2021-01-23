@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   v5_hal
   std_msgs
   geometry_msgs
+  roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
@@ -197,6 +198,8 @@ target_link_libraries(zero_swerve_pot_node
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+roslaunch_add_file_check(launch)
 
 #############
 ## Testing ##
