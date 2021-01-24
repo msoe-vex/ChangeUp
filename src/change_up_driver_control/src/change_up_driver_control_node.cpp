@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
 	ros::NodeHandle handle;
 
 	// Create subscribers and link to callbacks
-	ros::Subscriber primary_joystick_sub = handle.subscribe("/controller/primary", 100, primaryJoystickCallback);
+	ros::Subscriber primary_joystick_sub = handle.subscribe("/joystick/primary", 100, primaryJoystickCallback);
 
 	// Create publishers
 	ros::Publisher left_intake_pub = handle.advertise<std_msgs::Int8>("/motor/leftIntake/moveMotorVoltage", 100);
