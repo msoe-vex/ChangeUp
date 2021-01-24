@@ -4,7 +4,7 @@
 // NodeManager.h
 MotorNode::MotorNode(NodeManager* node_manager, int port_number,
     std::string handle_name, bool reverse,
-    pros::motor_gearset_e_t gearset) : Node(node_manager, 50),
+    pros::motor_gearset_e_t gearset) : Node(node_manager, 10),
     m_motor(port_number, gearset, reverse) {
     m_handle_name = handle_name.insert(0, "motor/");
     m_sub_move_motor_voltage_name = m_handle_name + "/moveMotorVoltage";
