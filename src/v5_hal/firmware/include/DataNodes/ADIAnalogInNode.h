@@ -11,12 +11,13 @@ private:
     std_msgs::Int16 m_analog_in_msg;
     std::string m_handle_name;
     ros::Publisher* m_publisher;
+    bool m_is_reversed;
 
     void m_populateMessage();
 
 public:
     ADIAnalogInNode(NodeManager* node_manager, int port,
-        std::string handle_name);
+        std::string handle_name, bool reverse=false);
 
     void initialize();
 
