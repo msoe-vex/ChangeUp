@@ -92,8 +92,8 @@ int main(int argc, char** argv) {
 
 	ros::NodeHandle handle;
 
-	handle.param("max_velocity", max_velocity, 1.31);
-	handle.param("max_rotation_velocity", max_rotation_velocity, 2.0);
+	handle.param("max_velocity", max_velocity, (float)1.31);
+	handle.param("max_rotation_velocity", max_rotation_velocity, (float)2.0);
 
 	// Create subscribers and link to callbacks
 	ros::Subscriber primary_joystick_sub = handle.subscribe("/joystick/primary", 100, primaryJoystickCallback);
