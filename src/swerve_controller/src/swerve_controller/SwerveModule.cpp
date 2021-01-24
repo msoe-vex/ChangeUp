@@ -89,7 +89,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     ROS_INFO("Scaled Motor 1 Mag (START): %.2f", scaled_motor_1_mag);
     ROS_INFO("Scaled Motor 2 Mag (START): %.2f", scaled_motor_2_mag);
 
-    float max_scaled_motor_mag = fmax(scaled_motor_1_mag, scaled_motor_2_mag);
+    float max_scaled_motor_mag = fmax(fabs(scaled_motor_1_mag), fabs(scaled_motor_2_mag));
 
     // If the max of the two motor powers is more than we can ouput, scale both down so the max motor's power
     // is equal to the max_motor_power
