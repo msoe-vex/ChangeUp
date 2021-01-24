@@ -10,8 +10,8 @@ SwerveModule::SwerveModule(Eigen::Vector2d module_location, double rotation_angl
 }
 
 MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, double target_rotation_velocity, Eigen::Rotation2Dd module_actual_angle) {
-    ROS_INFO("Target Velocity - x:%.2f y:%.2f", target_velocity(0), target_velocity(1));
-    ROS_INFO("Target Rotation Velocity: %.2f", target_rotation_velocity);
+    // ROS_INFO("Target Velocity - x:%.2f y:%.2f", target_velocity(0), target_velocity(1));
+    // ROS_INFO("Target Rotation Velocity: %.2f", target_rotation_velocity);
 
     // If you aren't trying to move, make sure to send no velocity to the motors
     if ((target_velocity(0) == 0) && (target_velocity(1) == 0) && (target_rotation_velocity == 0)) { //not sure if this works, might need to be reworked
@@ -45,14 +45,14 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // Add the target velocity and rotation vectors to get a resultant target vector
     Eigen::Vector2d target_vector = target_velocity + target_rotation_vector;
 
-    ROS_INFO("Target Vector - x:%.2f y:%.2f", target_vector(0), target_vector(1));
+    // ROS_INFO("Target Vector - x:%.2f y:%.2f", target_vector(0), target_vector(1));
 
     // Get the angle of the target vector by taking tangent inverse of y and x components
     // of the vector, and convert to a Rotation2D angle object
     Eigen::Rotation2Dd target_vector_angle = Eigen::Rotation2Dd(atan2(target_vector(1), target_vector(0)));
 
-    ROS_INFO("Current Angle: %.2f", module_actual_angle.angle());
-    ROS_INFO("Target Angle: %.2f", target_vector_angle.angle());
+    // ROS_INFO("Current Angle: %.2f", module_actual_angle.angle());
+    // ROS_INFO("Target Angle: %.2f", target_vector_angle.angle());
 
     // Subtract the actual module vector from the target to find the change in angle needed
     double module_rotation_delta = (target_vector_angle * module_actual_angle.inverse()).smallestAngle();
@@ -73,10 +73,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
         motor_power_vector(0) = target_vector.norm() / m_max_velocity;
     }
 
-
-
-    ROS_INFO("Motor Power Vector - x:%.2f y:%.2f", motor_power_vector(0), motor_power_vector(1));
-
+    // ROS_INFO("Motor Power Vector - x:%.2f y:%.2f", motor_power_vector(0), motor_power_vector(1));
 
     // We are working in the (m/s Forward)-(rpm Speed of Rotation) plane now
     // Project the target vector onto each max motor vector to get components
@@ -84,29 +81,29 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     double scaled_motor_1_mag = motor_power_vector.dot(Eigen::Vector2d(1, 1));
     double scaled_motor_2_mag = motor_power_vector.dot(Eigen::Vector2d(-1, 1));
 
-    ROS_INFO("Max Motor Mag: %.2f", max_motor_power);
+    // ROS_INFO("Max Motor Mag: %.2f", max_motor_power);
 
-    ROS_INFO("Scaled Motor 1 Mag (START): %.2f", scaled_motor_1_mag);
-    ROS_INFO("Scaled Motor 2 Mag (START): %.2f", scaled_motor_2_mag);
+    // ROS_INFO("Scaled Motor 1 Mag (START): %.2f", scaled_motor_1_mag);
+    // ROS_INFO("Scaled Motor 2 Mag (START): %.2f", scaled_motor_2_mag);
 
     float max_scaled_motor_mag = fmax(fabs(scaled_motor_1_mag), fabs(scaled_motor_2_mag));
 
     // If the max of the two motor powers is more than we can ouput, scale both down so the max motor's power
     // is equal to the max_motor_power
-    if(max_scaled_motor_mag > 1.0) {
+    if (max_scaled_motor_mag > 1.0) {
         scaled_motor_1_mag /= max_scaled_motor_mag;
         scaled_motor_2_mag /= max_scaled_motor_mag;
     }
 
-    ROS_INFO("Scaled Motor 1 Mag (1): %.2f", scaled_motor_1_mag);
-    ROS_INFO("Scaled Motor 2 Mag (1): %.2f", scaled_motor_2_mag);
+    // ROS_INFO("Scaled Motor 1 Mag (1): %.2f", scaled_motor_1_mag);
+    // ROS_INFO("Scaled Motor 2 Mag (1): %.2f", scaled_motor_2_mag);
 
     // Scale motors between -127 and 127
     scaled_motor_1_mag = scaled_motor_1_mag * 127.0;
     scaled_motor_2_mag = scaled_motor_2_mag * 127.0;
 
-    ROS_INFO("Scaled Motor 1 Mag (FINAL): %.2f", scaled_motor_1_mag);
-    ROS_INFO("Scaled Motor 2 Mag (FINAL): %.2f", scaled_motor_2_mag);
+    // ROS_INFO("Scaled Motor 1 Mag (FINAL): %.2f", scaled_motor_1_mag);
+    // ROS_INFO("Scaled Motor 2 Mag (FINAL): %.2f", scaled_motor_2_mag);
 
     // Set and return the motor powers as a pointer
     MotorPowers motor_powers;
