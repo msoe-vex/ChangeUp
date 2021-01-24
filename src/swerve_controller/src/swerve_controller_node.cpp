@@ -48,41 +48,54 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
     float maxMotor1Mag = maxMotor1Vector.norm() / 2;
     float maxMotor2Mag = maxMotor2Vector.norm() / 2;
 
-    // Inverting the current module location and applying a rotation vector
+    // Take the vector from the origin to the module (module_location) and rotate it to 
+    // make it orthogonal to the current (module_location) vector
     Eigen::Vector2d rotatedModuleLocation = Eigen::Rotation2Dd(M_PI / 2) * module_location;
 
-    // Get the rotation vector for the module
+    // Multiply the orthogonal vector (rotatedModuleLocation) by the target angular velocity
+    // (targetRotationVelocity) to create your target rotation vector
     Eigen::Vector2d targetRotationVector = targetRotationVelocity * rotatedModuleLocation;
 
-    // Create a resultant vector from the velocity and rotation
+    // Add the target velocity and rotation vectors to get a resultant target vector
     Eigen::Vector2d targetVector = targetVelocity + targetRotationVector;
 
-    // Get the angle of the target vector
+    ROS_INFO("Target Vector - x:%.2f y:%.2f", targetVector(0), targetVector(1));
+
+    // Get the angle of the target vector by taking tangent inverse of y and x components
+    // of the vector, and convert to a Rotation2D angle object
     Eigen::Rotation2Dd targetVectorAngle = Eigen::Rotation2Dd(atan2(targetVector(1), targetVector(0)));
 
     ROS_INFO("Current Angle: %.2f", moduleActualAngle.angle());
     ROS_INFO("Target Angle: %.2f", targetVectorAngle.angle());
 
-    // Determine the change in rotation for the module
+    // Subtract the actual module vector from the target to find the change in angle needed
     double moduleRotationDelta = (targetVectorAngle * moduleActualAngle.inverse()).smallestAngle();
 
+    // Determine if we need to only turn the module, or if we can move while turning. Current limit
+    // is 60 degrees, if above we will exclusively turn, and if below we turn proportional to the
+    // angle needed
     Eigen::Vector2d motorPowerVector;
     if (moduleRotationDelta >= rotation_angle_threshold) {
-        motorPowerVector(1) = max_rotation_velocity; // Make sure the rotation vector isn't over the max
+        // Exclusively turn to the target (max speed turn)
+        motorPowerVector(1) = max_rotation_velocity;
     }
     else {
-        motorPowerVector(1) = max_rotation_velocity * (moduleRotationDelta / rotation_angle_threshold); // Apply rotation vector
+        // Turn proportional to how far off we are from the target
+        motorPowerVector(1) = max_rotation_velocity * (moduleRotationDelta / rotation_angle_threshold); 
     }
 
     // Set the power as the magnitude of the vector
     motorPowerVector(0) = targetVector.norm();
 
-    // Get the magnitude of the scaled motor vectors
+    // We are working in the (m/s Forward)-(rpm Speed of Rotation) plane now
+    // Project the target vector onto each max motor vector to get components
+    // This finds the projection magnitude onto the max motor vector
     double scaledMotor1Mag = motorPowerVector.dot(maxMotor1Vector) / maxMotor1Mag;
     double scaledMotor2Mag = motorPowerVector.dot(maxMotor2Vector) / maxMotor2Mag;
 
     // Find the largest magnitude of the two vectors, and save the scalar
-    float motorVectorScalar = 1;
+    // The factor of two is to equalize math
+    float motorVectorScalar;
     if (scaledMotor1Mag > (maxMotor1Mag * 2)) {
         if (scaledMotor1Mag > scaledMotor2Mag) {
             motorVectorScalar = (maxMotor1Mag * 2) / scaledMotor1Mag;
@@ -92,7 +105,7 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
         }
     }
 
-    // Normalize the vectors
+    // TODO fix random scale and figure this out
     scaledMotor1Mag /= sqrt(2);
     scaledMotor2Mag /= sqrt(2);
 
@@ -101,8 +114,8 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
     scaledMotor2Mag *= motorVectorScalar;
 
     // Scale motors between -127 and 127
-    scaledMotor1Mag = (scaledMotor1Mag / 100) * 127;
-    scaledMotor1Mag = (scaledMotor1Mag / 100) * 127;
+    scaledMotor1Mag = (scaledMotor1Mag / 100.0) * 127.0;
+    scaledMotor1Mag = (scaledMotor1Mag / 100.0) * 127.0;
 
     // Set and return the motor powers as a pointer
     MotorPowers motorPowers;
@@ -131,12 +144,12 @@ int main(int argc, char** argv) {
 
     ros::NodeHandle handle;
 
-    handle.param("left_module_x", x, 5.0);
-    handle.param("left_module_y", y, 5.0);
+    handle.param("module_x", x, 5.0);
+    handle.param("module_y", y, 5.0);
     module_location(0) = x;
     module_location(1) = y;
 
-    handle.param("rotation_angle_threshold", rotation_angle_threshold, M_PI);
+    handle.param("rotation_angle_threshold", rotation_angle_threshold, (M_PI / 3));
     handle.param("max_velocity", max_velocity, 1.31);
     handle.param("max_rotation_velocity", max_rotation_velocity, 100.0);
 
