@@ -14,6 +14,9 @@ std_msgs::Int8 top_rollers_msg;
 geometry_msgs::Vector3 robot_target_velocity_msg;
 std_msgs::Float32 robot_target_rotation_velocity_msg;
 
+float max_velocity;
+float max_rotation_velocity;
+
 /**
  * Spins the front intakes of the robot at the specified voltage
  * Parameters:
@@ -48,10 +51,10 @@ void spinTopRollersVoltage(int voltage) {
  * 		joystick: Message containing data from the joystick
  */
 void primaryJoystickCallback(const v5_hal::V5Controller& msg) {
-	robot_target_velocity_msg.x = msg.analog_left_x;
-	robot_target_velocity_msg.y = msg.analog_left_y;
+	robot_target_velocity_msg.x = (msg.analog_left_x / 127.0) * max_velocity;
+	robot_target_velocity_msg.y = (msg.analog_left_y / 127.0) * max_velocity;
 
-	robot_target_rotation_velocity_msg.data = msg.analog_right_x;
+	robot_target_rotation_velocity_msg.data = (msg.analog_right_x / 127.0) * max_rotation_velocity;
 
 	int intake_voltage = 0;
 	int bottom_rollers_voltage = 0;
@@ -88,6 +91,9 @@ int main(int argc, char** argv) {
 	ros::init(argc, argv, "changeUpDriverControl");
 
 	ros::NodeHandle handle;
+
+	handle.param("max_velocity", max_velocity, 1.31);
+	handle.param("max_rotation_velocity", max_rotation_velocity, 2.0);
 
 	// Create subscribers and link to callbacks
 	ros::Subscriber primary_joystick_sub = handle.subscribe("/joystick/primary", 100, primaryJoystickCallback);
