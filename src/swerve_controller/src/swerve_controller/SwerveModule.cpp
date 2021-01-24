@@ -67,7 +67,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
         motor_power_vector(0) = 0.0;
     } else {
         // Turn proportional to how far off we are from the target
-        motor_power_vector(1) = module_rotation_delta / m_rotation_angle_threshold; 
+        motor_power_vector(1) = module_rotation_delta / m_rotation_angle_threshold / 4.0; 
 
         // Set the power as the magnitude of the vector
         motor_power_vector(0) = target_vector.norm() / m_max_velocity;
