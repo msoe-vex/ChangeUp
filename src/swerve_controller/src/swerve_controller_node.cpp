@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <Eigen/Dense>
 #include <math.h>
+#include <ros/console.h>
 
 #include "geometry_msgs/Vector3.h"
 #include "std_msgs/Float32.h"
@@ -23,6 +24,9 @@ struct MotorPowers {
 };
 
 MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle) {
+    ROS_INFO("Target Velocity: " << targetVelocity);
+    ROS_INFO("Target Rotation Velocity: %.2f", targetRotationVelocity);
+
     // If you aren't trying to move, make sure to send no velocity to the motors
     if ((targetVelocity(0) == 0) && (targetVelocity(1) == 0) && (targetRotationVelocity == 0)) { //not sure if this works, might need to be reworked
         double scaledMotor1Mag = 0;
@@ -55,6 +59,9 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
 
     // Get the angle of the target vector
     Eigen::Rotation2Dd targetVectorAngle = Eigen::Rotation2Dd(atan2(targetVector(1), targetVector(0)));
+
+    ROS_INFO("Current Angle: %.2f", moduleActualAngle.angle());
+    ROS_INFO("Target Angle: %.2f", targetVectorAngle.angle());
 
     // Determine the change in rotation for the module
     double moduleRotationDelta = (targetVectorAngle * moduleActualAngle.inverse()).smallestAngle();
