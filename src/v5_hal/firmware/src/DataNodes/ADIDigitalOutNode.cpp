@@ -1,7 +1,7 @@
 #include "DataNodes/ADIDigitalOutNode.h"
 
 ADIDigitalOutNode::ADIDigitalOutNode(NodeManager* node_manager, std::string handle_name,
-    int port, bool initial_state) : Node(node_manager, 20), 
+    int port, bool initial_state) : Node(node_manager, 50), 
     m_digital_out(port, initial_state) {
     m_handle_name = handle_name.insert(0, "output/");
     m_sub_digital_out_name = m_handle_name + "/digitalOut";

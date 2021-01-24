@@ -7,7 +7,7 @@
 //It can only be E_CONTROLLER_MASTER or E_CONTROLLER_PARTNER 
 //CONTROLLER_MASTER and CONTROLLER_PARTNER are #define as their E_ counterparts
 ControllerNode::ControllerNode(NodeManager* node_manager, std::string handle_name,
-    pros::controller_id_e_t controller_id) : Node(node_manager, 20),
+    pros::controller_id_e_t controller_id) : Node(node_manager, 50),
     m_controller(controller_id) {
     m_handle_name = handle_name.insert(0, "joystick/");
     m_sub_controller_rumble_name = m_handle_name + "/joystickRumble";
