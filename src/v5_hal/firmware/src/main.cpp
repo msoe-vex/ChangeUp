@@ -35,7 +35,7 @@ void initialize() {
 	primary_controller = new ControllerNode(node_manager, "primary");
 
 	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", true);
-	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", false);
+	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", true);
 	left_module_pot = new ADIAnalogInNode(node_manager, 8, "leftModulePot");
 
 	right_module_1 = new MotorNode(node_manager, 3, "rightModule1", false);
