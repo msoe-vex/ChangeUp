@@ -49,6 +49,23 @@ TEST_F(SimpleForwardModule, RotateInPlaceHalfPower) {
     EXPECT_EQ(motorMags.right_motor_power, 0);
 }
 
+TEST_F(SimpleForwardModule, OverSpeedNegativeDirection) {
+    // Drive forwards at full speed, module already facing correct direction
+    MotorPowers motorMags = swerveModule->InverseKinematics(Eigen::Vector2d(0, -1000), 0, Eigen::Rotation2Dd(-M_PI/2));
+
+    EXPECT_EQ(motorMags.left_motor_power, 127);
+    EXPECT_EQ(motorMags.right_motor_power, -127);
+}
+
+TEST_F(SimpleForwardModule, SetModuleToAngleNoForwardSpeed) {
+    // Drive forwards at full speed, module already facing correct direction
+    MotorPowers motorMags = swerveModule->InverseKinematics(Eigen::Vector2d(0, 0.00000000001), 0, Eigen::Rotation2Dd(M_PI/3));
+
+    EXPECT_EQ(motorMags.left_motor_power, 63);
+    EXPECT_EQ(motorMags.right_motor_power, 63);
+}
+
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
