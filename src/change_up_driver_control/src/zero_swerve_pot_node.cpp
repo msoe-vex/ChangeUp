@@ -2,11 +2,12 @@
 #include <ros/ros.h>
 
 #include <sstream>
+#include <math.h>
 
 #include "std_msgs/Bool.h"
-#include "std_msgs/Int16.h"
+#include "std_msgs/Float32.h"
 
-std_msgs::Int16 pot_msg;
+std_msgs::Float32 pot_msg;
 ros::NodeHandle* handle;
 
 int offset;
@@ -18,9 +19,10 @@ int pot_value;
  * Parameters:
  * 		msg: Message containing the current potentiometer value
  */
-void potentiometerCallback(const std_msgs::Int16& msg) {
+void potentiometerCallback(const std_msgs::Float32& msg) {
     pot_value = msg.data;
-    pot_msg.data = pot_value - offset;
+    float adjusted_pot_value = pot_value - offset;
+    pot_msg.data = (adjusted_pot_value / 4096.0) * (2 * M_PI);
 }
 
 /**
@@ -56,7 +58,7 @@ int main(int argc, char** argv) {
     ros::Subscriber zero_pot_sub = handle->subscribe("zeroPot", 100, zeroPotCallback);
 
     // Create publishers
-    ros::Publisher motor_pot_pub = handle->advertise<std_msgs::Int16>("outputPot", 100);
+    ros::Publisher motor_pot_pub = handle->advertise<std_msgs::Float32>("outputPot", 100);
 
     ros::Rate loop_rate(50);
 
