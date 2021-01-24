@@ -33,7 +33,7 @@
     <remap from="/swerveCommandActAngle" to="/sensor/zeroedLeftModulePot"/>
   </node>
 
-  <node name="right_module_controller_node" type="swerve_controller_node" pkg="swerve_controller" respawn="true" output="screen">
+  <!-- <node name="right_module_controller_node" type="swerve_controller_node" pkg="swerve_controller" respawn="true" output="screen">
     <param name="right_module_x" type="double" value="5.25"/>
     <param name="right_module_y" type="double" value="5.55"/>
     <remap from="/leftMotor" to="/motor/rightModule1/moveMotorVoltage"/>
@@ -47,7 +47,7 @@
     <remap from="/leftMotor" to="/motor/rearModule1/moveMotorVoltage"/>
     <remap from="/rightMotor" to="/motor/rearModule2/moveMotorVoltage"/>
     <remap from="/swerveCommandActAngle" to="/sensor/zeroedRearModulePot"/>
-  </node>
+  </node> -->
 
   <!-- Node for Driver Control state machine -->
   <node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" respawn="true" output="screen"/>
