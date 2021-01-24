@@ -26,7 +26,7 @@ private:
 
     uint32_t(*m_get_millis)(void);
 
-    const uint32_t m_delay_time_millis = 10;
+    const uint32_t m_delay_time_millis = 20;
 
 protected:
     ros::NodeHandle* m_handle;
