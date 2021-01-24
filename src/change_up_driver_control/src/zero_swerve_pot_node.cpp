@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
     // Create publishers
     ros::Publisher motor_pot_pub = handle->advertise<std_msgs::Float32>("outputPot", 100);
 
-    ros::Rate loop_rate(50);
+    ros::Rate loop_rate(100);
 
 	while (ros::ok())
 	{
