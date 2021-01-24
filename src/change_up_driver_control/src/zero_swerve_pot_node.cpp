@@ -5,6 +5,7 @@
 #include <math.h>
 
 #include "std_msgs/Bool.h"
+#include "std_msgs/Int32.h"
 #include "std_msgs/Float32.h"
 
 std_msgs::Float32 pot_msg;
@@ -19,7 +20,7 @@ int pot_value;
  * Parameters:
  * 		msg: Message containing the current potentiometer value
  */
-void potentiometerCallback(const std_msgs::Float32& msg) {
+void potentiometerCallback(const std_msgs::Int32& msg) {
     pot_value = msg.data;
     float adjusted_pot_value = pot_value - offset;
     pot_msg.data = (adjusted_pot_value / 4096.0) * (2 * M_PI);
