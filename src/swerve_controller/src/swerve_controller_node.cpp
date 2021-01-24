@@ -93,6 +93,9 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
     double scaledMotor1Mag = motorPowerVector.dot(maxMotor1Vector) / maxMotor1Mag;
     double scaledMotor2Mag = motorPowerVector.dot(maxMotor2Vector) / maxMotor2Mag;
 
+    ROS_INFO("Scaled Motor 1 Mag (START): %.2f", scaledMotor1Mag);
+    ROS_INFO("Scaled Motor 2 Mag (START): %.2f", scaledMotor2Mag);
+
     // Find the largest magnitude of the two vectors, and save the scalar
     // The factor of two is to equalize math
     float motorVectorScalar;
@@ -116,6 +119,9 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
     // Scale motors between -127 and 127
     scaledMotor1Mag = (scaledMotor1Mag / 100.0) * 127.0;
     scaledMotor1Mag = (scaledMotor1Mag / 100.0) * 127.0;
+
+    ROS_INFO("Scaled Motor 1 Mag (FINAL): %.2f", scaledMotor1Mag);
+    ROS_INFO("Scaled Motor 2 Mag (FINAL): %.2f", scaledMotor2Mag);
 
     // Set and return the motor powers as a pointer
     MotorPowers motorPowers;
