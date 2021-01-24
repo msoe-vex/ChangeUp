@@ -46,14 +46,13 @@
     <remap from="/rightMotor" to="/motor/rearModule2/moveMotorVoltage"/>
   </node>
 
-  <!-- Node for field oriented drive -->
-  <node name="field_oriented_control_node" type="field_oriented_control_node" pkg="change_up_driver_control" respawn="true" output="screen">
-    <param name="rear_module_x" type="double" value="5.0"/>
-    <param name="rear_module_y" type="double" value="5.0"/>
-    <remap from="/leftMotor" to="/motor/rearModule1/moveMotorVoltage"/>
-    <remap from="/rightMotor" to="/motor/rearModule2/moveMotorVoltage"/>
-  </node>
+  <!-- Node for Driver Control state machine -->
+  <node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" respawn="true" output="screen"/>
 
+  <!-- Node for field oriented drive -->
+  <node name="field_oriented_control_node" type="field_oriented_control_node" pkg="change_up_driver_control" respawn="true" output="screen"/>
+
+  <!-- Node for NavX data -->
   <!-- <node name="navx_publisher_node" type="navx_publisher" pkg="navx_publisher_node" output="screen">
     <param name="device" value="/dev/ttyACM2"/>
   </node> -->
