@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
 	// Create publishers
 	ros::Publisher swerve_command_tf_pub = handle.advertise<geometry_msgs::Vector3>("swerveCommandTf", 100);
 	
-	ros::Rate loop_rate(50);
+	ros::Rate loop_rate(100);
 
 	while (ros::ok())
 	{
