@@ -96,7 +96,7 @@ MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotat
     // Find the largest magnitude of the two vectors, and save the scalar
     // The factor of two is to equalize math
     float motorVectorScalar;
-    if (scaledMotor1Mag > (maxMotor1Mag * 2)) {
+    if (scaledMotor1Mag > (maxMotor1Mag * 2) || scaledMotor2Mag > (maxMotor2Mag * 2)) {
         if (scaledMotor1Mag > scaledMotor2Mag) {
             motorVectorScalar = (maxMotor1Mag * 2) / scaledMotor1Mag;
         }
