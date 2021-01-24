@@ -20,6 +20,8 @@ void NodeManager::initialize() {
 }
 
 void NodeManager::execute() {
+    m_handle->spinOnce();
+    
     for (auto& node_structure : m_node_structures) {
         auto current_time = m_get_millis();
         if (current_time - node_structure.last_executed_millis >=

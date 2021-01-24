@@ -3,7 +3,7 @@
 // By default, this constructor calls the constructor for the Node object in
 // NodeManager.h
 ADIAnalogInNode::ADIAnalogInNode(NodeManager* node_manager, int port,
-    std::string handle_name) : Node(node_manager, 20), m_analog_in(port) {
+    std::string handle_name) : Node(node_manager, 50), m_analog_in(port) {
     m_handle_name = handle_name.insert(0, "sensor/");
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_analog_in_msg);
