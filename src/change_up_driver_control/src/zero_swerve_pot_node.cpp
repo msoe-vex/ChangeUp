@@ -7,10 +7,7 @@
 #include "std_msgs/Int16.h"
 
 std_msgs::Int16 pot_msg;
-<<<<<<< Updated upstream
 ros::NodeHandle* handle;
-=======
->>>>>>> Stashed changes
 
 int offset;
 int pot_value;
