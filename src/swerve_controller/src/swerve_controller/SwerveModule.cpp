@@ -26,13 +26,13 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
         return motor_powers;
     }
 
-    // Create the maximum vector for each motor
-    Eigen::Vector2d max_motor_1_vector(m_max_velocity, m_max_rotation_velocity);
-    Eigen::Vector2d max_motor_2_vector(-1 * m_max_velocity, m_max_rotation_velocity);
+    // Create a maximum power vector for translating motor into percent motor output power
+    Eigen::Vector2d max_motor_vector(m_max_velocity, m_max_rotation_velocity);
 
-    // Get the magnitude of the vector (norm returns the magnitude)
-    float max_motor_1_mag = max_motor_1_vector.norm() / 2;
-    float max_motor_2_mag = max_motor_2_vector.norm() / 2;
+    // Find the length of the maxium power vector, but divide by sqrt(2) to account for the fact that later
+    // we will be projecting vectors onto this vector and due to the 45-45-90 nature of this conversion need to 
+    // divide this vector by sqrt(2)
+    float max_motor_power = max_motor_vector.norm() / sqrt(2); 
 
     // Take the vector from the origin to the module (module_location) and rotate it to 
     // make it orthogonal to the current (module_location) vector
@@ -63,57 +63,47 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     Eigen::Vector2d motor_power_vector;
     if (module_rotation_delta >= m_rotation_angle_threshold) {
         // Exclusively turn to the target (max speed turn)
-        motor_power_vector(1) = m_max_rotation_velocity;
-    }
-    else {
+        motor_power_vector(1) = 1.0;
+        motor_power_vector(0) = 0.0;
+    } else {
         // Turn proportional to how far off we are from the target
-        motor_power_vector(1) = m_max_rotation_velocity * (module_rotation_delta / m_rotation_angle_threshold); 
+        motor_power_vector(1) = module_rotation_delta / m_rotation_angle_threshold / 4.0; 
+
+        // Set the power as the magnitude of the vector
+        motor_power_vector(0) = target_vector.norm() / m_max_velocity;
     }
 
-    // Set the power as the magnitude of the vector
-    motor_power_vector(0) = target_vector.norm();
+
+
+    ROS_INFO("Motor Power Vector - x:%.2f y:%.2f", motor_power_vector(0), motor_power_vector(1));
+
 
     // We are working in the (m/s Forward)-(rpm Speed of Rotation) plane now
     // Project the target vector onto each max motor vector to get components
     // This finds the projection magnitude onto the max motor vector
-    double scaled_motor_1_mag = motor_power_vector.dot(max_motor_1_vector) / max_motor_1_mag;
-    double scaled_motor_2_mag = motor_power_vector.dot(max_motor_2_vector) / max_motor_2_mag;
+    double scaled_motor_1_mag = motor_power_vector.dot(Eigen::Vector2d(1, 1));
+    double scaled_motor_2_mag = motor_power_vector.dot(Eigen::Vector2d(-1, 1));
 
-    ROS_INFO("Max Motor 1 Mag: %.2f", max_motor_1_mag);
-    ROS_INFO("Max Motor 2 Mag: %.2f", max_motor_2_mag);
+    ROS_INFO("Max Motor Mag: %.2f", max_motor_power);
 
     ROS_INFO("Scaled Motor 1 Mag (START): %.2f", scaled_motor_1_mag);
     ROS_INFO("Scaled Motor 2 Mag (START): %.2f", scaled_motor_2_mag);
 
-    // Find the largest magnitude of the two vectors, and save the scalar
-    // The factor of two is to equalize math
-    float motor_vector_scalar;
-    if (scaled_motor_1_mag > (max_motor_1_mag * 2) || scaled_motor_2_mag > (max_motor_2_mag * 2)) {
-        if (scaled_motor_1_mag > scaled_motor_2_mag) {
-            motor_vector_scalar = (max_motor_1_mag * 2) / scaled_motor_1_mag;
-        }
-        else {
-            motor_vector_scalar = (max_motor_2_mag * 2) / scaled_motor_2_mag;
-        }
-    }
+    float max_scaled_motor_mag = fmax(fabs(scaled_motor_1_mag), fabs(scaled_motor_2_mag));
 
-    // TODO fix random scale and figure this out
-    scaled_motor_1_mag /= sqrt(2);
-    scaled_motor_2_mag /= sqrt(2);
+    // If the max of the two motor powers is more than we can ouput, scale both down so the max motor's power
+    // is equal to the max_motor_power
+    if(max_scaled_motor_mag > 1.0) {
+        scaled_motor_1_mag /= max_scaled_motor_mag;
+        scaled_motor_2_mag /= max_scaled_motor_mag;
+    }
 
     ROS_INFO("Scaled Motor 1 Mag (1): %.2f", scaled_motor_1_mag);
     ROS_INFO("Scaled Motor 2 Mag (1): %.2f", scaled_motor_2_mag);
 
-    // Scale both vectors by the magnitude of the largest vector
-    scaled_motor_1_mag *= motor_vector_scalar;
-    scaled_motor_2_mag *= motor_vector_scalar;
-
-    ROS_INFO("Scaled Motor 1 Mag (2): %.2f", scaled_motor_1_mag);
-    ROS_INFO("Scaled Motor 2 Mag (2): %.2f", scaled_motor_2_mag);
-
     // Scale motors between -127 and 127
-    scaled_motor_1_mag = (scaled_motor_1_mag / 100.0) * 127.0;
-    scaled_motor_2_mag = (scaled_motor_2_mag / 100.0) * 127.0;
+    scaled_motor_1_mag = scaled_motor_1_mag * 127.0;
+    scaled_motor_2_mag = scaled_motor_2_mag * 127.0;
 
     ROS_INFO("Scaled Motor 1 Mag (FINAL): %.2f", scaled_motor_1_mag);
     ROS_INFO("Scaled Motor 2 Mag (FINAL): %.2f", scaled_motor_2_mag);
