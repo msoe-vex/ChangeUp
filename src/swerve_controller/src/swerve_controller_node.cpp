@@ -27,8 +27,9 @@ void assignActualAngle(const std_msgs::Float32& msg) {
 }
 
 int main(int argc, char** argv) {
-    ros::NodeHandle handle;
     ros::init(argc, argv, "swerve_controller");
+
+    ros::NodeHandle handle;
 
     double x, y, rotation_angle_threshold, max_velocity, max_rotation_velocity;
 
@@ -49,7 +50,7 @@ int main(int argc, char** argv) {
     ros::Publisher swerve_controller_left_motor_pub = handle.advertise<std_msgs::Int8>("leftMotor", 10);
     ros::Publisher swerve_controller_right_motor_pub = handle.advertise<std_msgs::Int8>("rightMotor", 10);
 
-    ros::Rate loop_rate(50);
+    ros::Rate loop_rate(10);
 
     while (ros::ok()) {
         motor_powers = swerveModule.InverseKinematics(target_velocity, rotation_velocity, actual_angle);

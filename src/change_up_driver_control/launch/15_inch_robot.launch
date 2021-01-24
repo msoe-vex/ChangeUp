@@ -3,16 +3,60 @@
   <arg name="mainport" default="/dev/ttyACM1" />
   <arg name="mainbaud" default="57600" />
 
-  <node name="connector" type="serial_node.py" pkg="rosserial_arduino" output="screen">
+  <node name="connector" type="serial_node.py" pkg="rosserial_arduino" respawn="true" output="screen">
     <param name="port" value="$(arg mainport)" />
     <param name="baud" value="$(arg mainbaud)" />
   </node>
 
-  <!--<node name="change_up_driver_control_node" type="change_up_driver_control_node" pkg="change_up_driver_control" output="screen"/>-->
-
-  <node name="navx_publisher_node" type="navx_publisher" pkg="navx_publisher_node" output="screen">
-    <param name="device" value="/dev/ttyACM2"/>
+  <!-- Nodes for zeroing out the potentiometers -->
+  <node name="zero_left_module_pot_node" type="zero_swerve_pot_node" pkg="change_up_driver_control" respawn="true" output="screen">
+    <remap from="/inputPot" to="/sensor/leftModulePot"/>
+    <remap from="/outputPot" to="/sensor/zeroedLeftModulePot"/>
   </node>
+
+  <node name="zero_right_module_pot_node" type="zero_swerve_pot_node" pkg="change_up_driver_control" respawn="true" output="screen">
+    <remap from="/inputPot" to="/sensor/rightModulePot"/>
+    <remap from="/outputPot" to="/sensor/zeroedRightModulePot"/>
+  </node>
+
+  <node name="zero_rear_module_pot_node" type="zero_swerve_pot_node" pkg="change_up_driver_control" respawn="true" output="screen">
+    <remap from="/inputPot" to="/sensor/rearModulePot"/>
+    <remap from="/outputPot" to="/sensor/zeroedRearModulePot"/>
+  </node>
+
+  <!-- Nodes for controlling the swerve drive -->
+  <node name="left_module_controller_node" type="swerve_controller_node" pkg="swerve_controller" respawn="true" output="screen">
+    <param name="left_module_x" type="double" value="5.0"/>
+    <param name="left_module_y" type="double" value="5.0"/>
+    <remap from="/leftMotor" to="/motor/leftModule1/moveMotorVoltage"/>
+    <remap from="/rightMotor" to="/motor/leftModule2/moveMotorVoltage"/>
+  </node>
+
+  <node name="right_module_controller_node" type="swerve_controller_node" pkg="swerve_controller" respawn="true" output="screen">
+    <param name="right_module_x" type="double" value="5.0"/>
+    <param name="right_module_y" type="double" value="5.0"/>
+    <remap from="/leftMotor" to="/motor/rightModule1/moveMotorVoltage"/>
+    <remap from="/rightMotor" to="/motor/rightModule2/moveMotorVoltage"/>
+  </node>
+
+  <node name="rear_module_controller_node" type="swerve_controller_node" pkg="swerve_controller" respawn="true" output="screen">
+    <param name="rear_module_x" type="double" value="5.0"/>
+    <param name="rear_module_y" type="double" value="5.0"/>
+    <remap from="/leftMotor" to="/motor/rearModule1/moveMotorVoltage"/>
+    <remap from="/rightMotor" to="/motor/rearModule2/moveMotorVoltage"/>
+  </node>
+
+  <!-- Node for field oriented drive -->
+  <node name="field_oriented_control_node" type="field_oriented_control_node" pkg="change_up_driver_control" respawn="true" output="screen">
+    <param name="rear_module_x" type="double" value="5.0"/>
+    <param name="rear_module_y" type="double" value="5.0"/>
+    <remap from="/leftMotor" to="/motor/rearModule1/moveMotorVoltage"/>
+    <remap from="/rightMotor" to="/motor/rearModule2/moveMotorVoltage"/>
+  </node>
+
+  <!-- <node name="navx_publisher_node" type="navx_publisher" pkg="navx_publisher_node" output="screen">
+    <param name="device" value="/dev/ttyACM2"/>
+  </node> -->
   
   <arg name="topicstolog" value="sensor/leftModulePot" />
   <node pkg="rostopic" type="rostopic" name="logresults" args="echo $(arg topicstolog)" output="screen" />

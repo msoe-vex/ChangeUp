@@ -7,8 +7,7 @@
 #include "std_msgs/Int16.h"
 
 std_msgs::Int16 pot_msg;
-ros::NodeHandle handle;
-ros::Publisher motor_pot_pub;
+ros::NodeHandle* handle;
 
 int offset;
 int pot_value;
@@ -22,7 +21,6 @@ int pot_value;
 void potentiometerCallback(const std_msgs::Int16& msg) {
     pot_value = msg.data;
     pot_msg.data = pot_value - offset;
-    motor_pot_pub.publish(pot_msg);
 }
 
 /**
@@ -33,7 +31,7 @@ void potentiometerCallback(const std_msgs::Int16& msg) {
  */
 void zeroPotCallback(const std_msgs::Bool& msg) {
     if (msg.data) {
-        handle.setParam("pot_offset", pot_value);
+        handle->setParam("pot_offset", pot_value);
         offset = pot_value;
     }
 }
@@ -48,17 +46,28 @@ void zeroPotCallback(const std_msgs::Bool& msg) {
 int main(int argc, char** argv) {
     ros::init(argc, argv, "zeroSwervePot");
 
+    handle = new ros::NodeHandle();
+
     // Grab offest value from memory
-    handle.getParam("pot_offset", offset);
+    handle->param("pot_offset", offset, 0);
 
     // Create subscribers and link to callbacks
-    ros::Subscriber motor_pot_sub = handle.subscribe("inputPot", 100, potentiometerCallback);
-    ros::Subscriber zero_pot_sub = handle.subscribe("zeroPot", 100, zeroPotCallback);
+    ros::Subscriber motor_pot_sub = handle->subscribe("inputPot", 100, potentiometerCallback);
+    ros::Subscriber zero_pot_sub = handle->subscribe("zeroPot", 100, zeroPotCallback);
 
     // Create publishers
-    motor_pot_pub = handle.advertise<std_msgs::Int16>("outputPot", 100);
+    ros::Publisher motor_pot_pub = handle->advertise<std_msgs::Int16>("outputPot", 100);
 
-    ros::spin();
+    ros::Rate loop_rate(50);
+
+	while (ros::ok())
+	{
+		motor_pot_pub.publish(pot_msg);
+
+		ros::spinOnce();
+
+		loop_rate.sleep();
+	}
 
     return 0;
 }
