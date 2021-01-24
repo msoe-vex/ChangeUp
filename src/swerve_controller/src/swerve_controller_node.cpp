@@ -24,7 +24,7 @@ struct MotorPowers {
 };
 
 MotorPowers inverseKinematics(Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle) {
-    ROS_INFO("Target Velocity: " << targetVelocity);
+    ROS_INFO("Target Velocity - x:%.2f y:%.2f", targetVelocity(0), targetVelocity(1));
     ROS_INFO("Target Rotation Velocity: %.2f", targetRotationVelocity);
 
     // If you aren't trying to move, make sure to send no velocity to the motors
