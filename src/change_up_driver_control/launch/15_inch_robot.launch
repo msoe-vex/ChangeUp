@@ -26,8 +26,8 @@
 
   <!-- Nodes for controlling the swerve drive -->
   <node name="left_module_controller_node" type="swerve_controller_node" pkg="swerve_controller" respawn="true" output="screen">
-    <param name="left_module_x" type="double" value="-5.25"/>
-    <param name="left_module_y" type="double" value="5.55"/>
+    <param name="module_x" type="double" value="-5.25"/>
+    <param name="module_y" type="double" value="5.55"/>
     <remap from="/leftMotor" to="/motor/leftModule1/moveMotorVoltage"/>
     <remap from="/rightMotor" to="/motor/leftModule2/moveMotorVoltage"/>
     <remap from="/swerveCommandActAngle" to="/sensor/zeroedLeftModulePot"/>
