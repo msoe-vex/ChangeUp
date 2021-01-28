@@ -1,28 +1,51 @@
 #include "main.h"
 
+//Custom Electonics Ports
+int ce_write = 20;
+int ce_read = 19;
 
-// NodeManager* node_manager = new NodeManager(pros::millis);
+//Comm variables
+pros::Serial *ce_port_w = nullptr;
+pros::Serial *ce_port_r = nullptr;
 
-// Declare all nodes here
-// ControllerNode* primary_controller;
-// MotorNode* left_module_1;
-// MotorNode* left_module_2;
-// ADIAnalogInNode* left_module_pot;
-// MotorNode* right_module_1;
-// MotorNode* right_module_2;
-// ADIAnalogInNode* right_module_pot;
-// MotorNode* rear_module_1;
-// MotorNode* rear_module_2;
-// ADIAnalogInNode* rear_module_pot;
-// MotorNode* left_intake;
-// MotorNode* right_intake;
-// MotorNode* bottom_rollers;
-// MotorNode* top_rollers;
-// ADIEncoderNode* x_odometry_encoder;
-// ADIEncoderNode* y_odometry_encoder;
-// BatteryNode* battery;
-// CompetitionStatusNode* competition_status;
-// ProsTimeNode* pros_time;
+void init_comm(){
+  //Setup the ports
+  ce_port_w = new pros::Serial(ce_write);
+  ce_port_r = new pros::Serial(ce_read);
+}
+
+//flush the comm ports
+void flush(){
+  ce_port_w->flush();
+  pros::delay(100);
+  ce_port_r->flush();
+}
+
+//set the port baud rate
+void setBaud(){
+  ce_port_w->set_baudrate(115200);
+  ce_port_r->set_baudrate(115200);
+}
+
+//read byte from port and print to cout
+void recv_print(){
+  //Read byte command
+  int32_t r = ce_port_r->read_byte();
+  //Check if error
+  if(r == PROS_ERR){
+    std::cout << pros::millis() << " Error read " << r << std::endl;
+  } else {
+    //Print recieved byte
+    std::cout << pros::millis() << " Pass read " << r << std::endl;
+  }
+}
+
+void send_print(char value){
+	//Send the value byte
+  int32_t w = ce_port_w->write_byte(value);
+	std::cout << "Sent Value " << value << std::endl;
+  pros::delay(3);
+}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -31,35 +54,12 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// Define all nodes used by the robot here
-	// primary_controller = new ControllerNode(node_manager, "primary");
-
-	// left_module_1 = new MotorNode(node_manager, 1, "leftModule1", false);
-	// left_module_2 = new MotorNode(node_manager, 2, "leftModule2", false);
-	// left_module_pot = new ADIAnalogInNode(node_manager, 8, "leftModulePot");
-
-	// right_module_1 = new MotorNode(node_manager, 3, "rightModule1", false);
-	// right_module_2 = new MotorNode(node_manager, 4, "rightModule2", false);
-	// right_module_pot = new ADIAnalogInNode(node_manager, 7, "rightModulePot");
-
-	// rear_module_1 = new MotorNode(node_manager, 5, "rearModule1", false);
-	// rear_module_2 = new MotorNode(node_manager, 6, "rearModule2", false);
-	// rear_module_pot = new ADIAnalogInNode(node_manager, 6, "rearModulePot");
-	
-	// left_intake = new MotorNode(node_manager, 7, "leftIntake", false);
-	// right_intake = new MotorNode(node_manager, 8, "rightIntake", false);
-	// bottom_rollers = new MotorNode(node_manager, 9, "bottomRollers", false);
-	// top_rollers = new MotorNode(node_manager, 10, "topRollers", false);
-	
-	// x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
-	// y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
-	
-	// battery = new BatteryNode(node_manager, "v5battery");
-	// competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
-	// pros_time = new ProsTimeNode(node_manager, "prosTime");
-
-	// // Call the node manager to initialize all of the nodes above
-	// node_manager->initialize();
+	//Set up the communication. Takes about 1/8th of a second
+	init_comm();
+	pros::delay(10);
+	flush();
+	pros::delay(10);
+	setBaud();
 }
 
 /**
@@ -105,25 +105,15 @@ void autonomous() {}
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
- *
- * NOTE: If custom code is needed outside of the node manager, it should be put
- * into a different task with a wait. Each node has an embedded timing control loop
- * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
-	pros::c::serial_enable(20);
-	pros::c::serial_flush(20);
-	pros::c::serial_set_baudrate(20, 115200);
-	int i = 0;
-	while(true) {
-		pros::c::serial_write_byte(20, i);
-		pros::delay(1000);
-		i++;
-		if(i>15) {
-			i = 0;
-		}
+	//Send and recieve alphabet as a test
+	for(int i = 65; i <= 90; i++){
+		send_print(i);
+		recv_print();
+		pros::delay(97);
 	}
-	// while (true) {
-	// 	node_manager->execute();
-	// }
+	while (true) {
+		pros::delay(20);
+	}
 }
