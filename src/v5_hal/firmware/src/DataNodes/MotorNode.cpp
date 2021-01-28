@@ -21,7 +21,6 @@ void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
 
 void MotorNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
     Node::m_handle->subscribe(*m_move_motor_voltage_sub);
 }
@@ -31,7 +30,6 @@ void MotorNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage();
     m_publisher->publish(&m_motor_msg);
-    Node::m_handle->spinOnce();
 }
 
 void MotorNode::m_populateMessage() {

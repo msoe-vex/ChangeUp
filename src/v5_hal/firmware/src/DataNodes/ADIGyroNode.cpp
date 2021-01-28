@@ -11,7 +11,6 @@ ADIGyroNode::ADIGyroNode(NodeManager* node_manager, int port, double multiplier,
 
 void ADIGyroNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
@@ -20,7 +19,6 @@ void ADIGyroNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage();
     m_publisher->publish(&m_gyro_msg);
-    Node::m_handle->spinOnce();
 }
 
 void ADIGyroNode::m_populateMessage() { 

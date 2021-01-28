@@ -8,14 +8,12 @@ ProsTimeNode::ProsTimeNode(NodeManager* node_manager, std::string handle_name)
 }
 
 void ProsTimeNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
 void ProsTimeNode::periodic() {
     m_populateMessage();
     m_publisher->publish(&m_pros_time_msg);
-    Node::m_handle->spinOnce();
 }
 
 void ProsTimeNode::m_populateMessage() {

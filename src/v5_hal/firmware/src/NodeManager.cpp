@@ -14,13 +14,23 @@ ros::NodeHandle* NodeManager::addNode(Node* node,
 }
 
 void NodeManager::initialize() {
+    m_handle->initNode();
     for (auto node_structure : m_node_structures) {
         node_structure.node->initialize();
     }
 }
 
 void NodeManager::execute() {
-    m_handle->spinOnce();
+    switch(m_handle->spinOnce()) {
+        case ros::SPIN_ERR:
+            m_handle->logError("spin once encountered error");
+            break;
+        case ros::SPIN_TIMEOUT:
+            m_handle->logError("spin once timed out!")
+            break;
+        default:
+            break;
+    }
     
     for (auto& node_structure : m_node_structures) {
         auto current_time = m_get_millis();

@@ -14,7 +14,6 @@ void ADIDigitalOutNode::m_setValue(const std_msgs::Bool& msg) {
 }
 
 void ADIDigitalOutNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->subscribe(*m_digital_out_sub);
 }
 

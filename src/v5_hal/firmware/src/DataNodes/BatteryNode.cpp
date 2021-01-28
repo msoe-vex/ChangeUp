@@ -8,14 +8,12 @@ BatteryNode::BatteryNode (NodeManager* node_manager, std::string handle_name)
 }
 
 void BatteryNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
 void BatteryNode::periodic() {
     m_populateMessage();
     m_publisher->publish(&m_battery_msg);
-    Node::m_handle->spinOnce();
 }
 
 void BatteryNode::m_populateMessage () {

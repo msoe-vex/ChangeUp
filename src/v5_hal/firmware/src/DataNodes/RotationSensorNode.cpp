@@ -9,14 +9,12 @@ RotationSensorNode::RotationSensorNode(NodeManager* node_manager,
 }
 
 void RotationSensorNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
 void RotationSensorNode::periodic() {
     m_populateMessage();
     m_publisher->publish(&m_rotation_msg);
-    Node::m_handle->spinOnce();
 }
 
 void RotationSensorNode::m_populateMessage() {

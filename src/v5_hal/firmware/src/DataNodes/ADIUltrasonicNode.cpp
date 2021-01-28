@@ -12,7 +12,6 @@ ADIUltrasonicNode::ADIUltrasonicNode(NodeManager* node_manager, int port_ping,
 
 void ADIUltrasonicNode::initialize() {
     // Initialize the handler, and set up data to publish
-    m_handle->initNode();
     m_handle->advertise(*m_publisher);
 }
 
@@ -21,7 +20,6 @@ void ADIUltrasonicNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage();
     m_publisher->publish(&m_ultrasonic_msg);
-    m_handle->spinOnce();
 }
 
 void ADIUltrasonicNode::m_populateMessage() {

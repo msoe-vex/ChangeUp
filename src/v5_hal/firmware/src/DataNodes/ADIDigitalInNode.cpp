@@ -11,7 +11,6 @@ ADIDigitalInNode::ADIDigitalInNode(NodeManager* node_manager, int port,
 
 void ADIDigitalInNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
@@ -20,7 +19,6 @@ void ADIDigitalInNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage();
     m_publisher->publish(&m_digital_in_msg);
-    Node::m_handle->spinOnce();
 }
 
 void ADIDigitalInNode::m_populateMessage() {

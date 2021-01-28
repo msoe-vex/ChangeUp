@@ -28,7 +28,6 @@ void ControllerNode::m_rumbleController(const std_msgs::String& msg) {
 
 void ControllerNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
     Node::m_handle->subscribe(*m_rumble_controller_sub);
 }
@@ -38,7 +37,6 @@ void ControllerNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage(); //populate each value in the message file with the current value
     m_publisher->publish(&m_controller_msg); //Serializes the message and queue for procesing
-    Node::m_handle->spinOnce(); //Send all queued messages
 }
 
 //Populates the V5Controller message object
