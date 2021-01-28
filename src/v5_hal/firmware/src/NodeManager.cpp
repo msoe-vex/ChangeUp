@@ -23,10 +23,10 @@ void NodeManager::initialize() {
 void NodeManager::execute() {
     switch(m_handle->spinOnce()) {
         case ros::SPIN_ERR:
-            m_handle->logError("spin once encountered error");
+            m_handle->logerror("spin once encountered error");
             break;
         case ros::SPIN_TIMEOUT:
-            m_handle->logError("spin once timed out!")
+            m_handle->logerror("spin once timed out!");
             break;
         default:
             break;
