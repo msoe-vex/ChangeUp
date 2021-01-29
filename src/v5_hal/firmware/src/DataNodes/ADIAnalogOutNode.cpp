@@ -5,7 +5,7 @@ ADIAnalogOutNode::ADIAnalogOutNode(NodeManager* node_manager, std::string handle
     m_analog_out(port) {
     m_handle_name = handle_name.insert(0, "output/");
     m_sub_analog_out_name = m_handle_name + "/analogOut";
-    m_analog_out_sub = new ros::Subscriber<std_msgs::Bool, ADIAnalogOutNode>
+    m_analog_out_sub = new ros::Subscriber<std_msgs::Int16, ADIAnalogOutNode>
         (m_sub_analog_out_name.c_str(), &ADIAnalogOutNode::m_setValue, this);
     }
 
