@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     handle.param("kI", kI, 0.0);
     handle.param("kD", kD, 0.0);
 
-    SwerveModule swerveModule(module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity);
+    SwerveModule swerveModule(module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD);
 
     ros::Subscriber swerve_controller_tf_sub = handle.subscribe("swerveCommandTf", 10, assignTargetVelocity);
     ros::Subscriber swerve_controller_rotate_sub = handle.subscribe("swerveCommandRotate", 10, assignRotationVelocity);
