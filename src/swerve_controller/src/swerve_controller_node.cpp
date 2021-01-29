@@ -46,6 +46,9 @@ int main(int argc, char** argv) {
     handle.param("rotation_angle_threshold", rotation_angle_threshold, (M_PI / 3));
     handle.param("max_velocity", max_velocity, 1.31);
     handle.param("max_rotation_velocity", max_rotation_velocity, 100.0);
+    handle.param("kP", kP, 0.0);
+    handle.param("kI", kI, 0.0);
+    handle.param("kD", kD, 0.0);
 
     SwerveModule swerveModule(module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity);
 

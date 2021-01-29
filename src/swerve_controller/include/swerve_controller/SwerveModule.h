@@ -14,9 +14,16 @@ private:
     double m_rotation_angle_threshold;
     double m_max_velocity;
     double m_max_rotation_velocity;
+    double m_percent_error;
+    double m_total_error;
+    double kP;
+    double kI;
+    double kD;
+
 
 public:
-    SwerveModule (Eigen::Vector2d module_location, double rotation_angle_threshold, double max_velocity, double max_rotation_velocity);
+    SwerveModule (Eigen::Vector2d module_location, double rotation_angle_threshold, double max_velocity, double max_rotation_velocity,
+        double kP, double kI, double kD);
 
     MotorPowers InverseKinematics(Eigen::Vector2d target_velocity, double target_rotation_velocity, Eigen::Rotation2Dd module_actual_angle);
 };
