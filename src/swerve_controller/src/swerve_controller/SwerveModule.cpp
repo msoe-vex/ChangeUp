@@ -1,11 +1,16 @@
 #include "swerve_controller/SwerveModule.h"
 
 SwerveModule::SwerveModule(Eigen::Vector2d module_location, double rotation_angle_threshold, 
-    double max_velocity, double max_rotation_velocity) : 
+    double max_velocity, double max_rotation_velocity, double kP, double, kI, double kD) : 
     m_module_location(module_location),
     m_rotation_angle_threshold(rotation_angle_threshold), 
     m_max_velocity(max_velocity), 
-    m_max_rotation_velocity(max_rotation_velocity) {
+    m_max_rotation_velocity(max_rotation_velocity), 
+    m_percent_error(0),
+    m_total_error(0),
+    kP(kP),
+    kI(kI),
+    kD(kD) {
 
 }
 
@@ -57,21 +62,29 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // Subtract the actual module vector from the target to find the change in angle needed
     double module_rotation_delta = (target_vector_angle * module_actual_angle.inverse()).smallestAngle();
 
-    // Determine if we need to only turn the module, or if we can move while turning. Current limit
-    // is 60 degrees, if above we will exclusively turn, and if below we turn proportional to the
-    // angle needed
+    // PID control for turning
     Eigen::Vector2d motor_power_vector;
-    if (module_rotation_delta >= m_rotation_angle_threshold) {
-        // Exclusively turn to the target (max speed turn)
-        motor_power_vector(1) = 1.0;
-        motor_power_vector(0) = 0.0;
-    } else {
-        // Turn proportional to how far off we are from the target
-        motor_power_vector(1) = module_rotation_delta / m_rotation_angle_threshold / 4.0; 
 
-        // Set the power as the magnitude of the vector
-        motor_power_vector(0) = target_vector.norm() / m_max_velocity;
-    }
+    double error;
+    double dirivative;
+
+    // Proportional
+    error = module_rotation_delta;
+
+    // Dirivative
+    dirivative = error - m_percent_error;
+
+    // Integral
+    m_total_error += error;
+
+    // The last value of error
+    m_percent_error = error;
+
+    // Set the turn as the error * a constant + the dirivative * a constant + the integral * a constant
+    motor_power_vector(1) = error * kP + dirivative * kD + m_total_error * kI;
+
+    // Set the power as the magnitude of the vector
+    motor_power_vector(0) = target_vector.norm() / m_max_velocity;
 
     // ROS_INFO("Motor Power Vector - x:%.2f y:%.2f", motor_power_vector(0), motor_power_vector(1));
 
