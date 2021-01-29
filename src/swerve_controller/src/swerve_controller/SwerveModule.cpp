@@ -66,13 +66,13 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     Eigen::Vector2d motor_power_vector;
 
     double error;
-    double dirivative;
+    double derivative;
 
     // Proportional
     error = module_rotation_delta;
 
     // Dirivative
-    dirivative = error - m_percent_error;
+    derivative = error - m_percent_error;
 
     // Integral
     m_total_error += error;
@@ -80,8 +80,8 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // The last value of error
     m_percent_error = error;
 
-    // Set the turn as the error * a constant + the dirivative * a constant + the integral * a constant
-    motor_power_vector(1) = error * kP + dirivative * kD + m_total_error * kI;
+    // Set the turn as the error * a constant + the derivative * a constant + the integral * a constant
+    motor_power_vector(1) = error * kP + derivative * kD + m_total_error * kI;
 
     // Set the power as the magnitude of the vector
     motor_power_vector(0) = target_vector.norm() / m_max_velocity;
