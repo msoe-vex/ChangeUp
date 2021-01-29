@@ -1,5 +1,6 @@
 #include "main.h"
 #include "NodeManager.h"
+#include "eigen/Eigen/Dense"
 
 NodeManager* node_manager = new NodeManager(pros::millis);
 
