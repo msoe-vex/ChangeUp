@@ -1,7 +1,7 @@
 #include "swerve_controller/SwerveModule.h"
 
 SwerveModule::SwerveModule(Eigen::Vector2d module_location, double rotation_angle_threshold, 
-    double max_velocity, double max_rotation_velocity, double kP, double, kI, double kD) : 
+    double max_velocity, double max_rotation_velocity, double kP, double kI, double kD) : 
     m_module_location(module_location),
     m_rotation_angle_threshold(rotation_angle_threshold), 
     m_max_velocity(max_velocity), 
