@@ -67,8 +67,8 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // ROS_INFO("Current Angle: %.2f", module_actual_angle.angle());
     // ROS_INFO("Target Angle: %.2f", target_vector_angle.angle());
 
-    // std::cout << "Current Angle: " << module_actual_angle.angle() << "\n" << std::endl;
-    // std::cout << "Target Angle: " << target_vector_angle.angle() << "\n" << std::endl;
+    std::cout << "Current Angle: " << module_actual_angle.angle() << "\n" << std::endl;
+    std::cout << "Target Angle: " << target_vector_angle.angle() << "\n" << std::endl;
 
     // Subtract the actual module vector from the target to find the change in angle needed
     double module_rotation_delta = (target_vector_angle * module_actual_angle.inverse()).smallestAngle();
