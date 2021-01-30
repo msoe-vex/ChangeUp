@@ -71,8 +71,6 @@ void ControllerNode::m_populateMessage() {
     m_controller_msg.btn_l1 = (bool)m_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
     m_controller_msg.btn_l2 = (bool)m_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
     m_controller_msg.is_connected = (bool)m_controller.is_connected();
-    m_controller_msg.battery_capacity = m_controller.get_battery_capacity();
-    m_controller_msg.battery_level = m_controller.get_battery_level();
 }
 
 ControllerNode::~ControllerNode() {
