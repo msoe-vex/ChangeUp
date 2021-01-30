@@ -1,0 +1,4 @@
+{
+    "name": "Build ROS Project",
+    "description": "Build ROS 1 project with catkin_make."
+}
