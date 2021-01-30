@@ -41,11 +41,13 @@ private:
     pros::ADIAnalogIn right_swerve_pot;
     pros::ADIAnalogIn rear_swerve_pot;
 
+    pros::Controller controller_primary;
+
 public:
     DriverControlNode(NodeManager* node_manager, pros::Motor left_swerve_1, pros::Motor left_swerve_2, 
         pros::ADIAnalogIn left_swerve_pot, pros::Motor right_swerve_1, pros::Motor right_swerve_2, 
         pros::ADIAnalogIn right_swerve_pot, pros::Motor rear_swerve_1, pros::Motor rear_swerve_2, 
-        pros::ADIAnalogIn rear_swerve_pot);
+        pros::ADIAnalogIn rear_swerve_pot, pros::Controller controller_primary);
 
     void initialize();
 

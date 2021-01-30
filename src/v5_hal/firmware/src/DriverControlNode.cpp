@@ -5,12 +5,12 @@
 DriverControlNode::DriverControlNode(NodeManager* node_manager, pros::Motor left_swerve_1, pros::Motor left_swerve_2, 
         pros::ADIAnalogIn left_swerve_pot, pros::Motor right_swerve_1, pros::Motor right_swerve_2, 
         pros::ADIAnalogIn right_swerve_pot, pros::Motor rear_swerve_1, pros::Motor rear_swerve_2, 
-        pros::ADIAnalogIn rear_swerve_pot) : Node(node_manager, 20), 
+        pros::ADIAnalogIn rear_swerve_pot, pros::Controller controller_primary) : Node(node_manager, 20), 
     swerveController(left_module_location, right_module_location, rear_module_location, rotation_angle_threshold,
     max_velocity, max_rotation_velocity, kP, kI, kD), left_swerve_1(left_swerve_1), left_swerve_2(left_swerve_2),
     left_swerve_pot(left_swerve_pot), right_swerve_1(right_swerve_1), right_swerve_2(right_swerve_2),
     right_swerve_pot(right_swerve_pot), rear_swerve_1(rear_swerve_1), rear_swerve_2(rear_swerve_2),
-    rear_swerve_pot(rear_swerve_pot) {
+    rear_swerve_pot(rear_swerve_pot), controller_primary(controller_primary) {
 
     left_module_location(0) = left_module_location_x;
     left_module_location(1) = left_module_location_y;
@@ -18,9 +18,6 @@ DriverControlNode::DriverControlNode(NodeManager* node_manager, pros::Motor left
     right_module_location(1) = right_module_location_y;
     rear_module_location(0) = rear_module_location_x;
     rear_module_location(1) = rear_module_location_y;
-
-    left_swerve_1.move(-127);
-
 }
 
 void DriverControlNode::initialize() {
@@ -28,6 +25,10 @@ void DriverControlNode::initialize() {
 }
 
 void DriverControlNode::periodic() {
+
+    target_velocity(0) = (controller_primary.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127) * max_velocity;
+    target_velocity(0) = (controller_primary.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127) * max_velocity;
+    rotation_velocity = (controller_primary.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127) * max_rotation_velocity;
 
     swerveController.assignActualAngle(left_swerve_pot.get_value(), right_swerve_pot.get_value(), rear_swerve_pot.get_value());
     left_swerve_1.move(swerveController.calculateLeftModule(target_velocity, rotation_velocity).left_motor_power);
