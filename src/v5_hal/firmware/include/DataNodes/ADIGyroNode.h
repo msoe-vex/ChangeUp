@@ -20,6 +20,8 @@ public:
 
     void initialize();
 
+    float getValue();
+
     void periodic();
 
     ~ADIGyroNode();

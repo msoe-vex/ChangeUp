@@ -19,6 +19,12 @@ public:
         int rotation_port);
     
     void initialize();
+
+    int getAngle();
+
+    int getPosition();
+
+    int getVelocity();
     
     void periodic();
     

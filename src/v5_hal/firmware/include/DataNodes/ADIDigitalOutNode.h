@@ -20,6 +20,8 @@ public:
 
     void initialize();
 
+    void setValue(int value);
+
     void periodic();
 
     ~ADIDigitalOutNode();

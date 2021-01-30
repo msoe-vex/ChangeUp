@@ -21,6 +21,8 @@ public:
 
     void initialize();
 
+    int getValue();
+
     void periodic();
 
     ~ADIAnalogInNode();
