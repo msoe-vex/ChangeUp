@@ -8,10 +8,20 @@ MotorNode::MotorNode(NodeManager* node_manager, int port_number,
     m_motor(port_number, gearset, reverse) {
     m_handle_name = handle_name.insert(0, "motor/");
     m_sub_move_motor_voltage_name = m_handle_name + "/moveMotorVoltage";
+    m_sub_publish_data_name = m_handle_name + "/publish";
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_motor_msg);
+
+    m_publish_data_sub = new ros::Subscriber<std_msgs::Empty, MotorNode>
+        (m_sub_publish_data_name.c_str(), &MotorNode::m_publishData, this);
+    
     m_move_motor_voltage_sub = new ros::Subscriber<std_msgs::Int8, MotorNode>
         (m_sub_move_motor_voltage_name.c_str(), &MotorNode::m_moveMotorVoltage, this);
+}
+
+void MotorNode::m_publishData(const std_msgs::Empty& msg) {
+    m_populateMessage();
+    m_publisher->publish(&m_motor_msg);
 }
 
 void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
@@ -40,8 +50,6 @@ void MotorNode::moveVoltage(int voltage) {
 void MotorNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    // m_populateMessage();
-    // m_publisher->publish(&m_motor_msg);
 }
 
 void MotorNode::m_populateMessage() {

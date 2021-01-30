@@ -3,8 +3,17 @@
 CompetitionStatusNode::CompetitionStatusNode (NodeManager* node_manager, 
     std::string handle_name) : Node(node_manager, 50) {
     m_handle_name = handle_name.insert(0, "compStatus/");
+    m_sub_publish_data_name = m_handle_name + "/publish";
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_comp_status_msg);
+
+    m_publish_data_sub = new ros::Subscriber<std_msgs::Empty, CompetitionStatusNode>
+        (m_sub_publish_data_name.c_str(), &CompetitionStatusNode::m_publishData, this);
+}
+
+void CompetitionStatusNode::m_publishData(const std_msgs::Empty& msg) {
+    m_populateMessage();
+    m_publisher->publish(&m_comp_status_msg);
 }
 
 void CompetitionStatusNode::initialize() {
