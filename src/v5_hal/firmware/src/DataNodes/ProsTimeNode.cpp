@@ -12,6 +12,10 @@ void ProsTimeNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
+int ProsTimeNode::getValue() {
+    return pros::millis();
+}
+
 void ProsTimeNode::periodic() {
     m_populateMessage();
     m_publisher->publish(&m_pros_time_msg);

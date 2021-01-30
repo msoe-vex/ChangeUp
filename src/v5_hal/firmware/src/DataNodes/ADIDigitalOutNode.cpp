@@ -10,7 +10,11 @@ ADIDigitalOutNode::ADIDigitalOutNode(NodeManager* node_manager, std::string hand
     }
 
 void ADIDigitalOutNode::m_setValue(const std_msgs::Bool& msg) {
-    m_digital_out.set_value((int)msg.data);
+    setValue((int)msg.data);
+}
+
+void ADIDigitalOutNode::setValue(int value) {
+    m_digital_out.set_value(value);
 }
 
 void ADIDigitalOutNode::initialize() {

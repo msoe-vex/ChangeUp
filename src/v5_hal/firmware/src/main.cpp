@@ -26,18 +26,6 @@ CompetitionStatusNode* competition_status;
 ProsTimeNode* pros_time;
 DriverControlNode* driver_control;
 
-pros::Motor left_swerve_1(1);
-pros::Motor left_swerve_2(2);
-pros::Motor right_swerve_1(3);
-pros::Motor right_swerve_2(4);
-pros::Motor rear_swerve_1(5);
-pros::Motor rear_swerve_2(6);
-pros::ADIAnalogIn left_swerve_pot(8);
-pros::ADIAnalogIn right_swerve_pot(7);
-pros::ADIAnalogIn rear_swerve_pot(6);
-pros::controller_id_e_t controller_primary(pros::E_CONTROLLER_MASTER);
-
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -72,9 +60,9 @@ void initialize() {
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
 
-	driver_control = new DriverControlNode(node_manager, left_swerve_1, left_swerve_2, left_swerve_pot, 
-		right_swerve_1, right_swerve_2, right_swerve_pot, rear_swerve_1, rear_swerve_2, rear_swerve_pot,
-		controller_primary);
+	driver_control = new DriverControlNode(node_manager, left_module_1, left_module_2, left_module_pot, 
+		right_module_1, right_module_2, right_module_pot, rear_module_1, rear_module_2, rear_module_pot,
+		primary_controller);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

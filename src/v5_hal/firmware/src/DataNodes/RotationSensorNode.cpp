@@ -13,6 +13,18 @@ void RotationSensorNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
+int RotationSensorNode::getAngle() {
+    return m_rotation_sensor.get_angle();
+}
+
+int RotationSensorNode::getPosition() {
+    return m_rotation_sensor.get_position();
+}
+
+int RotationSensorNode::getVelocity() {
+    return m_rotation_sensor.get_velocity();
+}
+
 void RotationSensorNode::periodic() {
     m_populateMessage();
     m_publisher->publish(&m_rotation_msg);
@@ -20,9 +32,9 @@ void RotationSensorNode::periodic() {
 }
 
 void RotationSensorNode::m_populateMessage() {
-    m_rotation_msg.encoder_angle = m_rotation_sensor.get_angle();
-    m_rotation_msg.encoder_position = m_rotation_sensor.get_position();
-    m_rotation_msg.encoder_velocity = m_rotation_sensor.get_velocity();
+    m_rotation_msg.encoder_angle = getAngle();
+    m_rotation_msg.encoder_position = getPosition();
+    m_rotation_msg.encoder_velocity = getVelocity();
 }
 
 RotationSensorNode::~RotationSensorNode () {

@@ -4,10 +4,12 @@
 #include "eigen/Eigen/Dense"
 #include "math.h"
 #include "SwerveController.h"
+#include "DataNodes/MotorNode.h"
+#include "DataNodes/ADIAnalogInNode.h"
+#include "DataNodes/ControllerNode.h"
 
 class DriverControlNode : public Node {
 private:
-    
     SwerveController swerveController;
 
     std::string m_handle_name;
@@ -31,23 +33,22 @@ private:
     double rear_module_location_x = 0.0;
     double rear_module_location_y = -5.21;
 
-    pros::Motor left_swerve_1;
-    pros::Motor left_swerve_2;
-    pros::Motor right_swerve_1;
-    pros::Motor right_swerve_2;
-    pros::Motor rear_swerve_1;
-    pros::Motor rear_swerve_2;
-    pros::ADIAnalogIn left_swerve_pot;
-    pros::ADIAnalogIn right_swerve_pot;
-    pros::ADIAnalogIn rear_swerve_pot;
-
-    pros::Controller controller_primary;
+    MotorNode* left_swerve_1;
+    MotorNode* left_swerve_2;
+    MotorNode* right_swerve_1;
+    MotorNode* right_swerve_2;
+    MotorNode* rear_swerve_1;
+    MotorNode* rear_swerve_2;
+    ADIAnalogInNode* left_swerve_pot;
+    ADIAnalogInNode* right_swerve_pot;
+    ADIAnalogInNode* rear_swerve_pot;
+    pros::Controller* controller_primary;
 
 public:
-    DriverControlNode(NodeManager* node_manager, pros::Motor left_swerve_1, pros::Motor left_swerve_2, 
-        pros::ADIAnalogIn left_swerve_pot, pros::Motor right_swerve_1, pros::Motor right_swerve_2, 
-        pros::ADIAnalogIn right_swerve_pot, pros::Motor rear_swerve_1, pros::Motor rear_swerve_2, 
-        pros::ADIAnalogIn rear_swerve_pot, pros::Controller controller_primary);
+    DriverControlNode(NodeManager* node_manager, MotorNode* left_swerve_1, MotorNode* left_swerve_2, 
+        ADIAnalogInNode* left_swerve_pot, MotorNode* right_swerve_1, MotorNode* right_swerve_2, 
+        ADIAnalogInNode* right_swerve_pot, MotorNode* rear_swerve_1, MotorNode* rear_swerve_2, 
+        ADIAnalogInNode* rear_swerve_pot, ControllerNode* controller_primary);
 
     void initialize();
 

@@ -16,6 +16,10 @@ void ADIUltrasonicNode::initialize() {
     m_handle->advertise(*m_publisher);
 }
 
+int ADIUltrasonicNode::getValue() {
+    return m_ultrasonic.get_value();
+}
+
 void ADIUltrasonicNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
@@ -25,7 +29,7 @@ void ADIUltrasonicNode::periodic() {
 }
 
 void ADIUltrasonicNode::m_populateMessage() {
-    m_ultrasonic_msg.data = m_ultrasonic.get_value();
+    m_ultrasonic_msg.data = getValue();
 }
 
 ADIUltrasonicNode::~ADIUltrasonicNode() { 
