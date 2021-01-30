@@ -24,6 +24,10 @@ void ADIAnalogInNode::periodic() {
     Node::m_handle->spinOnce();
 }
 
+int16_t ADIAnalogInNode::getValue(){
+    return m_analog_in.get_value();
+}
+
 void ADIAnalogInNode::m_populateMessage() {
     if (m_is_reversed) {
         m_analog_in_msg.data = (4096 - m_analog_in.get_value());
