@@ -11,10 +11,20 @@ ControllerNode::ControllerNode(NodeManager* node_manager, std::string handle_nam
     m_controller(controller_id) {
     m_handle_name = handle_name.insert(0, "joystick/");
     m_sub_controller_rumble_name = m_handle_name + "/joystickRumble";
+    m_sub_publish_data_name = m_handle_name + "/publish";
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_controller_msg);
+
+    m_publish_data_sub = new ros::Subscriber<std_msgs::Empty, ControllerNode>
+            (m_sub_publish_data_name.c_str(), &ControllerNode::m_publishData, this);
+
     m_rumble_controller_sub = new ros::Subscriber<std_msgs::String, ControllerNode>
         (m_sub_controller_rumble_name.c_str(), &ControllerNode::m_rumbleController, this);
+}
+
+void ControllerNode::m_publishData(const std_msgs::Empty& msg) {
+    m_populateMessage();
+    m_publisher->publish(&m_controller_msg);
 }
 
 void ControllerNode::m_rumbleController(const std_msgs::String& msg) {
@@ -40,9 +50,6 @@ pros::Controller* ControllerNode::getController() {
 void ControllerNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    m_populateMessage(); //populate each value in the message file with the current value
-    m_publisher->publish(&m_controller_msg); //Serializes the message and queue for procesing
-    Node::m_handle->spinOnce(); //Send all queued messages
 }
 
 //Populates the V5Controller message object
