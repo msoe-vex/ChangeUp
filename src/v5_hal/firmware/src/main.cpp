@@ -24,6 +24,7 @@ ADIEncoderNode* y_odometry_encoder;
 BatteryNode* battery;
 CompetitionStatusNode* competition_status;
 ProsTimeNode* pros_time;
+DriverControlNode* driver_control
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -58,6 +59,8 @@ void initialize() {
 	battery = new BatteryNode(node_manager, "v5battery");
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
+
+	driver_control = new DriverControlNode();
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
