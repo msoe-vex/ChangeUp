@@ -1,12 +1,14 @@
 #pragma once
 
 #include "NodeManager.h"
-#include "api.h"
-#include "ros_lib/ros.h"
-#include "ros_lib/std_msgs/Int16.h"
+#include "eigen/Eigen/Dense"
+#include "math.h"
+#include "SwerveController.h"
 
 class DriverControlNode : public Node {
 private:
+    
+    SwerveController swerveController;
 
     std::string m_handle_name;
     ros::Publisher* m_publisher;
@@ -29,9 +31,21 @@ private:
     double rear_module_location_x = 0.0;
     double rear_module_location_y = -5.21;
 
+    pros::Motor left_swerve_1;
+    pros::Motor left_swerve_2;
+    pros::Motor right_swerve_1;
+    pros::Motor right_swerve_2;
+    pros::Motor rear_swerve_1;
+    pros::Motor rear_swerve_2;
+    pros::ADIAnalogIn left_swerve_pot;
+    pros::ADIAnalogIn right_swerve_pot;
+    pros::ADIAnalogIn rear_swerve_pot;
+
 public:
-    DriverControlNode(NodeManager* node_manager, 
-        std::string handle_name);
+    DriverControlNode(NodeManager* node_manager, pros::Motor left_swerve_1, pros::Motor left_swerve_2, 
+        pros::ADIAnalogIn left_swerve_pot, pros::Motor right_swerve_1, pros::Motor right_swerve_2, 
+        pros::ADIAnalogIn right_swerve_pot, pros::Motor rear_swerve_1, pros::Motor rear_swerve_2, 
+        pros::ADIAnalogIn rear_swerve_pot);
 
     void initialize();
 

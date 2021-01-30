@@ -3,9 +3,9 @@
 
 SwerveController::SwerveController(Eigen::Vector2d left_module_location, Eigen::Vector2d right_module_location, Eigen::Vector2d rear_module_location,
     double rotation_angle_threshold, double max_velocity, double max_rotation_velocity, double kP, double kI, double kD) : 
-    leftSwerveModule(SwerveModule(left_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD)),
-    rightSwerveModule(SwerveModule(right_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD)),
-    rearSwerveModule(SwerveModule(rear_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD)) {
+    leftSwerveModule(left_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD),
+    rightSwerveModule(right_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD),
+    rearSwerveModule(rear_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD) {
     
 }
 
