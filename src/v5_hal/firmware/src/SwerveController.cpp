@@ -6,7 +6,6 @@ SwerveController::SwerveController(Eigen::Vector2d left_module_location, Eigen::
     leftSwerveModule(left_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD),
     rightSwerveModule(right_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD),
     rearSwerveModule(rear_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD) {
-    
 }
 
 void SwerveController::assignActualAngle(const float left_msg, const float right_msg, const float rear_msg) {
@@ -18,18 +17,20 @@ void SwerveController::assignActualAngle(const float left_msg, const float right
 MotorPowers SwerveController::calculateLeftModule(Eigen::Vector2d target_velocity, double rotation_velocity) {
     MotorPowers motor_powers = leftSwerveModule.InverseKinematics(target_velocity, rotation_velocity, left_actual_angle);
 
+    //printf("Motor Powers %i %i\n",  motor_powers.left_motor_power, motor_powers.right_motor_power);
+
     return motor_powers;
 }
 
 MotorPowers SwerveController::calculateRightModule(Eigen::Vector2d target_velocity, double rotation_velocity) {
-    MotorPowers motor_powers = rightSwerveModule.InverseKinematics(target_velocity, rotation_velocity, right_actual_angle);
+    right_motor_powers = rightSwerveModule.InverseKinematics(target_velocity, rotation_velocity, right_actual_angle);
 
-    return motor_powers;
+    return right_motor_powers;
 }
 
 MotorPowers SwerveController::calculateRearModule(Eigen::Vector2d target_velocity, double rotation_velocity) {
-    MotorPowers motor_powers = rearSwerveModule.InverseKinematics(target_velocity, rotation_velocity, rear_actual_angle);
+    rear_motor_powers = rearSwerveModule.InverseKinematics(target_velocity, rotation_velocity, rear_actual_angle);
 
-    return motor_powers;
+    return rear_motor_powers;
 }
 

@@ -10,9 +10,10 @@ class SwerveController{
     SwerveModule leftSwerveModule;
     SwerveModule rightSwerveModule;
     SwerveModule rearSwerveModule;
-    
-    
 
+    MotorPowers left_motor_powers;
+    MotorPowers right_motor_powers;
+    MotorPowers rear_motor_powers;
 
 public:
     SwerveController(Eigen::Vector2d left_module_location, Eigen::Vector2d right_module_location, Eigen::Vector2d rear_module_location,

@@ -27,6 +27,8 @@ public:
 
     int getPosition();
 
+    void move(int value);
+
     void moveVoltage(int voltage);
 
     void periodic();
