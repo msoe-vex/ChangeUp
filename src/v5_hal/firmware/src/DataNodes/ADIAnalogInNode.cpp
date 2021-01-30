@@ -12,7 +12,6 @@ ADIAnalogInNode::ADIAnalogInNode(NodeManager* node_manager, int port,
 
 void ADIAnalogInNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
@@ -25,7 +24,6 @@ void ADIAnalogInNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage();
     m_publisher->publish(&m_analog_in_msg);
-    Node::m_handle->spinOnce();
 }
 
 void ADIAnalogInNode::m_populateMessage() {
