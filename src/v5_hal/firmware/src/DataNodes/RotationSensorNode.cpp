@@ -9,7 +9,6 @@ RotationSensorNode::RotationSensorNode(NodeManager* node_manager,
 }
 
 void RotationSensorNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
@@ -27,8 +26,7 @@ int RotationSensorNode::getVelocity() {
 
 void RotationSensorNode::periodic() {
     m_populateMessage();
-    m_publisher->publish(&m_rotation_msg);
-    Node::m_handle->spinOnce();
+    // m_publisher->publish(&m_rotation_msg);
 }
 
 void RotationSensorNode::m_populateMessage() {

@@ -11,7 +11,6 @@ HelloWorldNode::HelloWorldNode(NodeManager* node_manager,
 
 void HelloWorldNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
@@ -20,7 +19,6 @@ void HelloWorldNode::periodic() {
     // coprocessor on the published topic
     m_populateMessage();
     m_publisher->publish(&m_string_msg);
-    Node::m_handle->spinOnce();
 }
 
 void HelloWorldNode::m_populateMessage() {

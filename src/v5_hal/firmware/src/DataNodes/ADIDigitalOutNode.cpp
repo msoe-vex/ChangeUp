@@ -18,7 +18,6 @@ void ADIDigitalOutNode::setValue(int value) {
 }
 
 void ADIDigitalOutNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->subscribe(*m_digital_out_sub);
 }
 

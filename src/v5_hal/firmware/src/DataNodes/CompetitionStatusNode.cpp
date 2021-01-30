@@ -8,14 +8,12 @@ CompetitionStatusNode::CompetitionStatusNode (NodeManager* node_manager,
 }
 
 void CompetitionStatusNode::initialize() {
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
 void CompetitionStatusNode::periodic() {
     m_populateMessage();
-    m_publisher->publish(&m_comp_status_msg);
-    Node::m_handle->spinOnce();
+    // m_publisher->publish(&m_comp_status_msg);
 }
 
 void CompetitionStatusNode::m_populateMessage() {
