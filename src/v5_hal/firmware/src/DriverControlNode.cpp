@@ -25,19 +25,22 @@ void DriverControlNode::initialize() {
 }
 
 void DriverControlNode::periodic() {
-
-    target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127) * max_velocity;
-    target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127) * max_velocity;
-    rotation_velocity = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127) * max_rotation_velocity;
+    target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * max_velocity;
+    target_velocity(1) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * max_velocity;
+    rotation_velocity = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * max_rotation_velocity;
 
     swerveController.assignActualAngle(left_swerve_pot->getValue(), right_swerve_pot->getValue(), rear_swerve_pot->getValue());
-    left_swerve_1->moveVoltage(swerveController.calculateLeftModule(target_velocity, rotation_velocity).left_motor_power);
-    left_swerve_2->moveVoltage(swerveController.calculateLeftModule(target_velocity, rotation_velocity).right_motor_power);
-    right_swerve_1->moveVoltage(swerveController.calculateRightModule(target_velocity, rotation_velocity).left_motor_power);
-    right_swerve_2->moveVoltage(swerveController.calculateRightModule(target_velocity, rotation_velocity).right_motor_power);
-    rear_swerve_1->moveVoltage(swerveController.calculateRearModule(target_velocity, rotation_velocity).left_motor_power);
-    rear_swerve_2->moveVoltage(swerveController.calculateRearModule(target_velocity, rotation_velocity).right_motor_power);
 
+    MotorPowers left_motor_powers = swerveController.calculateLeftModule(target_velocity, rotation_velocity);
+    MotorPowers right_motor_powers = swerveController.calculateRightModule(target_velocity, rotation_velocity);
+    MotorPowers rear_motor_powers = swerveController.calculateRearModule(target_velocity, rotation_velocity);
+
+    left_swerve_1->move(left_motor_powers.left_motor_power);
+    left_swerve_2->move(left_motor_powers.right_motor_power);
+    right_swerve_1->move(right_motor_powers.left_motor_power);
+    right_swerve_2->move(right_motor_powers.right_motor_power);
+    rear_swerve_1->move(rear_motor_powers.left_motor_power);
+    rear_swerve_2->move(rear_motor_powers.right_motor_power);
 }
 
 DriverControlNode::~DriverControlNode() { 

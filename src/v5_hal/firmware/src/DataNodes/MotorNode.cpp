@@ -30,6 +30,10 @@ int MotorNode::getPosition() {
     return m_motor.get_position();
 }
 
+void MotorNode::move(int value) {
+    m_motor.move(value);
+}
+
 void MotorNode::moveVoltage(int voltage) {
     m_motor.move_voltage(voltage);
 }
