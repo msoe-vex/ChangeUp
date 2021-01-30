@@ -40,7 +40,7 @@ void MotorNode::moveVoltage(int voltage) {
 void MotorNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    m_populateMessage();
+    // m_populateMessage();
     // m_publisher->publish(&m_motor_msg);
 }
 

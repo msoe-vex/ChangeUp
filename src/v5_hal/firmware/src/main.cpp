@@ -38,8 +38,13 @@ void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
 
+<<<<<<< HEAD
 	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", false);
 	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", false);
+=======
+	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", true);
+	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", true);
+>>>>>>> Readded nodes
 	left_module_pot = new ADIAnalogInNode(node_manager, 8, "leftModulePot");
 
 	right_module_1 = new MotorNode(node_manager, 3, "rightModule1", false);
@@ -58,12 +63,12 @@ void initialize() {
 
 	inertial_sensor = new InertialSensorNode(node_manager, 12, "inertialSensor");
 	
-	// x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
-	// y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
+	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
+	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
 	
-	// battery = new BatteryNode(node_manager, "v5battery");
-	// competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
-	// pros_time = new ProsTimeNode(node_manager, "prosTime");
+	battery = new BatteryNode(node_manager, "v5battery");
+	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
+	pros_time = new ProsTimeNode(node_manager, "prosTime");
 
 	driver_control = new DriverControlNode(node_manager, left_module_1, left_module_2, left_module_pot, 
 		right_module_1, right_module_2, right_module_pot, rear_module_1, rear_module_2, rear_module_pot,
