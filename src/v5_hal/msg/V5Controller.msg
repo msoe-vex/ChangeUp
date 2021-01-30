@@ -15,5 +15,3 @@ bool btn_r2
 bool btn_l1
 bool btn_l2
 bool is_connected
-int16 battery_capacity
-int8 battery_level
