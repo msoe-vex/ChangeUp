@@ -1,7 +1,7 @@
 #include "DataNodes/CompetitionStatusNode.h"
 
 CompetitionStatusNode::CompetitionStatusNode (NodeManager* node_manager, 
-    std::string handle_name) : Node(node_manager, 50) {
+    std::string handle_name) : Node(node_manager, 100) {
     m_handle_name = handle_name.insert(0, "compStatus/");
     m_sub_publish_data_name = m_handle_name + "/publish";
 
