@@ -21,8 +21,6 @@ void CompetitionStatusNode::initialize() {
 }
 
 void CompetitionStatusNode::periodic() {
-    m_populateMessage();
-    // m_publisher->publish(&m_comp_status_msg);
 }
 
 void CompetitionStatusNode::m_populateMessage() {

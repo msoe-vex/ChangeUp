@@ -60,8 +60,6 @@ void initialize() {
 	bottom_rollers = new MotorNode(node_manager, 15, "bottomRollers", true);
 	ejection_roller = new MotorNode(node_manager, 14, "ejectionRoller", false);
 	top_rollers = new MotorNode(node_manager, 6, "topRollers", true);
-
-	inertial_sensor = new InertialSensorNode(node_manager, 12, "inertialSensor");
 	
 	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
 	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);

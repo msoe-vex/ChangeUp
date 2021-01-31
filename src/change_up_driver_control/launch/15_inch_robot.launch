@@ -1,6 +1,6 @@
 <launch>
   <!-- the primary port that allows rosserial to function -->
-  <arg name="mainport" default="/dev/ttyACM0"/>
+  <arg name="mainport" default="/dev/ttyACM0" />
   <arg name="mainbaud" default="57600" />
 
   <node name="connector" type="serial_node.py" pkg="rosserial_arduino" respawn="true" output="screen">
