@@ -16,7 +16,7 @@ MotorNode::MotorNode(NodeManager* node_manager, int port_number,
 
 void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
     float voltage = (msg.data / 127.0) * 12000.0;
-    m_motor.move_voltage((int)voltage);
+    moveVoltage((int)voltage);
 }
 
 void MotorNode::initialize() {
@@ -24,6 +24,18 @@ void MotorNode::initialize() {
     Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
     Node::m_handle->subscribe(*m_move_motor_voltage_sub);
+}
+
+int MotorNode::getPosition() {
+    return m_motor.get_position();
+}
+
+void MotorNode::move(int value) {
+    m_motor.move(value);
+}
+
+void MotorNode::moveVoltage(int voltage) {
+    m_motor.move_voltage(voltage);
 }
 
 void MotorNode::periodic() {

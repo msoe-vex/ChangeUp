@@ -25,6 +25,12 @@ public:
 
     void initialize();
 
+    int getPosition();
+
+    void move(int value);
+
+    void moveVoltage(int voltage);
+
     void periodic();
 
     ~MotorNode();

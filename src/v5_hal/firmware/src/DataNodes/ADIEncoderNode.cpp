@@ -16,6 +16,10 @@ void ADIEncoderNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
+int ADIEncoderNode::getValue() {
+    return m_encoder.get_value();
+}
+
 void ADIEncoderNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
@@ -25,7 +29,7 @@ void ADIEncoderNode::periodic() {
 }
 
 void ADIEncoderNode::m_populateMessage() {
-    m_encoder_msg.data = m_encoder.get_value();
+    m_encoder_msg.data = getValue();
 }
 
 ADIEncoderNode::~ADIEncoderNode() { 

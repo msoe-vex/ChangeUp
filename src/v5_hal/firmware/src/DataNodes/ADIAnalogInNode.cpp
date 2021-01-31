@@ -16,6 +16,10 @@ void ADIAnalogInNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
+int ADIAnalogInNode::getValue() {
+    return m_analog_in.get_value();
+}
+
 void ADIAnalogInNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
