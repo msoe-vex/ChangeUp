@@ -47,13 +47,13 @@ void initialize() {
 	right_module_pot = new ADIAnalogInNode(node_manager, 7, "rightModulePot");
 
 	rear_module_1 = new MotorNode(node_manager, 5, "rearModule1", true);
-	rear_module_2 = new MotorNode(node_manager, 6, "rearModule2", true);
+	rear_module_2 = new MotorNode(node_manager, 7, "rearModule2", true);
 	rear_module_pot = new ADIAnalogInNode(node_manager, 6, "rearModulePot");
 	
-	left_intake = new MotorNode(node_manager, 2, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 1, "rightIntake", false);
-	bottom_rollers = new MotorNode(node_manager, 5, "bottomRollers", true);
-	ejection_roller = new MotorNode(node_manager, 4, "ejectionRoller", false);
+	left_intake = new MotorNode(node_manager, 11, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 13, "rightIntake", false);
+	bottom_rollers = new MotorNode(node_manager, 15, "bottomRollers", true);
+	ejection_roller = new MotorNode(node_manager, 14, "ejectionRoller", false);
 	top_rollers = new MotorNode(node_manager, 6, "topRollers", true);
 
 	inertial_sensor = new InertialSensorNode(node_manager, 12, "inertialSensor");
