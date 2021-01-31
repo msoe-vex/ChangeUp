@@ -29,15 +29,11 @@ void ADIAnalogInNode::periodic() {
 }
 
 void ADIAnalogInNode::m_populateMessage() {
-<<<<<<< HEAD
     if (m_is_reversed) {
         m_analog_in_msg.data = (4096 - m_analog_in.get_value());
     } else {
         m_analog_in_msg.data = m_analog_in.get_value();
     }
-=======
-    m_analog_in_msg.data = getValue();
->>>>>>> Updated driver control to use values in node structures
 }
 
 ADIAnalogInNode::~ADIAnalogInNode() { 
