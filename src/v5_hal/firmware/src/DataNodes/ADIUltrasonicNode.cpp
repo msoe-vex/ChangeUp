@@ -32,8 +32,6 @@ int ADIUltrasonicNode::getValue() {
 void ADIUltrasonicNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    m_populateMessage();
-    // m_publisher->publish(&m_ultrasonic_msg);
 }
 
 void ADIUltrasonicNode::m_populateMessage() {

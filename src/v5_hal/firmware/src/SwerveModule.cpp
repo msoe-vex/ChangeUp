@@ -98,7 +98,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
 
     // std::cout << "PID Error: " << module_rotation_delta << "\n" << std::endl;
 
-    // Dirivative
+    // Derivative
     derivative = error - m_percent_error;
 
     // Integral

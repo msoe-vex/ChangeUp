@@ -31,8 +31,6 @@ int ADIEncoderNode::getValue() {
 void ADIEncoderNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    m_populateMessage();
-    // m_publisher->publish(&m_encoder_msg);
 }
 
 void ADIEncoderNode::m_populateMessage() {
