@@ -38,16 +38,16 @@ void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
 
-	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", true);
-	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", true);
+	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", false);
+	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", false);
 	left_module_pot = new ADIAnalogInNode(node_manager, 8, "leftModulePot");
 
-	right_module_1 = new MotorNode(node_manager, 3, "rightModule1", true);
-	right_module_2 = new MotorNode(node_manager, 4, "rightModule2", true);
+	right_module_1 = new MotorNode(node_manager, 3, "rightModule1", false);
+	right_module_2 = new MotorNode(node_manager, 4, "rightModule2", false);
 	right_module_pot = new ADIAnalogInNode(node_manager, 7, "rightModulePot");
 
-	rear_module_1 = new MotorNode(node_manager, 5, "rearModule1", true);
-	rear_module_2 = new MotorNode(node_manager, 7, "rearModule2", true);
+	rear_module_1 = new MotorNode(node_manager, 5, "rearModule1", false);
+	rear_module_2 = new MotorNode(node_manager, 7, "rearModule2", false);
 	rear_module_pot = new ADIAnalogInNode(node_manager, 6, "rearModulePot");
 	
 	left_intake = new MotorNode(node_manager, 11, "leftIntake", true);

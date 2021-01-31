@@ -76,6 +76,20 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // PID control for turning
     Eigen::Vector2d motor_power_vector;
 
+    if(fabs(module_rotation_delta) > M_PI_2){
+        module_rotation_delta = (target_vector_angle * module_actual_angle.inverse() * Eigen::Rotation2Dd(M_PI)).smallestAngle();
+
+        // Set the power as the magnitude of the vector
+        motor_power_vector(0) = -target_vector.norm() / m_max_velocity;
+
+        // std::cout << "Forward %: " << motor_power_vector(0) << "\n" << std::endl;
+    } else{
+        // Set the power as the magnitude of the vector
+        motor_power_vector(0) = target_vector.norm() / m_max_velocity;
+
+        // std::cout << "Forward %: " << motor_power_vector(0) << "\n" << std::endl;
+    }
+
     double error;
     double derivative;
 
@@ -98,10 +112,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
 
     // std::cout << "PID Output: " << motor_power_vector(1) << "\n" << std::endl;
 
-    // Set the power as the magnitude of the vector
-    motor_power_vector(0) = target_vector.norm() / m_max_velocity;
-
-    // std::cout << "Forward %: " << motor_power_vector(0) << "\n" << std::endl;
+   
 
     // ROS_INFO("Motor Power Vector - x:%.2f y:%.2f", motor_power_vector(0), motor_power_vector(1));
 

@@ -15,7 +15,7 @@ class SwerveController{
     MotorPowers right_motor_powers;
     MotorPowers rear_motor_powers;
 
-    const int LEFT_POT_OFFSET = 0;
+    const int LEFT_POT_OFFSET = 731;
     const int RIGHT_POT_OFFSET = 0;
     const int REAR_POT_OFFSET = 0;
 
