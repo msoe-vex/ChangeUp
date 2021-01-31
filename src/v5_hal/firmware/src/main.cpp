@@ -18,9 +18,11 @@ ADIAnalogInNode* rear_module_pot;
 MotorNode* left_intake;
 MotorNode* right_intake;
 MotorNode* bottom_rollers;
+MotorNode* ejection_roller;
 MotorNode* top_rollers;
 ADIEncoderNode* x_odometry_encoder;
 ADIEncoderNode* y_odometry_encoder;
+InertialSensorNode* inertial_sensor;
 BatteryNode* battery;
 CompetitionStatusNode* competition_status;
 ProsTimeNode* pros_time;
@@ -40,18 +42,21 @@ void initialize() {
 	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", true);
 	left_module_pot = new ADIAnalogInNode(node_manager, 8, "leftModulePot");
 
-	right_module_1 = new MotorNode(node_manager, 3, "rightModule1", false);
-	right_module_2 = new MotorNode(node_manager, 4, "rightModule2", false);
+	right_module_1 = new MotorNode(node_manager, 9, "rightModule1", false);
+	right_module_2 = new MotorNode(node_manager, 10, "rightModule2", false);
 	right_module_pot = new ADIAnalogInNode(node_manager, 7, "rightModulePot");
 
-	rear_module_1 = new MotorNode(node_manager, 5, "rearModule1", false);
-	rear_module_2 = new MotorNode(node_manager, 6, "rearModule2", false);
+	rear_module_1 = new MotorNode(node_manager, 11, "rearModule1", false);
+	rear_module_2 = new MotorNode(node_manager, 12, "rearModule2", false);
 	rear_module_pot = new ADIAnalogInNode(node_manager, 6, "rearModulePot");
 	
-	left_intake = new MotorNode(node_manager, 7, "leftIntake", false);
-	right_intake = new MotorNode(node_manager, 8, "rightIntake", false);
-	bottom_rollers = new MotorNode(node_manager, 9, "bottomRollers", false);
-	top_rollers = new MotorNode(node_manager, 10, "topRollers", false);
+	left_intake = new MotorNode(node_manager, 2, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 1, "rightIntake", false);
+	bottom_rollers = new MotorNode(node_manager, 5, "bottomRollers", true);
+	ejection_roller = new MotorNode(node_manager, 4, "ejectionRoller", false);
+	top_rollers = new MotorNode(node_manager, 6, "topRollers", true);
+
+	inertial_sensor = new InertialSensorNode(node_manager, 13, "inertialSensor");
 	
 	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
 	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
@@ -62,7 +67,7 @@ void initialize() {
 
 	driver_control = new DriverControlNode(node_manager, left_module_1, left_module_2, left_module_pot, 
 		right_module_1, right_module_2, right_module_pot, rear_module_1, rear_module_2, rear_module_pot,
-		primary_controller);
+		left_intake, right_intake, bottom_rollers, ejection_roller, top_rollers, inertial_sensor, primary_controller);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

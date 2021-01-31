@@ -46,6 +46,7 @@
 #include "DataNodes/CompetitionStatusNode.h"
 #include "DataNodes/ProsTimeNode.h"
 #include "DataNodes/BatteryNode.h"
+#include "DataNodes/InertialSensorNode.h"
 #include "DriverControlNode.h"
 
    /**
