@@ -7,7 +7,10 @@ InertialSensorNode::InertialSensorNode(NodeManager* node_manager,
 }
 
 void InertialSensorNode::initialize() {
-
+    m_inertial_sensor.reset();
+    while(m_inertial_sensor.is_calibrating()){
+        pros::delay(10);
+    }
 }
 
 double InertialSensorNode::getYaw() {
