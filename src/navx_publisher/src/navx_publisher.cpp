@@ -11,6 +11,7 @@
 #include "nav_msgs/Odometry.h"
 #include "navXTimeSync/AHRS.h"
 #include "navx_publisher/stampedUInt64.h"
+#include "navx_publisher/RollPitchYaw.h"
 #include <tf/transform_datatypes.h>
 
 using namespace std;
