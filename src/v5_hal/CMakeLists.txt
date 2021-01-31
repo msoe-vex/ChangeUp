@@ -52,6 +52,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    CompetitionStatus.msg
+   RollPitchYaw.msg
    V5Battery.msg
    V5Controller.msg
    V5InertialSensor.msg

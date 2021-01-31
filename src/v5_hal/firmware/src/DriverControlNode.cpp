@@ -20,10 +20,18 @@ DriverControlNode::DriverControlNode(NodeManager* node_manager, MotorNode* left_
     right_module_location(1) = right_module_location_y;
     rear_module_location(0) = rear_module_location_x;
     rear_module_location(1) = rear_module_location_y;
+
+
+    m_navx_sub = new ros::Subscriber<v5_hal::RollPitchYaw, DriverControlNode>
+        ("/navx/rpy", &DriverControlNode::m_navxDataCallback, this);
 }
 
 void DriverControlNode::initialize() {
     Node::m_handle->initNode();
+}
+
+void DriverControlNode::m_navxDataCallback(const v5_hal::RollPitchYaw& msg) {
+	robot_angle = Eigen::Rotation2Dd(msg.yaw);
 }
 
 /**
@@ -56,9 +64,6 @@ void DriverControlNode::m_spinEjectionRollerVoltage(int voltage) {
 }
 
 void DriverControlNode::periodic() {
-    robot_angle = Eigen::Rotation2Dd(inertial_sensor->getYaw());
-
-
     // printf("Inertial Sensor Yaw: %f\n", inertial_sensor->getYaw());
     
     controller_target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * max_velocity;

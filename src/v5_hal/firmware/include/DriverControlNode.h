@@ -8,6 +8,7 @@
 #include "DataNodes/ADIAnalogInNode.h"
 #include "DataNodes/ControllerNode.h"
 #include "DataNodes/InertialSensorNode.h"
+#include "ros_lib/v5_hal/RollPitchYaw.h"
 
 class DriverControlNode : public Node {
 private:
@@ -15,10 +16,11 @@ private:
 
     std::string m_handle_name;
     ros::Publisher* m_publisher;
+    ros::Subscriber<v5_hal::RollPitchYaw, DriverControlNode>* m_navx_sub;
 
     Eigen::Vector2d controller_target_velocity;
     Eigen::Vector2d field_target_velocity;
-    Eigen::Rotation2Dd robot_angle;
+    Eigen::Rotation2Dd robot_angle = Eigen::Rotation2Dd(0);
     double rotation_velocity;
     double rotation_angle_threshold = (M_PI / 3);
     double max_velocity = 1.31;
@@ -52,6 +54,8 @@ private:
     ADIAnalogInNode* rear_swerve_pot;
     InertialSensorNode* inertial_sensor;
     pros::Controller* controller_primary;
+
+    void m_navxDataCallback(const v5_hal::RollPitchYaw& msg);
 
     void m_spinIntakesVoltage(int voltage);
 
