@@ -67,6 +67,8 @@ void DriverControlNode::periodic() {
 
     field_target_velocity = robot_angle.inverse() * controller_target_velocity;
 
+    // printf("Field Target Velocity: %f\n", field_target_velocity);
+
     swerveController.assignActualAngle(left_swerve_pot->getValue(), right_swerve_pot->getValue(), rear_swerve_pot->getValue());
 
     MotorPowers left_motor_powers = swerveController.calculateLeftModule(field_target_velocity, rotation_velocity);
@@ -79,6 +81,13 @@ void DriverControlNode::periodic() {
     right_swerve_2->move(right_motor_powers.right_motor_power);
     rear_swerve_1->move(rear_motor_powers.left_motor_power);
     rear_swerve_2->move(rear_motor_powers.right_motor_power);
+
+    // printf("Left Motor 1 Power: %d\n", left_motor_powers.left_motor_power);
+    // printf("Left Motor 2 Power: %d\n", left_motor_powers.right_motor_power);
+    // printf("Right Motor 1 Power: %d\n", right_motor_powers.left_motor_power);
+    // printf("Right Motor 2 Power: %d\n", right_motor_powers.right_motor_power);
+    // printf("Rear Motor 1 Power: %d\n", rear_motor_powers.left_motor_power);
+    // printf("Rear Motor 2 Power: %d\n", rear_motor_powers.right_motor_power);
 
     int intake_voltage = 0;
 	int main_rollers_voltage = 0;
