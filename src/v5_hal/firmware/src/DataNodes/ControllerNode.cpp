@@ -33,6 +33,10 @@ void ControllerNode::initialize() {
     Node::m_handle->subscribe(*m_rumble_controller_sub);
 }
 
+pros::Controller* ControllerNode::getController() {
+    return &m_controller;
+}
+
 void ControllerNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic

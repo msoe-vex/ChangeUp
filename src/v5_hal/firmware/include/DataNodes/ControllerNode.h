@@ -26,6 +26,8 @@ public:
 
     void initialize();
 
+    pros::Controller* getController();
+
     void periodic();
 
     ~ControllerNode();

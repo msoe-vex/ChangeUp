@@ -15,6 +15,10 @@ void ADIDigitalInNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
+int ADIDigitalInNode::getValue() {
+    return m_digital_in.get_value();
+}
+
 void ADIDigitalInNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
@@ -25,7 +29,7 @@ void ADIDigitalInNode::periodic() {
 
 void ADIDigitalInNode::m_populateMessage() {
     // By defalt, C++ maps 0 to false and 1 to true
-    m_digital_in_msg.data = (bool)m_digital_in.get_value();
+    m_digital_in_msg.data = (bool)getValue();
 }
 
 ADIDigitalInNode::~ADIDigitalInNode() { 

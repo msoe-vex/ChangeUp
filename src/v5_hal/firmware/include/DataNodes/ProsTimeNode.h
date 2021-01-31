@@ -17,6 +17,8 @@ public:
     ProsTimeNode(NodeManager* node_handle, std::string handle_name);
 
     void initialize();
+
+    int getValue();
     
     void periodic();
 

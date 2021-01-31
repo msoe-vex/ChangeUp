@@ -15,6 +15,10 @@ void ADIGyroNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
+float ADIGyroNode::getValue() {
+    return m_gyro.get_value();
+}
+
 void ADIGyroNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
@@ -24,7 +28,7 @@ void ADIGyroNode::periodic() {
 }
 
 void ADIGyroNode::m_populateMessage() { 
-    m_gyro_msg.data = m_gyro.get_value(); 
+    m_gyro_msg.data = m_gyro.get_value();
 }
 
 ADIGyroNode::~ADIGyroNode() { 
