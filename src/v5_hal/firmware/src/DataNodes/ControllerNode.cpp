@@ -32,7 +32,7 @@ void ControllerNode::m_rumbleController(const std_msgs::String& msg) {
     if (str.length() <= 8) {
         m_controller.rumble(str.c_str());
     } else {
-        // TODO Log to ROS
+        m_handle->logwarn("Rumble string exceeds 8 characters, will be discarded");
     }
 }
 
