@@ -8,10 +8,17 @@ SwerveController::SwerveController(Eigen::Vector2d left_module_location, Eigen::
     rearSwerveModule(rear_module_location, rotation_angle_threshold, max_velocity, max_rotation_velocity, kP, kI, kD) {
 }
 
+<<<<<<< Updated upstream
 void SwerveController::assignActualAngle(int left_pot, int right_pot, int rear_pot) {
     left_actual_angle = Eigen::Rotation2Dd((left_pot - LEFT_POT_OFFSET) % 4095);
     right_actual_angle = Eigen::Rotation2Dd((right_pot - RIGHT_POT_OFFSET) % 4095);
     rear_actual_angle = Eigen::Rotation2Dd((rear_pot - REAR_POT_OFFSET) % 4095);
+=======
+void SwerveController::assignActualAngle(const float left_msg, const float right_msg, const float rear_msg) {
+    left_actual_angle = Eigen::Rotation2Dd((((float)left_msg / 4095.0) * M_PI) * 2.0);
+    right_actual_angle = Eigen::Rotation2Dd((((float)right_msg / 4095.0) * M_PI) * 2.0);
+    rear_actual_angle = Eigen::Rotation2Dd((((float)rear_msg / 4095.0) * M_PI) * 2.0);
+>>>>>>> Stashed changes
 }
 
 MotorPowers SwerveController::calculateLeftModule(Eigen::Vector2d target_velocity, double rotation_velocity) {

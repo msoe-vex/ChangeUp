@@ -66,6 +66,7 @@ void DriverControlNode::periodic() {
 
     swerveController.assignActualAngle(left_swerve_pot->getValue(), right_swerve_pot->getValue(), rear_swerve_pot->getValue());
 
+<<<<<<< Updated upstream
     MotorPowers left_motor_powers = swerveController.calculateLeftModule(field_target_velocity, rotation_velocity);
     MotorPowers right_motor_powers = swerveController.calculateRightModule(field_target_velocity, rotation_velocity);
     MotorPowers rear_motor_powers = swerveController.calculateRearModule(field_target_velocity, rotation_velocity);
@@ -99,6 +100,20 @@ void DriverControlNode::periodic() {
 	m_spinIntakesVoltage(intake_voltage);
 	m_spinMainRollersVoltage(main_rollers_voltage);
 	m_spinEjectionRollerVoltage(ejection_roller_voltage);
+=======
+    printf("Left Pot Value: %d\n", left_swerve_pot->getValue());
+
+    MotorPowers left_motor_powers = swerveController.calculateLeftModule(target_velocity, rotation_velocity);
+    //MotorPowers right_motor_powers = swerveController.calculateRightModule(target_velocity, rotation_velocity);
+    //MotorPowers rear_motor_powers = swerveController.calculateRearModule(target_velocity, rotation_velocity);
+
+    left_swerve_1->move(left_motor_powers.left_motor_power);
+    left_swerve_2->move(left_motor_powers.right_motor_power);
+    // right_swerve_1->move(right_motor_powers.left_motor_power);
+    // right_swerve_2->move(right_motor_powers.right_motor_power);
+    // rear_swerve_1->move(rear_motor_powers.left_motor_power);
+    // rear_swerve_2->move(rear_motor_powers.right_motor_power);
+>>>>>>> Stashed changes
 }
 
 DriverControlNode::~DriverControlNode() { 
