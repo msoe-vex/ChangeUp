@@ -243,7 +243,7 @@ int main(int argc, char **argv)
 			imu_msg.angular_velocity.y = pitch / dTime;
 			imu_rpy_msg.pitch = pitch;
 			imu_msg.angular_velocity.z = -yaw / dTime;
-			imu_rpy_msg = yaw;
+			imu_rpy_msg.yaw = yaw;
 			imu_msg_raw.angular_velocity = imu_msg.angular_velocity;
 			last_rot = pose;
 			last_time = odom.header.stamp;
