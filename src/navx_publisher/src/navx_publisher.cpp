@@ -265,7 +265,7 @@ int main(int argc, char **argv)
 			//publish to ROS topics
 			time_pub.publish(timestamp);
 			imu_pub.publish(imu_msg);
-			imu_rpy_pub.publish(imu_rpy_msg)
+			imu_rpy_pub.publish(imu_rpy_msg);
 			odom_pub.publish(odom);
 			raw_pub.publish(imu_msg_raw);
 		}
