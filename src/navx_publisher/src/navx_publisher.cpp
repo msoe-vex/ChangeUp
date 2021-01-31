@@ -138,7 +138,7 @@ int main(int argc, char **argv)
 
 	bool firstrun = true;
 
-	ros::Rate loop_time(210);
+	ros::Rate loop_time(100);
 	ros::NodeHandle nh_local("~");
 	const std::string device(nh_local.param("device", std::string("/dev/ttyACM0")));
 
