@@ -15,11 +15,15 @@ class SwerveController{
     MotorPowers right_motor_powers;
     MotorPowers rear_motor_powers;
 
+    const int LEFT_POT_OFFSET = 0;
+    const int RIGHT_POT_OFFSET = 0;
+    const int REAR_POT_OFFSET = 0;
+
 public:
     SwerveController(Eigen::Vector2d left_module_location, Eigen::Vector2d right_module_location, Eigen::Vector2d rear_module_location,
     double rotation_angle_threshold, double max_velocity, double max_rotation_velocity, double kP, double kI, double kD);
      
-    void assignActualAngle(const float left_msg, const float right_msg, const float rear_msg);
+    void assignActualAngle(int left_pot, int right_pot, int rear_pot);
 
     MotorPowers calculateLeftModule(Eigen::Vector2d target_velocity, double rotation_velocity);
 

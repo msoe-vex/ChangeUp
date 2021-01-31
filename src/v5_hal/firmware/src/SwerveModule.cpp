@@ -82,7 +82,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // Proportional
     error = module_rotation_delta;
 
-    // Dirivative
+    // Derivative
     derivative = error - m_percent_error;
 
     // Integral
