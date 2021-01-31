@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 	// instead of NED (north east down)
 	ros::Publisher time_pub = nh.advertise<navx_publisher::stampedUInt64>("time", 5);
 	ros::Publisher imu_pub = nh.advertise<sensor_msgs::Imu>("navx/data", 5);
-	ros::Publisher imu_rpy_pub = nh.advertise<sensor_msgs::Imu>("navx/rpy", 5);
+	ros::Publisher imu_rpy_pub = nh.advertise<navx_publisher::RollPitchYaw>("navx/rpy", 5);
 	ros::Publisher raw_pub = nh.advertise<sensor_msgs::Imu>("navx/raw", 5);
 	ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("odom", 5);
 	navx_publisher::stampedUInt64 timestamp;
