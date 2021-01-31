@@ -82,7 +82,13 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // Proportional
     error = module_rotation_delta;
 
+<<<<<<< Updated upstream
     // Derivative
+=======
+    std::cout << "PID Error: " << module_rotation_delta << "\n" << std::endl;
+
+    // Dirivative
+>>>>>>> Stashed changes
     derivative = error - m_percent_error;
 
     // Integral
@@ -94,8 +100,12 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // Set the turn as the error * a constant + the derivative * a constant + the integral * a constant
     motor_power_vector(1) = error * kP + derivative * kD + m_total_error * kI;
 
+    std::cout << "PID Output: " << motor_power_vector(1) << "\n" << std::endl;
+
     // Set the power as the magnitude of the vector
     motor_power_vector(0) = target_vector.norm() / m_max_velocity;
+
+    std::cout << "Forward %: " << motor_power_vector(0) << "\n" << std::endl;
 
     // ROS_INFO("Motor Power Vector - x:%.2f y:%.2f", motor_power_vector(0), motor_power_vector(1));
 
@@ -139,8 +149,8 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     // ROS_INFO("Scaled Motor 1 Mag (FINAL): %.2f", scaled_motor_1_mag);
     // ROS_INFO("Scaled Motor 2 Mag (FINAL): %.2f", scaled_motor_2_mag);
 
-    // std::cout << "Scaled Motor 1 Magnitude (2): " << scaled_motor_1_mag << "\n" << std::endl;
-    // std::cout << "Scaled Motor 2 Magnitude (2): " << scaled_motor_2_mag << "\n" << std::endl;
+    std::cout << "Scaled Motor 1 Magnitude (2): " << scaled_motor_1_mag << "\n" << std::endl;
+    std::cout << "Scaled Motor 2 Magnitude (2): " << scaled_motor_2_mag << "\n" << std::endl;
 
     // Set and return the motor powers
     MotorPowers motor_powers;
