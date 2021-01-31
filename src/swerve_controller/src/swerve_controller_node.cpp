@@ -19,6 +19,7 @@ double y;
 double rotation_angle_threshold;
 double max_velocity;
 double max_rotation_velocity;
+double kP, kI, kD;
 
 void assignTargetVelocity(const geometry_msgs::Vector3& msg) {
     target_velocity(0) = msg.x;
