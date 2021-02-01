@@ -25,7 +25,7 @@ private:
     double rotation_angle_threshold = (M_PI / 3);
     double max_velocity = 1.31;
     double max_rotation_velocity = 0.17;
-    double kP = 0.8;
+    double kP = 0.7;
     double kI = 0.0;
     double kD = 0.0;
     Eigen::Vector2d left_module_location;
@@ -52,6 +52,7 @@ private:
     ADIAnalogInNode* left_swerve_pot;
     ADIAnalogInNode* right_swerve_pot;
     ADIAnalogInNode* rear_swerve_pot;
+    InertialSensorNode* inertial_sensor;
     pros::Controller* controller_primary;
 
     void m_navxDataCallback(const v5_hal::RollPitchYaw& msg);
@@ -67,7 +68,7 @@ public:
         ADIAnalogInNode* left_swerve_pot, MotorNode* right_swerve_1, MotorNode* right_swerve_2, 
         ADIAnalogInNode* right_swerve_pot, MotorNode* rear_swerve_1, MotorNode* rear_swerve_2, 
         ADIAnalogInNode* rear_swerve_pot, MotorNode* left_intake, MotorNode* right_intake, MotorNode* bottom_rollers,
-        MotorNode* ejection_roller, MotorNode* top_rollers, ControllerNode* controller_primary);
+        MotorNode* ejection_roller, MotorNode* top_rollers, InertialSensorNode* inertial_sensor, ControllerNode* controller_primary);
 
     void initialize();
 
