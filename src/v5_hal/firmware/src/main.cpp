@@ -37,36 +37,17 @@ void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", false);
-	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", false);
-=======
-	left_module_1 = new MotorNode(node_manager, 1, "leftModule1", true);
-	left_module_2 = new MotorNode(node_manager, 2, "leftModule2", true);
->>>>>>> Readded nodes
-	left_module_pot = new ADIAnalogInNode(node_manager, 8, "leftModulePot");
-
-	right_module_1 = new MotorNode(node_manager, 3, "rightModule1", false);
-	right_module_2 = new MotorNode(node_manager, 4, "rightModule2", false);
-	right_module_pot = new ADIAnalogInNode(node_manager, 7, "rightModulePot");
-
-	rear_module_1 = new MotorNode(node_manager, 5, "rearModule1", false);
-	rear_module_2 = new MotorNode(node_manager, 7, "rearModule2", false);
-	rear_module_pot = new ADIAnalogInNode(node_manager, 6, "rearModulePot");
-=======
-	left_module_1 = new MotorNode(node_manager, 5, "leftModule1", true);
-	left_module_2 = new MotorNode(node_manager, 6, "leftModule2", true);
+	left_module_1 = new MotorNode(node_manager, 5, "leftModule1", false);
+	left_module_2 = new MotorNode(node_manager, 6, "leftModule2", false);
 	left_module_pot = new ADIAnalogInNode(node_manager, 6, "leftModulePot");
 
-	right_module_1 = new MotorNode(node_manager, 1, "rightModule1", true);
-	right_module_2 = new MotorNode(node_manager, 2, "rightModule2", true);
+	right_module_1 = new MotorNode(node_manager, 1, "rightModule1", false);
+	right_module_2 = new MotorNode(node_manager, 2, "rightModule2", false);
 	right_module_pot = new ADIAnalogInNode(node_manager, 8, "rightModulePot");
 
-	rear_module_1 = new MotorNode(node_manager, 3, "rearModule1", true);
-	rear_module_2 = new MotorNode(node_manager, 4, "rearModule2", true);
+	rear_module_1 = new MotorNode(node_manager, 3, "rearModule1", false);
+	rear_module_2 = new MotorNode(node_manager, 4, "rearModule2", false);
 	rear_module_pot = new ADIAnalogInNode(node_manager, 7, "rearModulePot");
->>>>>>> Updated module offsets
 	
 	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);
