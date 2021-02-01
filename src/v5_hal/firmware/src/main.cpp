@@ -22,7 +22,6 @@ MotorNode* ejection_roller;
 MotorNode* top_rollers;
 ADIEncoderNode* x_odometry_encoder;
 ADIEncoderNode* y_odometry_encoder;
-InertialSensorNode* inertial_sensor;
 BatteryNode* battery;
 CompetitionStatusNode* competition_status;
 ProsTimeNode* pros_time;
@@ -84,7 +83,7 @@ void initialize() {
 
 	driver_control = new DriverControlNode(node_manager, left_module_1, left_module_2, left_module_pot, 
 		right_module_1, right_module_2, right_module_pot, rear_module_1, rear_module_2, rear_module_pot,
-		left_intake, right_intake, bottom_rollers, ejection_roller, top_rollers, inertial_sensor, primary_controller);
+		left_intake, right_intake, bottom_rollers, ejection_roller, top_rollers, primary_controller);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
