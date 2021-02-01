@@ -31,9 +31,9 @@ private:
     Eigen::Vector2d left_module_location;
     Eigen::Vector2d right_module_location;
     Eigen::Vector2d rear_module_location;
-    double left_module_location_x = -5.25;
+    double left_module_location_x = 5.25;
     double left_module_location_y = 5.55;
-    double right_module_location_x = 5.25;
+    double right_module_location_x = -5.25;
     double right_module_location_y = 5.55;
     double rear_module_location_x = 0.0;
     double rear_module_location_y = -5.21;
@@ -52,7 +52,6 @@ private:
     ADIAnalogInNode* left_swerve_pot;
     ADIAnalogInNode* right_swerve_pot;
     ADIAnalogInNode* rear_swerve_pot;
-    InertialSensorNode* inertial_sensor;
     pros::Controller* controller_primary;
 
     void m_navxDataCallback(const v5_hal::RollPitchYaw& msg);
@@ -68,7 +67,7 @@ public:
         ADIAnalogInNode* left_swerve_pot, MotorNode* right_swerve_1, MotorNode* right_swerve_2, 
         ADIAnalogInNode* right_swerve_pot, MotorNode* rear_swerve_1, MotorNode* rear_swerve_2, 
         ADIAnalogInNode* rear_swerve_pot, MotorNode* left_intake, MotorNode* right_intake, MotorNode* bottom_rollers,
-        MotorNode* ejection_roller, MotorNode* top_rollers, InertialSensorNode* inertial_sensor, ControllerNode* controller_primary);
+        MotorNode* ejection_roller, MotorNode* top_rollers, ControllerNode* controller_primary);
 
     void initialize();
 
