@@ -15,9 +15,9 @@ class SwerveController{
     MotorPowers right_motor_powers;
     MotorPowers rear_motor_powers;
 
-    const int LEFT_POT_OFFSET = 0;
-    const int RIGHT_POT_OFFSET = 731;
-    const int REAR_POT_OFFSET = 0;
+    const int LEFT_POT_OFFSET = 2225;
+    const int RIGHT_POT_OFFSET = 2875;
+    const int REAR_POT_OFFSET = 3623;
 
 public:
     SwerveController(Eigen::Vector2d left_module_location, Eigen::Vector2d right_module_location, Eigen::Vector2d rear_module_location,
