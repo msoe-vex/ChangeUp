@@ -24,7 +24,7 @@ private:
     double rotation_velocity;
     double rotation_angle_threshold = (M_PI / 3);
     double max_velocity = 1.31;
-    double max_rotation_velocity = 0.17;
+    double max_rotation_velocity = 1.17;
     double kP = 0.8;
     double kI = 0.0;
     double kD = 0.0;
