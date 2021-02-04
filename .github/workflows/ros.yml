@@ -17,4 +17,4 @@ jobs:
         cd ~/
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
-        /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && catkin_make"
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep install tf && catkin_make"
