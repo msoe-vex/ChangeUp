@@ -9,7 +9,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
     - name: Install catkin
-      run: cd / && ./scripts/actions-entrypoint.sh
+      run: cd / && $GITHUB_WORKSPACE/scripts/actions-entrypoint.sh
     - name: Setup catkin workspace
       run: |
         mkdir -p ~/ros-project/src
