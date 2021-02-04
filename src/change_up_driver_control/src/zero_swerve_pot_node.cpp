@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     ros::Subscriber zero_pot_sub = handle->subscribe("zeroPot", 100, zeroPotCallback);
 
     // Create publishers
-    ros::Publisher motor_pot_pub = handle->advertise<std_msgs::Float32>("outputPot", 100);
+    ros::Publisher motor_pot_pub = handle->advertise<std_msgs::Float32>("/outputPot", 100);
 
     ros::Rate loop_rate(100);
 
