@@ -7,3 +7,6 @@
 [submodule "src/navx_publisher/src/navXTimeSync"]
 	path = src/navx_publisher/src/navXTimeSync
 	url = git@github.com:FRC900/navXTimeSync.git
+[submodule "src/v5_hal/firmware/include/eigen"]
+	path = src/v5_hal/firmware/include/eigen
+	url = https://gitlab.com/libeigen/eigen
