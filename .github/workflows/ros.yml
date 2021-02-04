@@ -8,12 +8,13 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-    - name: Install catkin
+    - name: Install dependencies and packages into container
       run: |
         chmod +x $GITHUB_WORKSPACE/scripts/actions-entrypoint.sh
         $GITHUB_WORKSPACE/scripts/actions-entrypoint.sh
     - name: Build project
       run: |
-        cd ~/ros-project/src 
+        mkdir -p ~/ros-project
+        cd ~/ros-project
         cp -r $GITHUB_WORKSPACE .
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make"
