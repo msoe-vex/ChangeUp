@@ -17,4 +17,5 @@ jobs:
         mkdir -p ~/ros-project/src
         cd ~/ros-project
         cp -r $GITHUB_WORKSPACE .
+        ls
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make"
