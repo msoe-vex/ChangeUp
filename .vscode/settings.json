@@ -80,7 +80,8 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "core": "cpp"
     },
     "C_Cpp.clang_format_fallbackStyle": "Google"
 }

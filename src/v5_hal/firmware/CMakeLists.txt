@@ -36,8 +36,10 @@ add_custom_command(TARGET clean_all PRE_BUILD
     COMMAND rm -rf ${PROJECT_SOURCE_DIR}/include/ros_lib
 )
 
-add_custom_target(upload
-    COMMENT "UPLOADING PROS"
-    COMMAND prosv5 upload
+add_custom_target(wsl_upload
+    COMMENT "UPLOADING THROUGH PROS.EXE"
+    COMMAND prosv5.exe upload
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
+
+add_dependencies(wsl_upload build)

@@ -5,22 +5,27 @@
 HelloWorldNode::HelloWorldNode(NodeManager* node_manager,
     std::string handle_name) : Node(node_manager, 1000) {
     m_handle_name = handle_name.insert(0, "debug/");
+    m_sub_publish_data_name = m_handle_name + "/publish";
 
     m_publisher = new ros::Publisher(m_handle_name.c_str(), &m_string_msg);
+
+    m_publish_data_sub = new ros::Subscriber<std_msgs::Empty, HelloWorldNode>
+        (m_sub_publish_data_name.c_str(), &HelloWorldNode::m_publishData, this);
+}
+
+void HelloWorldNode::m_publishData(const std_msgs::Empty& msg) {
+    m_populateMessage();
+    m_publisher->publish(&m_string_msg);
 }
 
 void HelloWorldNode::initialize() {
     // Initialize the handler, and set up data to publish
-    Node::m_handle->initNode();
     Node::m_handle->advertise(*m_publisher);
 }
 
 void HelloWorldNode::periodic() {
     // Publish data when called, and spin the handler to send data to the
     // coprocessor on the published topic
-    m_populateMessage();
-    m_publisher->publish(&m_string_msg);
-    Node::m_handle->spinOnce();
 }
 
 void HelloWorldNode::m_populateMessage() {

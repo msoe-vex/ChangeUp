@@ -52,6 +52,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    CompetitionStatus.msg
+   RollPitchYaw.msg
    V5Battery.msg
    V5Controller.msg
    V5InertialSensor.msg
@@ -227,4 +228,4 @@ rosserial_add_client_target(firmware build)
 add_dependencies(${PROJECT_NAME}_firmware_build ${PROJECT_NAME}_generate_messages)
 
 rosserial_add_client_target(firmware clean_all)
-rosserial_add_client_target(firmware upload)
+rosserial_add_client_target(firmware wsl_upload)

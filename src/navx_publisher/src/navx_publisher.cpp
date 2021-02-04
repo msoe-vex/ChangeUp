@@ -11,6 +11,7 @@
 #include "nav_msgs/Odometry.h"
 #include "navXTimeSync/AHRS.h"
 #include "navx_publisher/stampedUInt64.h"
+#include "navx_publisher/RollPitchYaw.h"
 #include <tf/transform_datatypes.h>
 
 using namespace std;
@@ -74,9 +75,11 @@ int main(int argc, char **argv)
 	// instead of NED (north east down)
 	ros::Publisher time_pub = nh.advertise<navx_publisher::stampedUInt64>("time", 5);
 	ros::Publisher imu_pub = nh.advertise<sensor_msgs::Imu>("navx/data", 5);
+	ros::Publisher imu_rpy_pub = nh.advertise<navx_publisher::RollPitchYaw>("navx/rpy", 5);
 	ros::Publisher raw_pub = nh.advertise<sensor_msgs::Imu>("navx/raw", 5);
 	ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("odom", 5);
 	navx_publisher::stampedUInt64 timestamp;
+	navx_publisher::RollPitchYaw imu_rpy_msg;
 	sensor_msgs::Imu imu_msg;
 	sensor_msgs::Imu imu_msg_raw;
 	nav_msgs::Odometry odom;
@@ -138,7 +141,7 @@ int main(int argc, char **argv)
 
 	bool firstrun = true;
 
-	ros::Rate loop_time(210);
+	ros::Rate loop_time(100);
 	ros::NodeHandle nh_local("~");
 	const std::string device(nh_local.param("device", std::string("/dev/ttyACM0")));
 
@@ -236,8 +239,11 @@ int main(int argc, char **argv)
 			tf::Matrix3x3(rot).getRPY(roll, pitch, yaw);
 			const double dTime = odom.header.stamp.toSec() - last_time.toSec();
 			imu_msg.angular_velocity.x = roll / dTime;
+			imu_rpy_msg.roll = roll;
 			imu_msg.angular_velocity.y = pitch / dTime;
+			imu_rpy_msg.pitch = pitch;
 			imu_msg.angular_velocity.z = -yaw / dTime;
+			imu_rpy_msg.yaw = yaw;
 			imu_msg_raw.angular_velocity = imu_msg.angular_velocity;
 			last_rot = pose;
 			last_time = odom.header.stamp;
@@ -259,6 +265,7 @@ int main(int argc, char **argv)
 			//publish to ROS topics
 			time_pub.publish(timestamp);
 			imu_pub.publish(imu_msg);
+			imu_rpy_pub.publish(imu_rpy_msg);
 			odom_pub.publish(odom);
 			raw_pub.publish(imu_msg_raw);
 		}

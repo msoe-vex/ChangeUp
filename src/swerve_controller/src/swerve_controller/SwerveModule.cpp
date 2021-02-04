@@ -1,92 +1,107 @@
 #include "swerve_controller/SwerveModule.h"
-#include <iostream>
 
-SwerveModule::SwerveModule(Eigen::Vector2d moduleLocation, double rotationAngleThreshold, double maxVelocity, double maxRotationVelocity) {
-    m_moduleLocation = moduleLocation;
-    m_rotationAngleThreshold = rotationAngleThreshold;
-    m_maxVelocity = maxVelocity;
-    m_maxRotationVelocity = maxRotationVelocity;
+SwerveModule::SwerveModule(Eigen::Vector2d module_location, double rotation_angle_threshold, 
+    double max_velocity, double max_rotation_velocity, double kP, double kI, double kD) : 
+    m_module_location(module_location),
+    m_rotation_angle_threshold(rotation_angle_threshold), 
+    m_max_velocity(max_velocity), 
+    m_max_rotation_velocity(max_rotation_velocity), 
+    m_percent_error(0),
+    m_total_error(0),
+    kP(kP),
+    kI(kI),
+    kD(kD) {
+
 }
 
-MotorPowers* SwerveModule::InverseKinematics(Eigen::Vector2d targetVelocity, double targetRotationVelocity, Eigen::Rotation2Dd moduleActualAngle) {
+MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, double target_rotation_velocity, Eigen::Rotation2Dd module_actual_angle) {
     // If you aren't trying to move, make sure to send no velocity to the motors
-    if ((targetVelocity(0) == 0) && (targetVelocity(1) == 0) && (targetRotationVelocity == 0)) { //not sure if this works, might need to be reworked
-        double scaledMotor1Mag = 0;
-        double scaledMotor2Mag = 0;
+    if ((target_velocity(0) == 0) && (target_velocity(1) == 0) && (target_rotation_velocity == 0)) { //not sure if this works, might need to be reworked
+        double scaled_motor_1_mag = 0;
+        double scaled_motor_2_mag = 0;
 
-        MotorPowers* motorPowers = new MotorPowers;
-        motorPowers->left_motor_power = scaledMotor1Mag;
-        motorPowers->right_motor_power = scaledMotor2Mag;
+        MotorPowers motor_powers;
+        
+        motor_powers.left_motor_power = scaled_motor_1_mag;
+        motor_powers.right_motor_power = scaled_motor_2_mag;
 
-        return motorPowers;
+        return motor_powers;
     }
 
-    // Create the maximum vector for each motor
-    Eigen::Vector2d maxMotor1Vector(m_maxVelocity, 100);
-    Eigen::Vector2d maxMotor2Vector(-1 * m_maxVelocity, 100);
+    // Create a maximum power vector for translating motor into percent motor output power
+    Eigen::Vector2d max_motor_vector(m_max_velocity, m_max_rotation_velocity);
 
-    // Get the magnitude of the vector (norm returns the magnitude)
-    float maxMotor1Mag = maxMotor1Vector.norm() / 2;
-    float maxMotor2Mag = maxMotor2Vector.norm() / 2;
+    // Find the length of the maxium power vector, but divide by sqrt(2) to account for the fact that later
+    // we will be projecting vectors onto this vector and due to the 45-45-90 nature of this conversion need to 
+    // divide this vector by sqrt(2)
+    float max_motor_power = max_motor_vector.norm() / sqrt(2); 
 
-    // Inverting the current module location and applying a rotation vector
-    Eigen::Vector2d rotatedModuleLocation = Eigen::Rotation2Dd(M_PI / 2) * m_moduleLocation;
+    // Take the vector from the origin to the module (module_location) and rotate it to 
+    // make it orthogonal to the current (module_location) vector
+    Eigen::Vector2d rotated_module_location = Eigen::Rotation2Dd(M_PI / 2) * m_module_location;
 
-    // Get the rotation vector for the module
-    Eigen::Vector2d targetRotationVector = targetRotationVelocity * rotatedModuleLocation;
+    // Multiply the orthogonal vector (rotated_module_location) by the target angular velocity
+    // (target_rotation_velocity) to create your target rotation vector
+    Eigen::Vector2d target_rotation_vector = target_rotation_velocity * rotated_module_location;
 
-    // Create a resultant vector from the velocity and rotation
-    Eigen::Vector2d targetVector = targetVelocity + targetRotationVector;
+    // Add the target velocity and rotation vectors to get a resultant target vector
+    Eigen::Vector2d target_vector = target_velocity + target_rotation_vector;
 
-    // Get the angle of the target vector
-    Eigen::Rotation2Dd targetVectorAngle = Eigen::Rotation2Dd(atan2(targetVector(1), targetVector(0)));
+    // Get the angle of the target vector by taking tangent inverse of y and x components
+    // of the vector, and convert to a Rotation2D angle object
+    Eigen::Rotation2Dd target_vector_angle = Eigen::Rotation2Dd(atan2(target_vector(1), target_vector(0)));
 
-    // Determine the change in rotation for the module
-    double moduleRotationDelta = (targetVectorAngle * moduleActualAngle.inverse()).smallestAngle();
+    // Subtract the actual module vector from the target to find the change in angle needed
+    double module_rotation_delta = (target_vector_angle * module_actual_angle.inverse()).smallestAngle();
 
-    Eigen::Vector2d motorPowerVector;
-    if (moduleRotationDelta >= m_rotationAngleThreshold) {
-        motorPowerVector(1) = m_maxRotationVelocity; // Make sure the rotation vector isn't over the max
-    }
-    else {
-        motorPowerVector(1) = m_maxRotationVelocity * (moduleRotationDelta / m_rotationAngleThreshold); // Apply rotation vector
-    }
+    // PID control for turning
+    Eigen::Vector2d motor_power_vector;
+
+    double error;
+    double derivative;
+
+    // Proportional
+    error = module_rotation_delta;
+
+    // Derivative
+    derivative = error - m_percent_error;
+
+    // Integral
+    m_total_error += error;
+
+    // The last value of error
+    m_percent_error = error;
+
+    // Set the turn as the error * a constant + the derivative * a constant + the integral * a constant
+    motor_power_vector(1) = error * kP + derivative * kD + m_total_error * kI;
 
     // Set the power as the magnitude of the vector
-    motorPowerVector(0) = targetVector.norm();
+    motor_power_vector(0) = target_vector.norm() / m_max_velocity;
 
-    // Get the magnitude of the scaled motor vectors
-    double scaledMotor1Mag = motorPowerVector.dot(maxMotor1Vector) / maxMotor1Mag;
-    double scaledMotor2Mag = motorPowerVector.dot(maxMotor2Vector) / maxMotor2Mag;
+    // We are working in the (m/s Forward)-(rpm Speed of Rotation) plane now
+    // Project the target vector onto each max motor vector to get components
+    // This finds the projection magnitude onto the max motor vector
+    double scaled_motor_1_mag = motor_power_vector.dot(Eigen::Vector2d(1, 1));
+    double scaled_motor_2_mag = motor_power_vector.dot(Eigen::Vector2d(-1, 1));
 
-    // Find the largest magnitude of the two vectors, and save the scalar
-    float motorVectorScalar = 1;
-    if (scaledMotor1Mag > (maxMotor1Mag * 2)) {
-        if (scaledMotor1Mag > scaledMotor2Mag) {
-            motorVectorScalar = (maxMotor1Mag * 2) / scaledMotor1Mag;
-        }
-        else {
-            motorVectorScalar = (maxMotor2Mag * 2) / scaledMotor2Mag;
-        }
+    float max_scaled_motor_mag = fmax(fabs(scaled_motor_1_mag), fabs(scaled_motor_2_mag));
+
+    // If the max of the two motor powers is more than we can ouput, scale both down so the max motor's power
+    // is equal to the max_motor_power
+    if (max_scaled_motor_mag > 1.0) {
+        scaled_motor_1_mag /= max_scaled_motor_mag;
+        scaled_motor_2_mag /= max_scaled_motor_mag;
     }
 
-    // Normalize the vectors
-    scaledMotor1Mag /= sqrt(2);
-    scaledMotor2Mag /= sqrt(2);
-
-    // Scale both vectors by the magnitude of the largest vector
-    scaledMotor1Mag *= motorVectorScalar;
-    scaledMotor2Mag *= motorVectorScalar;
-
     // Scale motors between -127 and 127
-    scaledMotor1Mag = (scaledMotor1Mag / 100) * 127;
-    scaledMotor1Mag = (scaledMotor1Mag / 100) * 127;
+    scaled_motor_1_mag = scaled_motor_1_mag * 127.0;
+    scaled_motor_2_mag = scaled_motor_2_mag * 127.0;
 
     // Set and return the motor powers as a pointer
-    MotorPowers* motorPowers = new MotorPowers;
+    MotorPowers motor_powers;
 
-    motorPowers->left_motor_power = (int8_t)scaledMotor1Mag;
-    motorPowers->right_motor_power = (int8_t)scaledMotor2Mag;
+    motor_powers.left_motor_power = (int8_t)scaled_motor_1_mag;
+    motor_powers.right_motor_power = (int8_t)scaled_motor_2_mag;
 
-    return motorPowers;
+    return motor_powers;
 }

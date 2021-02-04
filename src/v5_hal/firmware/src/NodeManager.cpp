@@ -14,12 +14,16 @@ ros::NodeHandle* NodeManager::addNode(Node* node,
 }
 
 void NodeManager::initialize() {
+    m_handle->initNode();
+
     for (auto node_structure : m_node_structures) {
         node_structure.node->initialize();
     }
 }
 
 void NodeManager::execute() {
+    m_handle->spinOnce();
+    
     for (auto& node_structure : m_node_structures) {
         auto current_time = m_get_millis();
         if (current_time - node_structure.last_executed_millis >=
@@ -28,6 +32,7 @@ void NodeManager::execute() {
             node_structure.last_executed_millis = current_time;
         }
     }
+    
     pros::c::delay(m_delay_time_millis);
 }
 
