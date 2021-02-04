@@ -8,9 +8,11 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-      with:
-        ssh-key: ${{ github.token }}
-        submodules: recursive
+    - name: Initialize submodules
+      run: |
+        cd $GITHUB_WORKSPACE
+        git submodule init 
+        git submodule update
     - name: Install dependencies and packages into container
       run: |
         chmod +x $GITHUB_WORKSPACE/scripts/actions-entrypoint.sh
