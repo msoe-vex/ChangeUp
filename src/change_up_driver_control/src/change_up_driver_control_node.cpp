@@ -105,8 +105,8 @@ int main(int argc, char** argv) {
 	ros::Publisher bottom_rollers_pub = handle.advertise<std_msgs::Int8>("/motor/bottomRollers/moveMotorVoltage", 100);
 	ros::Publisher top_rollers_pub = handle.advertise<std_msgs::Int8>("/motor/topRollers/moveMotorVoltage", 100);
 
-	ros::Publisher robot_target_velocity_pub = handle.advertise<geometry_msgs::Vector3>("swerveCommandJoystick", 100);
-	ros::Publisher robot_target_rotation_velocity_pub = handle.advertise<std_msgs::Float32>("swerveCommandRotate", 100);
+	ros::Publisher robot_target_velocity_pub = handle.advertise<geometry_msgs::Vector3>("/swerveCommandJoystick", 100);
+	ros::Publisher robot_target_rotation_velocity_pub = handle.advertise<std_msgs::Float32>("/swerveCommandRotate", 100);
 
 	ros::Rate loop_rate(50);
 
