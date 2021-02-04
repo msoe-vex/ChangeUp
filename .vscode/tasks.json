@@ -43,9 +43,9 @@
             "problemMatcher": []
         },
         {
-            "label": "v5_hal Firmware Upload",
+            "label": "v5_hal Firmware WSL Upload",
             "type": "shell",
-            "command": "catkin_make v5_hal_firmware_upload",
+            "command": "catkin_make v5_hal_firmware_wsl_upload",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
