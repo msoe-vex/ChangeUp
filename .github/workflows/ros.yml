@@ -9,6 +9,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
+        token: ${{ github.token }}
         submodules: recursive
     - name: Install dependencies and packages into container
       run: |
