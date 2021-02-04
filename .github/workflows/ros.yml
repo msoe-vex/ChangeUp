@@ -1,16 +1,22 @@
-name: ROS Build CI
-
+name: ROS Noetic Build CI
 on: [push, pull_request]
-
 jobs:
-  ros-build:
+  build:
     name: ROS Build
     runs-on: ubuntu-20.04
-
+    container: ros:noetic-ros-base-focal
     steps:
-    - name: ROS container pull
-      uses: docker://ros:noetic-ros-base-focal
     - name: Checkout Repository
       uses: actions/checkout@v2
-    - name: catkin_make
-      run: catkin_make
+    - name: Install catkin
+      run: cd / && ./scripts/actions-entrypoint.sh
+    - name: Setup catkin workspace
+      run: |
+        mkdir -p ~/ros-project/src
+        cd ~/ros-project
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make"
+    - name: Build project
+      run: |
+        cd ~/ros-project/src 
+        cp -r $GITHUB_WORKSPACE .
+        /bin/bash -c "source ../devel/setup.bash && catkin_make"
