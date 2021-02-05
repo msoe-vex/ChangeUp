@@ -28,4 +28,4 @@ jobs:
         cd $HOME/
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
-        /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && rosdep install Eigen3 && catkin_make v5_hal_firmware_build"
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make v5_hal_firmware_build"
