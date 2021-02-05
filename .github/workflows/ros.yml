@@ -8,12 +8,13 @@ jobs:
     steps:
     - name: Checkout repository and submodules
       uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Install dependencies and packages into container
       run: |
         cd $GITHUB_WORKSPACE
         chmod +x ./scripts/actions-entrypoint.sh
         ./scripts/actions-entrypoint.sh
-        git submodule update --init --recursive
     - name: Build project
       run: |
         cd ~/
