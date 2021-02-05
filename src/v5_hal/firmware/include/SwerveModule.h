@@ -19,11 +19,18 @@ private:
     double kP;
     double kI;
     double kD;
+    Eigen::Rotation2Dd m_setpoint;
 
 
 public:
     SwerveModule (Eigen::Vector2d module_location, double rotation_angle_threshold, double max_velocity, double max_rotation_velocity,
         double kP, double kI, double kD);
+    
+    void setkP(double kP);
+    void setkI(double kI);
+    void setkD(double kD);
+
+    Eigen::Rotation2Dd getSetpoint();
 
     MotorPowers InverseKinematics(Eigen::Vector2d target_velocity, double target_rotation_velocity, Eigen::Rotation2Dd module_actual_angle);
 };

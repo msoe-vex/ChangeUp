@@ -25,8 +25,8 @@ private:
     double rotation_angle_threshold = (M_PI / 3);
     double max_velocity = 1.31;
     double max_rotation_velocity = 0.17;
-    double kP = 0.7;
-    double kI = 0.0;
+    double kP = 1.0;
+    double kI = 0.001;
     double kD = 0.0;
     Eigen::Vector2d left_module_location;
     Eigen::Vector2d right_module_location;

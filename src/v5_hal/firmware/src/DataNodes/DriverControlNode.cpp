@@ -7,7 +7,7 @@ DriverControlNode::DriverControlNode(NodeManager* node_manager, MotorNode* left_
         ADIAnalogInNode* right_swerve_pot, MotorNode* rear_swerve_1, MotorNode* rear_swerve_2, 
         ADIAnalogInNode* rear_swerve_pot, MotorNode* left_intake, MotorNode* right_intake, MotorNode* bottom_rollers,
         MotorNode* ejection_roller, MotorNode* top_rollers, InertialSensorNode* inertial_sensor, ControllerNode* controller_primary) : Node(node_manager, 20), 
-    swerveController(left_module_location, right_module_location, rear_module_location, rotation_angle_threshold,
+    swerveController(node_manager, left_module_location, right_module_location, rear_module_location, rotation_angle_threshold,
     max_velocity, max_rotation_velocity, kP, kI, kD), left_swerve_1(left_swerve_1), left_swerve_2(left_swerve_2),
     left_swerve_pot(left_swerve_pot), right_swerve_1(right_swerve_1), right_swerve_2(right_swerve_2),
     right_swerve_pot(right_swerve_pot), rear_swerve_1(rear_swerve_1), rear_swerve_2(rear_swerve_2),

@@ -167,3 +167,18 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
 
     return motor_powers;
 }
+void SwerveModule::setkP(double kP) {
+    kP = kP;
+}
+
+void SwerveModule::setkI(double kI) {
+    kI = kI;
+}
+
+void SwerveModule::setkD(double kD) {
+    kD = kD;
+}
+
+Eigen::Rotation2Dd SwerveModule::getSetpoint() {
+    return m_setpoint;
+}
