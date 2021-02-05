@@ -31,8 +31,6 @@ jobs:
         /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make"
     - name: Build PROS Project
       run: |
-        echo 'export PATH=$PATH:~/gcc-arm-none-eabi-9-2020-q2-update/bin/' >> ~/.bashrc
-        source ~/.bashrc
         arm-none-eabi-gcc --version
         cd ~/${{ github.event.repository.name }}/src/v5_hal/firmware
         prosv5 build
