@@ -1,9 +1,6 @@
 [submodule "src/rosserial"]
 	path = src/rosserial
-	url = https://github.com/msoe-vex/rosserial
-[submodule "src/V5HAL"]
-	path = src/V5HAL
-	url = https://github.com/msoe-vex/V5HAL.git
+	url = git@github.com:msoe-vex/rosserial.git
 [submodule "src/navx_publisher/src/navXTimeSync"]
 	path = src/navx_publisher/src/navXTimeSync
 	url = git@github.com:FRC900/navXTimeSync.git
