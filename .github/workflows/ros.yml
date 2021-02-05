@@ -6,8 +6,12 @@ jobs:
     runs-on: ubuntu-20.04
     container: ros:noetic-ros-base-focal
     steps:
+    - name: Update Git 
+      run: apt-get install -y git
     - name: Checkout repository and submodules
       uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - name: Install dependencies and packages into container
       run: |
         chmod +x $GITHUB_WORKSPACE/scripts/actions-entrypoint.sh
