@@ -29,9 +29,13 @@ jobs:
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make"
+        echo "Listing Repository Files"
         ls $HOME/${{ github.event.repository.name }}
+        echo "Listing Build Files"
         ls $HOME/${{ github.event.repository.name }}/build
+        echo "Listing Build/v5_hal Files"
         ls $HOME/${{ github.event.repository.name }}/build/v5_hal
+        echo "Listing Build/v5_hal/ros_lib Files"
         ls $HOME/${{ github.event.repository.name }}/build/v5_hal/ros_lib
     - name: Build PROS Project
       run: |
