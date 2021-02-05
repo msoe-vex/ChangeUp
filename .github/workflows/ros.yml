@@ -9,7 +9,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
     - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@master
+      run: git submodule update --init --recursive
     - name: Install dependencies and packages into container
       run: |
         chmod +x $GITHUB_WORKSPACE/scripts/actions-entrypoint.sh
