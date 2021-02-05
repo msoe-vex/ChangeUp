@@ -8,7 +8,6 @@ cd ~
 wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 --no-check-certificate
 tar -xjvf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
 echo '~/gcc-arm-none-eabi-9-2020-q2-update/bin/' >> $GITHUB_PATH
-source ~/.bashrc
 arm-none-eabi-gcc --version
 
 # Install PROS

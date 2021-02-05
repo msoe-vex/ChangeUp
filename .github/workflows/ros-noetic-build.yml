@@ -29,7 +29,3 @@ jobs:
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make"
-    - name: Build PROS Project
-      run: |
-        cd ~/${{ github.event.repository.name }}/src/v5_hal/firmware
-        prosv5 build
