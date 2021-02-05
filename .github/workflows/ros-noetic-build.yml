@@ -31,8 +31,8 @@ jobs:
         /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make"
     - name: Build PROS Project
       run: |
-        BUILD_ROS_LIB_DIR="$HOME/${{ github.event.repository.name }}/build/v5_hal/ros_lib/"
-        PROS_PROJ_DIR="$HOME/${{ github.event.repository.name }}/src/v5_hal/firmware/"
+        BUILD_ROS_LIB_DIR="$HOME/${{ github.event.repository.name }}/build/v5_hal/ros_lib"
+        PROS_PROJ_DIR="$HOME/${{ github.event.repository.name }}/src/v5_hal/firmware"
         mkdir $PROS_PROJ_DIR/include/ros_lib
         cp $BUILD_ROS_LIB_DIR/* $PROS_PROJ_DIR/include/ros_lib
         sh $PROS_PROJ_DIR/fixIncludes.sh $PROS_PROJ_DIR/include/ros_lib
