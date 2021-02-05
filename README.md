@@ -1,5 +1,6 @@
 # MSOE Robotics ChangeUp Project
-![ROS and PROS Build](https://github.com/msoe-vex/ChangeUp/workflows/.github/workflows/ros-noetic-build.yml/badge.svg)
+![ROS and PROS Build](https://github.com/msoe-vex/ChangeUp/workflows/ROS%20Noetic%20and%20PROS%20Build%20CI/badge.svg)
+
 ROS workspace for the 2020-2021 VEX Game Change Up.
 
 ### Cloning the Repository
