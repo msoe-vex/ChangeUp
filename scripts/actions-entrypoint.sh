@@ -2,6 +2,7 @@
 sudo apt-get install -y python3 python3-pip python-is-python3
 sudo apt-get install -y python3-rosdep
 sudo apt-get install -y ros-noetic-tf
+sudo apt-get install -y eigen3
 sudo apt-get install -y wget
 
 cd $HOME
