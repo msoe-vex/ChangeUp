@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	odom.twist.covariance = STANDARD_TWIST_COVARIANCE;
 	odom.pose.covariance = STANDARD_POSE_COVARIANCE;
 
-	imu_msg_raw.header.frame_id = "navx_frame";
+	imu_msg_ra.header.frame_id = "navx_frame";
 	imu_msg.header.frame_id = "navx_frame";
 	odom.header.frame_id = "nav_current_frame";
 
