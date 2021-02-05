@@ -2,7 +2,7 @@ name: ROS Noetic & PROS Build CI
 on: [push, pull_request]
 jobs:
   build:
-    name: ROS & PROS Build
+    name: ROS and PROS Build
     runs-on: ubuntu-20.04
     container: ros:noetic-ros-base-focal
     steps:
