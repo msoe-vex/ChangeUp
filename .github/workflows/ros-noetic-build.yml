@@ -1,8 +1,8 @@
-name: ROS Noetic Build CI
+name: ROS Noetic & PROS Build CI
 on: [push, pull_request]
 jobs:
   build:
-    name: ROS Build
+    name: ROS & PROS Build
     runs-on: ubuntu-20.04
     container: ros:noetic-ros-base-focal
     steps:
@@ -29,3 +29,7 @@ jobs:
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make"
+    - name: Build PROS Project
+      run: |
+        cd ~/${{ github.event.repository.name }}/src/v5_hal/firmware
+        prosv5 build

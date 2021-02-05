@@ -12,4 +12,4 @@ source ~/.bashrc
 arm-none-eabi-gcc --version
 
 # Install PROS
-sudo python3.8 -m pip install https://github.com/purduesigbots/pros-cli/releases/download/3.1.4/pros_cli_v5-3.1.4-py3-none-any.whl
+sudo python -m pip install https://github.com/purduesigbots/pros-cli/releases/download/3.1.4/pros_cli_v5-3.1.4-py3-none-any.whl
