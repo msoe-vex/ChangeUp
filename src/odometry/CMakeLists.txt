@@ -104,6 +104,8 @@ catkin_package(
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
 
 ###########
 ## Build ##
@@ -112,14 +114,16 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
 # ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/odometry.cpp
-# )
+add_library(${PROJECT_NAME}
+  src/${PROJECT_NAME}/Odometry.cpp
+  src/${PROJECT_NAME}/TankOdometry.cpp
+  src/${PROJECT_NAME}/FollowerOdometry.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

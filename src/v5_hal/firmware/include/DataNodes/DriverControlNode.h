@@ -61,6 +61,10 @@ private:
 
     void m_spinMainRollersVoltage(int voltage);
 
+    void m_spinBottomRollersVoltage(int voltage);
+
+    void m_spinTopRollersVoltage(int voltage);
+
     void m_spinEjectionRollerVoltage(int voltage);
 
 public:

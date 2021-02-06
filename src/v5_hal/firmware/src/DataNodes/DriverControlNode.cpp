@@ -54,6 +54,15 @@ void DriverControlNode::m_spinMainRollersVoltage(int voltage) {
     top_rollers->moveVoltage(voltage);
 }
 
+
+void DriverControlNode::m_spinTopRollersVoltage(int voltage) {
+    top_rollers->moveVoltage(voltage);
+}
+
+void DriverControlNode::m_spinBottomRollersVoltage(int voltage) {
+    bottom_rollers->moveVoltage(voltage);
+}
+
 /**
  * Spins the ejection roller (from a single motor) at the specified voltage
  * Parameters:
@@ -65,29 +74,33 @@ void DriverControlNode::m_spinEjectionRollerVoltage(int voltage) {
 
 void DriverControlNode::teleopPeriodic() {
     // printf("Inertial Sensor Yaw: %f\n", inertial_sensor->getYaw());
-    double sensor_yaw = inertial_sensor->getYaw();
-    robot_angle = Eigen::Rotation2Dd(-sensor_yaw);
+    // double sensor_yaw = inertial_sensor->getYaw();
+    // robot_angle = Eigen::Rotation2Dd(-sensor_yaw);
     
-    controller_target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * max_velocity;
-    controller_target_velocity(1) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * max_velocity;
-    rotation_velocity = -(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * max_rotation_velocity;
+    // controller_target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * max_velocity;
+    // controller_target_velocity(1) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * max_velocity;
+    // rotation_velocity = -(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * max_rotation_velocity;
 
-    field_target_velocity = robot_angle.inverse() * controller_target_velocity;
+    // field_target_velocity = robot_angle.inverse() * controller_target_velocity;
 
-    // printf("Field Target Velocity: %f\n", field_target_velocity);
+    // // printf("Field Target Velocity: %f\n", field_target_velocity);
 
-    swerveController.assignActualAngle(left_swerve_pot->getValue(), right_swerve_pot->getValue(), rear_swerve_pot->getValue());
+    // swerveController.assignActualAngle(left_swerve_pot->getValue(), right_swerve_pot->getValue(), rear_swerve_pot->getValue());
 
-    MotorPowers left_motor_powers = swerveController.calculateLeftModule(field_target_velocity, rotation_velocity);
-    MotorPowers right_motor_powers = swerveController.calculateRightModule(field_target_velocity, rotation_velocity);
-    MotorPowers rear_motor_powers = swerveController.calculateRearModule(field_target_velocity, rotation_velocity);
+    // MotorPowers left_motor_powers = swerveController.calculateLeftModule(field_target_velocity, rotation_velocity);
+    // MotorPowers right_motor_powers = swerveController.calculateRightModule(field_target_velocity, rotation_velocity);
+    // MotorPowers rear_motor_powers = swerveController.calculateRearModule(field_target_velocity, rotation_velocity);
 
-    left_swerve_1->move(left_motor_powers.left_motor_power);
-    left_swerve_2->move(left_motor_powers.right_motor_power);
-    right_swerve_1->move(right_motor_powers.left_motor_power);
-    right_swerve_2->move(right_motor_powers.right_motor_power);
-    rear_swerve_1->move(rear_motor_powers.left_motor_power);
-    rear_swerve_2->move(rear_motor_powers.right_motor_power);
+    // Temporary - Left Front
+    left_swerve_1->move(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
+    // Temporary - Left Rear
+    left_swerve_2->move(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
+    // Temporary - Right Front
+    right_swerve_1->move(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+    // Temporary - Right Rear 
+    right_swerve_2->move(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+    // rear_swerve_1->move(rear_motor_powers.left_motor_power);
+    // rear_swerve_2->move(rear_motor_powers.right_motor_power);
 
     // printf("Left Motor 1 Power: %d\n", left_motor_powers.left_motor_power);
     // printf("Left Motor 2 Power: %d\n", left_motor_powers.right_motor_power);
