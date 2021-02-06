@@ -1,6 +1,6 @@
 <launch>
   <!-- the primary port that allows rosserial to function -->
-  <arg name="mainport" default="/dev/ttyACM0" />
+  <arg name="mainport" default="/dev/ttyACM1" />
   <arg name="mainbaud" default="57600" />
 
   <node name="connector" type="serial_node.py" pkg="rosserial_arduino" respawn="true" output="screen">
@@ -9,7 +9,7 @@
   </node>
 
   <!-- Node for NavX data -->
-  <node name="navx_publisher_node" type="navx_publisher_node" pkg="navx_publisher" output="screen">
+  <node name="navx_publisher_node" type="navx_publisher_node" pkg="navx_publisher" respawn="true" output="screen">
     <param name="device" value="/dev/ttyACM2"/>
   </node>
 </launch>
