@@ -35,6 +35,8 @@ class SwerveController : public Node {
 
     float m_PIDConstants[3];
 
+    bool PID_recieved;
+
     const int LEFT_POT_OFFSET = 510; // ADI Port F
     const int RIGHT_POT_OFFSET = 1749; // ADI PORT H
     const int REAR_POT_OFFSET = 3119; // ADI Port G

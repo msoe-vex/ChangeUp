@@ -62,22 +62,23 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
 
     // Get the angle of the target vector by taking tangent inverse of y and x components
     // of the vector, and convert to a Rotation2D angle object
-    Eigen::Rotation2Dd target_vector_angle = Eigen::Rotation2Dd(atan2(target_vector(1), target_vector(0)));
+    m_setpoint = Eigen::Rotation2Dd(atan2(target_vector(1), target_vector(0)));
 
     // ROS_INFO("Current Angle: %.2f", module_actual_angle.angle());
-    // ROS_INFO("Target Angle: %.2f", target_vector_angle.angle());
+    // ROS_INFO("Target Angle: %.2f", m_setpoint.angle());
 
     // std::cout << "Current Angle: " << module_actual_angle.angle() << "\n" << std::endl;
-    // std::cout << "Target Angle: " << target_vector_angle.angle() << "\n" << std::endl;
+    // std::cout << "Target Angle: " << m_setpoint.angle() << "\n" << std::endl;
 
     // Subtract the actual module vector from the target to find the change in angle needed
-    double module_rotation_delta = (target_vector_angle * module_actual_angle.inverse()).smallestAngle();
+    double module_rotation_delta = (m_setpoint * module_actual_angle.inverse()).smallestAngle();
 
     // PID control for turning
     Eigen::Vector2d motor_power_vector;
 
     if(fabs(module_rotation_delta) > M_PI_2){
-        module_rotation_delta = (target_vector_angle * module_actual_angle.inverse() * Eigen::Rotation2Dd(M_PI)).smallestAngle();
+        m_setpoint *= Eigen::Rotation2Dd(M_PI);
+        module_rotation_delta = (m_setpoint * module_actual_angle.inverse()).smallestAngle();
 
         // Set the power as the magnitude of the vector
         motor_power_vector(0) = -target_vector.norm() / m_max_velocity;
