@@ -1,0 +1,31 @@
+name: ROS Noetic and PROS Build CI
+on: [push, pull_request]
+jobs:
+  build:
+    name: ROS and PROS Build
+    runs-on: ubuntu-20.04
+    container: ros:noetic-ros-base-focal
+    steps:
+    - name: Updating Git Version
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y software-properties-common
+        sudo apt-get update
+        sudo add-apt-repository -y ppa:git-core/ppa
+        sudo apt-get update
+        sudo apt-get install -y git
+    - name: Checkout Repository and Submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Install Dependencies and Packages
+      run: |
+        cd $GITHUB_WORKSPACE
+        chmod +x ./scripts/actions-entrypoint.sh
+        ./scripts/actions-entrypoint.sh
+    - name: Build Project
+      run: |
+        cd $HOME/
+        cp -r $GITHUB_WORKSPACE .
+        cd ${{ github.event.repository.name }}
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make v5_hal_firmware_build"

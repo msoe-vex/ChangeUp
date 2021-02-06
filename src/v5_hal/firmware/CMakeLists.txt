@@ -22,7 +22,6 @@ add_custom_command(TARGET build PRE_BUILD
     COMMENT "RUNNING PROSV5 BUILD"
     COMMAND prosv5 build
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-
 )
 
 add_custom_target(clean_all
