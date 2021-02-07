@@ -29,7 +29,7 @@ void DriverControlNode::initialize() {
     
 }
 
-void DriverControlNode::m_navxDataCallback(const v5_hal::RollPitchYaw& msg) {
+void DriverControlNode::m_navxDataCallback(const navx_publisher::RollPitchYaw& msg) {
 	//robot_angle = Eigen::Rotation2Dd(msg.yaw);
     Node::m_handle->loginfo("Message Recieved");
 }

@@ -52,11 +52,15 @@
   <build_depend>message_generation</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rosserial_vex_v5</build_depend>
+  <build_depend>path_reader</build_depend>
+  <build_depend>navx_publisher</build_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rosserial_vex_v5</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rosserial_vex_v5</exec_depend>
   <exec_depend>message_runtime</exec_depend>
+  <exec_depend>path_reader</exec_depend>
+  <exec_depend>navx_publisher</exec_depend>
 
 
 

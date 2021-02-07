@@ -8,7 +8,7 @@
 #include "DataNodes/ADIAnalogInNode.h"
 #include "DataNodes/ControllerNode.h"
 #include "DataNodes/InertialSensorNode.h"
-#include "ros_lib/v5_hal/RollPitchYaw.h"
+#include "ros_lib/navx_publisher/RollPitchYaw.h"
 
 class DriverControlNode : public Node {
 private:
@@ -16,7 +16,7 @@ private:
 
     std::string m_handle_name;
     ros::Publisher* m_publisher;
-    ros::Subscriber<v5_hal::RollPitchYaw, DriverControlNode>* m_navx_sub;
+    ros::Subscriber<navx_publisher::RollPitchYaw, DriverControlNode>* m_navx_sub;
 
     Eigen::Vector2d controller_target_velocity;
     Eigen::Vector2d field_target_velocity;
@@ -55,7 +55,7 @@ private:
     InertialSensorNode* inertial_sensor;
     pros::Controller* controller_primary;
 
-    void m_navxDataCallback(const v5_hal::RollPitchYaw& msg);
+    void m_navxDataCallback(const navx_publisher::RollPitchYaw& msg);
 
     void m_spinIntakesVoltage(int voltage);
 

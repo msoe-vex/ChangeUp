@@ -12,7 +12,10 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   roscpp
   rosserial_vex_v5
+  path_reader
+  navx_publisher
   std_msgs
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -52,7 +55,6 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    CompetitionStatus.msg
-   RollPitchYaw.msg
    V5Battery.msg
    V5Controller.msg
    V5InertialSensor.msg
@@ -76,6 +78,8 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs  # Or other packages containing msgs
+   path_reader
+   navx_publisher
  )
 
 ################################################
@@ -110,7 +114,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES change_up_robot_code
-  CATKIN_DEPENDS message_runtime roscpp rosserial_vex_v5
+  CATKIN_DEPENDS message_runtime roscpp rosserial_vex_v5 path_reader navx_publisher
 #  DEPENDS system_lib
 )
 
@@ -133,7 +137,7 @@ include_directories(
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
