@@ -28,12 +28,11 @@ DriverControlNode::DriverControlNode(NodeManager* node_manager, MotorNode* left_
 }
 
 void DriverControlNode::initialize() {
-    
+    Node::m_handle->subscribe(*m_navx_sub);
 }
 
 void DriverControlNode::m_navxDataCallback(const v5_hal::RollPitchYaw& msg) {
-	robot_angle = Eigen::Rotation2Dd(msg.yaw);
-    Node::m_handle->loginfo("Message Recieved");
+	robot_angle = Eigen::Rotation2Dd((msg.yaw * (M_PI/180)));
 }
 
 /**
