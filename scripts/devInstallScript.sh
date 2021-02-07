@@ -7,8 +7,16 @@ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main
 curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | sudo apt-key add -
 sudo apt update
 sudo apt upgrade -y
-sudo apt install python3 python-is-python3 python3-pip ros-noetic-desktop-full -y
+sudo apt install python3 python-is-python3 python3-pip ros-noetic-desktop-full python3-rosdep git -y
+sudo rosdep init
+rosdep update
+
 echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
+echo 'source ~/git/ChangeUp/devel/setup.bash' >> ~/.bashrc
+
+# Setup X forwarding
+echo "export DISPLAY=localhost:0.0" >> ~/.bashrc
+sudo strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5  # Fix for WSL 1 bug
 
 # Install gcc-arm compiler
 cd ~
@@ -20,3 +28,15 @@ arm-none-eabi-gcc --version
 
 # Install PROS
 sudo python3.8 -m pip install https://github.com/purduesigbots/pros-cli/releases/download/3.1.4/pros_cli_v5-3.1.4-py3-none-any.whl
+
+# Clone ChangeUp repository
+cd ~
+mkdir git
+cd git
+git clone git@github.com:msoe-vex/ChangeUp.git
+cd ChangeUp
+git submodule init
+git submodule update
+
+# Build repository
+catkin_make
