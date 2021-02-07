@@ -10,10 +10,10 @@
 class PathReaderNode : public Node {
 private:
     std::string m_handle_name;
-    std::string m_sub_publish_data_name;
+    std::string m_sub_auton_path;
     ros::Subscriber<path_reader::Auton, PathReaderNode>* m_move_motor_voltage_sub;
 
-    void m_HandleAutonPath(const path_reader::Auton& msg);
+    void m_handleAutonPath(const path_reader::Auton& msg);
 
 public:
     PathReaderNode(NodeManager* node_manager, std::string handle_name);
