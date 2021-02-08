@@ -30,11 +30,15 @@ public:
 
     void initialize();
 
+    void resetEncoder();
+
     int getPosition();
 
     void move(int value);
 
     void moveVoltage(int voltage);
+
+    void moveAbsolute(double position, int max_velocity);
 
     void periodic();
 

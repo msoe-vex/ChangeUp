@@ -35,6 +35,10 @@ void MotorNode::initialize() {
     Node::m_handle->subscribe(*m_move_motor_voltage_sub);
 }
 
+void MotorNode::resetEncoder() {
+    m_motor.tare_position();
+}
+
 int MotorNode::getPosition() {
     return m_motor.get_position();
 }
@@ -45,6 +49,10 @@ void MotorNode::move(int value) {
 
 void MotorNode::moveVoltage(int voltage) {
     m_motor.move_voltage(voltage);
+}
+
+void MotorNode::moveAbsolute(double position, int max_velocity) {
+    m_motor.move_absolute(position, max_velocity);
 }
 
 void MotorNode::periodic() {
