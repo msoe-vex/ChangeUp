@@ -40,5 +40,3 @@ add_custom_target(wsl_upload
     COMMAND prosv5.exe upload
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
-
-add_dependencies(wsl_upload build)
