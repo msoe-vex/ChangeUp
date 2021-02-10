@@ -7,7 +7,6 @@ NodeManager* node_manager = new NodeManager(pros::millis);
 
 // Declare all nodes here
 ControllerNode* primary_controller;
-ConnectionCheckerNode* connection_checker_node;
 
 MotorNode* left_front_drive;
 MotorNode* left_rear_drive;
@@ -44,6 +43,9 @@ Auton* programming_skills_auton;
 
 OdometryNode* odom_node;
 
+ConnectionCheckerNode* connection_checker_node;
+
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -53,8 +55,6 @@ OdometryNode* odom_node;
 void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
-
-	connection_checker_node = new ConnectionCheckerNode(node_manager);
 	
 	left_front_drive = new MotorNode(node_manager, 3, "leftFrontDrive", false);
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
@@ -67,7 +67,7 @@ void initialize() {
 	ejection_roller = new MotorNode(node_manager, 15, "ejectionRoller", false);
 	top_rollers = new MotorNode(node_manager, 7, "topRollers", true);
 
-	//inertial_sensor = new InertialSensorNode(node_manager, 9, "inertialSensor");
+	inertial_sensor = new InertialSensorNode(node_manager, 9, "inertialSensor");
 	
 	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
 	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
@@ -96,6 +96,8 @@ void initialize() {
 		top_conveyor_sensor);
      
     programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
+
+	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
