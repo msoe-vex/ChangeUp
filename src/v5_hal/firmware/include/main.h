@@ -48,6 +48,8 @@
 #include "DataNodes/BatteryNode.h"
 #include "DataNodes/InertialSensorNode.h"
 #include "DataNodes/DriverControlNode.h"
+#include "DataNodes/TankDriveNode.h"
+#include "DataNodes/ConveyorNode.h"
 
    /**
     * You should add more #includes here
