@@ -1,10 +1,10 @@
 #include "DataNodes/TankDriveNode.h"
 
-TankDriveNode::TankDriveNode(NodeManager* node_manager, std::string handle_name, MotorNode* left_front_motor, 
-    MotorNode* left_rear_motor, MotorNode* right_front_motor, MotorNode* right_rear_motor) : Node(node_manager, 10),
-    m_left_front_motor(left_front_motor), m_left_rear_motor(left_rear_motor), m_right_front_motor(right_front_motor),
-    m_right_rear_motor(right_rear_motor) {
-    m_handle_name = handle_name.insert(0, "drivetrain/");
+TankDriveNode::TankDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
+    MotorNode* left_front_motor, MotorNode* left_rear_motor, MotorNode* right_front_motor, 
+    MotorNode* right_rear_motor) : Node(node_manager, 10), m_controller(controller->getController()), m_left_front_motor(left_front_motor), 
+    m_left_rear_motor(left_rear_motor), m_right_front_motor(right_front_motor), m_right_rear_motor(right_rear_motor) {
+    m_handle_name = handle_name.insert(0, "robot/");
 }
 
 void TankDriveNode::m_resetEncoders() {
@@ -50,7 +50,8 @@ void TankDriveNode::setDriveDistancePID(double left_distance, double right_dista
 }
 
 void TankDriveNode::periodic() {
-
+    m_setLeftVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0) * 12000);
+    m_setRightVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0) * 12000);
 }
 
 TankDriveNode::~TankDriveNode() {

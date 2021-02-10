@@ -83,29 +83,6 @@ void DriverControlNode::periodic() {
     right_swerve_2->move(right_motor_powers.right_motor_power);
     rear_swerve_1->move(rear_motor_powers.left_motor_power);
     rear_swerve_2->move(rear_motor_powers.right_motor_power);
-
-    int intake_voltage = 0;
-	int main_rollers_voltage = 0;
-	int ejection_roller_voltage = 0;
-
-	if (controller_primary->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-		intake_voltage = 12000;
-		main_rollers_voltage = 12000;
-		ejection_roller_voltage = 12000;
-
-		if (controller_primary->get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-			ejection_roller_voltage *= -1;
-		}
-	}
-	else if (controller_primary->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-		intake_voltage = -12000;
-		main_rollers_voltage = -12000;
-		ejection_roller_voltage = -12000;
-	}
-
-	m_spinIntakesVoltage(intake_voltage);
-	m_spinMainRollersVoltage(main_rollers_voltage);
-	m_spinEjectionRollerVoltage(ejection_roller_voltage);
 }
 
 DriverControlNode::~DriverControlNode() { 
