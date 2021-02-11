@@ -1,29 +1,28 @@
-#include "FollowPathAction.h"
+#include "Actions/DeployAction.h"
+#include "Timer.h"
 
 
-FollowPathAction::FollowPath(Chassis chassis, Path path, double maxAccel, double wheelDiameter, bool reversed,
-                             double fixedLookahead, double pathCompletionTolerance, bool gradualStop) :
-            m_controller(fixedLookahead, maxAccel, 0.01, path, reversed, pathCompletionTolerance, gradualStop,
-                    wheelDiameter) {
-    m_chassis = chassis;
+DeployAction::DeployAction(conveyor_node) {
+    m_conveyor_node = conveyor_node;
 }
 
-void FollowPathAction::actionInit() {
-
+void DeployAction::actionInit() {
+    m_timer.Start();
 }
 
-AutonAction::actionStatus FollowPathAction::action() {
-    auto command = m_controller.Update(TankOdometry::GetInstance()->GetPose(), pros::millis() / 1000.0);
+AutonAction::actionStatus DeployAction::action() {
+    m_conveyor_node->setIntakeVoltage(-12000);
+    m_conveyor_node->setBottomConveyorVoltage(-12000);
 
-    m_chassis.setVelocity(command.left, command.right);
-
-    if(m_controller.isDone()) {
+    if(m_timer.Get() > 1) {
         return END;
     } else {
         return CONTINUE;
     }
 }
 
-void FollowPathAction::actionEnd() {
-    m_chassis.setVelocity(0, 0);
+void DeployAction::actionEnd() {
+    m_timer.Stop();
+    m_conveyor_node->setIntakeVoltage(0);
+    m_conveyor_node->setBottomConveyorVoltage(0);
 }
