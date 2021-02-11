@@ -26,29 +26,27 @@ bool AdaptivePursuit::isDone() {
 }
 
 VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
-    Position2d pos = Position2d({robotPos.position.x(), robotPos.position.y()}, Rotation2d::fromRadians(robotPos.angle.angle()));
+    Position2d pos = Position2d({-robotPos.position.y(), robotPos.position.x()}, Rotation2d::fromRadians(robotPos.angle.angle()));
     if (m_reversed){
         pos = Position2d(pos.getTranslation(),
                          pos.getRotation().rotateBy(Rotation2d::fromRadians(PI)));
     }
 
     double distanceFromPath = m_path.update(pos.getTranslation());
+	// std::cout << "Dist From Path: " << distanceFromPath << std::endl;
     if(isDone()){
         return VelocityPair(0, 0);
     }
 
-//	std::cout << "Dist From Path" << distanceFromPath << std::endl;
+	// std::cout << "Dist From Path" << distanceFromPath << std::endl;
 
     PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(pos.getTranslation(),
                                                                   distanceFromPath + m_fixedLookahead);
     std::optional<Circle> circle = joinPath(pos, lookaheadPoint.translation);
-//	std::cout << "Look X: " << lookaheadPoint.translation.getX() << "  Look Y: " << lookaheadPoint.translation.getY() << std::endl;
 
 
-    m_path.getClosestPoint(pos.getTranslation());
     double speed = lookaheadPoint.speed;
     if(m_reversed){
-//		std::cout << "Reversed: " << speed << std::endl;
         speed *= -1;
     }
 
@@ -66,23 +64,19 @@ VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
     }
 
     double remainingDistance = m_path.getRemainingLength();
-	std::cout << "Remain: " << remainingDistance << std::endl;
-    if(m_gradualStop){
-        double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
-        if (fabs(speed) > maxAllowedSpeed){
-            speed = maxAllowedSpeed * (speed / fabs(speed));
-        }
+    double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
+    if (fabs(speed) > maxAllowedSpeed) {
+        speed = std::copysign(maxAllowedSpeed, speed);
     }
 
-//    double minSpeed = 5.0;
-//    if (fabs(speed) < minSpeed){
-//        speed = minSpeed * (speed / fabs(speed));
-//    }
+    // double minimumSpeed = 5.0;
+    // if (fabs(speed) < minimumSpeed) {
+    //     speed = std::copysign(minimumSpeed, speed);
+    // }
 
     Position2d::Delta rv(0,0,0);
     if(circle){
-        rv = Position2d::Delta(speed, 0,
-                               (((*circle).turnRight) ? -1 : 1) * fabs(speed) / (*circle).radius);
+        rv = Position2d::Delta(speed, 0, (((*circle).turnRight) ? -1 : 1) * fabs(speed) / (*circle).radius);
     } else {
         rv = Position2d::Delta(speed, 0, 0);
     }
@@ -134,6 +128,6 @@ std::optional<AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos,
 
     return Circle(
             Trans2d((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
-                          (-my * (-y1 * y1 + y2 * y2 + dy * dy) + 2 * mx * y1 * dx) / (2 * crossTerm)),
+                          (-my * (-y1 * y1 + y2 * y2 + dx * dx) + 2 * mx * y1 * dx) / (2 * crossTerm)),
             .5 * abs((dx * dx + dy * dy) / crossTerm), (crossProduct > 0));
 }

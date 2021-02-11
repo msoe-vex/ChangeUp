@@ -4,9 +4,10 @@
 #include "TankOdometry.h"
 #include "AdaptivePursuit.h"
 #include <stdio.h>
+#include "testPaths/simplePath.h"
 
 TEST(AdaptivePurePursuit, FollowsStraightPath) {
-    PathManager::GetInstance()->LoadPathsFile("test/testPaths/simplePath.json");
+    PathManager::GetInstance()->LoadPathsText(simplePath);
 
     auto paths = PathManager::GetInstance()->GetPaths();
 
@@ -55,7 +56,7 @@ TEST(AdaptivePurePursuit, FollowsStraightPath) {
 }
 
 TEST(AdaptivePurePursuit, FollowsSplinePath) {
-    PathManager::GetInstance()->LoadPathsFile("test/testPaths/simplePath.json");
+    PathManager::GetInstance()->LoadPathsText(simplePath);
 
     auto paths = PathManager::GetInstance()->GetPaths();
 
@@ -82,7 +83,7 @@ TEST(AdaptivePurePursuit, FollowsSplinePath) {
 
     fprintf(myfile, "time,leftVelocity,rightVelocity,leftPosition,rightPosition,x,y,\n");
 
-    for (double t = dt; t < 25; t += dt) {
+    for (double t = dt; t < 30; t += dt) {
         auto command = controller.Update(TankOdometry::GetInstance()->GetPose(), t);
 
         leftPosition += (command.left * dt);
@@ -99,6 +100,6 @@ TEST(AdaptivePurePursuit, FollowsSplinePath) {
 
     Pose pose = TankOdometry::GetInstance()->GetPose();
 
-    EXPECT_NEAR(pose.position.x(), -22.2, 0.1);
-    EXPECT_NEAR(pose.position.y(), 38.07, 0.1);
+    EXPECT_NEAR(pose.position.x(), 30, 0.3);
+    EXPECT_NEAR(pose.position.y(), 70, 0.3);
 }
