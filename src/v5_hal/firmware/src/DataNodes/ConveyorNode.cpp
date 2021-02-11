@@ -144,14 +144,6 @@ void ConveyorNode::autonPeriodic() {
     }
 }
 
-void ConveyorNode::deploy() {
-    m_setIntakeVoltage(-12000);
-    m_setEjectionRollerVoltage(-12000);
-    pros::delay(1000);
-    m_setIntakeVoltage(0);
-    m_setEjectionRollerVoltage(0);
-}
-
 ConveyorNode::~ConveyorNode() {
 
 }
