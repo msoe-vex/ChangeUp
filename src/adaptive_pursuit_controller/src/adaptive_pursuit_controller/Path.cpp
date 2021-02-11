@@ -14,8 +14,7 @@ Path::Path(vector<Waypoint> waypoints, bool flip) {
 	m_waypoints = waypoints;
 	for (int i = 0; i < m_waypoints.size() - 1; i++) {
         m_segments.emplace_back(m_waypoints[i].position, m_waypoints[i+1].position,
-                                (flip ? m_waypoints[i].rotation.inverse() : m_waypoints[i].rotation),
-                                m_waypoints[i].speed);
+                                m_waypoints[i].rotation, m_waypoints[i].speed);
 	}
 
 /*	if(m_waypoints.size() > 0){
@@ -76,14 +75,14 @@ Path Path::fromText(string text, bool flip) {
 
 double Path::update(Trans2d pos) {
 	double rv = 0.0;
-	for(int i = 0; i < m_segments.size(); i++) {
+	for(unsigned int i = 0; i < m_segments.size(); i++){
 //		PathSegment segment = m_segments[i];
 		PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
-//		cout << "Index " << closestPointReport.index << endl;
+//		std::cout << "Index " << closestPointReport.index << std::endl;
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
-			if(!m_waypoints.empty()){
-				if(!m_waypoints[0].event.empty()){
+			if(m_waypoints.size() > 0){
+				if(m_waypoints[0].event != ""){
 					m_events.push_back(m_waypoints[0].event);
 				}
 				m_waypoints.erase(m_waypoints.begin());
@@ -104,8 +103,8 @@ double Path::update(Trans2d pos) {
 					m_segments[i+1].updateStart(nextClosestPointReport.closestPoint);
 					rv = nextClosestPointReport.distance;
 					m_segments.erase(m_segments.begin() + i);
-					if(!m_waypoints.empty()){
-						if(!m_waypoints[0].event.empty()){
+					if(m_waypoints.size() > 0){
+						if(m_waypoints[0].event != ""){
 							m_events.push_back(m_waypoints[0].event);
 						}
 						m_waypoints.erase(m_waypoints.begin());
@@ -118,7 +117,7 @@ double Path::update(Trans2d pos) {
 	return rv;
 }
 
-bool Path::eventPassed(string event) {
+bool Path::eventPassed(std::string event) {
 	return (find(m_events.begin(), m_events.end(), event) != m_events.end());
 }
 
