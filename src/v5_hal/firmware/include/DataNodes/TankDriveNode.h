@@ -53,5 +53,9 @@ public:
 
     int getLeftDistancePID();
 
+    int getRightDistancePID();
+
+    int getLeftDistancePID()
+
     ~TankDriveNode();
 };
