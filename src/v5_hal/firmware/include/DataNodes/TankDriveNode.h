@@ -39,5 +39,9 @@ public:
 
     void periodic();
 
+    int getRightDistancePID();
+
+    int getLeftDistancePID()
+
     ~TankDriveNode();
 };
