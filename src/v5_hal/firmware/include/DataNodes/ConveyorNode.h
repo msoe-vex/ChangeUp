@@ -34,6 +34,8 @@ private:
 
     void m_updateConveyorStateMachine();
 
+    void deploy();
+
 public: 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_intake, 
         MotorNode* right_intake, MotorNode* bottom_conveyor_motor, MotorNode* ejection_roller_motor, MotorNode* top_conveyor_motor, 
