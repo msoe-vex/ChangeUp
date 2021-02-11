@@ -51,6 +51,9 @@
 #include "DataNodes/ConnectionCheckerNode.h"
 #include "DataNodes/TankDriveNode.h"
 #include "DataNodes/ConveyorNode.h"
+#include "Actions/DeployAction.h"
+#include "Actions/DriveAction.h"
+#include "Actions/IntakeAction.h"
 
    /**
     * You should add more #includes here

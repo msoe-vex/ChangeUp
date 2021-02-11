@@ -6,7 +6,7 @@ using namespace std;
  * Create a node with given actions and timeout. These actions will all be run in parallel to each other.
  * Nullptrs will not be added as actions, they will be ignored.
  */
-Node::Node(double timeout, AutonAction* action1, AutonAction* action2, AutonAction* action3) :
+AutonNode::AutonNode(double timeout, AutonAction* action1, AutonAction* action2, AutonAction* action3) :
         m_children(), m_actions(), m_timeout(timeout) {
 	m_startCondition = nullptr;
     if(action1 != nullptr) {
@@ -23,14 +23,14 @@ Node::Node(double timeout, AutonAction* action1, AutonAction* action2, AutonActi
 /*
  * Add a node to this node which will be run sequentially after this node completes all of its actions
  */
-void Node::AddNext(Node* childNode) {
+void AutonNode::AddNext(AutonNode* childNode) {
     m_children.push_back(childNode);
 }
 
 /*
  * Add an action to this node which will be run in parallel to other actions in this node
  */
-void Node::AddAction(AutonAction* leaf) {
+void AutonNode::AddAction(AutonAction* leaf) {
     if(leaf != nullptr) {
         m_actions.push_back(leaf);
     }
@@ -48,7 +48,7 @@ void Node::AddAction(AutonAction* leaf) {
  * This condition will be checked by the previous node while it is not complete.
  * While it is true this action will run its actions.
  */
-void Node::AddCondition(function<bool()> startCondition) {
+void AutonNode::AddCondition(function<bool()> startCondition) {
     m_startConditonGiven = true;
     m_startCondition = startCondition;
 }
@@ -56,7 +56,7 @@ void Node::AddCondition(function<bool()> startCondition) {
 /*
  * Returns true if all actions are complete and all child nodes are complete or if timeout has been exceeded
  */
-bool Node::Complete() {
+bool AutonNode::Complete() {
     if(m_actions.empty()) {
         for(auto child : m_children) {
             if(!child->Complete()) {
@@ -72,7 +72,7 @@ bool Node::Complete() {
 /*
  * Prepares node to be run
  */
-void Node::Reset() {
+void AutonNode::Reset() {
     for(auto child : m_children) {
         child->Reset();
     }
@@ -84,7 +84,7 @@ void Node::Reset() {
 /*
  * Set the timeout for this node to a given duration in seconds
  */
-void Node::SetTimeout(double timeout) {
+void AutonNode::SetTimeout(double timeout) {
     m_timeout = timeout;
 }
 
@@ -93,7 +93,7 @@ void Node::SetTimeout(double timeout) {
  * child node is run.
  * @param lastNodeDone If previous node is complete.
  */
-void Node::Act(bool lastNodeDone) {
+void AutonNode::Act(bool lastNodeDone) {
     bool shouldAct = (m_startConditonGiven && m_startCondition && !lastNodeDone)
                      || (!m_startConditonGiven && lastNodeDone);
     if(!m_actionsInitialized && shouldAct) {
@@ -107,7 +107,6 @@ void Node::Act(bool lastNodeDone) {
         m_actionsInitialized = true;
     }
     if(!m_actions.empty() && (m_timer.Get() > m_timeout)) {
-        Logger::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
         for(auto action : m_actions) {
             action->ActionEnd();
         }
@@ -144,7 +143,7 @@ void Node::Act(bool lastNodeDone) {
     }
 }
 
-Node::~Node() {
+AutonNode::~AutonNode() {
     for (auto i = m_actions.begin(); i != m_actions.end(); i++){
         delete *i;
     }
@@ -208,7 +207,7 @@ void Autonomous::Reset() {
  * Add another node to be run on start of autonomous routine
  * Nullptrs will not be added as actions, they will be ignored
  */
-void Autonomous::AddFirstNode(Node* firstNode) {
+void Autonomous::AddFirstNode(AutonNode* firstNode) {
     if(firstNode != nullptr) {
         m_firstNode.push_back(firstNode);
     }
