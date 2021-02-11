@@ -4,7 +4,6 @@
 #include "Auton.h"
 #include "Timer.h"
 #include "DataNodes/ConveyorNode.h"
-#include "DataNodes/ADIAnalogInNode.h"
 
 class IntakeAction : public AutonAction {
 private:
