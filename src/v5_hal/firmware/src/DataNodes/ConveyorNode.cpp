@@ -16,37 +16,37 @@ ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, C
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
-void ConveyorNode::m_setIntakeVoltage(int voltage) {
+void ConveyorNode::setIntakeVoltage(int voltage) {
     m_left_intake->moveVoltage(voltage);
     m_right_intake->moveVoltage(voltage);
 }
 
-void ConveyorNode::m_setBottomConveyorVoltage(int voltage) {
+void ConveyorNode::setBottomConveyorVoltage(int voltage) {
     m_bottom_conveyor_motor->moveVoltage(voltage);
 }
 
-void ConveyorNode::m_setEjectionRollerVoltage(int voltage) {
+void ConveyorNode::setEjectionRollerVoltage(int voltage) {
     m_ejection_roller_motor->moveVoltage(voltage);
 }
 
-void ConveyorNode::m_setTopConveyorVoltage(int voltage) {
+void ConveyorNode::setTopConveyorVoltage(int voltage) {
     m_top_conveyor_motor->moveVoltage(voltage);
 }
 
-void ConveyorNode::m_updateConveyorStateMachine() {
+void ConveyorNode::updateConveyorStateMachine() {
     if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
         // Ball is waiting on top; stop spinning balls up
-        m_setTopConveyorVoltage(0);
+        setTopConveyorVoltage(0);
     } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
         m_bottom_conveyor_sensor->getValue() > BALL_PRESENT_THRESHOLD) {
         // Ball isn't on top, but one is waiting in the middle with nothing behind
-        m_setTopConveyorVoltage(0);
+        setTopConveyorVoltage(0);
     } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
         m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
         // Balls are present in the bottom and middle positions
-        m_setTopConveyorVoltage(12000);
+        setTopConveyorVoltage(12000);
     } else {
-        m_setTopConveyorVoltage(12000);
+        setTopConveyorVoltage(12000);
     }
 }
 
@@ -94,23 +94,15 @@ void ConveyorNode::periodic() {
 		ejection_roller_voltage = -12000;
 	}
 
-    m_setIntakeVoltage(intake_voltage);
-    m_setBottomConveyorVoltage(bottom_conveyor_voltage);
-	m_setEjectionRollerVoltage(ejection_roller_voltage);
+    setIntakeVoltage(intake_voltage);
+    setBottomConveyorVoltage(bottom_conveyor_voltage);
+	setEjectionRollerVoltage(ejection_roller_voltage);
 
     if (m_enableStateMachine) {
-        m_updateConveyorStateMachine();
+        updateConveyorStateMachine();
     } else {
-        m_setTopConveyorVoltage(top_conveyor_voltage);
+        setTopConveyorVoltage(top_conveyor_voltage);
     }
-}
-
-void ConveyorNode::deploy() {
-    m_setIntakeVoltage(-12000);
-    m_setEjectionRollerVoltage(-12000);
-    pros::delay(1000);
-    m_setIntakeVoltage(0);
-    m_setEjectionRollerVoltage(0);
 }
 
 ConveyorNode::~ConveyorNode() {
