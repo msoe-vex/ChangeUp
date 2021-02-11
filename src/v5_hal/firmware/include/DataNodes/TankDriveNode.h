@@ -16,11 +16,17 @@ private:
 
     std::string m_handle_name;
 
+    const float MAX_ROBOT_SPEED = 1.1; // m/s
+
     void m_resetEncoders();
 
     void m_setLeftVoltage(int voltage);
 
     void m_setRightVoltage(int voltage);
+
+    void m_setLeftVelocity(float velocity);
+
+    void m_setRightVelocity(float velocity);
 
     void m_setLeftDistancePID(double distance, int max_velocity);
 
@@ -34,6 +40,8 @@ public:
     void initialize();
 
     void setDriveVoltage(int left_voltage, int right_voltage);
+
+    void setDriveVelocity(float left_velocity, float right_velocity);
 
     void setDriveDistancePID(double left_distance, double right_distance, int max_velocity);
 

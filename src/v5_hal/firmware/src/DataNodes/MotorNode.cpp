@@ -51,6 +51,10 @@ void MotorNode::moveVoltage(int voltage) {
     m_motor.move_voltage(voltage);
 }
 
+void MotorNode::moveVelocity(float velocity) {
+    m_motor.move_velocity(velocity);
+}
+
 void MotorNode::moveAbsolute(double position, int max_velocity) {
     m_motor.move_absolute(position, max_velocity);
 }

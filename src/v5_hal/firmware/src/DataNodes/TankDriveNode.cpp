@@ -24,6 +24,16 @@ void TankDriveNode::m_setRightVoltage(int voltage) {
     m_right_rear_motor->moveVoltage(voltage);
 }
 
+void TankDriveNode::m_setLeftVelocity(float velocity) {
+    m_left_front_motor->moveVelocity(velocity);
+    m_left_rear_motor->moveVelocity(velocity);
+}
+
+void TankDriveNode::m_setRightVelocity(float velocity) {
+    m_right_front_motor->moveVelocity(velocity);
+    m_right_rear_motor->moveVelocity(velocity);
+}
+
 void TankDriveNode::m_setLeftDistancePID(double distance, int max_velocity) {
     m_left_front_motor->moveAbsolute(distance, max_velocity);
     m_left_rear_motor->moveAbsolute(distance, max_velocity);
@@ -49,6 +59,11 @@ void TankDriveNode::initialize() {
 void TankDriveNode::setDriveVoltage(int left_voltage, int right_voltage) {
     m_setLeftVoltage(left_voltage);
     m_setRightVoltage(right_voltage);
+}
+
+void TankDriveNode::setDriveVelocity(float left_velocity, float right_velocity) { //incoming values should be in m/s so we convert to rpm here
+    m_setLeftVelocity(left_velocity / MAX_ROBOT_SPEED * 200);
+    m_setRightVelocity(right_velocity / MAX_ROBOT_SPEED * 200);
 }
 
 void TankDriveNode::setDriveDistancePID(double left_distance, double right_distance, int max_velocity) {

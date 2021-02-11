@@ -38,6 +38,8 @@ public:
 
     void moveVoltage(int voltage);
 
+    void moveVelocity(float velocity);
+
     void moveAbsolute(double position, int max_velocity);
 
     void periodic();
