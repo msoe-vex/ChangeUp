@@ -1,8 +1,7 @@
 #include "Actions/DeployAction.h"
-#include "Timer.h"
 
-
-DeployAction::DeployAction(conveyor_node) : m_conveyor_node(conveyor_node) {
+DeployAction::DeployAction(ConveyorNode* conveyor_node) : 
+        m_conveyor_node(conveyor_node) {
 
 }
 

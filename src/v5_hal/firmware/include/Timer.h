@@ -1,8 +1,8 @@
 #pragma once
 
+#include "api.h"
 #include <chrono>
 #include <time.h>
-#include <api.h>
 
 class Timer {
 private:

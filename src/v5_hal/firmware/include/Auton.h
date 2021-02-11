@@ -9,7 +9,6 @@
 #include <functional>
 
 #include "Timer.h"
-#include "Logger.h"
 
 using namespace std;
 
@@ -29,19 +28,19 @@ public:
     virtual ~AutonAction() {}
 };
 
-class Node {
+class AutonNode {
 public:
-    Node(double timeout, AutonAction* action1 = nullptr, AutonAction* action2 = nullptr, AutonAction* action3 = nullptr);
-    void AddNext(Node* childNode);
+    AutonNode(double timeout, AutonAction* action1 = nullptr, AutonAction* action2 = nullptr, AutonAction* action3 = nullptr);
+    void AddNext(AutonNode* childNode);
     void AddAction(AutonAction* leaf);
     void AddCondition(function<bool()> startCondition);
     bool Complete();
     void Reset();
     void SetTimeout(double timeout);
     void Act(bool lastNodeDone);
-    ~Node();
+    ~AutonNode();
 private:
-    vector<Node*> m_children;
+    vector<AutonNode*> m_children;
     vector<AutonAction*> m_actions;
     bool m_startConditonGiven = false;
     bool m_actionsInitialized = false;
@@ -69,12 +68,12 @@ public:
     void Reset();
     virtual ~Autonomous();
 protected:
-    void AddFirstNode(Node* firstNode);
+    void AddFirstNode(AutonNode* firstNode);
     virtual void AddNodes() = 0;
 private:
     string m_name;
     bool m_defaultAuton = false;
-    vector<Node*> m_firstNode;
+    vector<AutonNode*> m_firstNode;
 };
 
 class WaitAction : public AutonAction {
