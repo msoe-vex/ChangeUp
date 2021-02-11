@@ -29,6 +29,14 @@ void TankDriveNode::m_setLeftDistancePID(double distance, int max_velocity) {
     m_left_rear_motor->moveAbsolute(distance, max_velocity);
 }
 
+int TankDriveNode::getLeftDistancePID() {
+    return m_left_front_motor->getPosition();
+}
+
+int TankDriveNode::getRightDistancePID() {
+    return m_right_front_motor->getPosition();
+}
+
 void TankDriveNode::m_setRightDistancePID(double distance, int max_velocity) {
     m_right_front_motor->moveAbsolute(distance, max_velocity);
     m_right_rear_motor->moveAbsolute(distance, max_velocity);

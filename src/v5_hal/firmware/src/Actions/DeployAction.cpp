@@ -2,8 +2,8 @@
 #include "Timer.h"
 
 
-DeployAction::DeployAction(conveyor_node) {
-    m_conveyor_node = conveyor_node;
+DeployAction::DeployAction(conveyor_node) : m_conveyor_node(conveyor_node) {
+
 }
 
 void DeployAction::actionInit() {
