@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "DataNodes/TankDriveNode.h"
 #include "DataNodes/InertialSensorNode.h"
-#include "Eigen/Dense.h"
+#include "eigen/Eigen/Dense"
 
 class TurnToAngleAction : public AutonAction {
 private:
