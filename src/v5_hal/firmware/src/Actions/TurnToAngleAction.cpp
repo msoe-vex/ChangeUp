@@ -33,6 +33,10 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
     }
 }
 
+<<<<<<< HEAD
 void TurnToAngleAction::ActionEnd() {
+=======
+void TurnToAngleAction::actionEnd() {
+>>>>>>> Added turning logic to action
     m_tank_drive->setDriveVoltage(0, 0);
 }
