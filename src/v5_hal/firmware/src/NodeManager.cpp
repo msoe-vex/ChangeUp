@@ -21,14 +21,29 @@ void NodeManager::initialize() {
     }
 }
 
-void NodeManager::execute() {
+void NodeManager::executeTeleop() {
     m_handle->spinOnce();
     
     for (auto& node_structure : m_node_structures) {
         auto current_time = m_get_millis();
         if (current_time - node_structure.last_executed_millis >=
             node_structure.trigger_millis) {
-            node_structure.node->periodic();
+            node_structure.node->teleopPeriodic();
+            node_structure.last_executed_millis = current_time;
+        }
+    }
+    
+    pros::c::delay(m_delay_time_millis);
+}
+
+void NodeManager::executeAuton() {
+    m_handle->spinOnce();
+    
+    for (auto& node_structure : m_node_structures) {
+        auto current_time = m_get_millis();
+        if (current_time - node_structure.last_executed_millis >=
+            node_structure.trigger_millis) {
+            node_structure.node->autonPeriodic();
             node_structure.last_executed_millis = current_time;
         }
     }

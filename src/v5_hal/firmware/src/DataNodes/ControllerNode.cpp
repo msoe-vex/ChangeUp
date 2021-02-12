@@ -47,9 +47,12 @@ pros::Controller* ControllerNode::getController() {
     return &m_controller;
 }
 
-void ControllerNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void ControllerNode::teleopPeriodic() {
+    
+}
+
+void ControllerNode::autonPeriodic() {
+    
 }
 
 //Populates the V5Controller message object

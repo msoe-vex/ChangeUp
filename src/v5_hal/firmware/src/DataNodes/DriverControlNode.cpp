@@ -64,7 +64,11 @@ void DriverControlNode::m_spinEjectionRollerVoltage(int voltage) {
 	ejection_roller->moveVoltage(voltage);
 }
 
-void DriverControlNode::periodic() {    
+void DriverControlNode::teleopPeriodic() {
+    // printf("Inertial Sensor Yaw: %f\n", inertial_sensor->getYaw());
+    double sensor_yaw = inertial_sensor->getYaw();
+    robot_angle = Eigen::Rotation2Dd(-sensor_yaw);
+    
     controller_target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * max_velocity;
     controller_target_velocity(1) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * max_velocity;
     rotation_velocity = -(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * max_rotation_velocity;
@@ -83,6 +87,10 @@ void DriverControlNode::periodic() {
     right_swerve_2->move(right_motor_powers.right_motor_power);
     rear_swerve_1->move(rear_motor_powers.left_motor_power);
     rear_swerve_2->move(rear_motor_powers.right_motor_power);
+}
+
+void DriverControlNode::autonPeriodic() {
+    
 }
 
 DriverControlNode::~DriverControlNode() { 

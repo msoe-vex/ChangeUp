@@ -23,9 +23,12 @@ void HelloWorldNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
-void HelloWorldNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void HelloWorldNode::teleopPeriodic() {
+
+}
+
+void HelloWorldNode::autonPeriodic() {
+
 }
 
 void HelloWorldNode::m_populateMessage() {

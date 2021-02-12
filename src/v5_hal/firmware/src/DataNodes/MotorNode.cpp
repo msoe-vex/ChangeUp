@@ -55,9 +55,12 @@ void MotorNode::moveAbsolute(double position, int max_velocity) {
     m_motor.move_absolute(position, max_velocity);
 }
 
-void MotorNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void MotorNode::teleopPeriodic() {
+
+}
+
+void MotorNode::autonPeriodic() {
+
 }
 
 void MotorNode::m_populateMessage() {

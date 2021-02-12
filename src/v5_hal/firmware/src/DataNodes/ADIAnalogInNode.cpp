@@ -28,9 +28,12 @@ int ADIAnalogInNode::getValue() {
     return m_analog_in.get_value();
 }
 
-void ADIAnalogInNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void ADIAnalogInNode::teleopPeriodic() {
+    
+}
+
+void ADIAnalogInNode::autonPeriodic() {
+
 }
 
 void ADIAnalogInNode::m_populateMessage() {

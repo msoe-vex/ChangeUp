@@ -11,8 +11,8 @@ void IntakeAction::actionInit() {
 
 AutonAction::actionStatus IntakeAction::action() {
     if (m_time <= 0) {
-        // Run until the action stops
         m_conveyor_node->setIntakeVoltage(m_voltage);
+        return END;
     } else {
         // Run until elapsed time is reached
         if (m_timer.Get() < m_time) {

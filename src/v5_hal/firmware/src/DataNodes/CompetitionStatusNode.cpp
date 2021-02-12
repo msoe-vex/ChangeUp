@@ -20,7 +20,12 @@ void CompetitionStatusNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
-void CompetitionStatusNode::periodic() {
+void CompetitionStatusNode::teleopPeriodic() {
+    
+}
+
+void CompetitionStatusNode::autonPeriodic() {
+    
 }
 
 void CompetitionStatusNode::m_populateMessage() {

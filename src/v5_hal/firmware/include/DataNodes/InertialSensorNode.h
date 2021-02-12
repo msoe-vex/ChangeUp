@@ -17,7 +17,9 @@ public:
     
     double getYaw();
     
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
     
     ~InertialSensorNode();
 };

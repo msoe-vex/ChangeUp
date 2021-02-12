@@ -33,7 +33,9 @@ public:
 
     pros::Controller* getController();
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~ControllerNode();
 };

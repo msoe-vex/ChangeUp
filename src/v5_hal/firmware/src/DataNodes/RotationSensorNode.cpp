@@ -34,9 +34,12 @@ int RotationSensorNode::getVelocity() {
     return m_rotation_sensor.get_velocity();
 }
 
-void RotationSensorNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void RotationSensorNode::teleopPeriodic() {
+
+}
+
+void RotationSensorNode::autonPeriodic() {
+
 }
 
 void RotationSensorNode::m_populateMessage() {

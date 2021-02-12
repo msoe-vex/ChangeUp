@@ -27,7 +27,9 @@ public:
 
     int getValue();
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~ADIDigitalInNode();
 };
