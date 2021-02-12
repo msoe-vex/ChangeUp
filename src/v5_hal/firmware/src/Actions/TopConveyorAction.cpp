@@ -12,6 +12,7 @@ void TopConveyorAction::actionInit() {
 AutonAction::actionStatus TopConveyorAction::action() {
     if (m_time <= 0) {
         m_conveyor_node->setConveyorState(m_conveyor_state);
+        return END;
     } else {
         // Run until elapsed time is reached
         if (m_timer.Get() < m_time) {
