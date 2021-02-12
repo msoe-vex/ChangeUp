@@ -54,6 +54,7 @@
 #include "Actions/DriveAction.h"
 #include "Actions/IntakeAction.h"
 #include "Actions/BottomConveyorAction.h"
+#include "Actions/FollowPathAction.h"
 
    /**
     * You should add more #includes here

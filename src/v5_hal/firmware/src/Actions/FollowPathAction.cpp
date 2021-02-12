@@ -14,7 +14,7 @@ void FollowPathAction::actionInit() {
 AutonAction::actionStatus FollowPathAction::action() {
     auto command = m_controller.Update(TankOdometry::GetInstance()->GetPose(), pros::millis() / 1000.0);
 
-    m_tank_drive.setDriveVelocity(command.left, command.right); 
+    m_tank_drive->setDriveVelocity(command.left, command.right); 
 
     if(m_controller.isDone()) {
         return END;
@@ -24,5 +24,5 @@ AutonAction::actionStatus FollowPathAction::action() {
 }
 
 void FollowPathAction::actionEnd() {
-    m_chassis.setVelocity(0, 0);
+    m_tank_drive->setDriveVelocity(0, 0);
 }

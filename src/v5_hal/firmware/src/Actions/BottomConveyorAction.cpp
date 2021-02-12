@@ -1,7 +1,7 @@
 #include "Actions/BottomConveyorAction.h"
 
 BottomConveyorAction::BottomConveyorAction(ConveyorNode* conveyor_node, bool eject=false, int voltage=12000, double time=0) : 
-    (m_conveyor_node(conveyor_node), m_eject(eject), m_voltage(voltage), m_time(time)) {
+    m_conveyor_node(conveyor_node), m_eject(eject), m_voltage(voltage), m_time(time) {
         
     }
 
