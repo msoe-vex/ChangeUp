@@ -8,6 +8,28 @@
 #include "DataNodes/ADIDigitalOutNode.h"
 
 class ConveyorNode : public Node {
+private:
+    enum ConveyorState {
+        STOPPED, HOLDING, SCORING
+    };
+    ConveyorState m_current_conveyor_state = STOPPED;
+
+    const int BALL_PRESENT_THRESHOLD = 2700;
+
+    pros::Controller* m_controller;
+    MotorNode* m_left_intake;
+    MotorNode* m_right_intake;
+    MotorNode* m_bottom_conveyor_motor;
+    MotorNode* m_ejection_roller_motor;
+    MotorNode* m_top_conveyor_motor;
+    ADIAnalogInNode* m_bottom_conveyor_sensor;
+    ADIAnalogInNode* m_middle_conveyor_sensor;
+    ADIAnalogInNode* m_top_conveyor_sensor;
+
+    std::string m_handle_name;
+
+    bool m_enableStateMachine = false;
+
 public: 
     enum ConveyorState {
         STOPPED, HOLDING, SCORING, REVERSE
