@@ -15,8 +15,11 @@ private:
     int m_eject_voltage;
 
 public:
-    BottomConveyorAction(ConveyorNode* conveyor_node, bool eject, int voltage, double time);
+    BottomConveyorAction(ConveyorNode* conveyor_node, bool eject, double time, int voltage=12000);
+    
     void actionInit();
+    
     AutonAction::actionStatus action();
+    
     void actionEnd();
 };
