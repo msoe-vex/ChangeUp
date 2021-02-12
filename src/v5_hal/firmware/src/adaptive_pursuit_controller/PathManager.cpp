@@ -83,8 +83,10 @@ unordered_map<string, Path> PathManager::GetPaths() {
 }
 
 Path PathManager::GetPath(string name) {
-    if (m_paths.find(name) == m_paths.end())
+    if (m_paths.find(name) == m_paths.end()) {
         Logger::logError("Path with key: " + name + " not found!");
-    else
+        return m_paths[m_paths.begin()->first];
+    } else {
         return m_paths[name];
+    }   
 }
