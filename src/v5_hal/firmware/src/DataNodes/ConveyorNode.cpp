@@ -72,6 +72,24 @@ int ConveyorNode::getNumBallsStored() {
     return ballsStored;
 }
 
+int ConveyorNode::getNumBallsStored() {
+    int ballsStored = 0;
+
+    if (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        ballsStored++;
+    }
+
+    if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        ballsStored++;
+    }
+
+    if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        ballsStored++;
+    }
+
+    return ballsStored;
+}
+
 void ConveyorNode::initialize() {
 
 }
