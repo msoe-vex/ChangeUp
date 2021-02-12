@@ -115,6 +115,6 @@ void autonomous() {
  */
 void opcontrol() {
 	while (true) {
-		node_manager->execute();
+		node_manager->executeTeleop();
 	}
 }

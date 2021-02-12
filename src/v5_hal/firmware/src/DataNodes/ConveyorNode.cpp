@@ -16,6 +16,23 @@ ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, C
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
+void ConveyorNode::m_updateConveyorHoldingState() {
+    if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        // Ball is waiting on top; stop spinning balls up
+        setTopConveyorVoltage(0);
+    } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
+        m_bottom_conveyor_sensor->getValue() > BALL_PRESENT_THRESHOLD) {
+        // Ball isn't on top, but one is waiting in the middle with nothing behind
+        setTopConveyorVoltage(0);
+    } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
+        m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        // Balls are present in the bottom and middle positions
+        setTopConveyorVoltage(12000);
+    } else {
+        setTopConveyorVoltage(12000);
+    }
+}
+
 void ConveyorNode::setIntakeVoltage(int voltage) {
     m_left_intake->moveVoltage(voltage);
     m_right_intake->moveVoltage(voltage);
@@ -35,23 +52,6 @@ void ConveyorNode::setTopConveyorVoltage(int voltage) {
 
 void ConveyorNode::setConveyorState(ConveyorState conveyorState) {
     m_current_conveyor_state = conveyorState;
-}
-
-void ConveyorNode::updateConveyorStateMachine() {
-    if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
-        // Ball is waiting on top; stop spinning balls up
-        setTopConveyorVoltage(0);
-    } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
-        m_bottom_conveyor_sensor->getValue() > BALL_PRESENT_THRESHOLD) {
-        // Ball isn't on top, but one is waiting in the middle with nothing behind
-        setTopConveyorVoltage(0);
-    } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
-        m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
-        // Balls are present in the bottom and middle positions
-        setTopConveyorVoltage(12000);
-    } else {
-        setTopConveyorVoltage(12000);
-    }
 }
 
 int ConveyorNode::getNumBallsStored() {
@@ -121,14 +121,27 @@ void ConveyorNode::teleopPeriodic() {
 	setEjectionRollerVoltage(ejection_roller_voltage);
 
     if (m_enableStateMachine) {
-        updateConveyorStateMachine();
+        m_updateConveyorHoldingState();
     } else {
         setTopConveyorVoltage(top_conveyor_voltage);
     }
 }
 
 void ConveyorNode::autonPeriodic() {
-    
+    switch (m_current_conveyor_state) {
+        case STOPPED:
+            // Stop all motors
+            setTopConveyorVoltage(0);
+        break;
+        case HOLDING:
+            // Update the state machine controlling the ball storage
+            m_updateConveyorHoldingState();
+        break;
+        case SCORING:
+            // Run all motors
+            setTopConveyorVoltage(12000);
+        break;
+    }
 }
 
 ConveyorNode::~ConveyorNode() {

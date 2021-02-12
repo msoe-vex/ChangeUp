@@ -29,6 +29,8 @@ private:
 
     bool m_enableStateMachine = false;
 
+    void m_updateConveyorHoldingState();
+
 public: 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_intake, 
         MotorNode* right_intake, MotorNode* bottom_conveyor_motor, MotorNode* ejection_roller_motor, MotorNode* top_conveyor_motor, 
@@ -43,8 +45,6 @@ public:
     void setTopConveyorVoltage(int voltage);
 
     void setConveyorState(ConveyorState conveyorState);
-
-    void updateConveyorStateMachine();
 
     int getNumBallsStored();
 
