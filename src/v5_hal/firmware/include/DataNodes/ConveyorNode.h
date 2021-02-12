@@ -28,8 +28,6 @@ public:
 
     int getNumBallsStored();
 
-    int getNumBallsStored();
-
     void initialize();
 
     void teleopPeriodic();
