@@ -33,6 +33,10 @@ void ConveyorNode::setTopConveyorVoltage(int voltage) {
     m_top_conveyor_motor->moveVoltage(voltage);
 }
 
+void ConveyorNode::setConveyorState(ConveyorState conveyorState) {
+    m_current_conveyor_state = conveyorState;
+}
+
 void ConveyorNode::updateConveyorStateMachine() {
     if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
         // Ball is waiting on top; stop spinning balls up
@@ -50,11 +54,29 @@ void ConveyorNode::updateConveyorStateMachine() {
     }
 }
 
+int ConveyorNode::getNumBallsStored() {
+    int ballsStored = 0;
+
+    if (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        ballsStored++;
+    }
+
+    if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        ballsStored++;
+    }
+
+    if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
+        ballsStored++;
+    }
+
+    return ballsStored;
+}
+
 void ConveyorNode::initialize() {
 
 }
 
-void ConveyorNode::periodic() {
+void ConveyorNode::teleopPeriodic() {
     int intake_voltage = 0;
 	int bottom_conveyor_voltage = 0;
     int top_conveyor_voltage = 0;
@@ -103,6 +125,10 @@ void ConveyorNode::periodic() {
     } else {
         setTopConveyorVoltage(top_conveyor_voltage);
     }
+}
+
+void ConveyorNode::autonPeriodic() {
+    
 }
 
 ConveyorNode::~ConveyorNode() {

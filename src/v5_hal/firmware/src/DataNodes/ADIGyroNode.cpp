@@ -27,9 +27,12 @@ float ADIGyroNode::getValue() {
     return m_gyro.get_value();
 }
 
-void ADIGyroNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void ADIGyroNode::teleopPeriodic() {
+    
+}
+
+void ADIGyroNode::autonPeriodic() {
+    
 }
 
 void ADIGyroNode::m_populateMessage() { 

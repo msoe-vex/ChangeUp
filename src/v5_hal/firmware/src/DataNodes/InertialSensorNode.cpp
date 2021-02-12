@@ -17,7 +17,11 @@ double InertialSensorNode::getYaw() {
     return m_inertial_sensor.get_yaw() * (M_PI/180);
 }
 
-void InertialSensorNode::periodic() {
+void InertialSensorNode::teleopPeriodic() {
+
+}
+
+void InertialSensorNode::autonPeriodic() {
 
 }
 

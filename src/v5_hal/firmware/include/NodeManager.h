@@ -38,7 +38,9 @@ public:
 
     void initialize();
 
-    void execute();
+    void executeTeleop();
+
+    void executeAuton();
 
     ~NodeManager();
 };
@@ -62,6 +64,7 @@ public:
         m_handle = node_manager->addNode(this, interval_milliseconds);
     }
     virtual void initialize() = 0;
-    virtual void periodic() {}
+    virtual void teleopPeriodic() {}
+    virtual void autonPeriodic() {}
     virtual ~Node() {}
 };

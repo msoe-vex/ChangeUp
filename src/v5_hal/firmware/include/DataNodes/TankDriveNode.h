@@ -37,11 +37,13 @@ public:
 
     void setDriveDistancePID(double left_distance, double right_distance, int max_velocity);
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     int getRightDistancePID();
 
-    int getLeftDistancePID()
+    int getLeftDistancePID();
 
     ~TankDriveNode();
 };

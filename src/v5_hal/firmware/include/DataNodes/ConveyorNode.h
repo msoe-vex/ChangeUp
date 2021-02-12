@@ -8,6 +8,11 @@
 
 class ConveyorNode : public Node {
 private:
+    enum ConveyorState {
+        STOPPED, HOLDING, SCORING
+    };
+    ConveyorState m_current_conveyor_state = STOPPED;
+
     const int BALL_PRESENT_THRESHOLD = 2700;
 
     pros::Controller* m_controller;
@@ -37,11 +42,17 @@ public:
 
     void setTopConveyorVoltage(int voltage);
 
+    void setConveyorState(ConveyorState conveyorState);
+
     void updateConveyorStateMachine();
+
+    int getNumBallsStored();
 
     void initialize();
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~ConveyorNode();
 };

@@ -21,9 +21,12 @@ void BatteryNode::initialize() {
     Node::m_handle->advertise(*m_publisher);
 }
 
-void BatteryNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void BatteryNode::teleopPeriodic() {
+    
+}
+
+void BatteryNode::autonPeriodic() {
+    
 }
 
 void BatteryNode::m_populateMessage () {

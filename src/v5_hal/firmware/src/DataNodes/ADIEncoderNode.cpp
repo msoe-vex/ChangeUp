@@ -28,9 +28,12 @@ int ADIEncoderNode::getValue() {
     return m_encoder.get_value();
 }
 
-void ADIEncoderNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void ADIEncoderNode::teleopPeriodic() {
+    
+}
+
+void ADIEncoderNode::autonPeriodic() {
+    
 }
 
 void ADIEncoderNode::m_populateMessage() {

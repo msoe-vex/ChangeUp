@@ -27,7 +27,9 @@ public:
 
     float getValue();
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~ADIGyroNode();
 };

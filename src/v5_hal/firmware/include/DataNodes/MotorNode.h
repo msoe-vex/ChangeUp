@@ -40,7 +40,9 @@ public:
 
     void moveAbsolute(double position, int max_velocity);
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~MotorNode();
 };

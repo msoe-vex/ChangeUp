@@ -80,7 +80,9 @@ public:
 
     MotorPowers calculateRearModule(Eigen::Vector2d target_velocity, double rotation_velocity);
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~DriverControlNode();
 };
