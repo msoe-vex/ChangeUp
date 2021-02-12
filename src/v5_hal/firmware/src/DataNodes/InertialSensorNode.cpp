@@ -18,11 +18,11 @@ double InertialSensorNode::getYaw() {
 }
 
 bool InertialSensorNode::isAtAngle(double angle) {
-    return ((getYaw() - turning_threshold < angle) && (angle < getYaw() + turining_threshold));
+    return ((getYaw() - turning_threshold < angle) && (angle < getYaw() + turning_threshold));
 }
 
 void InertialSensorNode::teleopPeriodic() {
-
+    
 }
 
 void InertialSensorNode::autonPeriodic() {

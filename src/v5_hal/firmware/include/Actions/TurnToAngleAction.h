@@ -10,16 +10,18 @@
 class TurnToAngleAction : public AutonAction {
 private:
     TankDriveNode* m_tank_drive;
-    InertialSensorNode* m_inertial_sensor
-    Eigen::Rotation2Dd m_angle;
+    InertialSensorNode* m_inertial_sensor;
+    Eigen::Rotation2Dd m_target_angle;
+    Timer m_timer;
+    double kP = 2;
 
 public:
-    TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNode* inertial_sensor, Eigen::Rotation2Dd angle);
+    TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNode* inertial_sensor, 
+        Eigen::Rotation2Dd target_angle);
 
     void actionInit();
 
     actionStatus action();
 
     void actionEnd();
-
 };
