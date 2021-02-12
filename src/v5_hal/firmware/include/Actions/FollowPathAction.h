@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Auton.h"
-#include "DataNodes/TankDrive.h"
+#include "DataNodes/TankDriveNode.h"
 #include "adaptive_pursuit_controller/AdaptivePursuit.h"
 
 class FollowPathAction : AutonAction {
