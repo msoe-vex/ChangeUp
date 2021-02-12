@@ -8,6 +8,7 @@ class InertialSensorNode : public Node {
 private:
     pros::Imu m_inertial_sensor;
     std::string m_handle_name;
+    double turning_threshold = 0.1;
 
 public:
     InertialSensorNode(NodeManager* node_manager, int sensor_port, 
@@ -16,6 +17,8 @@ public:
     void initialize();
     
     double getYaw();
+
+    bool isAtAngle(double angle);
     
     void teleopPeriodic();
 
