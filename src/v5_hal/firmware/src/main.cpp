@@ -40,8 +40,9 @@ BatteryNode* battery;
 CompetitionStatusNode* competition_status;
 
 ProsTimeNode* pros_time;
-Auton * programming_skills_auton;
+Auton* programming_skills_auton;
 
+OdometryNode* odom_node;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -87,11 +88,14 @@ void initialize() {
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 
+	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
+		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+
 	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor);
      
-    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node);
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
