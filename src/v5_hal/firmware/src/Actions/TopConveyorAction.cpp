@@ -5,11 +5,11 @@ TopConveyorAction::TopConveyorAction(ConveyorNode* conveyor_node, ConveyorNode::
     
 }
 
-void TopConveyorAction::actionInit() {
+void TopConveyorAction::ActionInit() {
     m_timer.Start();
 }
 
-AutonAction::actionStatus TopConveyorAction::action() {
+AutonAction::actionStatus TopConveyorAction::Action() {
     if (m_time <= 0) {
         m_conveyor_node->setConveyorState(m_conveyor_state);
         return END;
@@ -25,6 +25,6 @@ AutonAction::actionStatus TopConveyorAction::action() {
     }
 }
 
-void TopConveyorAction::actionEnd() {
+void TopConveyorAction::ActionEnd() {
 
 }

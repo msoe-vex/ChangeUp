@@ -6,11 +6,11 @@ DriveAction::DriveAction(TankDriveNode* tank_drive_node, double distance_left, d
 
 }
 
-void DriveAction::actionInit() {
+void DriveAction::ActionInit() {
     m_tank_drive_node->setDriveDistancePID(m_distance_left, m_distance_right, m_max_velocity);
 }
 
-AutonAction::actionStatus DriveAction::action() {
+AutonAction::actionStatus DriveAction::Action() {
     m_actual_left_distance = m_tank_drive_node->getLeftDistancePID();
     m_actual_right_distance = m_tank_drive_node->getRightDistancePID();
 
@@ -22,6 +22,6 @@ AutonAction::actionStatus DriveAction::action() {
     }
 }
 
-void DriveAction::actionEnd() {
+void DriveAction::ActionEnd() {
     
 }

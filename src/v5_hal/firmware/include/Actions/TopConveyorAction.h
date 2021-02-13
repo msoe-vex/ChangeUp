@@ -17,9 +17,9 @@ public:
     TopConveyorAction(ConveyorNode* conveyor_node, ConveyorNode::ConveyorState conveyor_state, 
         double time=0);
 
-    void actionInit();
+    void ActionInit();
 
-    actionStatus action();
+    actionStatus Action();
 
-    void actionEnd();
+    void ActionEnd();
 };
