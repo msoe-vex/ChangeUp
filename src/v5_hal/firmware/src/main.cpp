@@ -159,7 +159,7 @@ void autonomous() {
  */
 void opcontrol() {
 	node_manager->reset();
-	
+
 	while(true) {
 		node_manager->executeTeleop();
 	}
