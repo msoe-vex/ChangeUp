@@ -5,11 +5,11 @@ TurnToAngleAction::TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNo
 
 }
 
-void TurnToAngleAction::actionInit() {
+void TurnToAngleAction::ActionInit() {
     m_timer.Start();
 }
 
-AutonAction::actionStatus TurnToAngleAction::action() {    
+AutonAction::actionStatus TurnToAngleAction::Action() {    
     Eigen::Rotation2Dd current_angle(m_inertial_sensor->getYaw());
 
     double delta_angle = (current_angle * m_target_angle.inverse()).smallestAngle();
@@ -33,6 +33,6 @@ AutonAction::actionStatus TurnToAngleAction::action() {
     }
 }
 
-void TurnToAngleAction::actionEnd() {
+void TurnToAngleAction::ActionEnd() {
     m_tank_drive->setDriveVoltage(0, 0);
 }

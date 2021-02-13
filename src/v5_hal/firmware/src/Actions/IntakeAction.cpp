@@ -5,11 +5,11 @@ IntakeAction::IntakeAction(ConveyorNode* conveyor_node, int voltage, double time
     
 }
 
-void IntakeAction::actionInit() {
+void IntakeAction::ActionInit() {
     m_timer.Start();
 }
 
-AutonAction::actionStatus IntakeAction::action() {
+AutonAction::actionStatus IntakeAction::Action() {
     if (m_time <= 0) {
         m_conveyor_node->setIntakeVoltage(m_voltage);
         return END;
@@ -25,6 +25,6 @@ AutonAction::actionStatus IntakeAction::action() {
     }
 }
 
-void IntakeAction::actionEnd() {
+void IntakeAction::ActionEnd() {
 
 }
