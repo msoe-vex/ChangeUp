@@ -1,9 +1,10 @@
 #include "DataNodes/OdometryNode.h"
 
 OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
-        ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor, 
+        ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor_node, 
         OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name), m_chassis(chassis),
-        m_odom_encoder_1(odom_encoder_1), m_odom_encoder_2(odom_encoder_2), m_odom_config(odom_config) {
+        m_odom_encoder_1(odom_encoder_1), m_odom_encoder_2(odom_encoder_2), m_inertial_sensor_node(inertial_sensor_node),
+        m_odom_config(odom_config) {
     m_odom = m_getOdomClass(odom_config);
 }
 
@@ -30,13 +31,13 @@ Pose OdometryNode::getCurrentPose() {
 }
 
 void OdometryNode::teleopPeriodic() {
-    Rotation2Dd current_angle(m_inertial_sensor->getYaw());
+    Rotation2Dd current_angle(m_inertial_sensor_node->getYaw());
 
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), current_angle);
 }
 
 void OdometryNode::autonPeriodic() {
-    Rotation2Dd current_angle(m_inertial_sensor->getYaw());
+    Rotation2Dd current_angle(m_inertial_sensor_node->getYaw());
 
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), current_angle);
 }

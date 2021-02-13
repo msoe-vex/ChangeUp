@@ -18,17 +18,25 @@ ConnectionCheckerNode::ConnectionCheckerNode(NodeManager* node_manager) : Node(n
     connectedStyle->body.grad_color = LV_COLOR_GREEN;
 }
 
-void ConnectionCheckerNode::initialize() {
-    lv_obj_set_style(obj1, notConnectedStyle);
-}
-
-void ConnectionCheckerNode::periodic() {
+void ConnectionCheckerNode::m_checkStatus() {
     if(Node::m_handle->connected()) {
         lv_obj_set_style(obj1, connectedStyle);
     } else {
         lv_obj_set_style(obj1, notConnectedStyle);
     }
     lv_obj_refresh_style(obj1);
+}
+
+void ConnectionCheckerNode::initialize() {
+    lv_obj_set_style(obj1, notConnectedStyle);
+}
+
+void ConnectionCheckerNode::teleopPeriodic() {
+    m_checkStatus();
+}
+
+void ConnectionCheckerNode::autonPeriodic() {
+    m_checkStatus();
 }
 
 ConnectionCheckerNode::~ConnectionCheckerNode() { 

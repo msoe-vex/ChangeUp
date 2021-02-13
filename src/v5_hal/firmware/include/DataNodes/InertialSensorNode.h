@@ -37,7 +37,7 @@ private:
     SensorConfig m_config;
     double m_yaw;
 
-    ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub = nullptr;
+    ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub;
 
     void m_handleSensorMsg(const v5_hal::RollPitchYaw& msg);
 };

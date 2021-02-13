@@ -38,7 +38,7 @@ private:
     TankDriveNode* m_chassis;
     ADIEncoderNode* m_odom_encoder_1;
     ADIEncoderNode* m_odom_encoder_2;
-    InertialSensorNode* m_inertial_sensor;
+    InertialSensorNode* m_inertial_sensor_node;
 
     Odometry* m_odom;
 

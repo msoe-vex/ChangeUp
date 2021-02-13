@@ -96,7 +96,7 @@ void initialize() {
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor);
 
-	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node);
+	// auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node);
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
