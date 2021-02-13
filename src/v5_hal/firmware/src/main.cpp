@@ -1,6 +1,7 @@
 #include "main.h"
 #include "NodeManager.h"
 #include "eigen/Eigen/Dense"
+#include "adaptive_pursuit_controller/PathManager.h"
 
 NodeManager* node_manager = new NodeManager(pros::millis);
 
@@ -34,6 +35,8 @@ BatteryNode* battery;
 CompetitionStatusNode* competition_status;
 
 ProsTimeNode* pros_time;
+Auton * programming_skills_auton;
+
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -77,9 +80,13 @@ void initialize() {
 	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor);
+     
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
+
+	PathManager::GetInstance()->LoadPathsFile("/usd/path.json");
 }
 
 /**
@@ -98,7 +105,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	programming_skills_auton->AutonInit();
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -112,8 +121,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-
-	
+	programming_skills_auton->AutonPeriodic();
 }
 
 /**
