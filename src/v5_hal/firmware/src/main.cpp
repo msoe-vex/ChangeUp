@@ -6,6 +6,7 @@ NodeManager* node_manager = new NodeManager(pros::millis);
 
 // Declare all nodes here
 ControllerNode* primary_controller;
+ConnectionCheckerNode* connection_checker_node;
 MotorNode* left_module_1;
 MotorNode* left_module_2;
 ADIAnalogInNode* left_module_pot;
@@ -37,6 +38,8 @@ DriverControlNode* driver_control;
 void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
+
+	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
 	left_module_1 = new MotorNode(node_manager, 5, "leftModule1", false);
 	left_module_2 = new MotorNode(node_manager, 6, "leftModule2", false);
