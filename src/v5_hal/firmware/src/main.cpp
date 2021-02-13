@@ -80,7 +80,7 @@ void initialize() {
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
 
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder");
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 

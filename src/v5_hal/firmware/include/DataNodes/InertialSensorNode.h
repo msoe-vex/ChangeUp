@@ -4,6 +4,7 @@
 #include "api.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/RollPitchYaw.h"
+#include "eigen/Eigen/Dense"
 
 class InertialSensorNode : public Node {
 public:
@@ -19,7 +20,7 @@ public:
     
     void initialize();
     
-    double getYaw();
+    Eigen::Rotation2Dd getYaw();
 
     bool isAtAngle(double angle);
     
@@ -35,7 +36,8 @@ private:
     std::string m_sub_inertial_sensor_name;
     double turning_threshold = 0.1;
     SensorConfig m_config;
-    double m_yaw;
+    Eigen::Rotation2Dd m_yaw;
+    Eigen::Rotation2Dd m_gyro_offset_angle; 
 
     ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub;
 

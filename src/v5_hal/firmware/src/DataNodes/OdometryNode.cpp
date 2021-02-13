@@ -4,7 +4,7 @@ OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, T
         ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor_node, 
         OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name), m_chassis(chassis),
         m_odom_encoder_1(odom_encoder_1), m_odom_encoder_2(odom_encoder_2), m_inertial_sensor_node(inertial_sensor_node),
-        m_odom_config(odom_config) {
+        m_current_angle_offset(0), m_odom_config(odom_config) {
     m_odom = m_getOdomClass(odom_config);
 }
 
@@ -24,6 +24,10 @@ Odometry* OdometryNode::m_getOdomClass(OdomConfig config) {
 
 void OdometryNode::initialize() {
 
+}
+
+void OdometryNode::setCurrentPose(Pose pose) {
+    m_odom->SetCurrentPose(pose);
 }
 
 Pose OdometryNode::getCurrentPose() {

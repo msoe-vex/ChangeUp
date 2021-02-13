@@ -2,7 +2,7 @@
 
 InertialSensorNode::InertialSensorNode(NodeManager* node_manager, 
         std::string handle_name, int sensor_port) : Node(node_manager, 20), 
-        m_yaw(0) {
+        m_yaw(0), m_gyro_offset_angle(M_PI_2) {
     m_handle_name = handle_name.insert(0, "sensor/");
     m_config = V5;
 
@@ -10,7 +10,7 @@ InertialSensorNode::InertialSensorNode(NodeManager* node_manager,
 }
 
 InertialSensorNode::InertialSensorNode(NodeManager* node_manager, std::string handle_name, 
-        std::string subscribe_handle) : Node(node_manager, 20), m_yaw(0),
+        std::string subscribe_handle) : Node(node_manager, 20), m_yaw(0), m_gyro_offset_angle(M_PI_2),
         m_sub_inertial_sensor_name(subscribe_handle) {
     m_handle_name = handle_name.insert(0, "sensor/");
     m_config = ROS;
@@ -20,7 +20,8 @@ InertialSensorNode::InertialSensorNode(NodeManager* node_manager, std::string ha
 }
 
 void InertialSensorNode::m_handleSensorMsg(const v5_hal::RollPitchYaw& msg) {
-    m_yaw = msg.yaw;
+    Eigen::Rotation2Dd current_angle(msg.yaw  * (M_PI/180));
+    m_yaw = (current_angle * m_gyro_offset_angle.inverse()).inverse();
 }
 
 void InertialSensorNode::initialize() {
@@ -36,19 +37,20 @@ void InertialSensorNode::initialize() {
     }
 }
 
-double InertialSensorNode::getYaw() {
+Eigen::Rotation2Dd InertialSensorNode::getYaw() {
     return m_yaw;
 }
 
 bool InertialSensorNode::isAtAngle(double angle) {
-    return ((m_yaw - turning_threshold < angle) && (angle < m_yaw + turning_threshold));
+    return ((m_yaw.angle() - turning_threshold < angle) && (angle < m_yaw.angle() + turning_threshold));
 }
 
 void InertialSensorNode::teleopPeriodic() {
     switch (m_config) {
         case V5:
             if (!(m_inertial_sensor->is_calibrating())) {
-                m_yaw = (m_inertial_sensor->get_yaw() * (M_PI/180));
+                Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_yaw() * -(M_PI/180));
+                m_yaw = current_angle * m_gyro_offset_angle.inverse();
             }
     }
 }
@@ -57,7 +59,8 @@ void InertialSensorNode::autonPeriodic() {
     switch (m_config) {
         case V5:
             if (!m_inertial_sensor->is_calibrating()) {
-                m_yaw = (m_inertial_sensor->get_yaw() * (M_PI/180));
+                Eigen::Rotation2Dd current_angle(m_inertial_sensor->get_yaw() * -(M_PI/180));
+                m_yaw = current_angle * m_gyro_offset_angle.inverse();
             }
     }
 }
