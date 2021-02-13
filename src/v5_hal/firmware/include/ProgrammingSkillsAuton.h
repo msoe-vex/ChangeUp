@@ -7,12 +7,13 @@
 #include "DataNodes/ConveyorNode.h"
 #include "Actions/FollowPathAction.h"
 #include "Actions/DeployAction.h"
+#include "eigen/Eigen/Dense"
 
 class ProgrammingSkillsAuton : public Auton {
 public:
     ProgrammingSkillsAuton(TankDriveNode* tankDriveNode, OdometryNode* odom_node, ConveyorNode* conveyer_node);
 
-    void AddNodes();
+    void AddNodes() override;
 
 private:
     TankDriveNode* m_tankDriveNode;
