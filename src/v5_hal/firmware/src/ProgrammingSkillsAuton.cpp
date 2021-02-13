@@ -7,7 +7,7 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(TankDriveNode* tankDriveNode, Odo
 }
 
 void ProgrammingSkillsAuton::AddNodes() {
-    // testNode = new AutonNode(10, new FollowPathAction(m_tankDriveNode, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
-    testNode = new AutonNode(10, new DeployAction(m_conveyor_node));
+    testNode = new AutonNode(10, new FollowPathAction(m_tankDriveNode, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
+    //testNode = new AutonNode(10, new DeployAction(m_conveyor_node));
     Auton::AddFirstNode(testNode);
 }

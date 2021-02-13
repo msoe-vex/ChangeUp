@@ -43,8 +43,6 @@ OdometryNode* odom_node;
 ConnectionCheckerNode* connection_checker_node;
 OdometryNode* odom_node;
 
-Auton* programming_skills_auton;
-
 AutonManagerNode* auton_manager_node;
 
 /**
@@ -96,9 +94,9 @@ void initialize() {
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor);
 
-	// auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node);
-
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
+
+	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
@@ -136,8 +134,11 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-	//node_manager->reset();
-	//programming_skills_auton->AutonPeriodic();
+	node_manager->reset();
+	
+	while (pros::competition::is_autonomous()) {
+		auton_manager_node->autonPeriodic();
+	}
 }
 
 /**
