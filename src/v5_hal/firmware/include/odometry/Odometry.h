@@ -21,7 +21,7 @@ public:
     struct EncoderConfig {
             double initial_ticks;
             double ticks_per_wheel_revolution;
-            double wheel_diameter;
+            double wheel_diameter; // inches
     };
 
     Odometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, Pose current_pose=Pose());

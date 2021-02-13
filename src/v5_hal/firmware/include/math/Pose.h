@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Eigen/Dense>
+#include "eigen/Eigen/Dense"
 
 using namespace Eigen;
 

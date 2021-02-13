@@ -23,6 +23,11 @@ ADIAnalogInNode* bottom_conveyor_sensor;
 ADIAnalogInNode* middle_conveyor_sensor;
 ADIAnalogInNode* top_conveyor_sensor;
 
+ADIEncoderNode* x_odom_encoder;
+ADIEncoderNode* y_odom_encoder;
+
+InertialSensorNode* inertial_sensor;
+
 TankDriveNode* tank_drive_node;
 ConveyorNode* conveyor_node;
 
@@ -53,6 +58,11 @@ void initialize() {
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
 	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
+
+	x_odom_encoder = new ADIEncoderNode(node_manager, 4, 5, "xOdomEncoder");
+	y_odom_encoder = new ADIEncoderNode(node_manager, 6, 7, "yOdomEncoder");
+
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14);
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);

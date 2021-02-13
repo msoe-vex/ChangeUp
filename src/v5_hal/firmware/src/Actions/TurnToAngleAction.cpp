@@ -9,8 +9,8 @@ void TurnToAngleAction::ActionInit() {
     m_timer.Start();
 }
 
-AutonAction::actionStatus TurnToAngleAction::Action() {    
-    Eigen::Rotation2Dd current_angle(m_inertial_sensor->getYaw());
+AutonAction::actionStatus TurnToAngleAction::action() {    
+    Eigen::Rotation2Dd current_angle(m_inertial_sensor->getRPY().yaw);
 
     double delta_angle = (current_angle * m_target_angle.inverse()).smallestAngle();
 

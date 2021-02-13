@@ -81,7 +81,9 @@
         "valarray": "cpp",
         "variant": "cpp",
         "*.ipp": "cpp",
-        "core": "cpp"
+        "core": "cpp",
+        "forward_list": "cpp",
+        "dense": "cpp"
     },
     "C_Cpp.clang_format_fallbackStyle": "Google"
 }
