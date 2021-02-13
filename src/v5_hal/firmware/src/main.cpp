@@ -129,6 +129,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+<<<<<<< HEAD
 	// Reset all nodes to default configuration
 	node_manager->reset();
 
@@ -138,6 +139,12 @@ void autonomous() {
 	// Execute autonomous code
 	while (pros::competition::is_autonomous()) {
 		node_manager->executeAuton();
+=======
+	node_manager->reset();
+	
+	while (pros::competition::is_autonomous()) {
+		auton_manager_node->autonPeriodic();
+>>>>>>> Fixed driver control nodes
 	}
 }
 
