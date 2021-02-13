@@ -38,10 +38,7 @@ OdometryNode* odom_node;
 TankDriveNode* tank_drive_node;
 ConveyorNode* conveyor_node;
 
-
-
 ConnectionCheckerNode* connection_checker_node;
-OdometryNode* odom_node;
 
 AutonManagerNode* auton_manager_node;
 
@@ -86,8 +83,6 @@ void initialize() {
 
 	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
-     
-    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
@@ -95,6 +90,8 @@ void initialize() {
 	battery = new BatteryNode(node_manager, "v5battery");
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
+     
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
