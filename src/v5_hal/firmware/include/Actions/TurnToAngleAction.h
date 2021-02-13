@@ -19,9 +19,9 @@ public:
     TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNode* inertial_sensor, 
         Eigen::Rotation2Dd target_angle);
 
-    void actionInit();
+    void ActionInit();
 
-    actionStatus action();
+    actionStatus Action();
 
-    void actionEnd();
+    void ActionEnd();
 };

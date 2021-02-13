@@ -49,11 +49,11 @@ private:
     Timer m_timer;
 };
 
-class Autonomous {
+class Auton {
 public:
-    Autonomous(string name, bool defaultAuton = false);
+    Auton(string name, bool defaultAuton = false);
 
-    inline Autonomous* GetInstance() {
+    inline Auton* GetInstance() {
         return this;
     }
 
@@ -62,11 +62,11 @@ public:
     }
 
     string GetName();
-    void Auton();
+    void AutonPeriodic();
     void AutonInit();
     bool Complete();
     void Reset();
-    virtual ~Autonomous();
+    virtual ~Auton();
 protected:
     void AddFirstNode(AutonNode* firstNode);
     virtual void AddNodes() = 0;
