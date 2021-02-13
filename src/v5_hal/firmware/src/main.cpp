@@ -88,7 +88,7 @@ void initialize() {
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
      
-    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node, conveyor_node);
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
