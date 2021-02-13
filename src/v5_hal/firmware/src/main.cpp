@@ -1,7 +1,4 @@
 #include "main.h"
-#include "NodeManager.h"
-#include "eigen/Eigen/Dense"
-#include "adaptive_pursuit_controller/PathManager.h"
 
 NodeManager* node_manager = new NodeManager(pros::millis);
 
@@ -46,8 +43,7 @@ OdometryNode* odom_node;
 ConnectionCheckerNode* connection_checker_node;
 OdometryNode* odom_node;
 
-Auton* programming_skills_auton;
-
+AutonManagerNode* auton_manager_node;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -83,29 +79,28 @@ void initialize() {
 	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
 
-	x_odom_encoder = new ADIEncoderNode(node_manager, 4, 5, "xOdomEncoder");
-	y_odom_encoder = new ADIEncoderNode(node_manager, 6, 7, "yOdomEncoder");
+
+	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder");
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 
-	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
-		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+	// odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
+		// y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
 	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor);
-     
-    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node, conveyor_node);
+
+	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node);
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
-
-	PathManager::GetInstance()->LoadPathsFile("/usd/path.json");
 }
 
 /**
@@ -124,9 +119,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {
-	programming_skills_auton->AutonInit();
-}
+void competition_initialize() {}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -141,11 +134,8 @@ void competition_initialize() {
  */
 void autonomous() {
 	while(pros::competition::is_autonomous()) {
-		programming_skills_auton->AutonPeriodic();
 		node_manager->executeAuton();
-		printf("Auton Periodic");
 	}
-
 }
 
 /**
@@ -166,7 +156,7 @@ void autonomous() {
  * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
-	while (true) {
+	while(true) {
 		node_manager->executeTeleop();
 	}
 }

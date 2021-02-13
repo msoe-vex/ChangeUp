@@ -51,12 +51,19 @@
 #include "DataNodes/ConnectionCheckerNode.h"
 #include "DataNodes/TankDriveNode.h"
 #include "DataNodes/ConveyorNode.h"
+#include "DataNodes/AutonManagerNode.h"
+
 #include "Actions/DeployAction.h"
 #include "Actions/DriveAction.h"
 #include "Actions/IntakeAction.h"
 #include "Actions/BottomConveyorAction.h"
 #include "Actions/FollowPathAction.h"
+
 #include "ProgrammingSkillsAuton.h"
+
+#include "NodeManager.h"
+#include "eigen/Eigen/Dense"
+#include "adaptive_pursuit_controller/PathManager.h"
 
    /**
     * You should add more #includes here

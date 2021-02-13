@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Auton.h"
 #include "adaptive_pursuit_controller/PathManager.h"
 #include "DataNodes/TankDriveNode.h"
