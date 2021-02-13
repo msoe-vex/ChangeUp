@@ -35,6 +35,7 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "NodeManager.h"
 #include "DataNodes/MotorNode.h"
 #include "DataNodes/ADIAnalogInNode.h"
 #include "DataNodes/ADIDigitalInNode.h"
@@ -61,7 +62,6 @@
 
 #include "ProgrammingSkillsAuton.h"
 
-#include "NodeManager.h"
 #include "eigen/Eigen/Dense"
 #include "adaptive_pursuit_controller/PathManager.h"
 

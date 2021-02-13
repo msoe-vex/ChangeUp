@@ -38,6 +38,8 @@ public:
 
     void initialize();
 
+    void reset();
+
     void executeTeleop();
 
     void executeAuton();

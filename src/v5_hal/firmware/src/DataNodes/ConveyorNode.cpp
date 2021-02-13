@@ -128,20 +128,20 @@ void ConveyorNode::teleopPeriodic() {
 }
 
 void ConveyorNode::autonPeriodic() {
-    switch (m_current_conveyor_state) {
-        case STOPPED:
-            // Stop all motors
-            setTopConveyorVoltage(0);
-        break;
-        case HOLDING:
-            // Update the state machine controlling the ball storage
-            m_updateConveyorHoldingState();
-        break;
-        case SCORING:
-            // Run all motors
-            setTopConveyorVoltage(12000);
-        break;
-    }
+    // switch (m_current_conveyor_state) {
+    //     case STOPPED:
+    //         // Stop all motors
+    //         setTopConveyorVoltage(0);
+    //     break;
+    //     case HOLDING:
+    //         // Update the state machine controlling the ball storage
+    //         m_updateConveyorHoldingState();
+    //     break;
+    //     case SCORING:
+    //         // Run all motors
+    //         setTopConveyorVoltage(12000);
+    //     break;
+    // }
 }
 
 ConveyorNode::~ConveyorNode() {

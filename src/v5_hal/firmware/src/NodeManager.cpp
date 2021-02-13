@@ -21,6 +21,12 @@ void NodeManager::initialize() {
     }
 }
 
+void NodeManager::reset() {
+    for (auto& node_structure : m_node_structures) {
+        node_structure.last_executed_millis = 0;
+    }
+}
+
 void NodeManager::executeTeleop() {
     m_handle->spinOnce();
     

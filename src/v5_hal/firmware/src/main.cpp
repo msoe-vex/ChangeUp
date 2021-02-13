@@ -43,6 +43,8 @@ OdometryNode* odom_node;
 ConnectionCheckerNode* connection_checker_node;
 OdometryNode* odom_node;
 
+Auton* programming_skills_auton;
+
 AutonManagerNode* auton_manager_node;
 
 /**
@@ -119,7 +121,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	//programming_skills_auton->AutonInit();
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -133,9 +137,8 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	while(pros::competition::is_autonomous()) {
-		node_manager->executeAuton();
-	}
+	//node_manager->reset();
+	//programming_skills_auton->AutonPeriodic();
 }
 
 /**
@@ -156,6 +159,8 @@ void autonomous() {
  * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
+	node_manager->reset();
+	
 	while(true) {
 		node_manager->executeTeleop();
 	}
