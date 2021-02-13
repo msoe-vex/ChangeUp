@@ -130,6 +130,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+<<<<<<< HEAD
 	// Reset all nodes to default configuration
 	node_manager->reset();
 
@@ -140,6 +141,14 @@ void autonomous() {
 	while (pros::competition::is_autonomous()) {
 		node_manager->executeAuton();
 	}
+=======
+	while(pros::competition::is_autonomous()) {
+		programming_skills_auton->AutonPeriodic();
+		node_manager->executeAuton();
+		printf("Auton Periodic");
+	}
+
+>>>>>>> Troubleshooting autonomous
 }
 
 /**
