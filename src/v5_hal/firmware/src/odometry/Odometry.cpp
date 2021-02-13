@@ -24,3 +24,7 @@ void Odometry::SetCurrentPose(Pose current_pose) {
     m_pose_reset = true;
 }
 
+Odometry::~Odometry() {
+
+}
+
