@@ -98,7 +98,7 @@ void initialize() {
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor);
      
-    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node, conveyor_node);
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 

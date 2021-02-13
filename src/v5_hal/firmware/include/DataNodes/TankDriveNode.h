@@ -16,7 +16,7 @@ private:
 
     std::string m_handle_name;
 
-    const float MAX_ROBOT_SPEED = 1.1; // m/s
+    const float MAX_ROBOT_SPEED = 41.9; // in/s
 
     void m_resetEncoders();
 
