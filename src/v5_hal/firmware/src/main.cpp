@@ -44,6 +44,7 @@ Auton* programming_skills_auton;
 OdometryNode* odom_node;
 
 ConnectionCheckerNode* connection_checker_node;
+Auton * programming_skills_auton;
 
 
 /**
