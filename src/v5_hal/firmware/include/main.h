@@ -55,6 +55,7 @@
 #include "Actions/IntakeAction.h"
 #include "Actions/BottomConveyorAction.h"
 #include "Actions/FollowPathAction.h"
+#include "ProgrammingSkillsAuton.h"
 
    /**
     * You should add more #includes here
