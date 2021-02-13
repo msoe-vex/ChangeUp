@@ -30,13 +30,13 @@ Pose OdometryNode::getCurrentPose() {
 }
 
 void OdometryNode::teleopPeriodic() {
-    Rotation2Dd current_angle(m_inertial_sensor->getRPY().yaw);
+    Rotation2Dd current_angle(m_inertial_sensor->getYaw());
 
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), current_angle);
 }
 
 void OdometryNode::autonPeriodic() {
-    Rotation2Dd current_angle(m_inertial_sensor->getRPY().yaw);
+    Rotation2Dd current_angle(m_inertial_sensor->getYaw());
 
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), current_angle);
 }

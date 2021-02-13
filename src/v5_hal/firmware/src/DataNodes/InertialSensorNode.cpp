@@ -1,7 +1,8 @@
 #include "DataNodes/InertialSensorNode.h"
 
 InertialSensorNode::InertialSensorNode(NodeManager* node_manager, 
-        std::string handle_name, int sensor_port) : Node(node_manager, 20) {
+        std::string handle_name, int sensor_port) : Node(node_manager, 20), 
+        m_yaw(0) {
     m_handle_name = handle_name.insert(0, "sensor/");
     m_config = V5;
 
@@ -9,7 +10,7 @@ InertialSensorNode::InertialSensorNode(NodeManager* node_manager,
 }
 
 InertialSensorNode::InertialSensorNode(NodeManager* node_manager, std::string handle_name, 
-        std::string subscribe_handle) : Node(node_manager, 20), 
+        std::string subscribe_handle) : Node(node_manager, 20), m_yaw(0),
         m_sub_inertial_sensor_name(subscribe_handle) {
     m_handle_name = handle_name.insert(0, "sensor/");
     m_config = ROS;
@@ -19,9 +20,7 @@ InertialSensorNode::InertialSensorNode(NodeManager* node_manager, std::string ha
 }
 
 void InertialSensorNode::m_handleSensorMsg(const v5_hal::RollPitchYaw& msg) {
-    m_rpy.roll = msg.roll;
-    m_rpy.pitch = msg.pitch;
-    m_rpy.yaw = msg.yaw;
+    m_yaw = msg.yaw;
 }
 
 void InertialSensorNode::initialize() {
@@ -37,21 +36,19 @@ void InertialSensorNode::initialize() {
     }
 }
 
-InertialSensorNode::RPY InertialSensorNode::getRPY() {
-    return m_rpy;
+double InertialSensorNode::getYaw() {
+    return m_yaw;
 }
 
 bool InertialSensorNode::isAtAngle(double angle) {
-    return ((m_rpy.yaw - turning_threshold < angle) && (angle < m_rpy.yaw + turning_threshold));
+    return ((m_yaw - turning_threshold < angle) && (angle < m_yaw + turning_threshold));
 }
 
 void InertialSensorNode::teleopPeriodic() {
     switch (m_config) {
         case V5:
-            if (!m_inertial_sensor->is_calibrating()) {
-                m_rpy.roll = m_inertial_sensor->get_roll();
-                m_rpy.pitch = m_inertial_sensor->get_pitch();
-                m_rpy.yaw = m_inertial_sensor->get_yaw();
+            if (!(m_inertial_sensor->is_calibrating())) {
+                m_yaw = (m_inertial_sensor->get_yaw() * (M_PI/180));
             }
     }
 }
@@ -60,9 +57,7 @@ void InertialSensorNode::autonPeriodic() {
     switch (m_config) {
         case V5:
             if (!m_inertial_sensor->is_calibrating()) {
-                m_rpy.roll = m_inertial_sensor->get_roll();
-                m_rpy.pitch = m_inertial_sensor->get_pitch();
-                m_rpy.yaw = m_inertial_sensor->get_yaw();
+                m_yaw = (m_inertial_sensor->get_yaw() * (M_PI/180));
             }
     }
 }

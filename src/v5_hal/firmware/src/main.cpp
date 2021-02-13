@@ -81,17 +81,16 @@ void initialize() {
 	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
 
-
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder");
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 
-	// odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
-		// y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
+		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
 	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,

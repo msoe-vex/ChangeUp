@@ -11,12 +11,6 @@ public:
         V5, ROS
     };
 
-    struct RPY {
-        double roll;
-        double pitch;
-        double yaw;
-    };
-
     InertialSensorNode(NodeManager* node_manager, std::string handle_name, 
         int sensor_port);
 
@@ -25,7 +19,7 @@ public:
     
     void initialize();
     
-    RPY getRPY();
+    double getYaw();
 
     bool isAtAngle(double angle);
     
@@ -41,7 +35,7 @@ private:
     std::string m_sub_inertial_sensor_name;
     double turning_threshold = 0.1;
     SensorConfig m_config;
-    RPY m_rpy = {0, 0, 0};
+    double m_yaw;
 
     ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub = nullptr;
 
