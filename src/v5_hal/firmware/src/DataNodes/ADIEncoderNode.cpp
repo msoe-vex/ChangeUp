@@ -25,6 +25,7 @@ void ADIEncoderNode::initialize() {
 }
 
 int ADIEncoderNode::getValue() {
+    printf("Value: %i\n", m_encoder.get_value());
     return m_encoder.get_value();
 }
 

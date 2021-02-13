@@ -37,10 +37,9 @@ Auton* programming_skills_auton;
 OdometryNode* odom_node;
 TankDriveNode* tank_drive_node;
 ConveyorNode* conveyor_node;
+AutonManagerNode* auton_manager_node;
 
 ConnectionCheckerNode* connection_checker_node;
-
-AutonManagerNode* auton_manager_node;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -130,7 +129,6 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-<<<<<<< HEAD
 	// Reset all nodes to default configuration
 	node_manager->reset();
 
@@ -141,14 +139,6 @@ void autonomous() {
 	while (pros::competition::is_autonomous()) {
 		node_manager->executeAuton();
 	}
-=======
-	while(pros::competition::is_autonomous()) {
-		programming_skills_auton->AutonPeriodic();
-		node_manager->executeAuton();
-		printf("Auton Periodic");
-	}
-
->>>>>>> Troubleshooting autonomous
 }
 
 /**

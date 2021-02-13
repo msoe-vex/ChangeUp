@@ -62,6 +62,7 @@
 
 #include "ProgrammingSkillsAuton.h"
 
+#include "NodeManager.h"
 #include "eigen/Eigen/Dense"
 #include "adaptive_pursuit_controller/PathManager.h"
 
