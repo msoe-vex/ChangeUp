@@ -16,7 +16,7 @@ private:
 public:
     DriveAction(TankDriveNode* tank_drive_node, double distance_left, double distance_right, int max_velocity);
 
-    void actionInit();
-    actionStatus action();
-    void actionEnd();
+    void ActionInit();
+    actionStatus Action();
+    void ActionEnd();
 };

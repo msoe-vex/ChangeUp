@@ -158,7 +158,7 @@ AutonNode::~AutonNode() {
  * Initialize an autonomous routine with given name, first node, and whether this autonomous should be the default
  * selected autonomous on Smart Dashboard
  */
-Autonomous::Autonomous(string name, bool defaultAuton) {
+Auton::Auton(string name, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
 }
@@ -166,7 +166,7 @@ Autonomous::Autonomous(string name, bool defaultAuton) {
 /*
  * Run autonomous routine. Needs to be called each iteration.
  */
-void Autonomous::Auton() {
+void Auton::AutonPeriodic() {
     for(auto node : m_firstNode) {
         node->Act(true);
     }
@@ -175,7 +175,7 @@ void Autonomous::Auton() {
 /*
  * Initialize autonomous routine by resetting and adding all nodes.
  */
-void Autonomous::AutonInit() {
+void Auton::AutonInit() {
     Reset();
     AddNodes();
 }
@@ -183,7 +183,7 @@ void Autonomous::AutonInit() {
 /*
  * If autonomous routine is complete
  */
-bool Autonomous::Complete() {
+bool Auton::Complete() {
     for(auto node : m_firstNode) {
         if(!node->Complete()) {
             return false;
@@ -195,7 +195,7 @@ bool Autonomous::Complete() {
 /*
  * Reset all nodes in autonomous routine
  */
-void Autonomous::Reset() {
+void Auton::Reset() {
     for(auto node : m_firstNode) {
         if(node != nullptr) {
             node->Reset();
@@ -207,7 +207,7 @@ void Autonomous::Reset() {
  * Add another node to be run on start of autonomous routine
  * Nullptrs will not be added as actions, they will be ignored
  */
-void Autonomous::AddFirstNode(AutonNode* firstNode) {
+void Auton::AddFirstNode(AutonNode* firstNode) {
     if(firstNode != nullptr) {
         m_firstNode.push_back(firstNode);
     }
@@ -216,14 +216,14 @@ void Autonomous::AddFirstNode(AutonNode* firstNode) {
 /*
  * Returns human readable name of routine
  */
-string Autonomous::GetName() {
+string Auton::GetName() {
     return m_name;
 }
 
 /*
  * Automatically deletes all nodes and their actions on deletion of the autonomous routine
  */
-Autonomous::~Autonomous() {
+Auton::~Auton() {
     for (auto i = m_firstNode.begin(); i != m_firstNode.end(); i++){
         delete *i;
     }

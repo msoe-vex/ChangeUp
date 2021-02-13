@@ -5,7 +5,7 @@ BottomConveyorAction::BottomConveyorAction(ConveyorNode* conveyor_node, bool eje
         
 }
 
-void BottomConveyorAction::actionInit() {
+void BottomConveyorAction::ActionInit() {
     m_timer.Start();
 
     //sets the direction of the eject roller
@@ -16,7 +16,7 @@ void BottomConveyorAction::actionInit() {
     }
 }
 
-AutonAction::actionStatus BottomConveyorAction::action() {
+AutonAction::actionStatus BottomConveyorAction::Action() {
     if (m_time <= 0) {
         m_conveyor_node->setBottomConveyorVoltage(m_voltage);
         m_conveyor_node->setEjectionRollerVoltage(m_eject_voltage);
@@ -34,6 +34,6 @@ AutonAction::actionStatus BottomConveyorAction::action() {
     }   
 }
 
-void BottomConveyorAction::actionEnd() {
+void BottomConveyorAction::ActionEnd() {
 
 }

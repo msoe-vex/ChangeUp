@@ -12,7 +12,7 @@ private:
 public:
     DeployAction(ConveyorNode* conveyor_node);
 
-    void actionInit();
-    actionStatus action();
-    void actionEnd();
+    void ActionInit();
+    actionStatus Action();
+    void ActionEnd();
 };

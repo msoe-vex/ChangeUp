@@ -15,9 +15,9 @@ private:
 public:
     IntakeAction(ConveyorNode* conveyor_node, int voltage=12000, double time=0);
 
-    void actionInit();
+    void ActionInit();
 
-    actionStatus action();
+    actionStatus Action();
 
-    void actionEnd();
+    void ActionEnd();
 };
