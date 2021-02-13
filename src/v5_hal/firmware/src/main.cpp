@@ -86,7 +86,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 4, 5, "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 6, 7, "yOdomEncoder");
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14);
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
@@ -140,7 +140,12 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-	programming_skills_auton->AutonPeriodic();
+	while(pros::competition::is_autonomous()) {
+		programming_skills_auton->AutonPeriodic();
+		node_manager->executeAuton();
+		printf("Auton Periodic");
+	}
+
 }
 
 /**
