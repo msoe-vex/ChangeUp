@@ -5,12 +5,13 @@ VelocityPair::VelocityPair(double l, double r) {
     right = r;
 }
 
-AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel,
+AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double maxDeccel,
                                  double nominalDt, Path path, bool reversed,
                                  double pathCompletionTolerance, bool gradualStop, double wheelDiameter):
         m_lastCommand(0,0,0) {
     m_fixedLookahead = fixedLookahead;
     m_maxAccel = maxAccel;
+    m_maxDeccel = maxDeccel;
     m_path = path;
     m_dt = nominalDt;
     m_reversed = reversed;
@@ -23,6 +24,10 @@ AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel,
 bool AdaptivePursuit::isDone() {
     double remainingLength = m_path.getRemainingLength();
     return (remainingLength <= m_pathCompletionTolerance);
+}
+
+double AdaptivePursuit::getRemainingLength() {
+    return m_path.getRemainingLength();
 }
 
 VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
@@ -64,7 +69,7 @@ VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
     }
 
     double remainingDistance = m_path.getRemainingLength();
-    double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
+    double maxAllowedSpeed = sqrt(2 * m_maxDeccel * remainingDistance);
     if (fabs(speed) > maxAllowedSpeed) {
         speed = std::copysign(maxAllowedSpeed, speed);
     }

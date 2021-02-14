@@ -69,7 +69,9 @@ void TankOdometry::Update(double left_encoder_raw_ticks, double right_encoder_ra
     Vector2d robot_translation(0, distance_moved);
     robot_translation = gyro_angle * robot_translation;
     Odometry::m_robot_pose.position += robot_translation;
-    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse();
+
+    Eigen::Rotation2Dd angle_offset(M_PI_2);
+    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * angle_offset;
 
     Odometry::m_last_encoder_1_dist = left_dist;
     Odometry::m_last_encoder_2_dist = right_dist;

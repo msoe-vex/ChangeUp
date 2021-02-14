@@ -6,6 +6,7 @@
 #include "DataNodes/TankDriveNode.h"
 #include "DataNodes/ADIEncoderNode.h"
 #include "DataNodes/InertialSensorNode.h"
+#include "DataNodes/MotorNode.h"
 #include "odometry/Odometry.h"
 #include "odometry/FollowerOdometry.h"
 #include "odometry/TankOdometry.h"
@@ -19,6 +20,10 @@ public:
 
     OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
         ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor,
+        OdomConfig odom_config);
+
+    OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
+        MotorNode* motor_1, MotorNode* motor_2, InertialSensorNode* inertial_sensor,
         OdomConfig odom_config);
 
     void initialize();
@@ -35,13 +40,14 @@ public:
 
 private:    
     std::string m_handle_name;
-    std::string m_log_msg;
 
     OdomConfig m_odom_config;
 
     TankDriveNode* m_chassis;
     ADIEncoderNode* m_odom_encoder_1;
     ADIEncoderNode* m_odom_encoder_2;
+    MotorNode* m_motor_1;
+    MotorNode* m_motor_2;
     InertialSensorNode* m_inertial_sensor_node;
     Eigen::Rotation2Dd m_current_angle_offset;
 

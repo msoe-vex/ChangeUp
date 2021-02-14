@@ -59,12 +59,15 @@ public:
 // the superclass constructor (should look like :Node([manager], [time]))
 class Node {
 protected:
-    ros::NodeHandle* m_handle;
+    
     
 public:
     Node(NodeManager* node_manager, uint32_t interval_milliseconds) {
         m_handle = node_manager->addNode(this, interval_milliseconds);
     }
+
+    ros::NodeHandle* m_handle;
+
     virtual void initialize() = 0;
     virtual void teleopPeriodic() {}
     virtual void autonPeriodic() {}

@@ -137,7 +137,7 @@ void autonomous() {
 	node_manager->reset();
 	
 	while (pros::competition::is_autonomous()) {
-		auton_manager_node->autonPeriodic();
+		node_manager->executeAuton();
 	}
 }
 
@@ -159,17 +159,17 @@ void autonomous() {
  * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
-	pros::delay(3000);
+	pros::delay(5000);
 
 	node_manager->reset();
 	
 	while (true) {
-		auton_manager_node->autonPeriodic();
+		node_manager->executeAuton();
 	}
 
 	// node_manager->reset();
 
-	// while(true) {
+	// while (true) {
 	// 	node_manager->executeTeleop();
 	// }
 }

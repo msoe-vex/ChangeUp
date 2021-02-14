@@ -25,6 +25,10 @@ bool AdaptivePursuit::isDone() {
     return (remainingLength <= m_pathCompletionTolerance);
 }
 
+double AdaptivePursuit::getRemainingLength() {
+    return m_path.getRemainingLength();
+}
+
 VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
     Position2d pos = Position2d({-robotPos.position.y(), robotPos.position.x()}, Rotation2d::fromRadians(robotPos.angle.angle()));
     if (m_reversed){

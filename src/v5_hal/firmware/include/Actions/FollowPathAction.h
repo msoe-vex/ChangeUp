@@ -16,7 +16,7 @@ private:
 
 public:
     FollowPathAction(TankDriveNode* tank_drive, OdometryNode* odom_node, Path path, double wheelDiameter = 4.0625, 
-        bool reversed = false, double fixedLookahead = 6, double pathCompletionTolerance = 0.25, bool gradualStop = true);
+        bool reversed = false, double fixedLookahead = 10, double pathCompletionTolerance = 0.25, bool gradualStop = true);
 
     void ActionInit();
     actionStatus Action();

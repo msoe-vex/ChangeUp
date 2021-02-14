@@ -21,7 +21,7 @@ InertialSensorNode::InertialSensorNode(NodeManager* node_manager, std::string ha
 
 void InertialSensorNode::m_handleSensorMsg(const v5_hal::RollPitchYaw& msg) {
     Eigen::Rotation2Dd current_angle(msg.yaw  * (M_PI/180));
-    m_yaw = (current_angle * m_gyro_offset_angle.inverse()).inverse();
+    m_yaw = (current_angle.inverse()) * m_gyro_offset_angle;
 }
 
 void InertialSensorNode::initialize() {

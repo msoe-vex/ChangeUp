@@ -7,7 +7,7 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(TankDriveNode* tankDriveNode, Odo
 }
 
 void ProgrammingSkillsAuton::AddNodes() {
-    testNode = new AutonNode(10, new FollowPathAction(m_tankDriveNode, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
+    testNode = new AutonNode(10000, new FollowPathAction(m_tankDriveNode, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
     //testNode = new AutonNode(10, new DeployAction(m_conveyor_node));
     Auton::AddFirstNode(testNode);
 
@@ -15,7 +15,7 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     Vector2d initial_pos(first_waypoint.position.getY(), -first_waypoint.position.getX());
 
-    Rotation2Dd initial_rot(0);
+    Rotation2Dd initial_rot(M_PI_2);
 
     Pose initial_pose(initial_pos, initial_rot);
 

@@ -12,6 +12,7 @@ private:
     std_msgs::Int32 m_encoder_msg;
     std::string m_handle_name;
     std::string m_sub_publish_data_name;
+    std::string m_log_str;
     ros::Publisher* m_publisher;
     ros::Subscriber<std_msgs::Empty, ADIEncoderNode>* m_publish_data_sub;
 
