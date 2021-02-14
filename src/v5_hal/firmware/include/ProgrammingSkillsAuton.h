@@ -12,6 +12,7 @@
 #include "Actions/BottomConveyorAction.h"
 #include "Actions/TopConveyorAction.h"
 #include "Actions/TurnToAngleAction.h"
+#include "Actions/OpenIntakesAction.h"
 #include "eigen/Eigen/Dense"
 
 class ProgrammingSkillsAuton : public Auton {
@@ -28,15 +29,11 @@ private:
     InertialSensorNode* m_inertial_sensor_node;
 
     AutonNode* m_deploy_node;
+
+    AutonNode* m_wait_to_close_intakes;
+    AutonNode* m_close_intakes;
     
     AutonNode* m_path_1;
-    AutonNode* m_intake_in;
-    AutonNode* m_bottom_conveyor_in;
-    AutonNode* m_store_balls;
-
     AutonNode* m_path_2;
     AutonNode* m_path_3;
-
-    AutonNode* m_turn_node;
-
 };

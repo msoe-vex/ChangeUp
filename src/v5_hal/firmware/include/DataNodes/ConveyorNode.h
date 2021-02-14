@@ -30,7 +30,7 @@ public:
 
     int getNumBallsStored();
 
-    void openIntakes(bool open);
+    void openIntakes(int open);
 
     void initialize();
 
@@ -54,6 +54,7 @@ private:
     ADIAnalogInNode* m_bottom_conveyor_sensor;
     ADIAnalogInNode* m_middle_conveyor_sensor;
     ADIAnalogInNode* m_top_conveyor_sensor;
+    ADIDigitalOutNode* m_intake_pneumatics;
 
     std::string m_handle_name;
 
