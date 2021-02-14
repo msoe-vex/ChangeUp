@@ -46,6 +46,9 @@ bool InertialSensorNode::isAtAngle(Eigen::Rotation2Dd angle) {
 }
 
 void InertialSensorNode::teleopPeriodic() {
+    std::string log_str = "Teleop Angle:" + std::to_string(m_yaw.angle());
+    Node::m_handle->logwarn(log_str.c_str());
+
     switch (m_config) {
         case V5:
             if (!(m_inertial_sensor->is_calibrating())) {

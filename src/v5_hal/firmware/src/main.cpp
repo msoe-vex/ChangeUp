@@ -78,7 +78,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, true);
+	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 

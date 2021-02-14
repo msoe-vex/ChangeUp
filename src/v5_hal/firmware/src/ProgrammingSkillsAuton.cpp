@@ -133,36 +133,4 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     m_forward_9 = new AutonNode(1.5, new DriveAction(m_tank_drive_node, -14, 150, 40));
     m_descore_3->AddNext(m_forward_9);
-
-    Auton::AddFirstNode(m_deploy_node);
-
-    m_path_1 = new AutonNode(10, new FollowPathAction(m_tank_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path1")));
-
-    m_deploy_node->AddNext(m_path_1);
-
-    m_wait_to_close_intakes = new AutonNode(5, new WaitAction(4.0));
-    m_wait_to_close_intakes->AddAction(new OpenIntakesAction(m_conveyor_node));
-
-    m_close_intakes = new AutonNode(1, new OpenIntakesAction(m_conveyor_node, false));
-    m_wait_to_close_intakes->AddNext(m_close_intakes);
-
-    m_deploy_node->AddNext(m_wait_to_close_intakes);
-
-    m_path_1->AddAction(new IntakeAction(m_conveyor_node));
-    m_path_1->AddAction(new BottomConveyorAction(m_conveyor_node, false));
-    m_path_1->AddAction(new TopConveyorAction(m_conveyor_node, ConveyorNode::HOLDING));
-
-    // Configure the position for the first path
-    Waypoint first_waypoint = PathManager::GetInstance()->GetPath("Path1").getFirstWaypoint();
-    Vector2d initial_pos(first_waypoint.position.getY(), -first_waypoint.position.getX());
-    Rotation2Dd initial_rot(M_PI);
-    Pose initial_pose(initial_pos, initial_rot);
-    m_odom_node->setCurrentPose(initial_pose);
-
-    m_path_2 = new AutonNode(10, new FollowPathAction(m_tank_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path2"), true));
-
-    m_path_1->AddNext(m_path_2);
-    m_path_2->AddAction(new IntakeAction(m_conveyor_node, 0));
-    m_path_2->AddAction(new BottomConveyorAction(m_conveyor_node, false, 0));
->>>>>>> Added basic node sequencing for auton
 }
