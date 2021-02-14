@@ -23,6 +23,8 @@ ADIAnalogInNode* top_conveyor_sensor;
 ADIEncoderNode* x_odom_encoder;
 ADIEncoderNode* y_odom_encoder;
 
+ADIDigitalOutNode* digital_out_node;
+
 InertialSensorNode* inertial_sensor;
 
 TankDriveNode* tank_drive_node;
@@ -82,6 +84,8 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
+	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, true);
+
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
@@ -92,11 +96,11 @@ void initialize() {
 
 	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
-		top_conveyor_sensor);
+		top_conveyor_sensor, digital_out_node);
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
-	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node);
+	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

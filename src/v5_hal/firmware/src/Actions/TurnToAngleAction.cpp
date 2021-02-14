@@ -12,7 +12,7 @@ void TurnToAngleAction::ActionInit() {
 AutonAction::actionStatus TurnToAngleAction::Action() {    
     Eigen::Rotation2Dd current_angle(m_inertial_sensor->getYaw());
 
-    double delta_angle = (current_angle * m_target_angle.inverse()).smallestAngle();
+    double delta_angle = (m_target_angle.inverse() * current_angle).smallestAngle();
 
     double turning_power = delta_angle / M_PI;
 

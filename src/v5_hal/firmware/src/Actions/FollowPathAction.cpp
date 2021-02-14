@@ -1,8 +1,8 @@
 #include "FollowPathAction.h"
 
-FollowPathAction::FollowPathAction(TankDriveNode* tank_drive, OdometryNode* odom_node, Path path, double wheelDiameter, bool reversed,
+FollowPathAction::FollowPathAction(TankDriveNode* tank_drive, OdometryNode* odom_node, Path path, bool reversed, double wheelDiameter,
         double fixedLookahead, double pathCompletionTolerance, bool gradualStop) :
-        m_odom_node(odom_node), m_controller(fixedLookahead, 10, 5, 0.05, path, reversed, pathCompletionTolerance, gradualStop, wheelDiameter) {
+        m_odom_node(odom_node), m_controller(fixedLookahead, 10, 10, 0.05, path, reversed, pathCompletionTolerance, gradualStop, wheelDiameter) {
     m_tank_drive = tank_drive;
 }
 

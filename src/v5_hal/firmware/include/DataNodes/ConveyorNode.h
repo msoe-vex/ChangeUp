@@ -5,6 +5,7 @@
 #include "DataNodes/MotorNode.h"
 #include "DataNodes/ADIAnalogInNode.h"
 #include "DataNodes/ControllerNode.h"
+#include "DataNodes/ADIDigitalOutNode.h"
 
 class ConveyorNode : public Node {
 public: 
@@ -14,7 +15,8 @@ public:
 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_intake, 
         MotorNode* right_intake, MotorNode* bottom_conveyor_motor, MotorNode* ejection_roller_motor, MotorNode* top_conveyor_motor, 
-        ADIAnalogInNode* bottom_conveyor_sensor, ADIAnalogInNode* middle_conveyor_sensor, ADIAnalogInNode* top_conveyor_sensor);
+        ADIAnalogInNode* bottom_conveyor_sensor, ADIAnalogInNode* middle_conveyor_sensor, ADIAnalogInNode* top_conveyor_sensor, 
+        ADIDigitalOutNode* digital_out_node);
 
     void setIntakeVoltage(int voltage);
 
@@ -27,6 +29,8 @@ public:
     void setConveyorState(ConveyorState conveyorState);
 
     int getNumBallsStored();
+
+    void openIntakes(bool open);
 
     void initialize();
 
@@ -54,6 +58,8 @@ private:
     std::string m_handle_name;
 
     bool m_enableStateMachine = false;
+
+    bool m_open = false;
 
     void m_updateConveyorHoldingState();
 };

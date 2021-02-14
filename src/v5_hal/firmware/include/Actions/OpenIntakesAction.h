@@ -5,17 +5,13 @@
 #include "Timer.h"
 #include "DataNodes/ConveyorNode.h"
 
-class BottomConveyorAction : public AutonAction {
+class OpenIntakesAction : public AutonAction {
 private:
     ConveyorNode* m_conveyor_node;
-    Timer m_timer;
-    bool m_eject;
-    int m_voltage;
-    double m_time;
-    int m_eject_voltage;
+    bool m_open;
 
 public:
-    BottomConveyorAction(ConveyorNode* conveyor_node, bool eject, int voltage=12000, double time=0.);
+    OpenIntakesAction(ConveyorNode* conveyor_node, bool open=true);
     
     void ActionInit();
     
