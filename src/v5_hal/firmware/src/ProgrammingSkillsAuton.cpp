@@ -133,14 +133,21 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     m_forward_9 = new AutonNode(1.5, new DriveAction(m_tank_drive_node, -14, 150, 40));
     m_descore_3->AddNext(m_forward_9);
-=======
-    m_deploy_node = new AutonNode(5, new DeployAction(m_conveyor_node));
 
     Auton::AddFirstNode(m_deploy_node);
 
     m_path_1 = new AutonNode(10, new FollowPathAction(m_tank_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path1")));
 
     m_deploy_node->AddNext(m_path_1);
+
+    m_wait_to_close_intakes = new AutonNode(5, new WaitAction(4.0));
+    m_wait_to_close_intakes->AddAction(new OpenIntakesAction(m_conveyor_node));
+
+    m_close_intakes = new AutonNode(1, new OpenIntakesAction(m_conveyor_node, false));
+    m_wait_to_close_intakes->AddNext(m_close_intakes);
+
+    m_deploy_node->AddNext(m_wait_to_close_intakes);
+
     m_path_1->AddAction(new IntakeAction(m_conveyor_node));
     m_path_1->AddAction(new BottomConveyorAction(m_conveyor_node, false));
     m_path_1->AddAction(new TopConveyorAction(m_conveyor_node, ConveyorNode::HOLDING));
