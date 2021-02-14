@@ -78,7 +78,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 
 	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
@@ -129,7 +129,6 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-<<<<<<< HEAD
 	// Reset all nodes to default configuration
 	node_manager->reset();
 
@@ -139,12 +138,6 @@ void autonomous() {
 	// Execute autonomous code
 	while (pros::competition::is_autonomous()) {
 		node_manager->executeAuton();
-=======
-	node_manager->reset();
-	
-	while (pros::competition::is_autonomous()) {
-		auton_manager_node->autonPeriodic();
->>>>>>> Fixed driver control nodes
 	}
 }
 
