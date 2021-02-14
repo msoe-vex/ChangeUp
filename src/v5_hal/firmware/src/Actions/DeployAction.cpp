@@ -13,7 +13,7 @@ void DeployAction::ActionInit() {
 }
 
 AutonAction::actionStatus DeployAction::Action() {
-    if (m_timer.Get() > 0.25) {
+    if (m_timer.Get() > 0.1) {
         m_conveyor_node->setBottomConveyorVoltage(0);
 
         if (m_timer.Get() > 1.0) {

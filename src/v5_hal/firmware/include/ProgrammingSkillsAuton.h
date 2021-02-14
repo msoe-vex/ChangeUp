@@ -13,6 +13,7 @@
 #include "Actions/TopConveyorAction.h"
 #include "Actions/TurnToAngleAction.h"
 #include "Actions/OpenIntakesAction.h"
+#include "Actions/DriveAction.h"
 #include "eigen/Eigen/Dense"
 
 class ProgrammingSkillsAuton : public Auton {
@@ -30,10 +31,15 @@ private:
 
     AutonNode* m_deploy_node;
 
+    AutonNode* m_path_1;
+    AutonNode* m_turn_1;
+    AutonNode* m_forward_1;
+    AutonNode* m_turn_2;
+
     AutonNode* m_wait_to_close_intakes;
     AutonNode* m_close_intakes;
     
-    AutonNode* m_path_1;
+    
     AutonNode* m_path_2;
     AutonNode* m_path_3;
 };

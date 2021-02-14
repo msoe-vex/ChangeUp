@@ -29,8 +29,7 @@ int ADIEncoderNode::getValue() {
 }
 
 void ADIEncoderNode::teleopPeriodic() {
-    m_log_str = m_handle_name + " Encoder Val:" + std::to_string(getValue());
-    Node::m_handle->logerror(m_log_str.c_str());
+    
 }
 
 void ADIEncoderNode::autonPeriodic() {

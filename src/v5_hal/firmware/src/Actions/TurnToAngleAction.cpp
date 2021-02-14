@@ -16,7 +16,16 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     double turning_power = delta_angle / M_PI;
 
-    double total_turning_power = kP * turning_power;
+    // Integral
+    m_total_error += turning_power;
+
+    //Derivative
+    double delta_error = turning_power - m_previous_error;
+
+    // Update previous value
+    m_previous_error = turning_power;
+
+    double total_turning_power = (kP * turning_power) + (kI * m_total_error) + (kD * delta_error);
     
     if (total_turning_power > 1) {
         total_turning_power = 1;
@@ -26,7 +35,7 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     m_tank_drive->setDriveVoltage((int)(total_turning_power * 12000), (int)(total_turning_power * -12000));
 
-    if (!m_inertial_sensor->isAtAngle(m_target_angle.angle())) {
+    if (!m_inertial_sensor->isAtAngle(m_target_angle.inverse().angle())) {
         return CONTINUE;
     } else {
         return END;

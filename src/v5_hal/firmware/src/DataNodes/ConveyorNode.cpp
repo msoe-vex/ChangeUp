@@ -12,7 +12,8 @@ ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, C
     m_top_conveyor_motor(top_conveyor_motor), 
     m_bottom_conveyor_sensor(bottom_conveyor_sensor), 
     m_middle_conveyor_sensor(middle_conveyor_sensor), 
-    m_top_conveyor_sensor(top_conveyor_sensor) {
+    m_top_conveyor_sensor(top_conveyor_sensor),
+    m_intake_pneumatics(digital_out_node) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
 

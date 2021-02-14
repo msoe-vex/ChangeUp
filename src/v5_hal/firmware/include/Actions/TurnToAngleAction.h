@@ -13,7 +13,13 @@ private:
     InertialSensorNode* m_inertial_sensor;
     Eigen::Rotation2Dd m_target_angle;
     Timer m_timer;
-    double kP = 2;
+    
+    double m_total_error;
+    double m_previous_error;
+
+    double kP = 3;
+    double kI = 0.05;
+    double kD = 0;
 
 public:
     TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNode* inertial_sensor, 

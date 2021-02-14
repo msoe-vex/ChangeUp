@@ -84,7 +84,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, true);
+	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 
@@ -163,17 +163,9 @@ void autonomous() {
  * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
-	pros::delay(5000);
-
 	node_manager->reset();
 	
 	while (true) {
-		node_manager->executeAuton();
+		node_manager->executeTeleop();
 	}
-
-	// node_manager->reset();
-
-	// while (true) {
-	// 	node_manager->executeTeleop();
-	// }
 }
