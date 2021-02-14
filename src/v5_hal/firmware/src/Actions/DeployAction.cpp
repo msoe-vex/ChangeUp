@@ -7,6 +7,9 @@ DeployAction::DeployAction(ConveyorNode* conveyor_node) :
 
 void DeployAction::ActionInit() {
     m_timer.Start();
+
+    m_conveyor_node->setIntakeVoltage(-12000);
+    m_conveyor_node->setBottomConveyorVoltage(-12000);
 }
 
 AutonAction::actionStatus DeployAction::Action() {
@@ -16,12 +19,9 @@ AutonAction::actionStatus DeployAction::Action() {
         if (m_timer.Get() > 1.0) {
             return END;
         }
-    } else {
-        m_conveyor_node->setIntakeVoltage(-12000);
-        m_conveyor_node->setBottomConveyorVoltage(-12000);
-        
-        return CONTINUE;
     }
+
+    return CONTINUE;
 }
 
 void DeployAction::ActionEnd() {
