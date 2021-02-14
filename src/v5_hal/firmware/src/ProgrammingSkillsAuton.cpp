@@ -8,7 +8,13 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(TankDriveNode* tank_drive_node, O
 }
 
 void ProgrammingSkillsAuton::AddNodes() {
+<<<<<<< HEAD
     m_deploy_node = new AutonNode(1, new DeployAction(m_conveyor_node));
+=======
+    testNode = new AutonNode(10000, new FollowPathAction(m_tankDriveNode, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
+    //testNode = new AutonNode(10, new DeployAction(m_conveyor_node));
+    Auton::AddFirstNode(testNode);
+>>>>>>> Fixed problems with odometry
 
     Auton::AddFirstNode(m_deploy_node);
     

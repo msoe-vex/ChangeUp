@@ -40,7 +40,6 @@ public:
 
 private:    
     std::string m_handle_name;
-    std::string m_log_msg;
 
     OdomConfig m_odom_config;
 
