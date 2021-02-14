@@ -60,7 +60,7 @@ public:
 class Node {
 protected:
     ros::NodeHandle* m_handle;
-
+    
 public:
     Node(NodeManager* node_manager, uint32_t interval_milliseconds) {
         m_handle = node_manager->addNode(this, interval_milliseconds);

@@ -13,9 +13,9 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     Waypoint first_waypoint = PathManager::GetInstance()->GetPath("TestPath").getFirstWaypoint();
 
-    Vector2d initial_pos(first_waypoint.position.getX(), first_waypoint.position.getY());
+    Vector2d initial_pos(first_waypoint.position.getY(), -first_waypoint.position.getX());
 
-    Rotation2Dd initial_rot(first_waypoint.rotation.getRadians());
+    Rotation2Dd initial_rot(0);
 
     Pose initial_pose(initial_pos, initial_rot);
 

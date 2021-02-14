@@ -82,7 +82,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
@@ -159,9 +159,17 @@ void autonomous() {
  * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
-	node_manager->reset();
+	pros::delay(3000);
 
-	while(true) {
-		node_manager->executeTeleop();
+	node_manager->reset();
+	
+	while (true) {
+		auton_manager_node->autonPeriodic();
 	}
+
+	// node_manager->reset();
+
+	// while(true) {
+	// 	node_manager->executeTeleop();
+	// }
 }
