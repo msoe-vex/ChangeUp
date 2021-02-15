@@ -17,9 +17,9 @@ private:
     double m_total_error;
     double m_previous_error;
 
-    double kP = 3;
-    double kI = 0.05;
-    double kD = 0;
+    double kP = 3.;
+    double kI = 0.;
+    double kD = 0.1;
 
 public:
     TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNode* inertial_sensor, 

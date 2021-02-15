@@ -31,15 +31,9 @@ private:
 
     AutonNode* m_deploy_node;
 
-    AutonNode* m_path_1;
     AutonNode* m_turn_1;
     AutonNode* m_forward_1;
-    AutonNode* m_turn_2;
-
-    AutonNode* m_wait_to_close_intakes;
-    AutonNode* m_close_intakes;
-    
-    
-    AutonNode* m_path_2;
-    AutonNode* m_path_3;
+    AutonNode* m_wait_1;
+    AutonNode* m_reverse_1;
+    AutonNode* m_turn_2;  
 };

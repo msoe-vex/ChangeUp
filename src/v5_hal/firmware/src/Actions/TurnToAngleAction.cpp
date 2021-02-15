@@ -14,7 +14,7 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     double delta_angle = (m_target_angle.inverse() * current_angle).smallestAngle();
 
-    double turning_power = delta_angle / M_PI;
+    double turning_power = delta_angle / M_PI * -1;
 
     // Integral
     m_total_error += turning_power;
@@ -26,6 +26,9 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
     m_previous_error = turning_power;
 
     double total_turning_power = (kP * turning_power) + (kI * m_total_error) + (kD * delta_error);
+
+    std::string log_str = "delta_angle: " + to_string(delta_angle) + " P: " + to_string(turning_power) + " D: " + to_string(delta_error);
+    m_tank_drive->m_handle->logwarn(log_str.c_str()); 
     
     if (total_turning_power > 1) {
         total_turning_power = 1;
@@ -33,7 +36,7 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
         total_turning_power = -1;
     }
 
-    m_tank_drive->setDriveVoltage((int)(total_turning_power * 12000), (int)(total_turning_power * -12000));
+    m_tank_drive->setDriveVoltage((int)(total_turning_power * -12000), (int)(total_turning_power * 12000));
 
     if (!m_inertial_sensor->isAtAngle(m_target_angle.inverse().angle())) {
         return CONTINUE;

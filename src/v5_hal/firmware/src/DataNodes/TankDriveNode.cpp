@@ -7,7 +7,7 @@ TankDriveNode::TankDriveNode(NodeManager* node_manager, std::string handle_name,
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
-void TankDriveNode::m_resetEncoders() {
+void TankDriveNode::resetEncoders() {
     m_left_front_motor->resetEncoder();
     m_left_rear_motor->resetEncoder();
     m_right_front_motor->resetEncoder();
@@ -53,7 +53,7 @@ void TankDriveNode::m_setRightDistancePID(double distance, int max_velocity) {
 }
 
 void TankDriveNode::initialize() {
-    m_resetEncoders();
+    resetEncoders();
 }
 
 void TankDriveNode::setDriveVoltage(int left_voltage, int right_voltage) {
@@ -67,7 +67,7 @@ void TankDriveNode::setDriveVelocity(float left_velocity, float right_velocity) 
 }
 
 void TankDriveNode::setDriveDistancePID(double left_distance, double right_distance, int max_velocity) {
-    m_resetEncoders();
+    resetEncoders();
     m_setLeftDistancePID(left_distance, max_velocity);
     m_setRightDistancePID(right_distance, max_velocity);
 }

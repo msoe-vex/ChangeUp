@@ -18,8 +18,6 @@ private:
 
     const float MAX_ROBOT_SPEED = 41.9; // in/s
 
-    void m_resetEncoders();
-
     void m_setLeftVoltage(int voltage);
 
     void m_setRightVoltage(int voltage);
@@ -38,6 +36,8 @@ public:
         MotorNode* right_rear_motor);
 
     void initialize();
+
+    void resetEncoders();
 
     void setDriveVoltage(int left_voltage, int right_voltage);
 

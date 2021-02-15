@@ -42,16 +42,10 @@ Eigen::Rotation2Dd InertialSensorNode::getYaw() {
 }
 
 bool InertialSensorNode::isAtAngle(double angle) {
-    Node::m_handle->logwarn("Angles:");
-    Node::m_handle->logwarn(std::to_string(m_yaw.angle()).c_str());
-    Node::m_handle->logwarn(std::to_string(angle).c_str());
     return ((m_yaw.angle() - turning_threshold < angle) && (angle < m_yaw.angle() + turning_threshold));
 }
 
 void InertialSensorNode::teleopPeriodic() {
-    std::string log_str = "Teleop Angle:" + std::to_string(m_yaw.angle());
-    Node::m_handle->logwarn(log_str.c_str());
-
     switch (m_config) {
         case V5:
             if (!(m_inertial_sensor->is_calibrating())) {

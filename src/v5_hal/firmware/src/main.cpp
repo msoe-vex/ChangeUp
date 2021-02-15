@@ -139,6 +139,7 @@ void competition_initialize() {
  */
 void autonomous() {
 	node_manager->reset();
+	auton_manager_node->selected_auton->AutonInit();
 	
 	while (pros::competition::is_autonomous()) {
 		node_manager->executeAuton();

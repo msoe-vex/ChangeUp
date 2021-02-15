@@ -11,11 +11,12 @@
 class AutonManagerNode : public Node {
 private:
     Auton* m_programming_skills_auton;
-    Auton* m_selected_auton;
 
 public:
     AutonManagerNode(NodeManager* node_manager, TankDriveNode* tank_drive_node, OdometryNode* odometry_node, 
         ConveyorNode* conveyor_node, InertialSensorNode* inertial_sensor_node);
+
+    Auton* selected_auton;
 
     void initialize();
 
