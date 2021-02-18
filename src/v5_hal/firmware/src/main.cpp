@@ -80,7 +80,7 @@ void initialize() {
 
 	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
 	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);

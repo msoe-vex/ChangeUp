@@ -34,7 +34,7 @@ private:
     pros::Imu* m_inertial_sensor = nullptr;
     std::string m_handle_name;
     std::string m_sub_inertial_sensor_name;
-    double turning_threshold = 0.15;
+    double turning_threshold = 0.1;
     SensorConfig m_config;
     Eigen::Rotation2Dd m_yaw;
     Eigen::Rotation2Dd m_gyro_offset_angle; 
