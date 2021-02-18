@@ -103,7 +103,7 @@ void ConveyorNode::teleopPeriodic() {
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         m_enableStateMachine = false;
         top_conveyor_voltage = -12000;
-        ejection_roller_voltage = 12000;
+        ejection_roller_voltage = -12000;
     }
 
 	if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
@@ -121,7 +121,7 @@ void ConveyorNode::teleopPeriodic() {
 		ejection_roller_voltage = -12000;
 	}
 
-    openIntakes(m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_UP));
+    openIntakes(m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT));
 
     setIntakeVoltage(intake_voltage);
     setBottomConveyorVoltage(bottom_conveyor_voltage);
@@ -147,6 +147,9 @@ void ConveyorNode::autonPeriodic() {
         case SCORING:
             // Run all motors
             setTopConveyorVoltage(12000);
+        break;
+        case REVERSE:
+            setTopConveyorVoltage(-12000);
         break;
     }
 }

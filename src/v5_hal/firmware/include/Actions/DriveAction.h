@@ -15,6 +15,7 @@ private:
     int m_actual_right_distance;
     double m_lastSpeed;
     double m_lastTime;
+    double m_feedForward;
 
 public:
     DriveAction(TankDriveNode* tank_drive_node, double distance, double max_velocity, 

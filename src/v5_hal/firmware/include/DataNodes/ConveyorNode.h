@@ -10,7 +10,7 @@
 class ConveyorNode : public Node {
 public: 
     enum ConveyorState {
-        STOPPED, HOLDING, SCORING
+        STOPPED, HOLDING, SCORING, REVERSE
     };
 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_intake, 

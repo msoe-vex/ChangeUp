@@ -86,7 +86,7 @@ void initialize() {
 
 	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 18);
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);

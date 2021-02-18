@@ -41,8 +41,8 @@ Eigen::Rotation2Dd InertialSensorNode::getYaw() {
     return m_yaw;
 }
 
-bool InertialSensorNode::isAtAngle(double angle) {
-    return ((m_yaw.angle() - turning_threshold < angle) && (angle < m_yaw.angle() + turning_threshold));
+bool InertialSensorNode::isAtAngle(Eigen::Rotation2Dd angle) {
+    return fabs((m_yaw * angle.inverse()).smallestAngle()) < turning_threshold;
 }
 
 void InertialSensorNode::teleopPeriodic() {
