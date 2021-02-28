@@ -64,18 +64,12 @@ void DriverControlNode::m_spinEjectionRollerVoltage(int voltage) {
 	ejection_roller->moveVoltage(voltage);
 }
 
-void DriverControlNode::periodic() {
-    // printf("Inertial Sensor Yaw: %f\n", inertial_sensor->getYaw());
-    // double sensor_yaw = inertial_sensor->getYaw();
-    // robot_angle = Eigen::Rotation2Dd(-sensor_yaw);
-    
+void DriverControlNode::periodic() {    
     controller_target_velocity(0) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * max_velocity;
     controller_target_velocity(1) = (controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * max_velocity;
     rotation_velocity = -(controller_primary->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * max_rotation_velocity;
 
     field_target_velocity = robot_angle.inverse() * controller_target_velocity;
-
-    // printf("Field Target Velocity: %f\n", field_target_velocity);
 
     swerveController.assignActualAngle(left_swerve_pot->getValue(), right_swerve_pot->getValue(), rear_swerve_pot->getValue());
 
@@ -89,13 +83,6 @@ void DriverControlNode::periodic() {
     right_swerve_2->move(right_motor_powers.right_motor_power);
     rear_swerve_1->move(rear_motor_powers.left_motor_power);
     rear_swerve_2->move(rear_motor_powers.right_motor_power);
-
-    // printf("Left Motor 1 Power: %d\n", left_motor_powers.left_motor_power);
-    // printf("Left Motor 2 Power: %d\n", left_motor_powers.right_motor_power);
-    // printf("Right Motor 1 Power: %d\n", right_motor_powers.left_motor_power);
-    // printf("Right Motor 2 Power: %d\n", right_motor_powers.right_motor_power);
-    // printf("Rear Motor 1 Power: %d\n", rear_motor_powers.left_motor_power);
-    // printf("Rear Motor 2 Power: %d\n", rear_motor_powers.right_motor_power);
 
     int intake_voltage = 0;
 	int main_rollers_voltage = 0;
