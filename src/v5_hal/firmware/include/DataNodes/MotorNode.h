@@ -30,13 +30,21 @@ public:
 
     void initialize();
 
+    void resetEncoder();
+
     int getPosition();
 
     void move(int value);
 
     void moveVoltage(int voltage);
 
-    void periodic();
+    void moveVelocity(float velocity);
+
+    void moveAbsolute(double position, int max_velocity);
+
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~MotorNode();
 };

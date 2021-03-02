@@ -61,6 +61,10 @@ private:
 
     void m_spinMainRollersVoltage(int voltage);
 
+    void m_spinBottomRollersVoltage(int voltage);
+
+    void m_spinTopRollersVoltage(int voltage);
+
     void m_spinEjectionRollerVoltage(int voltage);
 
 public:
@@ -80,7 +84,9 @@ public:
 
     MotorPowers calculateRearModule(Eigen::Vector2d target_velocity, double rotation_velocity);
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~DriverControlNode();
 };

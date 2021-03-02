@@ -24,7 +24,9 @@ public:
 
     void initialize();
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~CompetitionStatusNode();
 };

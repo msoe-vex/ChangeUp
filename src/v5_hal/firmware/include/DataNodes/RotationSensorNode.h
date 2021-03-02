@@ -31,7 +31,9 @@ public:
 
     int getVelocity();
     
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
     
     ~RotationSensorNode();
 };

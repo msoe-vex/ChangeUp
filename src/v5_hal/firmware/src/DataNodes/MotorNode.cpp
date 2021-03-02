@@ -35,6 +35,10 @@ void MotorNode::initialize() {
     Node::m_handle->subscribe(*m_move_motor_voltage_sub);
 }
 
+void MotorNode::resetEncoder() {
+    m_motor.tare_position();
+}
+
 int MotorNode::getPosition() {
     return m_motor.get_position();
 }
@@ -47,9 +51,20 @@ void MotorNode::moveVoltage(int voltage) {
     m_motor.move_voltage(voltage);
 }
 
-void MotorNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void MotorNode::moveVelocity(float velocity) {
+    m_motor.move_velocity(velocity);
+}
+
+void MotorNode::moveAbsolute(double position, int max_velocity) {
+    m_motor.move_absolute(position, max_velocity);
+}
+
+void MotorNode::teleopPeriodic() {
+
+}
+
+void MotorNode::autonPeriodic() {
+
 }
 
 void MotorNode::m_populateMessage() {

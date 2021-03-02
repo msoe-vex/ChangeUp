@@ -27,9 +27,12 @@ int ADIDigitalInNode::getValue() {
     return m_digital_in.get_value();
 }
 
-void ADIDigitalInNode::periodic() {
-    // Publish data when called, and spin the handler to send data to the
-    // coprocessor on the published topic
+void ADIDigitalInNode::teleopPeriodic() {
+
+}
+
+void ADIDigitalInNode::autonPeriodic() {
+    
 }
 
 void ADIDigitalInNode::m_populateMessage() {

@@ -27,7 +27,9 @@ public:
 
     void setValue(int value);
 
-    void periodic();
+    void teleopPeriodic();
+
+    void autonPeriodic();
 
     ~ADIDigitalOutNode();
 };

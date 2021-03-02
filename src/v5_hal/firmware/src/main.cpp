@@ -1,33 +1,48 @@
 #include "main.h"
 #include "NodeManager.h"
 #include "eigen/Eigen/Dense"
+#include "adaptive_pursuit_controller/PathManager.h"
 
 NodeManager* node_manager = new NodeManager(pros::millis);
 
 // Declare all nodes here
 ControllerNode* primary_controller;
 ConnectionCheckerNode* connection_checker_node;
-MotorNode* left_module_1;
-MotorNode* left_module_2;
-ADIAnalogInNode* left_module_pot;
-MotorNode* right_module_1;
-MotorNode* right_module_2;
-ADIAnalogInNode* right_module_pot;
-MotorNode* rear_module_1;
-MotorNode* rear_module_2;
-ADIAnalogInNode* rear_module_pot;
+
+MotorNode* left_front_drive;
+MotorNode* left_rear_drive;
+MotorNode* right_front_drive;
+MotorNode* right_rear_drive;
+
 MotorNode* left_intake;
 MotorNode* right_intake;
 MotorNode* bottom_rollers;
 MotorNode* ejection_roller;
 MotorNode* top_rollers;
+
+ADIAnalogInNode* bottom_conveyor_sensor;
+ADIAnalogInNode* middle_conveyor_sensor;
+ADIAnalogInNode* top_conveyor_sensor;
+
+ADIEncoderNode* x_odom_encoder;
+ADIEncoderNode* y_odom_encoder;
+
+InertialSensorNode* inertial_sensor;
+
+TankDriveNode* tank_drive_node;
+ConveyorNode* conveyor_node;
+
 ADIEncoderNode* x_odometry_encoder;
 ADIEncoderNode* y_odometry_encoder;
-InertialSensorNode* inertial_sensor;
+
 BatteryNode* battery;
+
 CompetitionStatusNode* competition_status;
+
 ProsTimeNode* pros_time;
-DriverControlNode* driver_control;
+Auton* programming_skills_auton;
+
+OdometryNode* odom_node;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -40,22 +55,15 @@ void initialize() {
 	primary_controller = new ControllerNode(node_manager, "primary");
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
-
-	left_module_1 = new MotorNode(node_manager, 5, "leftModule1", false);
-	left_module_2 = new MotorNode(node_manager, 6, "leftModule2", false);
-	left_module_pot = new ADIAnalogInNode(node_manager, 6, "leftModulePot");
-
-	right_module_1 = new MotorNode(node_manager, 1, "rightModule1", false);
-	right_module_2 = new MotorNode(node_manager, 2, "rightModule2", false);
-	right_module_pot = new ADIAnalogInNode(node_manager, 8, "rightModulePot");
-
-	rear_module_1 = new MotorNode(node_manager, 3, "rearModule1", false);
-	rear_module_2 = new MotorNode(node_manager, 4, "rearModule2", false);
-	rear_module_pot = new ADIAnalogInNode(node_manager, 7, "rearModulePot");
+	
+	left_front_drive = new MotorNode(node_manager, 3, "leftFrontDrive", false);
+	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
+	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", true);
+	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
 	
 	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);
-	bottom_rollers = new MotorNode(node_manager, 11, "bottomRollers", true);
+	bottom_rollers = new MotorNode(node_manager, 11, "bottomRollers", false);
 	ejection_roller = new MotorNode(node_manager, 15, "ejectionRoller", false);
 	top_rollers = new MotorNode(node_manager, 7, "topRollers", true);
 
@@ -68,12 +76,31 @@ void initialize() {
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
 
-	driver_control = new DriverControlNode(node_manager, left_module_1, left_module_2, left_module_pot, 
-		right_module_1, right_module_2, right_module_pot, rear_module_1, rear_module_2, rear_module_pot,
-		left_intake, right_intake, bottom_rollers, ejection_roller, top_rollers, inertial_sensor, primary_controller);
+	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
+	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
+	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
+
+	x_odom_encoder = new ADIEncoderNode(node_manager, 4, 5, "xOdomEncoder");
+	y_odom_encoder = new ADIEncoderNode(node_manager, 6, 7, "yOdomEncoder");
+
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14);
+
+	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
+		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
+
+	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
+		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+
+	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
+		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
+		top_conveyor_sensor);
+     
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
+
+	PathManager::GetInstance()->LoadPathsFile("/usd/path.json");
 }
 
 /**
@@ -92,7 +119,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	programming_skills_auton->AutonInit();
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -105,7 +134,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	programming_skills_auton->AutonPeriodic();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -126,6 +157,6 @@ void autonomous() {}
  */
 void opcontrol() {
 	while (true) {
-		node_manager->execute();
+		node_manager->executeTeleop();
 	}
 }
