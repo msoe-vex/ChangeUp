@@ -239,11 +239,8 @@ int main(int argc, char **argv)
 			tf::Matrix3x3(rot).getRPY(roll, pitch, yaw);
 			const double dTime = odom.header.stamp.toSec() - last_time.toSec();
 			imu_msg.angular_velocity.x = roll / dTime;
-			imu_rpy_msg.roll = roll;
 			imu_msg.angular_velocity.y = pitch / dTime;
-			imu_rpy_msg.pitch = pitch;
 			imu_msg.angular_velocity.z = -yaw / dTime;
-			imu_rpy_msg.yaw = yaw;
 			imu_msg_raw.angular_velocity = imu_msg.angular_velocity;
 			last_rot = pose;
 			last_time = odom.header.stamp;
@@ -261,6 +258,11 @@ int main(int argc, char **argv)
 			odom.twist.twist.linear.z = nx.GetVelocityZ();
 
 			odom.twist.twist.angular = imu_msg.angular_velocity;
+
+			// Gather RPY into custom message
+			imu_rpy_msg.roll = nx.GetRoll();
+			imu_rpy_msg.pitch = nx.GetPitch();
+			imu_rpy_msg.yaw = nx.GetYaw();
 
 			//publish to ROS topics
 			time_pub.publish(timestamp);
