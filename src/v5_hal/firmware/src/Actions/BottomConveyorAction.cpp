@@ -8,7 +8,7 @@ BottomConveyorAction::BottomConveyorAction(ConveyorNode* conveyor_node, bool eje
 void BottomConveyorAction::ActionInit() {
     m_timer.Start();
 
-    //sets the direction of the eject roller
+    // Sets the direction of the eject roller
     if (m_eject == false) {
         m_eject_voltage = m_voltage;
     } else {

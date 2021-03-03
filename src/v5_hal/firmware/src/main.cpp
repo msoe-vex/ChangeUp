@@ -9,6 +9,7 @@ MotorNode* left_front_drive;
 MotorNode* left_rear_drive;
 MotorNode* right_front_drive;
 MotorNode* right_rear_drive;
+TankDriveNode* tank_drive_node;
 
 MotorNode* left_intake;
 MotorNode* right_intake;
@@ -20,23 +21,23 @@ ADIAnalogInNode* bottom_conveyor_sensor;
 ADIAnalogInNode* middle_conveyor_sensor;
 ADIAnalogInNode* top_conveyor_sensor;
 
-ADIEncoderNode* x_odom_encoder;
-ADIEncoderNode* y_odom_encoder;
+ConveyorNode* conveyor_node;
 
 ADIDigitalOutNode* digital_out_node;
 
+ADIEncoderNode* x_odom_encoder;
+ADIEncoderNode* y_odom_encoder;
+
 InertialSensorNode* inertial_sensor;
 
+OdometryNode* odom_node;
+
 BatteryNode* battery;
-
 CompetitionStatusNode* competition_status;
-
 ProsTimeNode* pros_time;
+
 Auton* programming_skills_auton;
 
-OdometryNode* odom_node;
-TankDriveNode* tank_drive_node;
-ConveyorNode* conveyor_node;
 AutonManagerNode* auton_manager_node;
 
 ConnectionCheckerNode* connection_checker_node;
@@ -65,20 +66,18 @@ void initialize() {
 	ejection_roller = new MotorNode(node_manager, 15, "ejectionRoller", false);
 	top_rollers = new MotorNode(node_manager, 7, "topRollers", true);
 
+	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
+	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
+	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
+
 	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
 		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
 		top_conveyor_sensor, digital_out_node);	
 
 	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
-	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
-	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
-	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
-
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
-
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
@@ -89,9 +88,9 @@ void initialize() {
 	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
 	pros_time = new ProsTimeNode(node_manager, "prosTime");
      
-    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node, conveyor_node);
-
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
+
+    programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odom_node, conveyor_node, inertial_sensor);
 
 	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, odom_node, conveyor_node, inertial_sensor);
 
