@@ -1,7 +1,7 @@
 #include "DataNodes/ConveyorNode.h"
 
 ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-    MotorNode* left_intake, MotorNode* right_intake,MotorNode* bottom_conveyor_motor, MotorNode* ejection_roller_motor, 
+    MotorNode* left_intake, MotorNode* right_intake, MotorNode* bottom_conveyor_motor, MotorNode* ejection_roller_motor, 
     MotorNode* top_conveyor_motor, ADIAnalogInNode* bottom_conveyor_sensor, ADIAnalogInNode* middle_conveyor_sensor, 
     ADIAnalogInNode* top_conveyor_sensor, ADIDigitalOutNode* digital_out_node) : Node(node_manager, 10), 
     m_controller(controller->getController()),

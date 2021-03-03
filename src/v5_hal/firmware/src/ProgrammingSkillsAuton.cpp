@@ -8,10 +8,6 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(TankDriveNode* tank_drive_node, O
 }
 
 void ProgrammingSkillsAuton::AddNodes() {
-    // m_turn_1 = new AutonNode(10, new TurnToAngleAction(m_tank_drive_node, m_inertial_sensor_node, Rotation2Dd(1.2)));
-
-    // Auton::AddFirstNode(m_turn_1);
-
     m_deploy_node = new AutonNode(1, new DeployAction(m_conveyor_node));
 
     Auton::AddFirstNode(m_deploy_node);

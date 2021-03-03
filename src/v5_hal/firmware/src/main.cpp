@@ -61,6 +61,9 @@ void initialize() {
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
 	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", true);
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
+
+	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
+		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 	
 	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);
@@ -68,14 +71,11 @@ void initialize() {
 	ejection_roller = new MotorNode(node_manager, 15, "ejectionRoller", false);
 	top_rollers = new MotorNode(node_manager, 7, "topRollers", true);
 
-	inertial_sensor = new InertialSensorNode(node_manager, 9, "inertialSensor");
-	
-	x_odometry_encoder = new ADIEncoderNode(node_manager, 1, 2, "xOdometryEncoder", false);
-	y_odometry_encoder = new ADIEncoderNode(node_manager, 3, 4, "yOdometryEncoder", false);
-	
-	battery = new BatteryNode(node_manager, "v5battery");
-	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
-	pros_time = new ProsTimeNode(node_manager, "prosTime");
+	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
+		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
+		top_conveyor_sensor, digital_out_node);	
+
+	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
 	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
@@ -84,19 +84,14 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
 
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
-
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
-
-	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
-		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 
 	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
-	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
-		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
-		top_conveyor_sensor, digital_out_node);
+	battery = new BatteryNode(node_manager, "v5battery");
+	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
+	pros_time = new ProsTimeNode(node_manager, "prosTime");
 
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
@@ -123,7 +118,7 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {
-	//programming_skills_auton->AutonInit();
+	
 }
 
 /**
@@ -138,9 +133,13 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+	// Reset all nodes to default configuration
 	node_manager->reset();
+
+	// Reset the chosen autonomous and initialize
 	auton_manager_node->selected_auton->AutonInit();
 	
+	// Execute autonomous code
 	while (pros::competition::is_autonomous()) {
 		node_manager->executeAuton();
 	}
@@ -164,9 +163,11 @@ void autonomous() {
  * and adding a wait to this thread will disrupt the performance of all nodes.
  */
 void opcontrol() {
+	// Reset all nodes to default configuration
 	node_manager->reset();
 	
-	while (true) {
+	// Execute teleop code
+	while (!pros::competition::is_disabled && !pros::competition::is_autonomous) {
 		node_manager->executeTeleop();
 	}
 }

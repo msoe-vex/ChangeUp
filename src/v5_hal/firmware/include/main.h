@@ -48,7 +48,7 @@
 #include "DataNodes/ProsTimeNode.h"
 #include "DataNodes/BatteryNode.h"
 #include "DataNodes/InertialSensorNode.h"
-#include "DataNodes/DriverControlNode.h"
+#include "DataNodes/SwerveDriveNode.h"
 #include "DataNodes/ConnectionCheckerNode.h"
 #include "DataNodes/TankDriveNode.h"
 #include "DataNodes/ConveyorNode.h"
