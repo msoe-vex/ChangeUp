@@ -38,6 +38,8 @@ public:
 
     void initialize();
 
+    void reset();
+
     void executeTeleop();
 
     void executeAuton();
@@ -56,13 +58,13 @@ public:
 // The interval at which a node is called is set within the Node's CPP file, in
 // the superclass constructor (should look like :Node([manager], [time]))
 class Node {
-protected:
-    ros::NodeHandle* m_handle;
-
 public:
     Node(NodeManager* node_manager, uint32_t interval_milliseconds) {
         m_handle = node_manager->addNode(this, interval_milliseconds);
     }
+
+    ros::NodeHandle* m_handle;
+
     virtual void initialize() = 0;
     virtual void teleopPeriodic() {}
     virtual void autonPeriodic() {}

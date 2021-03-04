@@ -1,7 +1,7 @@
 #include "odometry/FollowerOdometry.h"
 
 FollowerOdometry::FollowerOdometry(EncoderConfig xEncoderConfig, EncoderConfig yEncoderConfig, 
-    Pose currentPose): Odometry(xEncoderConfig, yEncoderConfig, currentPose) {
+    Pose currentPose): Odometry(xEncoderConfig, yEncoderConfig, currentPose), m_gyro_offset(M_PI_2) {
 
 }
 
@@ -35,14 +35,14 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     // Convert the x and y deltas into a translation vector
     Vector2d robot_translation(x_delta, y_delta);
 
+    // Update the current angle of the robot position
+    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * m_gyro_offset;
+
     // Rotate the translation vector by the current angle rotation matrix
-    robot_translation = gyro_angle * robot_translation;
+    robot_translation = Odometry::m_robot_pose.angle * robot_translation;
 
     // Add the current translation onto the robot position vector
     Odometry::m_robot_pose.position += robot_translation;
-
-    // Update the current angle of the robot position
-    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse();
 
     // Update the previous values of the encoders for the next iteration
     Odometry::m_last_encoder_1_dist = x_dist;

@@ -27,10 +27,12 @@ private:
     bool m_gradualStop = true;
 
 public:
-    AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path,
+    AdaptivePursuit(double fixedLookahead, double maxAccel, double maxDeccel, double nominalDt, Path path,
                     bool reversed, double pathCompletionTolerance, bool gradualStop, double wheelDiameter);
 
     bool isDone();
+
+    double getRemainingLength();
 
     VelocityPair Update(Pose robotPos, double now);
 

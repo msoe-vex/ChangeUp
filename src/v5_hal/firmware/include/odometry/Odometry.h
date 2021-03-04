@@ -1,5 +1,6 @@
 #pragma once
 
+#include "api.h"
 #include "math/Pose.h"
 #include "math/Math.h"
 
@@ -32,7 +33,7 @@ public:
 
     void SetCurrentPose(Pose current_pose);
 
-    virtual void Update(double encoder_1_raw_ticks, double encoder_2_raw_ticks, double track_width) {};
+    virtual void Update(double encoder_1_raw_ticks, double encoder_2_raw_ticks, double track_width) {}
     virtual void Update(double encoder_1_raw_ticks, double encoder_2_raw_ticks, Rotation2Dd gyro_angle) = 0;
 
     ~Odometry();

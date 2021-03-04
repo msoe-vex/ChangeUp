@@ -35,28 +35,32 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
-#include "DataNodes/MotorNode.h"
-#include "DataNodes/ADIAnalogInNode.h"
-#include "DataNodes/ADIDigitalInNode.h"
-#include "DataNodes/ADIEncoderNode.h"
-#include "DataNodes/ADIGyroNode.h"
-#include "DataNodes/ADIUltrasonicNode.h"
-#include "DataNodes/HelloWorldNode.h"
-#include "DataNodes/ControllerNode.h"
-#include "DataNodes/CompetitionStatusNode.h"
-#include "DataNodes/ProsTimeNode.h"
-#include "DataNodes/BatteryNode.h"
-#include "DataNodes/InertialSensorNode.h"
-#include "DataNodes/DriverControlNode.h"
-#include "DataNodes/ConnectionCheckerNode.h"
-#include "DataNodes/TankDriveNode.h"
-#include "DataNodes/ConveyorNode.h"
-#include "Actions/DeployAction.h"
-#include "Actions/DriveAction.h"
-#include "Actions/IntakeAction.h"
-#include "Actions/BottomConveyorAction.h"
-#include "Actions/FollowPathAction.h"
+#include "NodeManager.h"
+#include "data_nodes/MotorNode.h"
+#include "data_nodes/ADIAnalogInNode.h"
+#include "data_nodes/ADIDigitalInNode.h"
+#include "data_nodes/ADIEncoderNode.h"
+#include "data_nodes/ADIGyroNode.h"
+#include "data_nodes/ADIUltrasonicNode.h"
+#include "data_nodes/HelloWorldNode.h"
+#include "data_nodes/ControllerNode.h"
+#include "data_nodes/CompetitionStatusNode.h"
+#include "data_nodes/ProsTimeNode.h"
+#include "data_nodes/BatteryNode.h"
+#include "data_nodes/InertialSensorNode.h"
+#include "data_nodes/SwerveDriveNode.h"
+#include "data_nodes/ConnectionCheckerNode.h"
+#include "data_nodes/TankDriveNode.h"
+#include "data_nodes/ConveyorNode.h"
+#include "data_nodes/AutonManagerNode.h"
+#include "auton_actions/DeployAction.h"
+#include "auton_actions/DriveAction.h"
+#include "auton_actions/IntakeAction.h"
+#include "auton_actions/BottomConveyorAction.h"
+#include "auton_actions/FollowPathAction.h"
 #include "ProgrammingSkillsAuton.h"
+#include "eigen/Eigen/Dense"
+#include "adaptive_pursuit_controller/PathManager.h"
 
    /**
     * You should add more #includes here
@@ -84,11 +88,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    void autonomous(void);
-    void initialize(void);
-    void disabled(void);
-    void competition_initialize(void);
-    void opcontrol(void);
+  void autonomous(void);
+  void initialize(void);
+  void disabled(void);
+  void competition_initialize(void);
+  void opcontrol(void);
 #ifdef __cplusplus
 }
 #endif
