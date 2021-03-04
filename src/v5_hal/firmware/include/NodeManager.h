@@ -58,9 +58,6 @@ public:
 // The interval at which a node is called is set within the Node's CPP file, in
 // the superclass constructor (should look like :Node([manager], [time]))
 class Node {
-protected:
-    
-    
 public:
     Node(NodeManager* node_manager, uint32_t interval_milliseconds) {
         m_handle = node_manager->addNode(this, interval_milliseconds);
