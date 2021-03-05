@@ -3,7 +3,25 @@
 //
 
 #include "../include/PID.h"
+#include "util/Timer.h"
 
-#include <ctime>
+PID::PID(double kP, double kI, double kD) {
+    this.kP = kP;
+    this.kI = kI;
+    this.kD = kD;
+    previousError = 0;
+    totalError = 0;
+    timer.Reset();
+}
 
-PID(double kP, double kI, double kD):
+// TODO: How to use timer?
+double PID::calculate(double power, double feedForward) {
+    const double deltaError = power - previousError;
+    const double totalPower;
+
+    previousError = power;
+    error += power;
+    totalPower = (kP * power) + (kI * error) + (kD * deltaError);
+
+    return std::copysign(min(fabs(totalPower) + feedForward, 1.0), totalPower);
+}

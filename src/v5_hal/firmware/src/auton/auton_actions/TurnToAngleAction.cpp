@@ -1,4 +1,5 @@
 #include "auton/auton_actions/TurnToAngleAction.h"
+#include "../../../../../pid_class/include/PID.h"
 
 TurnToAngleAction::TurnToAngleAction(IDriveNode* drive_node, InertialSensorNode* inertial_sensor, 
         Eigen::Rotation2Dd target_angle) : 
@@ -20,18 +21,13 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     double turning_power = delta_angle / M_PI * -1;
 
-    // Integral
-    m_total_error += turning_power;
+    double total_turning_power;
 
-    //Derivative
-    double delta_error = turning_power - m_previous_error;
+    PID pid;
+    pid::PID(kP, kI, kD);
+    pid::calculate(turning_power, m_feed_forward);
 
-    // Update previous value
-    m_previous_error = turning_power;
-
-    double total_turning_power = (kP * turning_power) + (kI * m_total_error) + (kD * delta_error);
-
-    total_turning_power = std::copysign(min(fabs(total_turning_power) + m_feed_forward, 1.0), total_turning_power);
+    total_turning_power = m_total_error += turning_power;
 
     m_drive_node->setDriveVoltage(0, (int)(total_turning_power * -1 * MAX_MOTOR_VOLTAGE));
 
