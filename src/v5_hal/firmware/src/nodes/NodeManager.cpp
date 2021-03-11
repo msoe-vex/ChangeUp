@@ -39,7 +39,7 @@ void NodeManager::executeTeleop() {
         }
     }
     
-    pros::c::delay(m_delay_time_millis);
+    pros::c::delay(DELAY_TIME_MILLIS);
 }
 
 void NodeManager::executeAuton() {
@@ -54,7 +54,7 @@ void NodeManager::executeAuton() {
         }
     }
     
-    pros::c::delay(m_delay_time_millis);
+    pros::c::delay(DELAY_TIME_MILLIS);
 }
 
 NodeManager::~NodeManager() { m_node_structures.clear(); }

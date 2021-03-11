@@ -4,6 +4,7 @@
 
 #include "api.h"
 #include "ros_lib/ros.h"
+#include "util/Constants.h"
 
 class Node;
 
@@ -25,8 +26,6 @@ private:
     std::vector<NodeStructure> m_node_structures;
 
     uint32_t(*m_get_millis)(void);
-
-    const uint32_t m_delay_time_millis = 5;
 
 protected:
     ros::NodeHandle* m_handle;

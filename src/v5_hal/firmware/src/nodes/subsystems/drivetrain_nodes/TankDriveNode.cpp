@@ -73,8 +73,8 @@ void TankDriveNode::setDriveDistancePID(double left_distance, double right_dista
 }
 
 void TankDriveNode::teleopPeriodic() {
-    m_setLeftVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0) * 12000);
-    m_setRightVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0) * 12000);
+    m_setLeftVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0) * MAX_MOTOR_VOLTAGE);
+    m_setRightVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) / 127.0) * MAX_MOTOR_VOLTAGE);
 }
 
 void TankDriveNode::autonPeriodic() {

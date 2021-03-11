@@ -1,11 +1,7 @@
 #include "swerve/SwerveModule.h"
 
-SwerveModule::SwerveModule(Eigen::Vector2d module_location, double rotation_angle_threshold, 
-    double max_velocity, double max_rotation_velocity, double kP, double kI, double kD) : 
+SwerveModule::SwerveModule(Eigen::Vector2d module_location, double kP, double kI, double kD) : 
     m_module_location(module_location),
-    m_rotation_angle_threshold(rotation_angle_threshold), 
-    m_max_velocity(max_velocity), 
-    m_max_rotation_velocity(max_rotation_velocity), 
     m_percent_error(0),
     m_total_error(0),
     kP(kP),
@@ -35,7 +31,7 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
     }
 
     // Create a maximum power vector for translating motor into percent motor output power
-    Eigen::Vector2d max_motor_vector(m_max_velocity, m_max_rotation_velocity);
+    Eigen::Vector2d max_motor_vector(MAX_VELOCITY, MAX_ROTATIONAL_VELOCITY);
 
     // Find the length of the maxium power vector, but divide by sqrt(2) to account for the fact that later
     // we will be projecting vectors onto this vector and due to the 45-45-90 nature of this conversion need to 
@@ -80,12 +76,12 @@ MotorPowers SwerveModule::InverseKinematics(Eigen::Vector2d target_velocity, dou
         module_rotation_delta = (target_vector_angle * module_actual_angle.inverse() * Eigen::Rotation2Dd(M_PI)).smallestAngle();
 
         // Set the power as the magnitude of the vector
-        motor_power_vector(0) = -target_vector.norm() / m_max_velocity;
+        motor_power_vector(0) = -target_vector.norm() / MAX_VELOCITY;
 
         // std::cout << "Forward %: " << motor_power_vector(0) << "\n" << std::endl;
     } else{
         // Set the power as the magnitude of the vector
-        motor_power_vector(0) = target_vector.norm() / m_max_velocity;
+        motor_power_vector(0) = target_vector.norm() / MAX_VELOCITY;
 
         // std::cout << "Forward %: " << motor_power_vector(0) << "\n" << std::endl;
     }
