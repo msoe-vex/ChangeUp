@@ -3,6 +3,7 @@
 #include "api.h"
 #include "auton/Auton.h"
 #include "util/Timer.h"
+#include "util/Constants.h"
 #include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "eigen/Eigen/Dense"

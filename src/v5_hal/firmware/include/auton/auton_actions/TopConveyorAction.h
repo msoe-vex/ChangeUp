@@ -10,8 +10,6 @@ private:
     ConveyorNode* m_conveyor_node;
     Timer m_timer;
     ConveyorNode::ConveyorState m_conveyor_state;
-    bool m_store_balls;
-    int m_voltage;
     double m_time; // Time in seconds
 
 public:

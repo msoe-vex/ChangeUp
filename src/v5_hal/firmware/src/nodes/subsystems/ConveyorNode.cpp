@@ -28,9 +28,9 @@ void ConveyorNode::m_updateConveyorHoldingState() {
     } else if (m_middle_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD &&
         m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
         // Balls are present in the bottom and middle positions
-        setTopConveyorVoltage(12000);
+        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
     } else {
-        setTopConveyorVoltage(12000);
+        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
     }
 }
 
@@ -94,31 +94,31 @@ void ConveyorNode::teleopPeriodic() {
 
     if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
         m_enableStateMachine = false;
-        top_conveyor_voltage = 12000;
-        ejection_roller_voltage = 12000;
+        top_conveyor_voltage = MAX_MOTOR_VOLTAGE;
+        ejection_roller_voltage = MAX_MOTOR_VOLTAGE;
 
         if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
 			ejection_roller_voltage *= -1;
 		}
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         m_enableStateMachine = false;
-        top_conveyor_voltage = -12000;
-        ejection_roller_voltage = -12000;
+        top_conveyor_voltage = -1 * MAX_MOTOR_VOLTAGE;
+        ejection_roller_voltage = -1 * MAX_MOTOR_VOLTAGE;
     }
 
 	if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-        intake_voltage = 12000;
-		bottom_conveyor_voltage = 12000;
-		ejection_roller_voltage = 12000;
+        intake_voltage = MAX_MOTOR_VOLTAGE;
+		bottom_conveyor_voltage = MAX_MOTOR_VOLTAGE;
+		ejection_roller_voltage = MAX_MOTOR_VOLTAGE;
 
 		if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
 			ejection_roller_voltage *= -1;
 		}
 	}
 	else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-        intake_voltage = -12000;
-		bottom_conveyor_voltage = -12000;
-		ejection_roller_voltage = -12000;
+        intake_voltage = -1 * MAX_MOTOR_VOLTAGE;
+		bottom_conveyor_voltage = -1 * MAX_MOTOR_VOLTAGE;
+		ejection_roller_voltage = -1 * MAX_MOTOR_VOLTAGE;
 	}
 
     openIntakes(m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT));
@@ -146,10 +146,10 @@ void ConveyorNode::autonPeriodic() {
         break;
         case SCORING:
             // Run all motors
-            setTopConveyorVoltage(12000);
+            setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
         break;
         case REVERSE:
-            setTopConveyorVoltage(-12000);
+            setTopConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
         break;
     }
 }

@@ -6,6 +6,7 @@
 #include "nodes/sensor_nodes/ADIAnalogInNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
 #include "nodes/actuator_nodes/ADIDigitalOutNode.h"
+#include "util/Constants.h"
 
 class ConveyorNode : public Node {
 public:
@@ -42,8 +43,6 @@ public:
 
 private:
     ConveyorState m_current_conveyor_state = STOPPED;
-
-    const int BALL_PRESENT_THRESHOLD = 2700;
 
     pros::Controller* m_controller;
     MotorNode* m_left_intake;

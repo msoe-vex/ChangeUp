@@ -3,4 +3,8 @@
 
 #define PUBLISH_DELAY_MS 20
 
+#define BALL_PRESENT_THRESHOLD 2700
+
+#define MAX_MOTOR_VOLTAGE 12000
+
 #endif
