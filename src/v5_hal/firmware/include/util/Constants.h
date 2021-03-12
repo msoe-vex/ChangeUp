@@ -13,6 +13,9 @@
 #define MAX_VELOCITY 1.31 // m/s
 #define MAX_ROTATIONAL_VELOCITY 0.17 // rad/s ?
 #define ROTATION_ANGLE_THRESHOLD (M_PI / 3) //Keeping this here because it was in the code but never used
+#define LEFT_POT_OFFSET 40
+#define RIGHT_POT_OFFSET 1714
+#define REAR_POT_OFFSET 3083
 #define LEFT_MODULE_LOCATION_X -5.25
 #define LEFT_MODULE_LOCATION_Y 5.55
 #define RIGHT_MODULE_LOCATION_X 5.25
