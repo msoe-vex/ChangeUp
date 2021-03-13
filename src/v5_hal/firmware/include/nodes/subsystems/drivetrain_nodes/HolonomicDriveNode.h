@@ -7,16 +7,12 @@
 
 class HolonomicDriveNode : public Node {
 private:
-    pros::Controller* m_controller;
-
     MotorNode* m_left_front_motor;
     MotorNode* m_left_rear_motor;
     MotorNode* m_right_front_motor;
     MotorNode* m_right_rear_motor;
 
     std::string m_handle_name;
-
-    const float MAX_WHEEL_SPEED = 1.0 //TODO Replace this value with the proper one and migrate to Constants.h
 
     void m_setLeftFrontVoltage(int voltage);
 
@@ -35,9 +31,8 @@ private:
     void m_setRightRearVelocity(int voltage);
 
 public: 
-    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-        MotorNode* left_front_motor, MotorNode* left_rear_motor, MotorNode* right_front_motor,
-        MotorNode* right_rear_motor);
+    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, MotorNode* left_front_motor, 
+        MotorNode* left_rear_motor, MotorNode* right_front_motor, MotorNode* right_rear_motor);
 
     void initialize();
 
@@ -59,5 +54,5 @@ public:
 
     int getRightRearPosition();
 
-    HolonomicDriveNode();
+    ~HolonomicDriveNode();
 };

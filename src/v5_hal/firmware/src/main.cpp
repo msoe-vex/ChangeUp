@@ -9,7 +9,7 @@ MotorNode* left_front_drive;
 MotorNode* left_rear_drive;
 MotorNode* right_front_drive;
 MotorNode* right_rear_drive;
-//TankDriveNode* tank_drive_node;
+TankDriveNode* tank_drive_node;
 HolonomicDriveNode* holonomic_drive_node;
 
 MotorNode* left_intake;
@@ -58,10 +58,10 @@ void initialize() {
 	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", true);
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
 
-	// tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
-	// 	left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
-    holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller, 
-	    left_front_drive, left_rear_drive, right_front_drive, right, rear, drive);
+	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
+		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
+    holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", 
+	    left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 
 	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);

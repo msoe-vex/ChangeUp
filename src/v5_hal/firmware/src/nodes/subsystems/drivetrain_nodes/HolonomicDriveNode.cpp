@@ -1,9 +1,11 @@
 #include "nodes/subsystems/drivetrain_nodes/HolonomicDriveNode.h"
 
-HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-    MotorNode* left_front_motor, MotorNode* left_rear_motor, MotorNode* right_front_motor, 
-    MotorNode* right_rear_motor) : Node(node_manager, 10), m_controller(controller->getController()), m_left_front_motor(left_front_motor), 
-    m_left_rear_motor(left_rear_motor), m_right_front_motor(right_front_motor), m_right_rear_motor(right_rear_motor) {
+HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name,
+    MotorNode* left_front_motor, MotorNode* left_rear_motor, 
+    MotorNode* right_front_motor, MotorNode* right_rear_motor) : 
+    Node(node_manager, 10),  
+    m_left_front_motor(left_front_motor), m_left_rear_motor(left_rear_motor), 
+    m_right_front_motor(right_front_motor), m_right_rear_motor(right_rear_motor) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
@@ -74,10 +76,10 @@ void HolonomicDriveNode::setDriveVoltage(int left_front_voltage, int left_rear_v
 }
 
 void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_rear_velocity, float right_front_velocity, float right_rear_velocity) { //incoming values should be in m/s so we convert to rpm here
-    m_setLeftFrontVelocity(left_velocity / MAX_WHEEL_SPEED * 200); //TODO MAX_WHEEL_SPEED needs to be added to Constants.h
-    m_setLeftRearVelocity(left_velocity / MAX_WHEEL_SPEED * 200);
-    m_setRightFrontVelocity(right_velocity / MAX_WHEEL_SPEED * 200);
-    m_setRightRearVelocity(right_velocity / MAX_WHEEL_SPEED * 200);
+    m_setLeftFrontVelocity(left_front_velocity / MAX_WHEEL_SPEED * 200); //TODO MAX_WHEEL_SPEED needs to be added to Constants.h
+    m_setLeftRearVelocity(left_rear_velocity / MAX_WHEEL_SPEED * 200);
+    m_setRightFrontVelocity(right_front_velocity / MAX_WHEEL_SPEED * 200);
+    m_setRightRearVelocity(right_rear_velocity / MAX_WHEEL_SPEED * 200);
 }
 
 void HolonomicDriveNode::teleopPeriodic() {

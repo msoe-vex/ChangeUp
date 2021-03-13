@@ -6,6 +6,7 @@
 #define MAX_MOTOR_VOLTAGE 12000 // Max voltage value for a motor
 #define DELAY_TIME_MILLIS 5 // Standard delay time used in NodeManager
 #define GYRO_OFFSET (M_PI_2)
+#define MAX_WHEEL_SPEED 1.1526 // Wheel speed for Holonomic Drive in m/s 
 
 // The following was from code that is no longer in current use
 #define MAX_ROBOT_SPEED 41.9 // tank drive max robot speed in/s
