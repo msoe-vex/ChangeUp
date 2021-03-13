@@ -51,6 +51,7 @@
 #include "nodes/subsystems/drivetrain_nodes/SwerveDriveNode.h"
 #include "nodes/system_nodes/ConnectionCheckerNode.h"
 #include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
+#include "nodes/subsystems/drivetrain_nodes/HolonomicDriveNode.h"
 #include "nodes/subsystems/ConveyorNode.h"
 #include "nodes/auton_nodes/AutonManagerNode.h"
 #include "auton/auton_actions/DeployAction.h"
