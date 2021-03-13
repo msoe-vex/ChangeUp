@@ -7,6 +7,8 @@
 
 class HolonomicDriveNode : public Node {
 private:
+    ControllerNode* m_controller;
+
     MotorNode* m_left_front_motor;
     MotorNode* m_left_rear_motor;
     MotorNode* m_right_front_motor;
@@ -31,7 +33,7 @@ private:
     void m_setRightRearVelocity(int voltage);
 
 public: 
-    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, MotorNode* left_front_motor, 
+    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_front_motor, 
         MotorNode* left_rear_motor, MotorNode* right_front_motor, MotorNode* right_rear_motor);
 
     void initialize();
