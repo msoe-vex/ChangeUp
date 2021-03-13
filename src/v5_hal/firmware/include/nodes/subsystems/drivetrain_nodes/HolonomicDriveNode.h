@@ -7,7 +7,7 @@
 
 class HolonomicDriveNode : public Node {
 private:
-    ControllerNode* m_controller;
+    pros::Controller* m_controller;
 
     MotorNode* m_left_front_motor;
     MotorNode* m_left_rear_motor;
