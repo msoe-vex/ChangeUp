@@ -25,7 +25,7 @@ void MotorNode::m_publishData(const std_msgs::Empty& msg) {
 }
 
 void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
-    float voltage = (msg.data / 127.0) * 12000.0;
+    float voltage = (msg.data / 127.0) * (float) MAX_MOTOR_VOLTAGE;
     moveVoltage((int)voltage);
 }
 

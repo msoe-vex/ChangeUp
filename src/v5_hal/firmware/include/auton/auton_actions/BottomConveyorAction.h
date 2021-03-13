@@ -3,6 +3,7 @@
 #include "api.h"
 #include "auton/Auton.h"
 #include "util/Timer.h"
+#include "util/Constants.h"
 #include "nodes/subsystems/ConveyorNode.h"
 
 class BottomConveyorAction : public AutonAction {
@@ -15,7 +16,7 @@ private:
     int m_eject_voltage;
 
 public:
-    BottomConveyorAction(ConveyorNode* conveyor_node, bool eject, int voltage=12000, double time=0.);
+    BottomConveyorAction(ConveyorNode* conveyor_node, bool eject, int voltage=MAX_MOTOR_VOLTAGE, double time=0.);
     
     void ActionInit();
     

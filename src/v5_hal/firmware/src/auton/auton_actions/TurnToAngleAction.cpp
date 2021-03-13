@@ -34,7 +34,7 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     total_turning_power = std::copysign(min(fabs(total_turning_power) + m_feed_forward, 1.0), total_turning_power);
 
-    m_tank_drive->setDriveVoltage((int)(total_turning_power * -12000), (int)(total_turning_power * 12000));
+    m_tank_drive->setDriveVoltage((int)(total_turning_power * -1 * MAX_MOTOR_VOLTAGE), (int)(total_turning_power * MAX_MOTOR_VOLTAGE));
 
     if (m_inertial_sensor->isAtAngle(m_target_angle) && m_turn_timer.Get() == 0) {
         m_turn_timer.Start();

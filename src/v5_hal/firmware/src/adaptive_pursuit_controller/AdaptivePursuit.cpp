@@ -5,10 +5,9 @@ VelocityPair::VelocityPair(double l, double r) {
     right = r;
 }
 
-AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double maxDeccel,
-                                 double nominalDt, Path path, bool reversed,
-                                 double pathCompletionTolerance, bool gradualStop, double wheelDiameter):
-        m_lastCommand(0,0,0) {
+    AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double maxDeccel, double nominalDt, Path path,
+                    bool reversed, double pathCompletionTolerance, bool gradualStop, double wheelDiameter) : 
+    m_lastCommand(0,0,0) {
     m_fixedLookahead = fixedLookahead;
     m_maxAccel = maxAccel;
     m_maxDeccel = maxDeccel;

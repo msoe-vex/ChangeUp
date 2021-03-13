@@ -21,21 +21,12 @@ private:
     Eigen::Vector2d field_target_velocity;
     Eigen::Rotation2Dd robot_angle = Eigen::Rotation2Dd(0);
     double rotation_velocity;
-    double rotation_angle_threshold = (M_PI / 3);
-    double max_velocity = 1.31;
-    double max_rotation_velocity = 0.17;
     double kP = 0.7;
     double kI = 0.0;
     double kD = 0.0;
     Eigen::Vector2d left_module_location;
     Eigen::Vector2d right_module_location;
     Eigen::Vector2d rear_module_location;
-    double left_module_location_x = -5.25;
-    double left_module_location_y = 5.55;
-    double right_module_location_x = 5.25;
-    double right_module_location_y = 5.55;
-    double rear_module_location_x = 0.0;
-    double rear_module_location_y = -5.21;
 
     MotorNode* left_swerve_1;
     MotorNode* left_swerve_2;

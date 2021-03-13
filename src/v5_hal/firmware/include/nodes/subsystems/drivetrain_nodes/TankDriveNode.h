@@ -16,8 +16,6 @@ private:
 
     std::string m_handle_name;
 
-    const float MAX_ROBOT_SPEED = 41.9; // in/s
-
     void m_setLeftVoltage(int voltage);
 
     void m_setRightVoltage(int voltage);

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "odometry/Odometry.h"
+#include "util/Constants.h"
 
 class FollowerOdometry : public Odometry {
 private:
-    Eigen::Rotation2Dd m_gyro_offset;
     
 public:
     FollowerOdometry(EncoderConfig x_encoder_config, EncoderConfig y_encoder_config, Pose current_pose=Pose());

@@ -39,7 +39,7 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     // Move toward corner goal
     m_forward_3 = new AutonNode(2, new DriveAction(m_tank_drive_node, 22, 150, 40));
-    m_forward_3->AddAction(new IntakeAction(m_conveyor_node, 12000));
+    m_forward_3->AddAction(new IntakeAction(m_conveyor_node));
     m_forward_3->AddAction(new BottomConveyorAction(m_conveyor_node, false, 0));
     m_turn_2->AddNext(m_forward_3);
 
@@ -48,8 +48,8 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     m_descore_1 = new AutonNode(0.2, new WaitAction(0.2));
     m_descore_1->AddAction(new TopConveyorAction(m_conveyor_node, ConveyorNode::STOPPED));
-    m_descore_1->AddAction(new IntakeAction(m_conveyor_node, 12000));
-    m_descore_1->AddAction(new BottomConveyorAction(m_conveyor_node, false, 12000));
+    m_descore_1->AddAction(new IntakeAction(m_conveyor_node));
+    m_descore_1->AddAction(new BottomConveyorAction(m_conveyor_node, false));
     m_score_1->AddNext(m_descore_1);
 
     m_reverse_2 = new AutonNode(2, new DriveAction(m_tank_drive_node, -31, 150, 40));
@@ -91,20 +91,20 @@ void ProgrammingSkillsAuton::AddNodes() {
     m_score_2->AddNext(m_descore_2);
 
     m_reverse_3 = new AutonNode(1.5, new DriveAction(m_tank_drive_node, -9, 150, 40));
-    m_reverse_3->AddAction(new BottomConveyorAction(m_conveyor_node, true, 12000));
+    m_reverse_3->AddAction(new BottomConveyorAction(m_conveyor_node, true));
     m_reverse_3->AddAction(new TopConveyorAction(m_conveyor_node, ConveyorNode::REVERSE));
     m_descore_2->AddNext(m_reverse_3);
 
     m_turn_5 = new AutonNode(1, new TurnToAngleAction(m_tank_drive_node, m_inertial_sensor_node, Rotation2Dd(-1.3)));
     m_reverse_3->AddNext(m_turn_5);
 
-    m_eject_1 = new AutonNode(2, new BottomConveyorAction(m_conveyor_node, true, 12000, 2));
+    m_eject_1 = new AutonNode(2, new BottomConveyorAction(m_conveyor_node, true, MAX_MOTOR_VOLTAGE, 2));
     m_eject_1->AddAction(new TopConveyorAction(m_conveyor_node, ConveyorNode::REVERSE));
     m_turn_5->AddNext(m_eject_1);
 
     m_forward_6 = new AutonNode(2.5, new DriveAction(m_tank_drive_node, 28, 150, 40));
     m_forward_6->AddAction(new OpenIntakesAction(m_conveyor_node));
-    m_forward_6->AddAction(new BottomConveyorAction(m_conveyor_node, false, 12000));
+    m_forward_6->AddAction(new BottomConveyorAction(m_conveyor_node, false));
     m_forward_6->AddAction(new TopConveyorAction(m_conveyor_node, ConveyorNode::HOLDING));
 
     m_eject_1->AddNext(m_forward_6);
