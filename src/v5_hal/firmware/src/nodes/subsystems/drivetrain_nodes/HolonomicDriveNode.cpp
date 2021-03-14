@@ -85,10 +85,21 @@ void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
-    m_setLeftFrontVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0) * MAX_MOTOR_VOLTAGE);
-    m_setLeftRearVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) / 127.0) * MAX_MOTOR_VOLTAGE);
-    m_setRightFrontVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0) * MAX_MOTOR_VOLTAGE);
-    m_setRightRearVoltage(((m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X)) / 127.0) * MAX_MOTOR_VOLTAGE);
+    int left_y = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int left_x = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
+    int right_x = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+
+    double front_left = (double)(left_y + left_x + right_x);
+    double back_left = (double)(left_y - left_x + right_x);
+    double front_right = (double)(left_y - left_x - right_x);
+    double back_right = (double)(left_y + left_x - right_x);
+
+    double max_val = std::max({front_left, back_left, front_right, back_right, 127.0});
+
+    m_setLeftFrontVoltage((front_left / max_val) * MAX_MOTOR_VOLTAGE);
+    m_setLeftRearVoltage((back_left / max_val) * MAX_MOTOR_VOLTAGE);
+    m_setRightFrontVoltage((front_right / max_val) * MAX_MOTOR_VOLTAGE);
+    m_setRightRearVoltage((back_right / max_val) * MAX_MOTOR_VOLTAGE);
 }
 
 void HolonomicDriveNode::autonPeriodic() {

@@ -4,6 +4,8 @@
 #include "api.h"
 #include "nodes/actuator_nodes/MotorNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
+#include <algorithm>
+#include <initializer_list>
 
 class HolonomicDriveNode : public Node {
 private:
