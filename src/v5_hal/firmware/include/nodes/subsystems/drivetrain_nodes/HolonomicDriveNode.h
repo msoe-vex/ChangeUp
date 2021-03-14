@@ -26,13 +26,13 @@ private:
 
     void m_setRightRearVoltage(int voltage);
 
-    void m_setLeftFrontVelocity(int voltage);
+    void m_setLeftFrontVelocity(float voltage);
 
-    void m_setLeftRearVelocity(int voltage);
+    void m_setLeftRearVelocity(float voltage);
 
-    void m_setRightFrontVelocity(int voltage);
+    void m_setRightFrontVelocity(float voltage);
 
-    void m_setRightRearVelocity(int voltage);
+    void m_setRightRearVelocity(float voltage);
 
 public: 
     HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_front_motor, 

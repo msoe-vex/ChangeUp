@@ -32,19 +32,19 @@ void HolonomicDriveNode::m_setRightRearVoltage(int voltage) {
     m_right_rear_motor->moveVoltage(voltage);
 }
 
-void HolonomicDriveNode::m_setLeftFrontVelocity(int velocity) {
+void HolonomicDriveNode::m_setLeftFrontVelocity(float velocity) {
     m_left_front_motor->moveVelocity(velocity);
 }
 
-void HolonomicDriveNode::m_setLeftRearVelocity(int velocity) {
+void HolonomicDriveNode::m_setLeftRearVelocity(float velocity) {
     m_left_rear_motor->moveVelocity(velocity);
 }
 
-void HolonomicDriveNode::m_setRightFrontVelocity(int velocity) {
+void HolonomicDriveNode::m_setRightFrontVelocity(float velocity) {
     m_right_front_motor->moveVelocity(velocity);
 }
 
-void HolonomicDriveNode::m_setRightRearVelocity(int velocity) {
+void HolonomicDriveNode::m_setRightRearVelocity(float velocity) {
     m_right_rear_motor->moveVelocity(velocity);
 }
 
@@ -78,10 +78,10 @@ void HolonomicDriveNode::setDriveVoltage(int left_front_voltage, int left_rear_v
 
 void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_rear_velocity, 
     float right_front_velocity, float right_rear_velocity) { //incoming values should be in m/s so we convert to rpm here
-    m_setLeftFrontVelocity(left_front_velocity / MAX_WHEEL_SPEED * 200);
-    m_setLeftRearVelocity(left_rear_velocity / MAX_WHEEL_SPEED * 200);
-    m_setRightFrontVelocity(right_front_velocity / MAX_WHEEL_SPEED * 200);
-    m_setRightRearVelocity(right_rear_velocity / MAX_WHEEL_SPEED * 200);
+    m_setLeftFrontVelocity(left_front_velocity / MAX_WHEEL_SPEED * 200.0);
+    m_setLeftRearVelocity(left_rear_velocity / MAX_WHEEL_SPEED * 200.0);
+    m_setRightFrontVelocity(right_front_velocity / MAX_WHEEL_SPEED * 200.0);
+    m_setRightRearVelocity(right_rear_velocity / MAX_WHEEL_SPEED * 200.0);
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
