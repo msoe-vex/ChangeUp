@@ -35,6 +35,14 @@ private:
     void m_setRightRearVelocity(float voltage);
 
 public: 
+    struct HolonomicDriveMotorPowers
+    {
+       double left_front;
+       double left_rear;
+       double right_front;
+       double right_rear;
+    };
+
     HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_front_motor, 
         MotorNode* left_rear_motor, MotorNode* right_front_motor, MotorNode* right_rear_motor);
 
@@ -45,6 +53,8 @@ public:
     void setDriveVoltage(int left_front_voltage, int left_rear_voltage, int right_front_voltage, int right_rear_voltage);
 
     void setDriveVelocity(float left_front_velocity, float left_rear_velocity, float right_front_velocity, float right_rear_velocity);
+
+    void setDriveVelocity(HolonomicDriveMotorPowers motor_powers);
 
     void teleopPeriodic();
 

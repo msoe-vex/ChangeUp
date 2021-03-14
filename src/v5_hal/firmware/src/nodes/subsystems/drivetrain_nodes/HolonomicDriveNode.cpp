@@ -84,6 +84,13 @@ void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_
     m_setRightRearVelocity(right_rear_velocity / MAX_WHEEL_SPEED * 200.0);
 }
 
+void HolonomicDriveNode::setDriveVelocity(HolonomicDriveMotorPowers motor_powers) {
+    m_setLeftFrontVelocity(motor_powers.left_front / MAX_WHEEL_SPEED * 200.0);
+    m_setLeftRearVelocity(motor_powers.left_rear / MAX_WHEEL_SPEED * 200.0);
+    m_setRightFrontVelocity(motor_powers.right_front / MAX_WHEEL_SPEED * 200.0);
+    m_setRightRearVelocity(motor_powers.right_rear / MAX_WHEEL_SPEED * 200.0);
+}
+
 void HolonomicDriveNode::teleopPeriodic() {
     int y_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
     int x_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
