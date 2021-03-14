@@ -36,6 +36,14 @@ private:
     void m_setRightRearVelocity(float velocity);
 
 public: 
+    struct HolonomicDriveMotorPowers
+    {
+       double left_front;
+       double left_rear;
+       double right_front;
+       double right_rear;
+    };
+
     HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_front_motor, 
         MotorNode* left_rear_motor, MotorNode* right_front_motor, MotorNode* right_rear_motor);
 

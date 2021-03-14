@@ -76,5 +76,6 @@ void MotorNode::m_populateMessage() {
 
 MotorNode::~MotorNode() {
     delete m_publisher;
+    delete m_publish_data_sub;
     delete m_move_motor_voltage_sub;
 }
