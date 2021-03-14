@@ -85,14 +85,14 @@ void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
-    int left_y = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int left_x = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
-    int right_x = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    int y_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int x_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
+    int theta_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    double front_left = (double)(left_y + left_x + right_x);
-    double back_left = (double)(left_y - left_x + right_x);
-    double front_right = (double)(left_y - left_x - right_x);
-    double back_right = (double)(left_y + left_x - right_x);
+    double front_left = (double)(y_power + x_power + theta_power);
+    double back_left = (double)(y_power - x_power + theta_power);
+    double front_right = (double)(y_power - x_power - theta_power);
+    double back_right = (double)(y_power + x_power - theta_power);
 
     double max_val = std::max({front_left, back_left, front_right, back_right, 127.0});
 
