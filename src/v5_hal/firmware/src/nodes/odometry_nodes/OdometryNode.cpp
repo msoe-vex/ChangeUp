@@ -1,16 +1,16 @@
 #include "nodes/odometry_nodes/OdometryNode.h"
 
-OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
+OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, 
         ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor_node, 
-        OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name), m_chassis(chassis),
+        OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name),
         m_odom_encoder_1(odom_encoder_1), m_odom_encoder_2(odom_encoder_2), m_inertial_sensor_node(inertial_sensor_node),
         m_current_angle_offset(0), m_odom_config(odom_config) {
     m_odom = m_getOdomClass(odom_config);
 }
 
-OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
+OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, 
         MotorNode* motor_1, MotorNode* motor_2, InertialSensorNode* inertial_sensor_node, 
-        OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name), m_chassis(chassis),
+        OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name),
         m_motor_1(motor_1), m_motor_2(motor_2), m_inertial_sensor_node(inertial_sensor_node),
         m_current_angle_offset(0), m_odom_config(odom_config) {
     m_odom = m_getOdomClass(odom_config);

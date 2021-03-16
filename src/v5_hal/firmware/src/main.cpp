@@ -60,8 +60,8 @@ void initialize() {
 
 	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
 		left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
-    holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
-	    left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
+    // holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
+	//     left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
 
 	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);
@@ -84,7 +84,7 @@ void initialize() {
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
-	odom_node = new OdometryNode(node_manager, "odometry", tank_drive_node, x_odom_encoder, 
+	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
 	battery = new BatteryNode(node_manager, "v5battery");

@@ -18,13 +18,11 @@ public:
         FOLLOWER, TANK
     };
 
-    OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
-        ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor,
-        OdomConfig odom_config);
+    OdometryNode(NodeManager* node_manager, std::string handle_name, ADIEncoderNode* odom_encoder_1, 
+        ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor, OdomConfig odom_config);
 
-    OdometryNode(NodeManager* node_manager, std::string handle_name, TankDriveNode* chassis, 
-        MotorNode* motor_1, MotorNode* motor_2, InertialSensorNode* inertial_sensor,
-        OdomConfig odom_config);
+    OdometryNode(NodeManager* node_manager, std::string handle_name, MotorNode* motor_1, MotorNode* motor_2, 
+        InertialSensorNode* inertial_sensor, OdomConfig odom_config);
 
     void initialize();
 
@@ -43,7 +41,6 @@ private:
 
     OdomConfig m_odom_config;
 
-    TankDriveNode* m_chassis;
     ADIEncoderNode* m_odom_encoder_1;
     ADIEncoderNode* m_odom_encoder_2;
     MotorNode* m_motor_1;
