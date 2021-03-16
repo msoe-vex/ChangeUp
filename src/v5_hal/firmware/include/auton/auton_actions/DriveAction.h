@@ -2,11 +2,11 @@
 
 #include "api.h"
 #include "auton/Auton.h"
-#include "nodes/subsystems/drivetrain_nodes/AbstractDriveNode.h"
+#include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 
 class DriveAction : public AutonAction {
 private:
-    AbstractDriveNode* m_drive_node;
+    IDriveNode* m_drive_node;
     Timer m_timer;
     double m_distance;
     double m_max_velocity;
@@ -18,7 +18,7 @@ private:
     double m_feedForward;
 
 public:
-    DriveAction(AbstractDriveNode* drive_node, double distance, double max_velocity, 
+    DriveAction(IDriveNode* drive_node, double distance, double max_velocity, 
         double max_accel);
 
     void ActionInit();

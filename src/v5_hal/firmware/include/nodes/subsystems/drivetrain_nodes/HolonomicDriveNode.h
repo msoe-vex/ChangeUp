@@ -2,13 +2,13 @@
 
 #include "nodes/NodeManager.h"
 #include "api.h"
-#include "nodes/subsystems/drivetrain_nodes/AbstractDriveNode.h"
+#include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/actuator_nodes/MotorNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
 #include <algorithm>
 #include <initializer_list>
 
-class HolonomicDriveNode : public AbstractDriveNode {
+class HolonomicDriveNode : public IDriveNode {
 private:
     pros::Controller* m_controller;
 
@@ -43,7 +43,7 @@ public:
 
     void resetEncoders();
 
-    AbstractDriveNode::FourMotorDriveEncoderVals getIntegratedEncoderVals();
+    IDriveNode::FourMotorDriveEncoderVals getIntegratedEncoderVals();
 
     void setDriveVoltage(int x_voltage, int theta_voltage);
 

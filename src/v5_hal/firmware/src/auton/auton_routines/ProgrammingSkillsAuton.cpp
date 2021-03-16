@@ -1,6 +1,6 @@
 #include "auton/auton_routines/ProgrammingSkillsAuton.h"
 
-ProgrammingSkillsAuton::ProgrammingSkillsAuton(AbstractDriveNode* drive_node, OdometryNode* odom_node,
+ProgrammingSkillsAuton::ProgrammingSkillsAuton(IDriveNode* drive_node, OdometryNode* odom_node,
         ConveyorNode* conveyor_node, InertialSensorNode* inertial_sensor_node) : Auton("Programming Skills"), 
         m_drive_node(drive_node), m_odom_node(odom_node), m_inertial_sensor_node(inertial_sensor_node),
         m_conveyor_node(conveyor_node) {

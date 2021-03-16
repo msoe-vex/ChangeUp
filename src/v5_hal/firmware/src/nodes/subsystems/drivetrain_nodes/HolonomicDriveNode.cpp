@@ -3,7 +3,7 @@
 HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller,
     MotorNode* left_front_motor, MotorNode* left_rear_motor, 
     MotorNode* right_front_motor, MotorNode* right_rear_motor) : 
-    AbstractDriveNode(node_manager), m_controller(controller->getController()),
+    IDriveNode(node_manager), m_controller(controller->getController()),
     m_left_front_motor(left_front_motor), m_left_rear_motor(left_rear_motor), 
     m_right_front_motor(right_front_motor), m_right_rear_motor(right_rear_motor) {
     m_handle_name = handle_name.insert(0, "robot/");
@@ -52,7 +52,7 @@ void HolonomicDriveNode::resetEncoders() {
     m_right_rear_motor->resetEncoder();
 }
 
-AbstractDriveNode::FourMotorDriveEncoderVals HolonomicDriveNode::getIntegratedEncoderVals() {
+IDriveNode::FourMotorDriveEncoderVals HolonomicDriveNode::getIntegratedEncoderVals() {
     return FourMotorDriveEncoderVals {
         m_left_front_motor->getPosition(),
         m_left_rear_motor->getPosition(),

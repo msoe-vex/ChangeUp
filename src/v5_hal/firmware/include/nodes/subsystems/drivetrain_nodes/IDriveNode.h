@@ -3,7 +3,7 @@
 #include "nodes/NodeManager.h"
 #include "api.h"
 
-class AbstractDriveNode : public Node {
+class IDriveNode : public Node {
 public: 
     struct FourMotorDriveEncoderVals {
         int left_front_encoder_val;
@@ -12,7 +12,7 @@ public:
         int right_rear_encoder_val;
     };
 
-    AbstractDriveNode(NodeManager* node_manager): Node(node_manager, 10) {};
+    IDriveNode(NodeManager* node_manager): Node(node_manager, 10) {};
 
     virtual void initialize() = 0;
 
@@ -32,5 +32,5 @@ public:
 
     virtual void autonPeriodic() {};
 
-    virtual ~AbstractDriveNode() {};
+    virtual ~IDriveNode() {};
 };

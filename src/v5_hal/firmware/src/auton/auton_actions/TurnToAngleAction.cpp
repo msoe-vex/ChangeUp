@@ -1,6 +1,6 @@
 #include "auton/auton_actions/TurnToAngleAction.h"
 
-TurnToAngleAction::TurnToAngleAction(AbstractDriveNode* drive_node, InertialSensorNode* inertial_sensor, 
+TurnToAngleAction::TurnToAngleAction(IDriveNode* drive_node, InertialSensorNode* inertial_sensor, 
         Eigen::Rotation2Dd target_angle) : 
         m_drive_node(drive_node), m_inertial_sensor(inertial_sensor), 
         m_target_angle(target_angle), m_feed_forward(0.1) {
