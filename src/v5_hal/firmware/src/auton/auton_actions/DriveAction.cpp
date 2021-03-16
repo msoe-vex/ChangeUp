@@ -1,16 +1,16 @@
 #include "auton/auton_actions/DriveAction.h"
 #include <math.h>
 
-DriveAction::DriveAction(TankDriveNode* tank_drive_node, double distance, double max_velocity, 
+DriveAction::DriveAction(AbstractDriveNode* drive_node, double distance, double max_velocity, 
         double max_accel) :
-        m_tank_drive_node(tank_drive_node), m_distance(distance), 
+        m_drive_node(drive_node), m_distance(distance), 
         m_max_velocity(max_velocity), m_max_accel(max_accel), m_lastSpeed(0), m_feedForward(4.91) {
 
 }
 
 void DriveAction::ActionInit() {
     m_timer.Start();
-    m_tank_drive_node->resetEncoders();
+    m_drive_node->resetEncoders();
 }
 
 AutonAction::actionStatus DriveAction::Action() {
@@ -26,7 +26,7 @@ AutonAction::actionStatus DriveAction::Action() {
     }
 
     // Subtract the found offset of 3 inches to shorten the path
-    double remainingDistance = max(fabs(m_distance) - fabs(((m_tank_drive_node->getLeftDistancePID() / 900.0) * (M_PI * 4.0625))) - 3, 0.);
+    double remainingDistance = max(fabs(m_distance) - fabs(((m_drive_node->getIntegratedEncoderVals().left_front_encoder_val / 900.0) * (M_PI * 4.0625))) - 3, 0.);
 
     double maxAllowedSpeed = sqrt(2 * m_max_accel * remainingDistance);
     if (fabs(speed) > maxAllowedSpeed) {
@@ -42,9 +42,9 @@ AutonAction::actionStatus DriveAction::Action() {
         return END;
     } else {
         if (m_distance > 0) {
-            m_tank_drive_node->setDriveVelocity(speed, speed);
+            m_drive_node->setDriveVelocity(speed, 0);
         } else {
-            m_tank_drive_node->setDriveVelocity(-speed, -speed);
+            m_drive_node->setDriveVelocity(-speed, 0);
         }
         
         return CONTINUE;
@@ -52,5 +52,5 @@ AutonAction::actionStatus DriveAction::Action() {
 }
 
 void DriveAction::ActionEnd() {
-    m_tank_drive_node->setDriveVelocity(0, 0);
+    m_drive_node->setDriveVelocity(0, 0);
 }

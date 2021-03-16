@@ -1,55 +1,36 @@
-// #pragma once
+#pragma once
 
-// #include "nodes/NodeManager.h"
-// #include "api.h"
-// #include "nodes/actuator_nodes/MotorNode.h"
-// #include "nodes/sensor_nodes/ControllerNode.h"
+#include "nodes/NodeManager.h"
+#include "api.h"
 
-// class AbstractDriveNode : public Node {
-// private:
-//     pros::Controller* m_controller;
+class AbstractDriveNode : public Node {
+public: 
+    struct FourMotorDriveEncoderVals {
+        int left_front_encoder_val;
+        int left_rear_encoder_val;
+        int right_front_encoder_val;
+        int right_rear_encoder_val;
+    };
 
-//     MotorNode* m_left_front_motor;
-//     MotorNode* m_left_rear_motor;
-//     MotorNode* m_right_front_motor;
-//     MotorNode* m_right_rear_motor;
+    AbstractDriveNode(NodeManager* node_manager): Node(node_manager, 10) {};
 
-//     std::string m_handle_name;
+    virtual void initialize() = 0;
 
-//     void m_setLeftVoltage(int voltage);
+    virtual void resetEncoders() = 0;
 
-//     void m_setRightVoltage(int voltage);
+    virtual FourMotorDriveEncoderVals getIntegratedEncoderVals() = 0;
 
-//     void m_setLeftVelocity(float velocity);
+    virtual void setDriveVoltage(int x_voltage, int theta_voltage) = 0;
 
-//     void m_setRightVelocity(float velocity);
+    virtual void setDriveVoltage(int x_voltage, int y_voltage, int theta_voltage) {};
 
-//     void m_setLeftDistancePID(double distance, int max_velocity);
+    virtual void setDriveVelocity(float x_velocity, float theta_velocity) = 0;
 
-//     void m_setRightDistancePID(double distance, int max_velocity);
+    virtual void setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity) {};
 
-// public: 
-//     AbstractDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-//         MotorNode* left_front_motor, MotorNode* left_rear_motor, MotorNode* right_front_motor,
-//         MotorNode* right_rear_motor);
+    virtual void teleopPeriodic() {};
 
-//     void initialize();
+    virtual void autonPeriodic() {};
 
-//     void resetEncoders();
-
-//     void setDriveVoltage(int left_voltage, int right_voltage);
-
-//     void setDriveVelocity(float left_velocity, float right_velocity);
-
-//     void setDriveDistancePID(double left_distance, double right_distance, int max_velocity);
-
-//     void teleopPeriodic();
-
-//     void autonPeriodic();
-
-//     int getRightDistancePID();
-
-//     int getLeftDistancePID();
-
-//     ~AbstractDriveNode();
-// };
+    virtual ~AbstractDriveNode() {};
+};

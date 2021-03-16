@@ -1,10 +1,9 @@
 #include "auton/auton_actions/TurnToAngleAction.h"
 
-TurnToAngleAction::TurnToAngleAction(TankDriveNode* tank_drive, InertialSensorNode* inertial_sensor, 
+TurnToAngleAction::TurnToAngleAction(AbstractDriveNode* drive_node, InertialSensorNode* inertial_sensor, 
         Eigen::Rotation2Dd target_angle) : 
-        m_tank_drive(tank_drive), m_inertial_sensor(inertial_sensor), 
+        m_drive_node(drive_node), m_inertial_sensor(inertial_sensor), 
         m_target_angle(target_angle), m_feed_forward(0.1) {
-
 }
 
 void TurnToAngleAction::ActionInit() {
@@ -34,7 +33,7 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     total_turning_power = std::copysign(min(fabs(total_turning_power) + m_feed_forward, 1.0), total_turning_power);
 
-    m_tank_drive->setDriveVoltage((int)(total_turning_power * -1 * MAX_MOTOR_VOLTAGE), (int)(total_turning_power * MAX_MOTOR_VOLTAGE));
+    m_drive_node->setDriveVoltage(0, (int)(total_turning_power * -1 * MAX_MOTOR_VOLTAGE));
 
     if (m_inertial_sensor->isAtAngle(m_target_angle) && m_turn_timer.Get() == 0) {
         m_turn_timer.Start();
@@ -50,5 +49,5 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 }
 
 void TurnToAngleAction::ActionEnd() {
-    m_tank_drive->setDriveVoltage(0, 0);
+    m_drive_node->setDriveVoltage(0, 0);
 }

@@ -2,12 +2,13 @@
 
 #include "nodes/NodeManager.h"
 #include "api.h"
+#include "nodes/subsystems/drivetrain_nodes/AbstractDriveNode.h"
 #include "nodes/actuator_nodes/MotorNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
 #include <algorithm>
 #include <initializer_list>
 
-class HolonomicDriveNode : public Node {
+class HolonomicDriveNode : public AbstractDriveNode {
 private:
     pros::Controller* m_controller;
 
@@ -26,13 +27,13 @@ private:
 
     void m_setRightRearVoltage(int voltage);
 
-    void m_setLeftFrontVelocity(int voltage);
+    void m_setLeftFrontVelocity(float velocity);
 
-    void m_setLeftRearVelocity(int voltage);
+    void m_setLeftRearVelocity(float velocity);
 
-    void m_setRightFrontVelocity(int voltage);
+    void m_setRightFrontVelocity(float velocity);
 
-    void m_setRightRearVelocity(int voltage);
+    void m_setRightRearVelocity(float velocity);
 
 public: 
     HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_front_motor, 
@@ -42,21 +43,19 @@ public:
 
     void resetEncoders();
 
-    void setDriveVoltage(int left_front_voltage, int left_rear_voltage, int right_front_voltage, int right_rear_voltage);
+    AbstractDriveNode::FourMotorDriveEncoderVals getIntegratedEncoderVals();
 
-    void setDriveVelocity(float left_front_velocity, float left_rear_velocity, float right_front_velocity, float right_rear_velocity);
+    void setDriveVoltage(int x_voltage, int theta_voltage);
+
+    void setDriveVoltage(int x_voltage, int y_voltage, int theta_voltage);
+
+    void setDriveVelocity(float x_velocity, float theta_velocity);
+
+    void setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity);
 
     void teleopPeriodic();
 
     void autonPeriodic();
-
-    int getLeftFrontPosition();
-
-    int getLeftRearPosition();
-
-    int getRightFrontPosition();
-
-    int getRightRearPosition();
 
     ~HolonomicDriveNode();
 };
