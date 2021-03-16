@@ -1,8 +1,8 @@
 #include "nodes/auton_nodes/AutonManagerNode.h"
 
-AutonManagerNode::AutonManagerNode(NodeManager* node_manager, TankDriveNode* tank_drive_node, OdometryNode* odometry_node,
+AutonManagerNode::AutonManagerNode(NodeManager* node_manager, IDriveNode* drive_node, OdometryNode* odometry_node,
     ConveyorNode* conveyor_node, InertialSensorNode* inertial_sensor_node) : Node(node_manager, 50) {
-    m_programming_skills_auton = new ProgrammingSkillsAuton(tank_drive_node, odometry_node, conveyor_node, inertial_sensor_node);
+    m_programming_skills_auton = new ProgrammingSkillsAuton(drive_node, odometry_node, conveyor_node, inertial_sensor_node);
     selected_auton = m_programming_skills_auton;
 }
 

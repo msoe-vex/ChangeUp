@@ -2,11 +2,11 @@
 
 #include "api.h"
 #include "auton/Auton.h"
-#include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
+#include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 
 class DriveAction : public AutonAction {
 private:
-    TankDriveNode* m_tank_drive_node;
+    IDriveNode* m_drive_node;
     Timer m_timer;
     double m_distance;
     double m_max_velocity;
@@ -18,7 +18,7 @@ private:
     double m_feedForward;
 
 public:
-    DriveAction(TankDriveNode* tank_drive_node, double distance, double max_velocity, 
+    DriveAction(IDriveNode* drive_node, double distance, double max_velocity, 
         double max_accel);
 
     void ActionInit();

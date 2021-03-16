@@ -2,7 +2,7 @@
 
 #include "auton/Auton.h"
 #include "adaptive_pursuit_controller/PathManager.h"
-#include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
+#include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "nodes/subsystems/ConveyorNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
@@ -19,13 +19,13 @@
 
 class ProgrammingSkillsAuton : public Auton {
 public:
-    ProgrammingSkillsAuton(TankDriveNode* tank_drive_node, OdometryNode* odom_node, ConveyorNode* conveyer_node,
+    ProgrammingSkillsAuton(IDriveNode* drive_node, OdometryNode* odom_node, ConveyorNode* conveyer_node,
         InertialSensorNode* inertial_sensor_node);
 
     void AddNodes() override;
 
 private:
-    TankDriveNode* m_tank_drive_node;
+    IDriveNode* m_drive_node;
     OdometryNode* m_odom_node;
     ConveyorNode* m_conveyor_node;
     InertialSensorNode* m_inertial_sensor_node;
