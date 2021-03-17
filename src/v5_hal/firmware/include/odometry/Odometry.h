@@ -3,6 +3,7 @@
 #include "api.h"
 #include "math/Pose.h"
 #include "math/Math.h"
+#include "util/Encoders.h"
 
 class Odometry {
 protected:
@@ -19,12 +20,6 @@ protected:
     double m_last_encoder_2_dist;
 
 public:
-    struct EncoderConfig {
-            double initial_ticks;
-            double ticks_per_wheel_revolution;
-            double wheel_diameter; // inches
-    };
-
     Odometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, Pose current_pose=Pose());
 
     void ResetEncoderTicks(double encoder_1_ticks=0, double encoder_2_ticks=0);
