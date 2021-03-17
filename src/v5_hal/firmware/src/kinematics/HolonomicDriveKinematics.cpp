@@ -1,6 +1,6 @@
 #include "kinematics/HolonomicDriveKinematics.h"
 
-HolonomicDriveKinematics::HolonomicDriveKinematics(EncoderConfig encoder_config, Pose current_pose=Pose()) :
+HolonomicDriveKinematics::HolonomicDriveKinematics(EncoderConfig encoder_config, Pose current_pose) :
         IDriveKinematics(encoder_config, current_pose) {
 
 }

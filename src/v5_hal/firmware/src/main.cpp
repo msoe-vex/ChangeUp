@@ -58,7 +58,8 @@ void initialize() {
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
 
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
-	    left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
+	    HolonomicDriveNode::HolonomicMotors { left_front_drive, left_rear_drive, right_front_drive, right_rear_drive },
+		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }));
 
 	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);

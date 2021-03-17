@@ -17,8 +17,8 @@ OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name,
 }
 
 Odometry* OdometryNode::m_getOdomClass(OdomConfig config) {
-    Odometry::EncoderConfig adi_encoder_config = {0., 360., 2.8};
-    Odometry::EncoderConfig v5_integrated_encoder_config = {0., 900., 4.0625};
+    EncoderConfig adi_encoder_config = {0., 360., 2.8};
+    EncoderConfig v5_integrated_encoder_config = {0., 900., 4.0625};
 
     switch (config) {
         case FOLLOWER:
