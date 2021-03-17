@@ -77,6 +77,7 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float theta_velocity
     setDriveVelocity(x_velocity, 0, theta_velocity);
 }
 
+<<<<<<< HEAD
 void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity) {
     IDriveKinematics::FourMotorPercentages motor_percentages = 
         m_kinematics.inverseKinematics(x_velocity, y_velocity, theta_velocity, MAX_VELOCITY);
@@ -85,6 +86,21 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, fl
     m_setLeftRearVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
     m_setRightFrontVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
     m_setRightRearVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
+=======
+void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_rear_velocity, 
+    float right_front_velocity, float right_rear_velocity) { //incoming values should be in m/s so we convert to rpm here
+    m_setLeftFrontVelocity(left_front_velocity / MAX_WHEEL_SPEED * 200.0);
+    m_setLeftRearVelocity(left_rear_velocity / MAX_WHEEL_SPEED * 200.0);
+    m_setRightFrontVelocity(right_front_velocity / MAX_WHEEL_SPEED * 200.0);
+    m_setRightRearVelocity(right_rear_velocity / MAX_WHEEL_SPEED * 200.0);
+}
+
+void HolonomicDriveNode::setDriveVelocity(HolonomicDriveMotorPowers motor_powers) {
+    m_setLeftFrontVelocity(motor_powers.left_front / MAX_WHEEL_SPEED * 200.0);
+    m_setLeftRearVelocity(motor_powers.left_rear / MAX_WHEEL_SPEED * 200.0);
+    m_setRightFrontVelocity(motor_powers.right_front / MAX_WHEEL_SPEED * 200.0);
+    m_setRightRearVelocity(motor_powers.right_rear / MAX_WHEEL_SPEED * 200.0);
+>>>>>>> 8327f160d0b2e2a4cda793372b511c65ee932f3e
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
