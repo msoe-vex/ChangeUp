@@ -77,7 +77,6 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float theta_velocity
     setDriveVelocity(x_velocity, 0, theta_velocity);
 }
 
-<<<<<<< HEAD
 void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity) {
     IDriveKinematics::FourMotorPercentages motor_percentages = 
         m_kinematics.inverseKinematics(x_velocity, y_velocity, theta_velocity, MAX_VELOCITY);
@@ -86,39 +85,14 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, fl
     m_setLeftRearVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
     m_setRightFrontVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
     m_setRightRearVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
-=======
-void HolonomicDriveNode::setDriveVelocity(float left_front_velocity, float left_rear_velocity, 
-    float right_front_velocity, float right_rear_velocity) { //incoming values should be in m/s so we convert to rpm here
-    m_setLeftFrontVelocity(left_front_velocity / MAX_WHEEL_SPEED * 200.0);
-    m_setLeftRearVelocity(left_rear_velocity / MAX_WHEEL_SPEED * 200.0);
-    m_setRightFrontVelocity(right_front_velocity / MAX_WHEEL_SPEED * 200.0);
-    m_setRightRearVelocity(right_rear_velocity / MAX_WHEEL_SPEED * 200.0);
-}
-
-void HolonomicDriveNode::setDriveVelocity(HolonomicDriveMotorPowers motor_powers) {
-    m_setLeftFrontVelocity(motor_powers.left_front / MAX_WHEEL_SPEED * 200.0);
-    m_setLeftRearVelocity(motor_powers.left_rear / MAX_WHEEL_SPEED * 200.0);
-    m_setRightFrontVelocity(motor_powers.right_front / MAX_WHEEL_SPEED * 200.0);
-    m_setRightRearVelocity(motor_powers.right_rear / MAX_WHEEL_SPEED * 200.0);
->>>>>>> 8327f160d0b2e2a4cda793372b511c65ee932f3e
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
-    int y_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int x_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
-    int theta_power = m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    int y_voltage = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
+    int x_voltage = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
+    int theta_voltage = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
 
-    double front_left = (double)(y_power + x_power + theta_power);
-    double back_left = (double)(y_power - x_power + theta_power);
-    double front_right = (double)(y_power - x_power - theta_power);
-    double back_right = (double)(y_power + x_power - theta_power);
-
-    double max_val = std::max({front_left, back_left, front_right, back_right, 127.0});
-
-    m_setLeftFrontVoltage((front_left / max_val) * MAX_MOTOR_VOLTAGE);
-    m_setLeftRearVoltage((back_left / max_val) * MAX_MOTOR_VOLTAGE);
-    m_setRightFrontVoltage((front_right / max_val) * MAX_MOTOR_VOLTAGE);
-    m_setRightRearVoltage((back_right / max_val) * MAX_MOTOR_VOLTAGE);
+    setDriveVoltage(x_voltage, y_voltage, theta_voltage);
 }
 
 void HolonomicDriveNode::autonPeriodic() {
@@ -126,8 +100,8 @@ void HolonomicDriveNode::autonPeriodic() {
 }
 
 HolonomicDriveNode::~HolonomicDriveNode() {
-    delete m_left_front_motor;
-    delete m_left_rear_motor;
-    delete m_right_front_motor;
-    delete m_right_rear_motor;
+    delete m_motors.left_front_motor;
+    delete m_motors.left_rear_motor;
+    delete m_motors.right_front_motor;
+    delete m_motors.right_rear_motor;
 }

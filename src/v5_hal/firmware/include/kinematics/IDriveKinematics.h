@@ -57,5 +57,5 @@ public:
      */
     virtual FourMotorPercentages inverseKinematics(float x, float y, float theta, float max) = 0;
 
-    virtual ~IDriveKinematics() = 0;
+    ~IDriveKinematics();
 };

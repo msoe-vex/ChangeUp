@@ -13,3 +13,7 @@ Pose IDriveKinematics::getPose() {
 void IDriveKinematics::setCurrentPose(Pose current_pose) {
     m_pose = current_pose;
 }
+
+IDriveKinematics::~IDriveKinematics() {
+
+}
