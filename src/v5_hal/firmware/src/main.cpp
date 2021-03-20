@@ -21,7 +21,7 @@ ADIAnalogInNode* bottom_conveyor_sensor;
 ADIAnalogInNode* middle_conveyor_sensor;
 ADIAnalogInNode* top_conveyor_sensor;
 
-ConveyorNode* conveyor_node;
+IntakeNode* intake_node;
 
 ADIDigitalOutNode* digital_out_node;
 
@@ -52,46 +52,38 @@ void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
-	left_front_drive = new MotorNode(node_manager, 3, "leftFrontDrive", false);
+	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
-	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", true);
+	right_front_drive = new MotorNode(node_manager, 3, "rightFrontDrive", false);
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
 
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
 	    HolonomicDriveNode::HolonomicMotors { left_front_drive, left_rear_drive, right_front_drive, right_rear_drive },
 		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }));
 
-	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);
-	bottom_rollers = new MotorNode(node_manager, 11, "bottomRollers", false);
-	ejection_roller = new MotorNode(node_manager, 15, "ejectionRoller", false);
-	top_rollers = new MotorNode(node_manager, 7, "topRollers", true);
+	left_intake = new MotorNode(node_manager, 12, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
 
-	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
-	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
-	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
+	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 'E', false);
 
-	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
-		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
-		top_conveyor_sensor, digital_out_node);	
+	intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
+		right_intake, digital_out_node);	
 
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
+	// x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder"); // TODO ask andrew
+	// y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", true);
 
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
+	// inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
+	// odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
+	// 	y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
-	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
-		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
-
-	battery = new BatteryNode(node_manager, "v5battery");
-	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
-	pros_time = new ProsTimeNode(node_manager, "prosTime");
+	// battery = new BatteryNode(node_manager, "v5battery");
+	// competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
+	// pros_time = new ProsTimeNode(node_manager, "prosTime");
      
-	connection_checker_node = new ConnectionCheckerNode(node_manager);
+	// connection_checker_node = new ConnectionCheckerNode(node_manager);
 
-	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, odom_node, conveyor_node, inertial_sensor);
+	// auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, odom_node, conveyor_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
@@ -163,7 +155,7 @@ void opcontrol() {
 	node_manager->reset();
 	
 	// Execute teleop code
-	while (!pros::competition::is_disabled && !pros::competition::is_autonomous) {
+	while (true) {
 		node_manager->executeTeleop();
 	}
 }
