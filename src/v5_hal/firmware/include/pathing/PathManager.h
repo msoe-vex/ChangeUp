@@ -1,6 +1,6 @@
 #pragma once
 
-#include "adaptive_pursuit_controller/Path.h"
+#include "Path.h"
 #include <memory>
 #include <unordered_map>
 #include <fstream>
