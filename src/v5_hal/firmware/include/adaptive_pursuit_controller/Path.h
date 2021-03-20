@@ -9,13 +9,13 @@
 using namespace nlohmann;
 using namespace std;
 
-struct Waypoint {
-	Trans2d position;
-	double speed;
-    Rotation2d rotation;
-	string event;
-    Waypoint(Trans2d pos, double spd = 0.0, string completeEvent = "");
-};
+// struct Waypoint {
+// 	Trans2d position;
+// 	double speed;
+//     Rotation2d rotation;
+// 	string event;
+//     Waypoint(Trans2d pos, double spd = 0.0, string completeEvent = "");
+// };
 
 class Path {
 protected:
