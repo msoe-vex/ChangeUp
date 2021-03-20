@@ -1,7 +1,7 @@
 #pragma once
 
 #include "auton/Auton.h"
-#include "adaptive_pursuit_controller/PathManager.h"
+#include "pathing/PathManager.h"
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "nodes/subsystems/ConveyorNode.h"

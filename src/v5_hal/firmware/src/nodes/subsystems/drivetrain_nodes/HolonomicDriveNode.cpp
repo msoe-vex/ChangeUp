@@ -68,9 +68,9 @@ void HolonomicDriveNode::setDriveVoltage(int x_voltage, int y_voltage, int theta
         m_kinematics.inverseKinematics(x_voltage, y_voltage, theta_voltage, MAX_MOTOR_VOLTAGE);
 
     m_setLeftFrontVoltage(motor_percentages.left_front_percent * MAX_MOTOR_VOLTAGE);
-    m_setLeftRearVoltage(motor_percentages.left_front_percent * MAX_MOTOR_VOLTAGE);
-    m_setRightFrontVoltage(motor_percentages.left_front_percent * MAX_MOTOR_VOLTAGE);
-    m_setRightRearVoltage(motor_percentages.left_front_percent * MAX_MOTOR_VOLTAGE);
+    m_setLeftRearVoltage(motor_percentages.left_rear_percent * MAX_MOTOR_VOLTAGE);
+    m_setRightFrontVoltage(motor_percentages.right_front_percent * MAX_MOTOR_VOLTAGE);
+    m_setRightRearVoltage(motor_percentages.right_rear_percent * MAX_MOTOR_VOLTAGE);
 }
 
 void HolonomicDriveNode::setDriveVelocity(float x_velocity, float theta_velocity) {
@@ -82,9 +82,9 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, fl
         m_kinematics.inverseKinematics(x_velocity, y_velocity, theta_velocity, MAX_VELOCITY);
 
     m_setLeftFrontVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
-    m_setLeftRearVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
-    m_setRightFrontVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
-    m_setRightRearVelocity(motor_percentages.left_front_percent * MAX_VELOCITY);
+    m_setLeftRearVelocity(motor_percentages.left_rear_percent * MAX_VELOCITY);
+    m_setRightFrontVelocity(motor_percentages.right_front_percent * MAX_VELOCITY);
+    m_setRightRearVelocity(motor_percentages.right_rear_percent * MAX_VELOCITY);
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
