@@ -2,7 +2,7 @@
 
 PathManager* PathManager::m_instance = nullptr;
 
-PathManager * PathManager::GetInstance() {
+PathManager* PathManager::GetInstance() {
     if(!m_instance) {
         m_instance = new PathManager;
     }

@@ -1,10 +1,10 @@
 #include "Path.h"
 
-Waypoint::Waypoint(Trans2d pos, double spd, string completeEvent) {
-	position = pos;
-	speed = spd;
-	event = completeEvent;
-}
+// Waypoint::Waypoint(Trans2d pos, double spd, string completeEvent) {
+// 	position = pos;
+// 	speed = spd;
+// 	event = completeEvent;
+// }
 
 Path::Path() : Path({Waypoint(Trans2d(), 0)}, false) {
 
