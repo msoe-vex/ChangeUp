@@ -1,10 +1,11 @@
 #include "auton/auton_actions/TurnToAngleAction.h"
-#include "../../../../../pid_class/include/PID.h"
 
 TurnToAngleAction::TurnToAngleAction(IDriveNode* drive_node, InertialSensorNode* inertial_sensor, 
         Eigen::Rotation2Dd target_angle) : 
-        m_drive_node(drive_node), m_inertial_sensor(inertial_sensor), 
-        m_target_angle(target_angle), m_feed_forward(0.1) {
+        m_drive_node(drive_node), 
+        m_inertial_sensor(inertial_sensor), 
+        m_target_angle(target_angle), 
+        m_turning_pid(3., 0., 0., 0.1) {
 }
 
 void TurnToAngleAction::ActionInit() {
@@ -21,15 +22,9 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     double turning_power = delta_angle / M_PI * -1;
 
-    double total_turning_power;
+    float total_turn_input = m_turning_pid.calculate(turning_power);
 
-    PID pid;
-    pid::PID(kP, kI, kD);
-    pid::calculate(turning_power, m_feed_forward);
-
-    total_turning_power = m_total_error += turning_power;
-
-    m_drive_node->setDriveVoltage(0, (int)(total_turning_power * -1 * MAX_MOTOR_VOLTAGE));
+    m_drive_node->setDriveVoltage(0, (int)(total_turn_input * -1 * MAX_MOTOR_VOLTAGE));
 
     if (m_inertial_sensor->isAtAngle(m_target_angle) && m_turn_timer.Get() == 0) {
         m_turn_timer.Start();
