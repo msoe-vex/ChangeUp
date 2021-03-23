@@ -2,8 +2,10 @@
 
 TurnToAngleAction::TurnToAngleAction(IDriveNode* drive_node, InertialSensorNode* inertial_sensor, 
         Eigen::Rotation2Dd target_angle) : 
-        m_drive_node(drive_node), m_inertial_sensor(inertial_sensor), 
-        m_target_angle(target_angle), m_feed_forward(0.1) {
+        m_drive_node(drive_node), 
+        m_inertial_sensor(inertial_sensor), 
+        m_target_angle(target_angle), 
+        m_turning_pid(3., 0., 0., 0.1) {
 }
 
 void TurnToAngleAction::ActionInit() {
@@ -20,20 +22,9 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
 
     double turning_power = delta_angle / M_PI * -1;
 
-    // Integral
-    m_total_error += turning_power;
+    float total_turn_input = m_turning_pid.calculate(turning_power);
 
-    //Derivative
-    double delta_error = turning_power - m_previous_error;
-
-    // Update previous value
-    m_previous_error = turning_power;
-
-    double total_turning_power = (kP * turning_power) + (kI * m_total_error) + (kD * delta_error);
-
-    total_turning_power = std::copysign(min(fabs(total_turning_power) + m_feed_forward, 1.0), total_turning_power);
-
-    m_drive_node->setDriveVoltage(0, (int)(total_turning_power * -1 * MAX_MOTOR_VOLTAGE));
+    m_drive_node->setDriveVoltage(0, (int)(total_turn_input * -1 * MAX_MOTOR_VOLTAGE));
 
     if (m_inertial_sensor->isAtAngle(m_target_angle) && m_turn_timer.Get() == 0) {
         m_turn_timer.Start();
