@@ -36,5 +36,5 @@ float PID::calculate(float current_error) {
     m_timer.Start();
 
     // Return the total input plus a feed forward value, with a limit
-    return std::copysign(min(fabs(total_input) + m_feed_forward, 1.0), total_input);
+    return std::copysign(std::min(fabs(total_input) + m_feed_forward, 1.0), total_input);
 }

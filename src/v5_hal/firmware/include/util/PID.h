@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cmath>
-
 #include "api.h"
 #include "util/Timer.h"
 
