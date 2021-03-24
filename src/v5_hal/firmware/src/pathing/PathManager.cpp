@@ -20,7 +20,7 @@ bool PathManager::LoadPathsText(string text) {
     try {
         loadedJson = json::parse(text);
     } catch (const exception& e) {
-        Logger::logError("Could not parse paths file:" + string(e.what()));
+        // Logger::logError("Could not parse paths file:" + string(e.what()));
         return false;
     }
 
@@ -31,21 +31,22 @@ bool PathManager::LoadPaths(json loadedJson) {
     m_paths.clear();
 
     try {
-        json pathJson;
-        for (auto path : loadedJson["paths"]) {
-            string name = path["name"];
-            vector<Waypoint> waypoints;
-            for (auto point : path["points"]) {
-                double speed = point["speed"];
-                Trans2d pos = Trans2d(-(double)point["y"], (double)point["x"]);
-                Waypoint waypoint = Waypoint(pos, speed, "");
-                waypoints.push_back(waypoint);
+        for (auto pathJson : loadedJson["paths"]) {
+            string name = pathJson["name"];
+            vector<PathPoint> pathPoints;
+            for (auto point : pathJson["points"]) {
+                Vector2d linear_velocity(point.value("vx", 0), point.value("vy", 0));
+                float time = point.value("time", 0);
+                float rotational_velocity = point.value("omega", 0);
+                Rotation2Dd rotation(toRadians(point.value("theta", 0)));
+                Vector2d position(point.value("x", 0), point.value("y", 0));
+                pathPoints.push_back(PathPoint(time, Pose(position, rotation), linear_velocity, rotational_velocity));
             }
-            Path newPath(waypoints);
+            Path newPath(pathPoints);
             m_paths[name] = newPath;
         }
     } catch (const exception& e) {
-        Logger::logError("Error reading json path! " + string(e.what()));
+        // Logger::logError("Error reading json path! " + string(e.what()));
         return false;
     }
 
@@ -57,11 +58,11 @@ bool PathManager::LoadPathsFile(string filePath) {
     try {
         pathsFile.open(filePath);
         if(!pathsFile.is_open()) {
-            Logger::logError("Could not open paths file at " + filePath);
+            // Logger::logError("Could not open paths file at " + filePath);
             return false;
         }
     } catch (const exception& e) {
-        Logger::logError("Could not open paths file at " + filePath + " : " + string(e.what()));
+        // Logger::logError("Could not open paths file at " + filePath + " : " + string(e.what()));
         return false;
     }
 
@@ -69,7 +70,7 @@ bool PathManager::LoadPathsFile(string filePath) {
     try {
         pathsFile >> loadedJson;
     } catch (const exception& e) {
-        Logger::logError("Could not parse paths file:" + string(e.what()));
+        // Logger::logError("Could not parse paths file:" + string(e.what()));
         pathsFile.close();
         return false;
     }
@@ -84,7 +85,7 @@ unordered_map<string, Path> PathManager::GetPaths() {
 
 Path PathManager::GetPath(string name) {
     if (m_paths.find(name) == m_paths.end()) {
-        Logger::logError("Path with key: " + name + " not found!");
+        // Logger::logError("Path with key: " + name + " not found!");
         return m_paths[m_paths.begin()->first];
     } else {
         return m_paths[name];

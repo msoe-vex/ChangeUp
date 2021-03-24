@@ -7,6 +7,7 @@
 #include "nodes/subsystems/ConveyorNode.h"
 #include "nodes/subsystems/IntakeNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
+#include "pathing/PathManager.h"
 #include "api.h"
 
 class AutonManagerNode : public Node {

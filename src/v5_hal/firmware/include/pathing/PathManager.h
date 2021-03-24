@@ -1,9 +1,16 @@
 #pragma once
 
-#include "adaptive_pursuit_controller/Path.h"
 #include <memory>
 #include <unordered_map>
 #include <fstream>
+#include <vector>
+#include "pathing/Path.h"
+#include "pathing/PathPoint.h"
+#include "3rdparty/json.hpp"
+#include "math/Math.h"
+
+using namespace nlohmann;
+using namespace std;
 
 class PathManager {
 public:
@@ -24,5 +31,3 @@ private:
     unordered_map<string, Path> m_paths;
     static PathManager* m_instance;
 };
-
-
