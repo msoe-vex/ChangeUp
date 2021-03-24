@@ -13,17 +13,16 @@ HolonomicDriveNode* holonomic_drive_node;
 
 MotorNode* left_intake;
 MotorNode* right_intake;
-MotorNode* bottom_rollers;
-MotorNode* ejection_roller;
-MotorNode* top_rollers;
-
-ADIAnalogInNode* bottom_conveyor_sensor;
-ADIAnalogInNode* middle_conveyor_sensor;
-ADIAnalogInNode* top_conveyor_sensor;
-
+ADIDigitalOutNode* left_intake_pneumatic;
+ADIDigitalOutNode* right_intake_pneumatic;
 IntakeNode* intake_node;
 
-ADIDigitalOutNode* digital_out_node;
+MotorNode* bottom_conveyor;
+MotorNode* top_conveyor;
+ADIAnalogInNode* bottom_conveyor_sensor;
+ADIAnalogInNode* top_conveyor_sensor;
+ConveyorNode* conveyor_node;
+
 
 ADIEncoderNode* x_odom_encoder;
 ADIEncoderNode* y_odom_encoder;
@@ -31,10 +30,6 @@ ADIEncoderNode* y_odom_encoder;
 InertialSensorNode* inertial_sensor;
 
 OdometryNode* odom_node;
-
-BatteryNode* battery;
-CompetitionStatusNode* competition_status;
-ProsTimeNode* pros_time;
 
 Auton* programming_skills_auton;
 
@@ -50,20 +45,9 @@ ConnectionCheckerNode* connection_checker_node;
  */
 void initialize() {
 	// Define all nodes used by the robot here
-
-	// left front drive = 1
-	// left rear drive = 2
-	// right front drive = 3
-	// right rear drive = 4
-	// left intake = 7
-	// right intake = 6
-	// top roller = 11
-	// bottom roller = 12
-	// x encoder = A B
-	// y encoder = C D
-
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
+	/* Define the drivetrain components */
 	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
 	right_front_drive = new MotorNode(node_manager, 3, "rightFrontDrive", false);
@@ -74,29 +58,39 @@ void initialize() {
 		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }, 
 								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1) }));
 
-	left_intake = new MotorNode(node_manager, 12, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
+	/* Define the intake components */
+	left_intake = new MotorNode(node_manager, 7, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
 
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 'E', false);
-
+	left_intake_pneumatic = new ADIDigitalOutNode(node_manager, "leftIntakeOpen", 'H', false);
+	right_intake_pneumatic = new ADIDigitalOutNode(node_manager, "rightIntakeOpen", 'G', false);
+	
 	intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
-		right_intake, digital_out_node);	
+		right_intake, left_intake_pneumatic, right_intake_pneumatic);	
 
-	// x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder"); // TODO ask andrew
-	// y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", true);
+	/* Define the conveyor components */
+	bottom_conveyor = new MotorNode(node_manager, 12, "bottomConveyor", false);
+	top_conveyor = new MotorNode(node_manager, 11, "topConveyor", false, pros::E_MOTOR_GEARSET_06);
 
-	// inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
+	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
+	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
 
-	// odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
-	// 	y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+	conveyor_node = new ConveyorNode(node_manager, "conveyorNode", primary_controller, bottom_conveyor, top_conveyor, 
+		bottom_conveyor_sensor, top_conveyor_sensor);
 
-	// battery = new BatteryNode(node_manager, "v5battery");
-	// competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
-	// pros_time = new ProsTimeNode(node_manager, "prosTime");
+	/* Define the odometry components */
+	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder");
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", true);
+
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
+
+	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
+		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+	
      
-	// connection_checker_node = new ConnectionCheckerNode(node_manager);
+	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
-	// auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, odom_node, conveyor_node, inertial_sensor);
+	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, odom_node, conveyor_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

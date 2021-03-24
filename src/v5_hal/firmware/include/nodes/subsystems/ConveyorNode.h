@@ -15,12 +15,9 @@ public:
     };
 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* bottom_conveyor_motor, 
-        MotorNode* ejection_roller_motor, MotorNode* top_conveyor_motor, ADIAnalogInNode* bottom_conveyor_sensor, 
-        ADIAnalogInNode* middle_conveyor_sensor, ADIAnalogInNode* top_conveyor_sensor);
+        MotorNode* top_conveyor_motor, ADIAnalogInNode* bottom_conveyor_sensor, ADIAnalogInNode* top_conveyor_sensor);
 
     void setBottomConveyorVoltage(int voltage);
-
-    void setEjectionRollerVoltage(int voltage);
 
     void setTopConveyorVoltage(int voltage);
 
@@ -41,10 +38,8 @@ private:
 
     pros::Controller* m_controller;
     MotorNode* m_bottom_conveyor_motor;
-    MotorNode* m_ejection_roller_motor;
     MotorNode* m_top_conveyor_motor;
     ADIAnalogInNode* m_bottom_conveyor_sensor;
-    ADIAnalogInNode* m_middle_conveyor_sensor;
     ADIAnalogInNode* m_top_conveyor_sensor;
 
     std::string m_handle_name;
