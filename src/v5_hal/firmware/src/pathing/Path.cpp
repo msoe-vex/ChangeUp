@@ -1,9 +1,5 @@
 #include "pathing/Path.h"
 
-Path::Path() {
-
-}
-
 Path::Path(json jsonToLoad) {
     m_pathPoints.clear();
     for (auto point : jsonToLoad["points"]) {
