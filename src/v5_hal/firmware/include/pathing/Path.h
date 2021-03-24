@@ -4,14 +4,14 @@
 #include "pathing/PathPoint.h"
 #include "math/Pose.h"
 #include <vector>
-#include "3rdparty/json.hpp"
 
 using namespace std;
-using namespace nlohmann;
 
 class Path {
 public:
-    Path(json jsonToLoad);
+    Path();
+
+    Path(vector<PathPoint> pathPoints);
 
     Pose update(float time);
 
