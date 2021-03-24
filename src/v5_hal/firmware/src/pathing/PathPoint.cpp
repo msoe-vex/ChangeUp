@@ -26,12 +26,12 @@ PathPoint PathPoint::interpolateTo(PathPoint other, float time) {
     float deltaTime = other.getTime() - getTime();
 
     Vector2d acceleration = (other.getLinearVelocity() + getLinearVelocity()) / deltaTime;
-    Vector2d position = 0.5 * acceleration * (t * t) + getLinearVelocity() * t + getPose().vector;
+    Vector2d position = 0.5 * acceleration * (t * t) + getLinearVelocity() * t + getPose().position;
     Vector2d velocity = acceleration * t + getLinearVelocity();
 
-    Rotation2Dd alpha = (other.getRotationalVelocity() - getRotationalVelocity()) / deltaTime;
-    Rotation2Dd theta = 0.5 * alpha * (t * t) + getRotationalVelocity() * t + getPose().rotation;
-    Rotation2Dd omega = alpha * t + getRotationalVelocity();
+    float alpha = (other.getRotationalVelocity() - getRotationalVelocity()) / deltaTime;
+    Rotation2Dd theta = Rotation2Dd(0.5 * alpha * (t * t) + getRotationalVelocity() * t) * getPose().angle;
+    float omega = alpha * t + getRotationalVelocity();
 
     return PathPoint(time, Pose(position, theta), velocity, omega);
 }
