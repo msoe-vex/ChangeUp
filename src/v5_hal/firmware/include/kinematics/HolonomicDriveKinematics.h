@@ -1,21 +1,22 @@
 #pragma once
 
-#include "kinematics/IDriveKinematics.h"
-#include "util/Constants.h"
 #include <algorithm>
 #include <initializer_list>
 
+#include "kinematics/IDriveKinematics.h"
+#include "util/Constants.h"
+
 class HolonomicDriveKinematics : public IDriveKinematics {
-private:
-    float m_left_front_previous_dist;
-    float m_left_rear_previous_dist;
-    float m_right_front_previous_dist;
-    float m_right_rear_previous_dist;
-
-    float m_getWheelTicksComponent(float wheel_ticks);
-
 public:
-    HolonomicDriveKinematics(EncoderConfig encoder_config, Pose current_pose=Pose());
+    struct HolonomicWheelLocations {
+        Vector2d left_front_location;
+        Vector2d left_rear_location;
+        Vector2d right_front_location;
+        Vector2d right_rear_location;
+    };
+
+    HolonomicDriveKinematics(EncoderConfig encoder_config, HolonomicWheelLocations wheel_locations, 
+        Pose current_pose=Pose());
 
     /**
      * This function takes in encoder values of all motors, and uses them to update
@@ -38,4 +39,13 @@ public:
     FourMotorPercentages inverseKinematics(float x, float y, float theta, float max);
 
     ~HolonomicDriveKinematics();
+
+private:
+    float m_left_front_previous_dist;
+    float m_left_rear_previous_dist;
+    float m_right_front_previous_dist;
+    float m_right_rear_previous_dist;
+
+    HolonomicWheelLocations m_wheel_locations;
+
 };

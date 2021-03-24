@@ -2,8 +2,10 @@
 
 HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller,
     HolonomicMotors motors, HolonomicDriveKinematics kinematics) : 
-    IDriveNode(node_manager), m_controller(controller->getController()),
-    m_motors(motors), m_kinematics(kinematics) {
+        IDriveNode(node_manager), 
+        m_controller(controller->getController()),
+        m_motors(motors),
+        m_kinematics(kinematics) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
 

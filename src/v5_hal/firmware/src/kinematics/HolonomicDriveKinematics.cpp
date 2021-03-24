@@ -1,12 +1,9 @@
 #include "kinematics/HolonomicDriveKinematics.h"
 
-HolonomicDriveKinematics::HolonomicDriveKinematics(EncoderConfig encoder_config, Pose current_pose) :
-        IDriveKinematics(encoder_config, current_pose) {
+HolonomicDriveKinematics::HolonomicDriveKinematics(EncoderConfig encoder_config, HolonomicWheelLocations wheel_locations, 
+    Pose current_pose) : IDriveKinematics(encoder_config, current_pose),
+        m_wheel_locations(wheel_locations) {
 
-}
-
-float HolonomicDriveKinematics::m_getWheelTicksComponent(float wheel_ticks) {
-    return sqrt(pow(wheel_ticks, 2) / 2);
 }
 
 void HolonomicDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriveEncoderVals encoder_vals) {
@@ -14,6 +11,8 @@ void HolonomicDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriv
     float left_rear_dist = encoder_vals.left_rear_encoder_val * m_ticks_to_distance_m;
     float right_front_dist = encoder_vals.right_front_encoder_val * m_ticks_to_distance_m;
     float right_rear_dist = encoder_vals.right_rear_encoder_val * m_ticks_to_distance_m;
+
+    float delta_time = m_timer.Get();
 
     if (m_pose_reset) {
         m_left_front_previous_dist = left_front_dist;
@@ -23,27 +22,39 @@ void HolonomicDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriv
         m_pose_reset = false;
     }
 
-    float left_front_delta = left_front_dist - m_left_front_previous_dist;
-    float left_rear_delta = left_rear_dist - m_left_front_previous_dist;
-    float right_front_delta = right_front_dist - m_left_front_previous_dist;
-    float right_rear_delta = right_rear_dist - m_left_front_previous_dist;
+    // Use a vector to describe the velocity of each wheel
+    Vector2d left_front_velocity((left_front_dist - m_left_front_previous_dist) / delta_time, 0);
+    Vector2d left_rear_velocity((left_rear_dist - m_left_front_previous_dist) / delta_time, 0);
+    Vector2d right_front_velocity((right_front_dist - m_left_front_previous_dist) / delta_time, 0);
+    Vector2d right_rear_velocity((right_rear_dist - m_left_front_previous_dist) / delta_time, 0);
     
-    // Positive encoder in the clockwise direction
-    float x_dist_moved = (m_getWheelTicksComponent(left_front_delta) -
-                          m_getWheelTicksComponent(left_rear_delta) + 
-                          m_getWheelTicksComponent(right_front_delta) - 
-                          m_getWheelTicksComponent(right_rear_delta)) / 4; 
+    // Rotate each of the vectors to their respective orientations
+    left_front_velocity = Rotation2Dd(-3 * M_PI_4) * left_front_velocity;
+    left_rear_velocity = Rotation2Dd(-1 * M_PI_4) * left_rear_velocity;
+    right_front_velocity = Rotation2Dd(3 * M_PI_4) * right_front_velocity;
+    right_rear_velocity = Rotation2Dd(M_PI_4) * right_rear_velocity;
 
-    // float rotation = (right_delta - left_delta) / track_width;
+    // Calculate the robot translation as the average of all component vectors
+    Vector2d robot_velocity = (left_front_velocity + left_rear_velocity + 
+                                  right_front_velocity + right_rear_velocity) / 4;
 
-    // Vector2d robot_translation(0, distance_moved);
+    float theta_velocity = (m_wheel_locations.left_front_location.norm() * left_front_velocity.norm()) + 
+                           (m_wheel_locations.left_rear_location.norm() * left_rear_velocity.norm()) + 
+                           (m_wheel_locations.right_front_location.norm() * right_front_velocity.norm()) +
+                           (m_wheel_locations.right_rear_location.norm() * right_rear_velocity.norm());
 
-    // Odometry::m_robot_pose.angle = Odometry::m_robot_pose.angle * Rotation2Dd(rotation);
-    // robot_translation = Odometry::m_robot_pose.angle * robot_translation;
-    // Odometry::m_robot_pose.position += robot_translation;
 
-    // Odometry::m_last_encoder_1_dist = left_dist;
-    // Odometry::m_last_encoder_2_dist = right_dist;
+    // Send the values to be integrated, to update our current robot position
+    IDriveKinematics::m_updateCurrentPosition(robot_velocity, theta_velocity, delta_time);
+
+    // Update the previous values of each encoder
+    m_left_front_previous_dist = left_front_dist;
+    m_left_rear_previous_dist = left_rear_dist;
+    m_right_front_previous_dist = right_front_dist;
+    m_right_rear_previous_dist = right_rear_dist;
+
+    // Restart the timer
+    m_timer.Start();
 }
 
 IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::inverseKinematics(
