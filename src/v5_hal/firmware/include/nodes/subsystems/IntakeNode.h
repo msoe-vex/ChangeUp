@@ -12,7 +12,8 @@ private:
     pros::Controller* m_controller;
     MotorNode* m_left_intake;
     MotorNode* m_right_intake;
-    ADIDigitalOutNode* m_intake_pneumatics;
+    ADIDigitalOutNode* m_left_intake_pneumatic;
+    ADIDigitalOutNode* m_right_intake_pneumatic;
 
     std::string m_handle_name;
 
@@ -20,7 +21,7 @@ private:
 
 public:
     IntakeNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_intake,
-        MotorNode* right_intake, ADIDigitalOutNode* intake_pneumatics);
+        MotorNode* right_intake, ADIDigitalOutNode* left_intake_pneumatic, ADIDigitalOutNode* right_intake_pneumatic);
 
     void setIntakeVoltage(int voltage);
 

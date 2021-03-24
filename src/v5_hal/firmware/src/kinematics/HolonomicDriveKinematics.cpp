@@ -38,10 +38,10 @@ void HolonomicDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriv
     Vector2d robot_velocity = (left_front_velocity + left_rear_velocity + 
                                   right_front_velocity + right_rear_velocity) / 4;
 
-    float theta_velocity = (m_wheel_locations.left_front_location.norm() * left_front_velocity.norm()) + 
-                           (m_wheel_locations.left_rear_location.norm() * left_rear_velocity.norm()) + 
-                           (m_wheel_locations.right_front_location.norm() * right_front_velocity.norm()) +
-                           (m_wheel_locations.right_rear_location.norm() * right_rear_velocity.norm());
+    float theta_velocity = (left_front_velocity.norm() / m_wheel_locations.left_front_location.norm()) + 
+                           (left_rear_velocity.norm() / m_wheel_locations.left_rear_location.norm()) + 
+                           (right_front_velocity.norm() / m_wheel_locations.right_front_location.norm()) +
+                           (right_rear_velocity.norm() / m_wheel_locations.right_rear_location.norm());
 
 
     // Send the values to be integrated, to update our current robot position
