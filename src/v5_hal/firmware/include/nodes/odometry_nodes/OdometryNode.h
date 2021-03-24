@@ -10,6 +10,7 @@
 #include "odometry/Odometry.h"
 #include "odometry/FollowerOdometry.h"
 #include "odometry/TankOdometry.h"
+#include "util/Encoders.h"
 #include "eigen/Eigen/Dense"
 
 class OdometryNode : public Node { 

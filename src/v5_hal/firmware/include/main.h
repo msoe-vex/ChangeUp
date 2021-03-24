@@ -53,6 +53,7 @@
 #include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
 #include "nodes/subsystems/drivetrain_nodes/HolonomicDriveNode.h"
 #include "nodes/subsystems/ConveyorNode.h"
+#include "nodes/subsystems/IntakeNode.h"
 #include "nodes/auton_nodes/AutonManagerNode.h"
 #include "auton/auton_actions/DeployAction.h"
 #include "auton/auton_actions/DriveAction.h"
@@ -61,7 +62,7 @@
 #include "auton/auton_actions/FollowPathAction.h"
 #include "auton/auton_routines/ProgrammingSkillsAuton.h"
 #include "eigen/Eigen/Dense"
-#include "adaptive_pursuit_controller/PathManager.h"
+#include "pathing/PathManager.h"
 
    /**
     * You should add more #includes here

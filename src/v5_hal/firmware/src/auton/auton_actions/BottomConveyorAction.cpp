@@ -19,16 +19,13 @@ void BottomConveyorAction::ActionInit() {
 AutonAction::actionStatus BottomConveyorAction::Action() {
     if (m_time <= 0) {
         m_conveyor_node->setBottomConveyorVoltage(m_voltage);
-        m_conveyor_node->setEjectionRollerVoltage(m_eject_voltage);
         return END;    
     } else {
         if (m_timer.Get() < m_time) {
             m_conveyor_node->setBottomConveyorVoltage(m_voltage);
-            m_conveyor_node->setEjectionRollerVoltage(m_eject_voltage);
             return CONTINUE;
         } else {
             m_conveyor_node->setBottomConveyorVoltage(0);
-            m_conveyor_node->setEjectionRollerVoltage(0);
             return END;
         }
     }   

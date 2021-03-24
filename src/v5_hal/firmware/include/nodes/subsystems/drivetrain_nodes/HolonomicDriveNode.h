@@ -5,39 +5,22 @@
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/actuator_nodes/MotorNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
+#include "kinematics/HolonomicDriveKinematics.h"
+#include "eigen/Eigen/Dense"
 #include <algorithm>
 #include <initializer_list>
 
 class HolonomicDriveNode : public IDriveNode {
-private:
-    pros::Controller* m_controller;
-
-    MotorNode* m_left_front_motor;
-    MotorNode* m_left_rear_motor;
-    MotorNode* m_right_front_motor;
-    MotorNode* m_right_rear_motor;
-
-    std::string m_handle_name;
-
-    void m_setLeftFrontVoltage(int voltage);
-
-    void m_setLeftRearVoltage(int voltage);
-
-    void m_setRightFrontVoltage(int voltage);
-
-    void m_setRightRearVoltage(int voltage);
-
-    void m_setLeftFrontVelocity(float velocity);
-
-    void m_setLeftRearVelocity(float velocity);
-
-    void m_setRightFrontVelocity(float velocity);
-
-    void m_setRightRearVelocity(float velocity);
-
 public: 
-    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_front_motor, 
-        MotorNode* left_rear_motor, MotorNode* right_front_motor, MotorNode* right_rear_motor);
+    struct HolonomicMotors {
+        MotorNode* left_front_motor;
+        MotorNode* left_rear_motor;
+        MotorNode* right_front_motor;
+        MotorNode* right_rear_motor;
+    };
+
+    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
+        HolonomicMotors motors, HolonomicDriveKinematics kinematics);
 
     void initialize();
 
@@ -58,4 +41,29 @@ public:
     void autonPeriodic();
 
     ~HolonomicDriveNode();
+
+private:
+    pros::Controller* m_controller;
+
+    std::string m_handle_name;
+
+    HolonomicMotors m_motors;
+
+    HolonomicDriveKinematics m_kinematics;
+
+    void m_setLeftFrontVoltage(int voltage);
+
+    void m_setLeftRearVoltage(int voltage);
+
+    void m_setRightFrontVoltage(int voltage);
+
+    void m_setRightRearVoltage(int voltage);
+
+    void m_setLeftFrontVelocity(float velocity);
+
+    void m_setLeftRearVelocity(float velocity);
+
+    void m_setRightFrontVelocity(float velocity);
+
+    void m_setRightRearVelocity(float velocity);
 };

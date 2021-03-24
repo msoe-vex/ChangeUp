@@ -13,17 +13,16 @@ HolonomicDriveNode* holonomic_drive_node;
 
 MotorNode* left_intake;
 MotorNode* right_intake;
-MotorNode* bottom_rollers;
-MotorNode* ejection_roller;
-MotorNode* top_rollers;
+ADIDigitalOutNode* left_intake_pneumatic;
+ADIDigitalOutNode* right_intake_pneumatic;
+IntakeNode* intake_node;
 
+MotorNode* bottom_conveyor;
+MotorNode* top_conveyor;
 ADIAnalogInNode* bottom_conveyor_sensor;
-ADIAnalogInNode* middle_conveyor_sensor;
 ADIAnalogInNode* top_conveyor_sensor;
-
 ConveyorNode* conveyor_node;
 
-ADIDigitalOutNode* digital_out_node;
 
 ADIEncoderNode* x_odom_encoder;
 ADIEncoderNode* y_odom_encoder;
@@ -31,10 +30,6 @@ ADIEncoderNode* y_odom_encoder;
 InertialSensorNode* inertial_sensor;
 
 OdometryNode* odom_node;
-
-BatteryNode* battery;
-CompetitionStatusNode* competition_status;
-ProsTimeNode* pros_time;
 
 Auton* programming_skills_auton;
 
@@ -52,45 +47,51 @@ void initialize() {
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
-	left_front_drive = new MotorNode(node_manager, 3, "leftFrontDrive", false);
+	/* Define the drivetrain components */
+	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
-	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", true);
+	right_front_drive = new MotorNode(node_manager, 3, "rightFrontDrive", false);
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
 
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
-	    left_front_drive, left_rear_drive, right_front_drive, right_rear_drive);
+	    HolonomicDriveNode::HolonomicMotors { left_front_drive, left_rear_drive, right_front_drive, right_rear_drive },
+		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }, 
+								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1) }));
 
-	left_intake = new MotorNode(node_manager, 13, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 16, "rightIntake", false);
-	bottom_rollers = new MotorNode(node_manager, 11, "bottomRollers", false);
-	ejection_roller = new MotorNode(node_manager, 15, "ejectionRoller", false);
-	top_rollers = new MotorNode(node_manager, 7, "topRollers", true);
+	/* Define the intake components */
+	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
 
-	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 1, "bottomConveyorSensor");
-	middle_conveyor_sensor = new ADIAnalogInNode(node_manager, 2, "middleConveyorSensor");
-	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 3, "topConveyorSensor");
+	left_intake_pneumatic = new ADIDigitalOutNode(node_manager, "leftIntakeOpen", 'H', false);
+	right_intake_pneumatic = new ADIDigitalOutNode(node_manager, "rightIntakeOpen", 'G', false);
+	
+	intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
+		right_intake, left_intake_pneumatic, right_intake_pneumatic);	
 
-	conveyor_node = new ConveyorNode(node_manager, "conveyor", primary_controller, left_intake,
-		right_intake, bottom_rollers, ejection_roller, top_rollers, bottom_conveyor_sensor, middle_conveyor_sensor,
-		top_conveyor_sensor, digital_out_node);	
+	/* Define the conveyor components */
+	bottom_conveyor = new MotorNode(node_manager, 11, "bottomConveyor", true);
+	top_conveyor = new MotorNode(node_manager, 12, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
-	digital_out_node = new ADIDigitalOutNode(node_manager, "intakeOpen", 4, false);
+	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
+	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
 
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'E', 'F', "xOdomEncoder");
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'G', 'H', "yOdomEncoder", true);
+	conveyor_node = new ConveyorNode(node_manager, "conveyorNode", primary_controller, bottom_conveyor, top_conveyor, 
+		bottom_conveyor_sensor, top_conveyor_sensor);
+
+	/* Define the odometry components */
+	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder");
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", true);
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
 	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
-
-	battery = new BatteryNode(node_manager, "v5battery");
-	competition_status = new CompetitionStatusNode(node_manager, "competitionStatus");
-	pros_time = new ProsTimeNode(node_manager, "prosTime");
-     
+	
+    /* Define other components */
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
-	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, odom_node, conveyor_node, inertial_sensor);
+	/* Define autonomous components */
+	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
@@ -162,7 +163,7 @@ void opcontrol() {
 	node_manager->reset();
 	
 	// Execute teleop code
-	while (!pros::competition::is_disabled && !pros::competition::is_autonomous) {
+	while (true) {
 		node_manager->executeTeleop();
 	}
 }
