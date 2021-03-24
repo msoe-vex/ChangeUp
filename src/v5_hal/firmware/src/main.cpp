@@ -59,7 +59,7 @@ void initialize() {
 								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1) }));
 
 	/* Define the intake components */
-	left_intake = new MotorNode(node_manager, 7, "leftIntake", true);
+	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
 
 	left_intake_pneumatic = new ADIDigitalOutNode(node_manager, "leftIntakeOpen", 'H', false);
@@ -69,8 +69,8 @@ void initialize() {
 		right_intake, left_intake_pneumatic, right_intake_pneumatic);	
 
 	/* Define the conveyor components */
-	bottom_conveyor = new MotorNode(node_manager, 12, "bottomConveyor", false);
-	top_conveyor = new MotorNode(node_manager, 11, "topConveyor", false, pros::E_MOTOR_GEARSET_06);
+	bottom_conveyor = new MotorNode(node_manager, 11, "bottomConveyor", true);
+	top_conveyor = new MotorNode(node_manager, 12, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
@@ -87,10 +87,11 @@ void initialize() {
 	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 	
-     
+    /* Define other components */
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
-	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, odom_node, conveyor_node, inertial_sensor);
+	/* Define autonomous components */
+	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

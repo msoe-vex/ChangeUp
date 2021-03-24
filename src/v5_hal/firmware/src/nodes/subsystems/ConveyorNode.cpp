@@ -60,10 +60,15 @@ void ConveyorNode::teleopPeriodic() {
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
         setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
         setTopConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+        setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+        setTopConveyorVoltage(0);
     } else {
         setBottomConveyorVoltage(0);
         setTopConveyorVoltage(0);
     }
+
+
 }
 
 void ConveyorNode::autonPeriodic() {

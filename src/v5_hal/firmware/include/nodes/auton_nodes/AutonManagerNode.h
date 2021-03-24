@@ -5,6 +5,7 @@
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "nodes/subsystems/ConveyorNode.h"
+#include "nodes/subsystems/IntakeNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "api.h"
 
@@ -13,8 +14,8 @@ private:
     Auton* m_programming_skills_auton;
 
 public:
-    AutonManagerNode(NodeManager* node_manager, IDriveNode* drive_node, OdometryNode* odometry_node, 
-        ConveyorNode* conveyor_node, InertialSensorNode* inertial_sensor_node);
+    AutonManagerNode(NodeManager* node_manager, IDriveNode* drive_node, ConveyorNode* conveyor_node, IntakeNode* intake_node, 
+        OdometryNode* odometry_node, InertialSensorNode* inertial_sensor_node);
 
     Auton* selected_auton;
 
