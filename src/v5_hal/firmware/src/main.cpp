@@ -50,6 +50,18 @@ ConnectionCheckerNode* connection_checker_node;
  */
 void initialize() {
 	// Define all nodes used by the robot here
+
+	// left front drive = 1
+	// left rear drive = 2
+	// right front drive = 3
+	// right rear drive = 4
+	// left intake = 7
+	// right intake = 6
+	// top roller = 11
+	// bottom roller = 12
+	// x encoder = A B
+	// y encoder = C D
+
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
 	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
@@ -59,7 +71,8 @@ void initialize() {
 
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
 	    HolonomicDriveNode::HolonomicMotors { left_front_drive, left_rear_drive, right_front_drive, right_rear_drive },
-		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }));
+		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }, 
+								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1) }));
 
 	left_intake = new MotorNode(node_manager, 12, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);

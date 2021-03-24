@@ -6,6 +6,7 @@
 #include "nodes/actuator_nodes/MotorNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
 #include "kinematics/HolonomicDriveKinematics.h"
+#include "eigen/Eigen/Dense"
 #include <algorithm>
 #include <initializer_list>
 

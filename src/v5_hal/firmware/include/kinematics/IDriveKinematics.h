@@ -4,6 +4,8 @@
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "math/Pose.h"
 #include "util/Encoders.h"
+#include "util/Timer.h"
+#include "eigen/Eigen/Dense"
 
 class IDriveKinematics { 
 protected:
@@ -11,6 +13,9 @@ protected:
     Pose m_pose = Pose(Vector2d(0, 0), Rotation2Dd());
     bool m_pose_reset = true;
     float m_ticks_to_distance_m;
+    Timer m_timer;
+
+    void m_updateCurrentPosition(Vector2d robot_velocity, float theta_velocity, float delta_time);
 
 public:
     struct FourMotorPercentages {
