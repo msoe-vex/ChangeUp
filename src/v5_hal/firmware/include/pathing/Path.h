@@ -11,7 +11,6 @@ using namespace nlohmann;
 
 class Path {
 public:
-    Path();
     Path(json jsonToLoad);
 
     Pose update(float time);
