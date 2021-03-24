@@ -56,7 +56,7 @@ void initialize() {
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
 	    HolonomicDriveNode::HolonomicMotors { left_front_drive, left_rear_drive, right_front_drive, right_rear_drive },
 		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }, 
-								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1), Vector2d(-1, -1) }));
+								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-5.48, 5.48), Vector2d(-5.48, -5.48), Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
 
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
