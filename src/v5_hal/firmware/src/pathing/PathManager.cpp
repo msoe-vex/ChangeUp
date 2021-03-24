@@ -33,7 +33,16 @@ bool PathManager::LoadPaths(json loadedJson) {
     try {
         for (auto pathJson : loadedJson["paths"]) {
             string name = pathJson["name"];
-            Path newPath(pathJson);
+            vector<PathPoint> pathPoints;
+            for (auto point : pathJson["points"]) {
+                Vector2d linear_velocity(point.value("vx", 0), point.value("vy", 0));
+                float time = point.value("time", 0);
+                float rotational_velocity = point.value("omega", 0);
+                Rotation2Dd rotation(toRadians(point.value("theta", 0)));
+                Vector2d position(point.value("x", 0), point.value("y", 0));
+                pathPoints.push_back(PathPoint(time, Pose(position, rotation), linear_velocity, rotational_velocity));
+            }
+            Path newPath(pathPoints);
             m_paths[name] = newPath;
         }
     } catch (const exception& e) {

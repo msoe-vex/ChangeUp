@@ -1,15 +1,11 @@
 #include "pathing/Path.h"
 
-Path::Path(json jsonToLoad) {
-    m_pathPoints.clear();
-    for (auto point : jsonToLoad["points"]) {
-        Vector2d linear_velocity(point["vx"], point["vy"]);
-        float time = point["time"];
-        float rotational_velocity = point["omega"];
-        Rotation2Dd rotation((double)point["theta"]);
-        Vector2d position((double)point["x"], (double)point["y"]);
-        m_pathPoints.push_back(PathPoint(time, Pose(position, rotation), linear_velocity, rotational_velocity));
-    }
+Path::Path() {
+    
+}
+
+Path::Path(vector<PathPoint> pathPoints) {
+    m_pathPoints = pathPoints;
 }
 
 Pose Path::update(float time) {
