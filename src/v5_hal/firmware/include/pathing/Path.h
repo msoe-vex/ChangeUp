@@ -13,10 +13,14 @@ public:
 
     Path(vector<PathPoint> pathPoints);
 
-    Pose* update(float time);
+    Pose update(float time);
 
     vector<PathPoint> getPathPoints();
 
+    bool isComplete();
+
 private:
     vector<PathPoint> m_pathPoints;
+    PathPoint m_last_point;
+    bool m_is_complete;
 };
