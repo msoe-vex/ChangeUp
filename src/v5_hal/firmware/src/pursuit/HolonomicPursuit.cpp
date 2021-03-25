@@ -28,14 +28,15 @@ HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose curren
     Vector2d linear_error = next_pose->position - current_pose.position;
     float theta_error = next_pose->angle.angle() - current_pose.angle.angle();
 
-    float x_percent = m_x_pid.calculate(linear_error(0));
-    float y_percent = m_y_pid.calculate(linear_error(1));
-    float theta_percent = m_theta_pid.calculate(theta_error);
+    // Determine the feedback of each movement component to get to our new position
+    float x_feedback = m_x_pid.calculate(linear_error(0));
+    float y_feedback = m_y_pid.calculate(linear_error(1));
+    float theta_feedback = m_theta_pid.calculate(theta_error);
 
     // Return the target velocities, and whether the path is at the end point
     TargetVelocity target_velocity = {
-        Vector2d(x_percent * MAX_VELOCITY, y_percent * MAX_VELOCITY), 
-        theta_percent * MAX_VELOCITY, 
+        Vector2d(x_feedback * MAX_VELOCITY, y_feedback * MAX_VELOCITY), 
+        theta_feedback * MAX_VELOCITY, 
         (next_pose == m_previous_pose)
     };
 
