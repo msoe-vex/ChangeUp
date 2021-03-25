@@ -23,6 +23,7 @@ public:
     struct TargetVelocity {
         Vector2d linear_velocity;
         float rotational_velocity;
+        bool end_of_path;
     };
 
     HolonomicPursuit(Path path, Timer timer=Timer());

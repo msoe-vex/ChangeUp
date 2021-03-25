@@ -16,12 +16,17 @@ void HolonomicPursuit::startPursuit() {
 HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose current_pose) {
     float current_time = m_timer.Get();
 
-    Pose next_pose = m_path.update(current_time);
+    Pose* next_pose = m_path.update(current_time);
+
+    if (next_pose == nullptr) {
+        TargetVelocity stop_velocity = {Vector2d(0., 0.), 0., true};
+        return stop_velocity;
+    }
 
     m_previous_time = m_timer.Get();
 
-    Vector2d linear_error = next_pose.position - current_pose.position;
-    float theta_error = next_pose.angle.angle() - current_pose.angle.angle();
+    Vector2d linear_error = next_pose->position - current_pose.position;
+    float theta_error = next_pose->angle.angle() - current_pose.angle.angle();
 
     float x_percent = m_x_pid.calculate(linear_error(0));
     float y_percent = m_y_pid.calculate(linear_error(1));
@@ -29,7 +34,12 @@ HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose curren
 
     TargetVelocity target_velocity = {
         Vector2d(x_percent * MAX_VELOCITY, y_percent * MAX_VELOCITY), 
-        theta_percent * MAX_VELOCITY};
+        theta_percent * MAX_VELOCITY, 
+        false
+    };
+
+    delete next_pose;
+    
     return target_velocity;
 }
 
