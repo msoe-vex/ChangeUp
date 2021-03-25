@@ -1,11 +1,15 @@
 #include "pathing/Path.h"
 
-Path::Path() {
+Path::Path() : 
+        m_is_complete(false),
+        m_last_point(0, Pose(), Vector2d(0., 0.), 0.) {
     
 }
 
-Path::Path(vector<PathPoint> pathPoints) {
-    m_pathPoints = pathPoints;
+Path::Path(vector<PathPoint> pathPoints) : 
+        m_pathPoints(pathPoints),
+        m_is_complete(false),
+        m_last_point(pathPoints.back()) {
 }
 
 Pose Path::update(float time) {
@@ -18,8 +22,24 @@ Pose Path::update(float time) {
         }
     }
 
-    //Interpolate between the first point and the next point
-    auto pathPoint = m_pathPoints.begin()->interpolateTo(*(m_pathPoints.begin() + 1), time);
+    Pose next_pose;
 
-    return pathPoint.getPose();
+    if (m_pathPoints.size() == 0) {
+        next_pose = m_last_point.getPose();
+        m_is_complete = true;
+    } else {
+        //Interpolate between the first point and the next point
+        auto path_point = m_pathPoints.begin()->interpolateTo(*(m_pathPoints.begin() + 1), time);
+        next_pose = path_point.getPose();
+    }
+
+    return next_pose;
+}
+
+vector<PathPoint> Path::getPathPoints() {
+    return m_pathPoints;
+}
+
+bool Path::isComplete() {
+    return m_is_complete;
 }
