@@ -18,9 +18,9 @@ HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose curren
 
     Pose* next_pose = m_path.update(current_time);
 
+    // If we're at the end of the path, keep the current point as the end point
     if (next_pose == nullptr) {
-        TargetVelocity stop_velocity = {Vector2d(0., 0.), 0., true};
-        return stop_velocity;
+        next_pose = m_previous_pose;
     }
 
     m_previous_time = m_timer.Get();
@@ -32,13 +32,18 @@ HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose curren
     float y_percent = m_y_pid.calculate(linear_error(1));
     float theta_percent = m_theta_pid.calculate(theta_error);
 
+    // Return the target velocities, and whether the path is at the end point
     TargetVelocity target_velocity = {
         Vector2d(x_percent * MAX_VELOCITY, y_percent * MAX_VELOCITY), 
         theta_percent * MAX_VELOCITY, 
-        false
+        (next_pose == m_previous_pose)
     };
 
-    delete next_pose;
+    // If we aren't at the end of the path, delete the previous point
+    if (next_pose != m_previous_pose) {
+        delete m_previous_pose;
+        m_previous_pose = next_pose;
+    }
     
     return target_velocity;
 }
