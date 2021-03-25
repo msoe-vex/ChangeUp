@@ -11,7 +11,7 @@
 // The following was from code that is no longer in current use
 #define MAX_ROBOT_SPEED 41.9 // tank drive max robot speed in/s
 // Swerve Drive
-#define MAX_VELOCITY 1.31 // m/s
+#define MAX_VELOCITY 1.31f // m/s
 #define MAX_ROTATIONAL_VELOCITY 0.17 // rad/s ?
 #define ROTATION_ANGLE_THRESHOLD (M_PI / 3) //Keeping this here because it was in the code but never used
 #define LEFT_POT_OFFSET 40
