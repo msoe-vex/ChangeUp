@@ -12,15 +12,11 @@ ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, C
 }
 
 void ConveyorNode::m_updateConveyorHoldingState() {
-    if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
-        // Ball is waiting on top; stop spinning balls up
-        setTopConveyorVoltage(0);
-    } else if (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
-        // Ball is in the bottom but not the top
-        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
-    } else {
-        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
-    }
+    bool is_ball_at_top = (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD);
+    bool is_ball_at_bottom = (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD);
+
+    setTopConveyorVoltage(is_ball_at_top ? 0 : MAX_MOTOR_VOLTAGE);
+    setBottomConveyorVoltage(is_ball_at_top && is_ball_at_bottom ? 0 : MAX_MOTOR_VOLTAGE);
 }
 
 void ConveyorNode::setBottomConveyorVoltage(int voltage) {
@@ -29,6 +25,11 @@ void ConveyorNode::setBottomConveyorVoltage(int voltage) {
 
 void ConveyorNode::setTopConveyorVoltage(int voltage) {
     m_top_conveyor_motor->moveVoltage(voltage);
+}
+
+void ConveyorNode::setConveyorVoltage(int voltage) {
+    setTopConveyorVoltage(voltage);
+    setBottomConveyorVoltage(voltage);
 }
 
 void ConveyorNode::setConveyorState(ConveyorState conveyorState) {
@@ -67,12 +68,23 @@ void ConveyorNode::teleopPeriodic() {
         setBottomConveyorVoltage(0);
         setTopConveyorVoltage(0);
     }
-
-
 }
 
 void ConveyorNode::autonPeriodic() {
-    
+    switch(m_current_conveyor_state) {
+        case STOPPED:
+            setConveyorVoltage(0);
+        break;
+        case HOLDING:
+            m_updateConveyorHoldingState();
+        break;
+        case SCORING:
+            setConveyorVoltage(MAX_MOTOR_VOLTAGE);
+        break;
+        case REVERSE:
+            setConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+        break;
+    }
 }
 
 ConveyorNode::~ConveyorNode() {

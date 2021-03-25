@@ -5,7 +5,7 @@
 #include "util/Timer.h"
 #include "nodes/subsystems/ConveyorNode.h"
 
-class TopConveyorAction : public AutonAction {
+class UpdateConveyorStateAction : public AutonAction {
 private:
     ConveyorNode* m_conveyor_node;
     Timer m_timer;
@@ -13,7 +13,7 @@ private:
     double m_time; // Time in seconds
 
 public:
-    TopConveyorAction(ConveyorNode* conveyor_node, ConveyorNode::ConveyorState conveyor_state, 
+    UpdateConveyorStateAction(ConveyorNode* conveyor_node, ConveyorNode::ConveyorState conveyor_state, 
         double time=0);
 
     void ActionInit();

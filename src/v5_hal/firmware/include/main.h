@@ -58,7 +58,7 @@
 #include "auton/auton_actions/DeployAction.h"
 #include "auton/auton_actions/DriveAction.h"
 #include "auton/auton_actions/IntakeAction.h"
-#include "auton/auton_actions/BottomConveyorAction.h"
+#include "auton/auton_actions/UpdateConveyorStateAction.h"
 #include "auton/auton_actions/FollowPathAction.h"
 #include "auton/auton_routines/ProgrammingSkillsAuton.h"
 #include "eigen/Eigen/Dense"

@@ -21,6 +21,8 @@ public:
 
     void setTopConveyorVoltage(int voltage);
 
+    void setConveyorVoltage(int voltage);
+
     void setConveyorState(ConveyorState conveyorState);
 
     int getNumBallsStored();
@@ -43,8 +45,6 @@ private:
     ADIAnalogInNode* m_top_conveyor_sensor;
 
     std::string m_handle_name;
-
-    bool m_enableStateMachine = false;
 
     void m_updateConveyorHoldingState();
 };
