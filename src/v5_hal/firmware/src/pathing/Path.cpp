@@ -1,6 +1,8 @@
 #include "pathing/Path.h"
 
-Path::Path() : m_is_complete(false) {
+Path::Path() : 
+        m_is_complete(false),
+        m_last_point(0, Pose(), Vector2d(0., 0.), 0.) {
     
 }
 
