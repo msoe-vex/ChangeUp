@@ -18,6 +18,7 @@ private:
     PID m_x_pid;
     PID m_y_pid;
     PID m_theta_pid;
+    Pose* m_previous_pose;
 
 public:
     struct TargetVelocity {
