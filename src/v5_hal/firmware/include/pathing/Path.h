@@ -13,7 +13,7 @@ public:
 
     Path(vector<PathPoint> pathPoints);
 
-    Pose update(float time);
+    Pose* update(float time);
 
     vector<PathPoint> getPathPoints();
 
