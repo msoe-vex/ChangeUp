@@ -6,9 +6,13 @@ NodeManager* node_manager = new NodeManager(pros::millis);
 ControllerNode* primary_controller;
 
 MotorNode* left_front_drive;
+MotorNode* left_front_drive_2;
 MotorNode* left_rear_drive;
+MotorNode* left_rear_drive_2;
 MotorNode* right_front_drive;
+MotorNode* right_front_drive_2;
 MotorNode* right_rear_drive;
+MotorNode* right_rear_drive_2;
 HolonomicDriveNode* holonomic_drive_node;
 
 MotorNode* left_intake;
@@ -49,14 +53,21 @@ void initialize() {
 	
 	/* Define the drivetrain components */
 	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
+	left_front_drive_2 = new MotorNode(node_manager, 19, "leftFrontTopDrive", false);
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
+	left_rear_drive_2 = new MotorNode(node_manager, 10, "leftRearTopDrive", false);
+
 	right_front_drive = new MotorNode(node_manager, 3, "rightFrontDrive", false);
+	right_front_drive_2 = new MotorNode(node_manager, 20, "rightFrontTopDrive", true);
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
+	right_rear_drive_2 = new MotorNode(node_manager, 9, "rightRearTopDrive", true);
 
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
-	    HolonomicDriveNode::HolonomicMotors { left_front_drive, left_rear_drive, right_front_drive, right_rear_drive },
+	    HolonomicDriveNode::HolonomicEightMotors { left_front_drive, left_front_drive_2, left_rear_drive, left_rear_drive_2, 
+			right_front_drive, right_front_drive_2, right_rear_drive, right_rear_drive_2 },
 		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }, 
-								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-5.48, 5.48), Vector2d(-5.48, -5.48), Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
+								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-5.48, 5.48), Vector2d(-5.48, -5.48), 
+									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
 
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);

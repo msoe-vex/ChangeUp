@@ -1,3 +1,5 @@
+#pragma once
+
 #include "eigen/Eigen/Dense"
 #include "eigen/Eigen/Geometry"
 #include "math.h"

@@ -39,7 +39,7 @@ void ConveyorNode::m_updateConveyorHoldingState() {
         }
     }
 
-    setBottomConveyorVoltage(is_ball_at_top && is_ball_at_bottom ? 0 : 1.);
+    setBottomConveyorVoltage(is_ball_at_top && is_ball_at_bottom ? 0 : MAX_MOTOR_VOLTAGE);
 }
 
 void ConveyorNode::setBottomConveyorVoltage(int voltage) {

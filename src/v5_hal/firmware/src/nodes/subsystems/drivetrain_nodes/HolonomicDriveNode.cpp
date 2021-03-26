@@ -1,7 +1,7 @@
 #include "nodes/subsystems/drivetrain_nodes/HolonomicDriveNode.h"
 
 HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller,
-    HolonomicMotors motors, HolonomicDriveKinematics kinematics) : 
+    HolonomicEightMotors motors, HolonomicDriveKinematics kinematics) : 
         IDriveNode(node_manager), 
         m_controller(controller->getController()),
         m_motors(motors),
@@ -11,34 +11,42 @@ HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string ha
 
 void HolonomicDriveNode::m_setLeftFrontVoltage(int voltage) {
     m_motors.left_front_motor->moveVoltage(voltage);
+    m_motors.left_front_motor_2->moveVoltage(voltage);
 }
 
 void HolonomicDriveNode::m_setLeftRearVoltage(int voltage) {
     m_motors.left_rear_motor->moveVoltage(voltage);
+    m_motors.left_rear_motor_2->moveVoltage(voltage);
 }
 
 void HolonomicDriveNode::m_setRightFrontVoltage(int voltage) {
     m_motors.right_front_motor->moveVoltage(voltage);
+    m_motors.right_front_motor_2->moveVoltage(voltage);
 }
 
 void HolonomicDriveNode::m_setRightRearVoltage(int voltage) {
     m_motors.right_rear_motor->moveVoltage(voltage);
+    m_motors.right_rear_motor_2->moveVoltage(voltage);
 }
 
 void HolonomicDriveNode::m_setLeftFrontVelocity(float velocity) {
     m_motors.left_front_motor->moveVelocity(velocity);
+    m_motors.left_front_motor_2->moveVelocity(velocity);
 }
 
 void HolonomicDriveNode::m_setLeftRearVelocity(float velocity) {
     m_motors.left_rear_motor->moveVelocity(velocity);
+    m_motors.left_rear_motor_2->moveVelocity(velocity);
 }
 
 void HolonomicDriveNode::m_setRightFrontVelocity(float velocity) {
     m_motors.right_front_motor->moveVelocity(velocity);
+    m_motors.right_front_motor_2->moveVelocity(velocity);
 }
 
 void HolonomicDriveNode::m_setRightRearVelocity(float velocity) {
     m_motors.right_rear_motor->moveVelocity(velocity);
+    m_motors.right_rear_motor_2->moveVelocity(velocity);
 }
 
 void HolonomicDriveNode::initialize() {
@@ -47,9 +55,13 @@ void HolonomicDriveNode::initialize() {
 
 void HolonomicDriveNode::resetEncoders() {
     m_motors.left_front_motor->resetEncoder();
+    m_motors.left_front_motor_2->resetEncoder();
     m_motors.left_rear_motor->resetEncoder();
+    m_motors.left_rear_motor_2->resetEncoder();
     m_motors.right_front_motor->resetEncoder();
+    m_motors.right_front_motor_2->resetEncoder();
     m_motors.right_rear_motor->resetEncoder();
+    m_motors.right_rear_motor_2->resetEncoder();
 }
 
 IDriveNode::FourMotorDriveEncoderVals HolonomicDriveNode::getIntegratedEncoderVals() {
@@ -103,7 +115,11 @@ void HolonomicDriveNode::autonPeriodic() {
 
 HolonomicDriveNode::~HolonomicDriveNode() {
     delete m_motors.left_front_motor;
+    delete m_motors.left_front_motor_2;
     delete m_motors.left_rear_motor;
+    delete m_motors.left_rear_motor_2;
     delete m_motors.right_front_motor;
+    delete m_motors.right_front_motor_2;
     delete m_motors.right_rear_motor;
+    delete m_motors.right_rear_motor_2;
 }
