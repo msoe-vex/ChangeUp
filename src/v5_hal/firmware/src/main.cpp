@@ -90,8 +90,8 @@ void initialize() {
 		bottom_conveyor_sensor, top_conveyor_sensor);
 
 	/* Define the odometry components */
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder");
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", true);
+	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
 
 	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
 
