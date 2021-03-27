@@ -17,8 +17,8 @@ HolonomicDriveNode* holonomic_drive_node;
 
 MotorNode* left_intake;
 MotorNode* right_intake;
-ADIDigitalOutNode* left_intake_pneumatic;
-ADIDigitalOutNode* right_intake_pneumatic;
+ADIDigitalOutNode* intake_deploy;
+ADIDigitalOutNode* intake_open;
 IntakeNode* intake_node;
 
 MotorNode* bottom_conveyor;
@@ -72,14 +72,14 @@ void initialize() {
 									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
 
 	/* Define the intake components */
-	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
+	left_intake = new MotorNode(node_manager, 5, "leftIntake", false);
+	right_intake = new MotorNode(node_manager, 6, "rightIntake", true);
 
-	left_intake_pneumatic = new ADIDigitalOutNode(node_manager, "leftIntakeOpen", 'H', false);
-	right_intake_pneumatic = new ADIDigitalOutNode(node_manager, "rightIntakeOpen", 'G', false);
+	intake_deploy = new ADIDigitalOutNode(node_manager, "intakeDeploy", 'H', false);
+	intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
 	
 	intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
-		right_intake, left_intake_pneumatic, right_intake_pneumatic);	
+		right_intake, intake_deploy, intake_open);	
 
 	/* Define the conveyor components */
 	bottom_conveyor = new MotorNode(node_manager, 11, "bottomConveyor", true);
@@ -95,7 +95,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "xOdomEncoder", false);
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "yOdomEncoder", true);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy");
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy"); // Port 15
 
 	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
