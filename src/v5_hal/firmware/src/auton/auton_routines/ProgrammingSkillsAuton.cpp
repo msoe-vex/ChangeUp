@@ -62,10 +62,8 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     AutonNode* path9 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(-45))));
     path9->AddAction(new OpenIntakesAction(m_intake_node, true));
-
-    AutonNode* path10 = new AutonNode(10, NULL);
-    path10->AddAction(new IntakeAction(m_intake_node, -MAX_MOTOR_VOLTAGE, 1.0));
-    path10->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE));
+    path9->AddAction(new IntakeAction(m_intake_node, -MAX_MOTOR_VOLTAGE, 1.0));
+    path9->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE));
 
     AutonNode* path11 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(165))));
     
@@ -81,8 +79,7 @@ void ProgrammingSkillsAuton::AddNodes() {
     path13->AddNext(path14);
     path12->AddNext(path13);
     path11->AddNext(path12);
-    path10->AddNext(path11);
-    path9->AddNext(path10);
+    path9->AddNext(path11);
     path8->AddNext(path9);
     goal_sequence2->AddNext(path8);
 
