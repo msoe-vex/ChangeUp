@@ -7,11 +7,12 @@
 #include "nodes/sensor_nodes/ControllerNode.h"
 #include "nodes/actuator_nodes/ADIDigitalOutNode.h"
 #include "util/Constants.h"
+#include "util/Timer.h"
 
 class ConveyorNode : public Node {
 public:
     enum ConveyorState {
-        STOPPED, HOLDING, SCORING, REVERSE
+        STOPPED, HOLDING, SCORING, REVERSE, DEPLOY
     };
 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* bottom_conveyor_motor, 
@@ -20,6 +21,14 @@ public:
     void setBottomConveyorVoltage(int voltage);
 
     void setTopConveyorVoltage(int voltage);
+
+    void setConveyorVoltage(int voltage);
+
+    void setTopConveyorRPMPercent(float percent);
+
+    void setBottomConveyorRPMPercent(float percent);
+
+    void setConveyorRPMPercent(float percent);
 
     void setConveyorState(ConveyorState conveyorState);
 
@@ -44,7 +53,10 @@ private:
 
     std::string m_handle_name;
 
-    bool m_enableStateMachine = false;
+    bool m_enable_holding;
+    bool m_previous_ball_on_top;
+    bool m_capture_sequence;
+    Timer m_ball_hold_timer;
 
     void m_updateConveyorHoldingState();
 };

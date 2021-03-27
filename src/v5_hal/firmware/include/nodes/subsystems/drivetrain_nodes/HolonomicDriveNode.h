@@ -12,15 +12,19 @@
 
 class HolonomicDriveNode : public IDriveNode {
 public: 
-    struct HolonomicMotors {
+    struct HolonomicEightMotors {
         MotorNode* left_front_motor;
+        MotorNode* left_front_motor_2;
         MotorNode* left_rear_motor;
+        MotorNode* left_rear_motor_2;
         MotorNode* right_front_motor;
+        MotorNode* right_front_motor_2;
         MotorNode* right_rear_motor;
+        MotorNode* right_rear_motor_2;
     };
 
     HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-        HolonomicMotors motors, HolonomicDriveKinematics kinematics);
+        HolonomicEightMotors motors, HolonomicDriveKinematics kinematics);
 
     void initialize();
 
@@ -47,7 +51,7 @@ private:
 
     std::string m_handle_name;
 
-    HolonomicMotors m_motors;
+    HolonomicEightMotors m_motors;
 
     HolonomicDriveKinematics m_kinematics;
 

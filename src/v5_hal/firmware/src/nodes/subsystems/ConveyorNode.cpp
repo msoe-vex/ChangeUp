@@ -2,25 +2,44 @@
 
 ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
         MotorNode* bottom_conveyor_motor, MotorNode* top_conveyor_motor, ADIAnalogInNode* bottom_conveyor_sensor, 
-        ADIAnalogInNode* top_conveyor_sensor) : Node(node_manager, 10), 
+        ADIAnalogInNode* top_conveyor_sensor) : Node(node_manager, 5), 
         m_controller(controller->getController()),
         m_bottom_conveyor_motor(bottom_conveyor_motor),  
         m_top_conveyor_motor(top_conveyor_motor), 
         m_bottom_conveyor_sensor(bottom_conveyor_sensor),  
-        m_top_conveyor_sensor(top_conveyor_sensor) {
+        m_top_conveyor_sensor(top_conveyor_sensor),
+        m_enable_holding(false),
+        m_previous_ball_on_top(false),
+        m_capture_sequence(false) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
 void ConveyorNode::m_updateConveyorHoldingState() {
-    if (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
-        // Ball is waiting on top; stop spinning balls up
-        setTopConveyorVoltage(0);
-    } else if (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD) {
-        // Ball is in the bottom but not the top
-        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+    bool is_ball_at_top = (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD);
+    bool is_ball_at_bottom = (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD);
+
+    if (m_capture_sequence) {
+        setTopConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+
+        if (m_ball_hold_timer.Get() > 0.05) {
+            m_capture_sequence = false;
+            m_previous_ball_on_top = true;
+            m_ball_hold_timer.Reset();
+        }
     } else {
-        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+        if (is_ball_at_top && !m_previous_ball_on_top) {
+            m_ball_hold_timer.Start();
+            m_capture_sequence = true;
+            setTopConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+        } else if (is_ball_at_top && m_previous_ball_on_top) {
+            setTopConveyorVoltage(0);
+        } else {
+            setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+            m_previous_ball_on_top = false;
+        }
     }
+
+    setBottomConveyorVoltage(is_ball_at_top && is_ball_at_bottom ? 0 : MAX_MOTOR_VOLTAGE);
 }
 
 void ConveyorNode::setBottomConveyorVoltage(int voltage) {
@@ -29,6 +48,24 @@ void ConveyorNode::setBottomConveyorVoltage(int voltage) {
 
 void ConveyorNode::setTopConveyorVoltage(int voltage) {
     m_top_conveyor_motor->moveVoltage(voltage);
+}
+
+void ConveyorNode::setConveyorVoltage(int voltage) {
+    setTopConveyorVoltage(voltage);
+    setBottomConveyorVoltage(voltage);
+}
+
+void ConveyorNode::setTopConveyorRPMPercent(float percent) {
+    m_top_conveyor_motor->moveVelocity(percent * 600.);
+}
+
+void ConveyorNode::setBottomConveyorRPMPercent(float percent) {
+    m_bottom_conveyor_motor->moveVelocity(percent * 200.);
+}
+
+void ConveyorNode::setConveyorRPMPercent(float percent) {
+    setTopConveyorRPMPercent(percent);
+    setBottomConveyorRPMPercent(percent);
 }
 
 void ConveyorNode::setConveyorState(ConveyorState conveyorState) {
@@ -55,24 +92,65 @@ void ConveyorNode::initialize() {
 
 void ConveyorNode::teleopPeriodic() {
     if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) { 
-        setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
-        setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+        setConveyorState(SCORING);
+        m_enable_holding = false;
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-        setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
-        setTopConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+        setConveyorState(REVERSE);
+        m_enable_holding = false;
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-        setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
-        setTopConveyorVoltage(0);
-    } else {
-        setBottomConveyorVoltage(0);
-        setTopConveyorVoltage(0);
+        setConveyorState(DEPLOY);
+        m_enable_holding = false;
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_UP) && !m_enable_holding) {
+        setConveyorState(HOLDING);
+        m_enable_holding = true;
+        pros::delay(150);
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_UP) && m_enable_holding) {
+        setConveyorState(STOPPED);
+        m_enable_holding = false;
+        pros::delay(150);
+    } else if (!m_enable_holding) {
+        setConveyorState(STOPPED);
     }
 
-
+    switch(m_current_conveyor_state) {
+        case STOPPED:
+            setConveyorVoltage(0);
+        break;
+        case HOLDING:
+            m_updateConveyorHoldingState();
+        break;
+        case SCORING:
+            setConveyorVoltage(MAX_MOTOR_VOLTAGE);
+        break;
+        case REVERSE:
+            setConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+        break;
+        case DEPLOY:
+            setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+            setTopConveyorVoltage(0);
+        break;
+    }
 }
 
 void ConveyorNode::autonPeriodic() {
-    
+    switch(m_current_conveyor_state) {
+        case STOPPED:
+            setConveyorVoltage(0);
+        break;
+        case HOLDING:
+            m_updateConveyorHoldingState();
+        break;
+        case SCORING:
+            setConveyorVoltage(MAX_MOTOR_VOLTAGE);
+        break;
+        case REVERSE:
+            setConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+        break;
+        case DEPLOY:
+            setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+            setTopConveyorVoltage(0);
+        break;
+    }
 }
 
 ConveyorNode::~ConveyorNode() {

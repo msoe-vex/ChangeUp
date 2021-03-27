@@ -3,15 +3,15 @@
 #include "api.h"
 #include "auton/Auton.h"
 #include "util/Timer.h"
-#include "nodes/subsystems/ConveyorNode.h"
+#include "nodes/subsystems/IntakeNode.h"
 
 class OpenIntakesAction : public AutonAction {
 private:
-    ConveyorNode* m_conveyor_node;
+    IntakeNode* m_intake_node;
     bool m_open;
 
 public:
-    OpenIntakesAction(ConveyorNode* conveyor_node, bool open=true);
+    OpenIntakesAction(IntakeNode* intake_node, bool open=true);
     
     void ActionInit();
     

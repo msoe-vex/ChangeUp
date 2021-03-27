@@ -10,8 +10,7 @@
 #include "auton/auton_actions/FollowPathAction.h"
 #include "auton/auton_actions/DeployAction.h"
 #include "auton/auton_actions/IntakeAction.h"
-#include "auton/auton_actions/BottomConveyorAction.h"
-#include "auton/auton_actions/TopConveyorAction.h"
+#include "auton/auton_actions/UpdateConveyorStateAction.h"
 #include "auton/auton_actions/TurnToAngleAction.h"
 #include "auton/auton_actions/OpenIntakesAction.h"
 #include "auton/auton_actions/DriveAction.h"
@@ -31,4 +30,6 @@ private:
     ConveyorNode* m_conveyor_node;
     IntakeNode* m_intake_node;
     InertialSensorNode* m_inertial_sensor_node;
+
+    AutonNode* m_deploy_node;
 };

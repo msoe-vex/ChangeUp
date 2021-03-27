@@ -4,17 +4,17 @@
 #include "auton/Auton.h"
 #include "util/Timer.h"
 #include "util/Constants.h"
-#include "nodes/subsystems/ConveyorNode.h"
+#include "nodes/subsystems/IntakeNode.h"
 
 class IntakeAction : public AutonAction {
 private:
-    ConveyorNode* m_conveyor_node;
+    IntakeNode* m_intake_node;
     Timer m_timer;
     int m_voltage;
     double m_time; // Time in seconds
 
 public:
-    IntakeAction(ConveyorNode* conveyor_node, int voltage=MAX_MOTOR_VOLTAGE, double time=0);
+    IntakeAction(IntakeNode* intake_node, int voltage=MAX_MOTOR_VOLTAGE, double time=0);
 
     void ActionInit();
 

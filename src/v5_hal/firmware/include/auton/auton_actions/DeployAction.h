@@ -9,10 +9,13 @@ class DeployAction : public AutonAction {
 private:
     ConveyorNode* m_conveyor_node;
     Timer m_timer;
+
 public:
     DeployAction(ConveyorNode* conveyor_node);
 
     void ActionInit();
+
     actionStatus Action();
+    
     void ActionEnd();
 };
