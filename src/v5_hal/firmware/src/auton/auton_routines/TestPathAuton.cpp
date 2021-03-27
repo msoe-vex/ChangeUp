@@ -13,10 +13,11 @@ void TestPathAuton::AddNodes() {
     Pose start_pose = path.getPathPoints().at(0).getPose();
 
     m_odom_node->setCurrentPose(start_pose);
+    
+    Logger::logInfo("Set current pose of the robot to x:" + std::to_string(start_pose.position.x()) + 
+                    " | y:" + std::to_string(start_pose.position.y()) + " | angle:" + std::to_string(start_pose.angle.angle()));
 
-    Logger::logInfo("Set current pose of the robot to x:" + std::to_string(start_pose.position.x()) + " y:" + std::to_string(start_pose.position.y()));
-
-    m_path_node = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, path));
+    m_path_node = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, path, true));
 
     Auton::AddFirstNode(m_path_node);
 }
