@@ -2,6 +2,7 @@
 
 #include "nodes/NodeManager.h"
 #include "auton/auton_routines/ProgrammingSkillsAuton.h"
+#include "auton/auton_routines/TestPathAuton.h"
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "nodes/subsystems/ConveyorNode.h"
@@ -13,6 +14,7 @@
 class AutonManagerNode : public Node {
 private:
     Auton* m_programming_skills_auton;
+    Auton* m_test_path_auton;
 
 public:
     AutonManagerNode(NodeManager* node_manager, IDriveNode* drive_node, ConveyorNode* conveyor_node, IntakeNode* intake_node, 
