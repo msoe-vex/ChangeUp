@@ -1,7 +1,7 @@
-#include "pursuit/HolonomicPursuit.h"
+#include "pursuit/HolonomicPosePursuit.h"
 
-HolonomicPursuit::HolonomicPursuit(Path path, Timer timer) : 
-        m_path(path),
+HolonomicPosePursuit::HolonomicPosePursuit(Pose target_pose, Timer timer) : 
+        m_target_pose(target_pose),
         m_timer(timer),
         m_x_pid(1., 0., 0., 0.),
         m_y_pid(1., 0., 0., 0.),
@@ -9,19 +9,17 @@ HolonomicPursuit::HolonomicPursuit(Path path, Timer timer) :
     
 }
 
-void HolonomicPursuit::startPursuit() {
+void HolonomicPosePursuit::startPursuit() {
     m_timer.Start();
 }
 
-HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose current_pose) {
+HolonomicPosePursuit::TargetVelocity HolonomicPosePursuit::getTargetVelocity(Pose current_pose) {
     float current_time = m_timer.Get();
-
-    Pose next_pose = m_path.update(current_time);
 
     m_previous_time = m_timer.Get();
 
-    Vector2d linear_error = next_pose.position - current_pose.position;
-    float theta_error = next_pose.angle.angle() - current_pose.angle.angle();
+    Vector2d linear_error = m_target_pose.position - current_pose.position;
+    float theta_error = m_target_pose.angle.angle() - current_pose.angle.angle();
 
     // Determine the feedback of each movement component to get to our new position
     float x_feedback = m_x_pid.calculate(linear_error.x());
@@ -31,13 +29,13 @@ HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose curren
     // Return the target velocities, and whether the path is at the end point
     TargetVelocity target_velocity = {
         Vector2d(x_feedback * MAX_VELOCITY, y_feedback * MAX_VELOCITY), 
-        theta_feedback * MAX_VELOCITY, 
-        m_path.isComplete()
+        theta_feedback * MAX_VELOCITY,
+        linear_error.norm() < POSE_PURSUIT_LINEAR_THRESHOLD && theta_error < POSE_PURSUIT_THETA_THRESHOLD
     };
     
     return target_velocity;
 }
 
-HolonomicPursuit::~HolonomicPursuit() {
+HolonomicPosePursuit::~HolonomicPosePursuit() {
 
 }
