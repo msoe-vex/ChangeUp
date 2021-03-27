@@ -10,8 +10,11 @@ TestPathAuton::TestPathAuton(IDriveNode* drive_node, OdometryNode* odom_node) :
 
 void TestPathAuton::AddNodes() {
     Path path = m_path_manager->GetPath("TestPath");
+    Pose start_pose = path.getPathPoints().at(0).getPose();
 
-    m_odom_node->setCurrentPose(path.getPathPoints().at(0).getPose());
+    m_odom_node->setCurrentPose(start_pose);
+
+    Logger::logInfo("Set current pose of the robot to x:" + std::to_string(start_pose.position.x()) + " y:" + std::to_string(start_pose.position.y()));
 
     m_path_node = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, path));
 

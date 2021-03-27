@@ -7,6 +7,7 @@
 #include "util/PID.h"
 #include "util/Constants.h"
 #include "math/Pose.h"
+#include "adaptive_pursuit_controller/Logger.h"
 
 using namespace Eigen;
 
@@ -14,7 +15,6 @@ class HolonomicPursuit {
 private:
     Path m_path;
     Timer m_timer;
-    float m_previous_time;
     PID m_x_pid;
     PID m_y_pid;
     PID m_theta_pid;

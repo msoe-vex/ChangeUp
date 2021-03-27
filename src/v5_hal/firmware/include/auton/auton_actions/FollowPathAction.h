@@ -6,6 +6,7 @@
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "pursuit/HolonomicPursuit.h"
 #include "math/Pose.h"
+#include "adaptive_pursuit_controller/Logger.h"
 
 class FollowPathAction : public AutonAction {
 private:

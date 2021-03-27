@@ -67,7 +67,7 @@ void initialize() {
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
 	    HolonomicDriveNode::HolonomicEightMotors { left_front_drive, left_front_drive_2, left_rear_drive, left_rear_drive_2, 
 			right_front_drive, right_front_drive_2, right_rear_drive, right_rear_drive_2 },
-		HolonomicDriveKinematics(EncoderConfig { 0, 360, 0.08255 }, 
+		HolonomicDriveKinematics(EncoderConfig { 0, 360, 3.75 }, 
 								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-5.48, 5.48), Vector2d(-5.48, -5.48), 
 									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
 
