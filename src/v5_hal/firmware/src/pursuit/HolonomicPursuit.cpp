@@ -16,6 +16,8 @@ void HolonomicPursuit::startPursuit() {
 HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose current_pose) {
     Pose next_pose = m_path.update(m_timer.Get());
 
+    Logger::logInfo("Next pose | x: " + std::to_string(next_pose.position.x()) + " | y: " + std::to_string(next_pose.position.y()));
+
     Vector2d linear_error = next_pose.position - current_pose.position;
     float theta_error = (next_pose.angle * current_pose.angle.inverse()).smallestAngle();
 

@@ -36,8 +36,8 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     Vector2d robot_translation(x_delta, y_delta);
 
     // Update the current angle of the robot position
-    //Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Rotation2Dd(m_gyro_offset).inverse();
-    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Rotation2Dd(GYRO_OFFSET);
+    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Rotation2Dd(m_gyro_offset).inverse();
+    //Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Rotation2Dd(GYRO_OFFSET);
 
     // Rotate the translation vector by the current angle rotation matrix
     robot_translation = Odometry::m_robot_pose.angle * robot_translation;
