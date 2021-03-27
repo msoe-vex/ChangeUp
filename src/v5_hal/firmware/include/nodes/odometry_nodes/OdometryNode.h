@@ -12,6 +12,7 @@
 #include "odometry/TankOdometry.h"
 #include "util/Encoders.h"
 #include "eigen/Eigen/Dense"
+#include "adaptive_pursuit_controller/Logger.h"
 
 class OdometryNode : public Node { 
 public:
