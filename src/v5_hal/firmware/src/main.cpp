@@ -115,7 +115,11 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	while (pros::competition::is_disabled()) {
+		node_manager->m_handle->spinOnce();
+	}
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -177,7 +181,6 @@ void opcontrol() {
 	
 	// Execute teleop code
 	while (true) {
-		Logger::logInfo("Hello World");
 		node_manager->executeTeleop();
 	}
 }
