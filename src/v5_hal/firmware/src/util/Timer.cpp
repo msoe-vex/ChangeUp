@@ -9,7 +9,7 @@ double Timer::Get() {
     } else if(m_started && m_stopped) {
         return m_stopTime - m_startTime;
     }
-    //TODO: Log -> Error, m_timer has not m_started!
+    Logger::logInfo("Error: Get called on timer which was not started");
     return 0;
 }
 
@@ -20,7 +20,7 @@ void Timer::Reset() {
 
 void Timer::Stop() {
     if(!m_started) {
-        //TODO: Log -> Error, m_timer m_stopped without starting!
+        Logger::logInfo("Error: Timer stopped without starting");
     } else {
         m_stopped = true;
         m_stopTime = getTime();
