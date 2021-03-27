@@ -4,7 +4,6 @@ FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_no
         m_drive_node(drive_node),
         m_odom_node(odom_node), 
         m_holonomic_pursuit(path) {
-    m_odom_node->setCurrentPose(path.getPathPoints().at(0).getPose());
 }
 
 void FollowPathAction::ActionInit() {

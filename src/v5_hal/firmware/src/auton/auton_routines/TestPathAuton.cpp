@@ -11,6 +11,8 @@ TestPathAuton::TestPathAuton(IDriveNode* drive_node, OdometryNode* odom_node) :
 void TestPathAuton::AddNodes() {
     Path path = m_path_manager->GetPath("TestPath");
 
+    m_odom_node->setCurrentPose(path.getPathPoints().at(0).getPose());
+
     m_path_node = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, path));
     Auton::AddFirstNode(m_path_node);
 }
