@@ -3,9 +3,9 @@
 HolonomicPosePursuit::HolonomicPosePursuit(Pose target_pose, Timer timer) : 
         m_target_pose(target_pose),
         m_timer(timer),
-        m_x_pid(1., 0., 0., 0.),
-        m_y_pid(1., 0., 0., 0.),
-        m_theta_pid(1., 0., 0., 0.) {
+        m_x_pid(0.1, 0., 0., 0.),
+        m_y_pid(0.1, 0., 0., 0.),
+        m_theta_pid(0.1, 0., 0., 0.) {
     
 }
 
