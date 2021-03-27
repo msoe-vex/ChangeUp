@@ -48,6 +48,8 @@ ConnectionCheckerNode* connection_checker_node;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	Logger::giveNodeManager(node_manager);
+
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
@@ -175,6 +177,7 @@ void opcontrol() {
 	
 	// Execute teleop code
 	while (true) {
+		Logger::logInfo("Hello World");
 		node_manager->executeTeleop();
 	}
 }

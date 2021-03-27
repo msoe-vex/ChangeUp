@@ -8,6 +8,8 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include "nodes/NodeManager.h"
 
 using namespace std;
 
@@ -18,13 +20,10 @@ public:
         WARNING,
         ERROR
     };
-    static void logInfo(ostringstream& message);
     static void logInfo(string message);
-    static void logWarning(ostringstream& message);
-    static void logWarning(string message);
-    static void logError(ostringstream& message);
-    static void logError(string message);
     static void setConsoleLoggingLevel(loggingLevel level);
+    static void giveNodeManager(NodeManager * node_manager);
 private:
     static loggingLevel m_consoleLoggingLevel;
+    static NodeManager * m_node_manager;
 };

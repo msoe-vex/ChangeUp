@@ -28,9 +28,9 @@ private:
     uint32_t(*m_get_millis)(void);
 
 protected:
-    ros::NodeHandle* m_handle;
 
 public:
+    ros::NodeHandle* m_handle;
     NodeManager(uint32_t(*get_milliseconds)(void));
 
     ros::NodeHandle* addNode(Node* node, uint32_t interval_milliseconds);

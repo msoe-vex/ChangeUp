@@ -1,35 +1,16 @@
 #include "Logger.h"
 
 Logger::loggingLevel Logger::m_consoleLoggingLevel;
+NodeManager * Logger::m_node_manager = nullptr;
 
-
-void Logger::logInfo(ostringstream& message) {
-	//logInfo(message.str());
+void Logger::giveNodeManager(NodeManager * node_manager) {
+    m_node_manager = node_manager;
 }
 
 void Logger::logInfo(string message) {
-    if(m_consoleLoggingLevel <= INFO) {
-        cout << "INFO: " << message << "\n";
-    }
-}
-
-void Logger::logWarning(ostringstream& message) {
-//	logWarning(message.str());
-}
-
-void Logger::logWarning(string message) {
-    if(m_consoleLoggingLevel <= WARNING) {
-        cout << "WARNING: " << message << "\n";
-    }
-}
-
-void Logger::logError(ostringstream& message) {
-//	logError(message.str());
-}
-
-void Logger::logError(string message) {
-    if(m_consoleLoggingLevel <= WARNING) {
-        cout << "ERROR: " << message << "\n";
+    if(m_node_manager != nullptr) {
+        string msg = message;
+        m_node_manager->m_handle->logwarn(msg.c_str());
     }
 }
 

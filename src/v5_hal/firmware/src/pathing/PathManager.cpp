@@ -20,7 +20,7 @@ bool PathManager::LoadPathsText(string text) {
     try {
         loadedJson = json::parse(text);
     } catch (const exception& e) {
-        // Logger::logError("Could not parse paths file:" + string(e.what()));
+        Logger::logInfo("Could not parse paths file:" + string(e.what()));
         return false;
     }
 
@@ -35,7 +35,7 @@ bool PathManager::LoadPaths(json loadedJson) {
             string name = pathJson["name"];
             vector<PathPoint> pathPoints;
             for (auto point : pathJson["points"]) {
-                Vector2d linear_velocity(point.value("vx", 0), point.value("vy", 0));
+                Vector2d linear_velocity(point["vx"], point["vy"]);
                 float time = point.value("time", 0);
                 float rotational_velocity = point.value("omega", 0);
                 Rotation2Dd rotation(toRadians(point.value("theta", 0)));
@@ -46,7 +46,7 @@ bool PathManager::LoadPaths(json loadedJson) {
             m_paths[name] = newPath;
         }
     } catch (const exception& e) {
-        // Logger::logError("Error reading json path! " + string(e.what()));
+        Logger::logInfo("Error reading json path! " + string(e.what()));
         return false;
     }
 
@@ -58,11 +58,11 @@ bool PathManager::LoadPathsFile(string filePath) {
     try {
         pathsFile.open(filePath);
         if(!pathsFile.is_open()) {
-            // Logger::logError("Could not open paths file at " + filePath);
+            Logger::logInfo("Could not open paths file at " + filePath);
             return false;
         }
     } catch (const exception& e) {
-        // Logger::logError("Could not open paths file at " + filePath + " : " + string(e.what()));
+        Logger::logInfo("Could not open paths file at " + filePath + " : " + string(e.what()));
         return false;
     }
 
@@ -70,7 +70,7 @@ bool PathManager::LoadPathsFile(string filePath) {
     try {
         pathsFile >> loadedJson;
     } catch (const exception& e) {
-        // Logger::logError("Could not parse paths file:" + string(e.what()));
+        Logger::logInfo("Could not parse paths file:" + string(e.what()));
         pathsFile.close();
         return false;
     }
@@ -85,7 +85,7 @@ unordered_map<string, Path> PathManager::GetPaths() {
 
 Path PathManager::GetPath(string name) {
     if (m_paths.find(name) == m_paths.end()) {
-        // Logger::logError("Path with key: " + name + " not found!");
+        Logger::logInfo("Path with key: " + name + " not found!");
         return m_paths[m_paths.begin()->first];
     } else {
         return m_paths[name];
