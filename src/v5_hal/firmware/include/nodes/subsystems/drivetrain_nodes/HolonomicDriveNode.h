@@ -36,6 +36,8 @@ public:
 
     void setDriveVoltage(int x_voltage, int y_voltage, int theta_voltage);
 
+    void setDriveVoltage(int left_x, int left_y, int right_x, int right_y);
+
     void setDriveVelocity(float x_velocity, float theta_velocity);
 
     void setDriveVelocity(float x_velocity, float y_velocity, float theta_velocity);

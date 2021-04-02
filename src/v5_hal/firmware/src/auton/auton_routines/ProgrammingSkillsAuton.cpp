@@ -12,8 +12,7 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(IDriveNode* drive_node, OdometryN
 
 void ProgrammingSkillsAuton::AddNodes() {
     // Define Auton nodes, actions, and sequences here
-    m_deploy_node = new AutonNode(1, new DeployAction(m_conveyor_node, m_intake_node));
-
+    m_deploy_node = new AutonNode(2, new DeployAction(m_conveyor_node, m_intake_node));
 
 	// Sequence nodes here
     Auton::AddFirstNode(m_deploy_node);

@@ -27,7 +27,7 @@ public:
 
     void openIntakes(int open);
 
-    void deployIntakes();
+    void deployIntakes(int open);
 
     void initialize();
 

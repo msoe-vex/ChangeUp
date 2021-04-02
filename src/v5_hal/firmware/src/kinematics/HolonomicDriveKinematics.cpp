@@ -76,6 +76,25 @@ IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::inverseKinemati
     return motor_percentages;
 }
 
+IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::tankKinematics(
+        float left_x, float left_y, float right_x, float right_y, float max) {
+    float front_left = left_x + left_y;
+    float back_left = -left_x + left_y;
+    float front_right = -right_x + right_y;
+    float back_right = right_x + right_y;
+
+    float max_val = std::max({fabs(front_left), fabs(back_left), fabs(front_right), fabs(back_right), max});
+
+    FourMotorPercentages motor_percentages {
+        front_left / max_val,
+        back_left / max_val,
+        front_right / max_val,
+        back_right / max_val
+    };
+
+    return motor_percentages;
+}
+
 HolonomicDriveKinematics::~HolonomicDriveKinematics() {
 
 }

@@ -5,7 +5,7 @@ TurnToAngleAction::TurnToAngleAction(IDriveNode* drive_node, InertialSensorNode*
         m_drive_node(drive_node), 
         m_inertial_sensor(inertial_sensor), 
         m_target_angle(target_angle), 
-        m_turning_pid(3., 0., 0., 0.1) {
+        m_turning_pid(0.2, 0., 0., 0.1) {
 }
 
 void TurnToAngleAction::ActionInit() {
@@ -18,13 +18,15 @@ AutonAction::actionStatus TurnToAngleAction::Action() {
     // std::string log_str = "Gyro Angle: " + to_string(current_angle.angle()) + "\nTarget Angle: " + to_string(m_target_angle.angle());
     // m_tank_drive->m_handle->logwarn(log_str.c_str());
 
+    Logger::logInfo("Gyro Angle: " + to_string(current_angle.angle()) + "\nTarget Angle: " + to_string(m_target_angle.angle()));
+
     double delta_angle = (m_target_angle.inverse() * current_angle).smallestAngle();
 
     double turning_power = delta_angle / M_PI * -1;
 
     float total_turn_input = m_turning_pid.calculate(turning_power);
 
-    m_drive_node->setDriveVoltage(0, (int)(total_turn_input * -1 * MAX_MOTOR_VOLTAGE));
+    m_drive_node->setDriveVoltage(0, (int)(total_turn_input * MAX_MOTOR_VOLTAGE));
 
     if (m_inertial_sensor->isAtAngle(m_target_angle) && m_turn_timer.Get() == 0) {
         m_turn_timer.Start();

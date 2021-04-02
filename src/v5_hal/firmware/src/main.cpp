@@ -95,7 +95,7 @@ void initialize() {
 	x_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "xOdomEncoder", false);
 	y_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "yOdomEncoder", true);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", "/navx/rpy"); // Port 15
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 15); // Port 15
 
 	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);

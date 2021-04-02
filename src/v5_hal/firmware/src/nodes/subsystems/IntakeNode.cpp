@@ -20,8 +20,8 @@ void IntakeNode::openIntakes(int open) {
     m_intake_open->setValue(open);
 }
 
-void IntakeNode::deployIntakes() {
-    m_intake_deploy->setValue(1);
+void IntakeNode::deployIntakes(int open) {
+    m_intake_deploy->setValue(open);
 }
 
 void IntakeNode::initialize() {
@@ -37,10 +37,16 @@ void IntakeNode::teleopPeriodic() {
         setIntakeVoltage(0);
     }
 
-    if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
+    if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
         openIntakes(1);
-    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+    } else {
         openIntakes(0);
+    }
+
+    if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+        deployIntakes(1);
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+        deployIntakes(0);
     }
 }
 
