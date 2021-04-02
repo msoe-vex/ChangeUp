@@ -15,5 +15,5 @@
  * This function is used to generate a sequence to score balls in a goal.
  * This should follow the node that makes the robot drive into the goal
  */
-AutonSequence::AutonSequenceList getGoalScoringSequence(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node);
+AutonNode* getGoalScoringSequence(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node);
 

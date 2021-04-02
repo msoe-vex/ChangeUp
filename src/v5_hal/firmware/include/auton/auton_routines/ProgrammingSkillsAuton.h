@@ -16,6 +16,7 @@
 #include "auton/auton_actions/DriveAction.h"
 #include "eigen/Eigen/Dense"
 #include "util/Constants.h"
+#include "auton/AutonSequencePresets.h"
 
 class ProgrammingSkillsAuton : public Auton {
 public:
