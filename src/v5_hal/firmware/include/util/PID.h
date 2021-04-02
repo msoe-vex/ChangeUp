@@ -2,6 +2,7 @@
 
 #include "api.h"
 #include "util/Timer.h"
+#include "adaptive_pursuit_controller/Logger.h"
 
 //
 // Created by Jonathan T. Phung on 3/4/2021.

@@ -38,6 +38,8 @@ public:
      */
     FourMotorPercentages inverseKinematics(float x, float y, float theta, float max);
 
+    FourMotorPercentages tankKinematics(float left_x, float left_y, float right_x, float right_y, float max);
+
     ~HolonomicDriveKinematics();
 
 private:

@@ -53,6 +53,9 @@ void InertialSensorNode::teleopPeriodic() {
                 m_yaw = current_angle * m_gyro_offset_angle.inverse();
             }
     }
+
+    // std::string msg = m_handle_name + " value: " + std::to_string(getYaw().angle());
+    // m_handle->logwarn(msg.c_str());
 }
 
 void InertialSensorNode::autonPeriodic() {
@@ -63,6 +66,8 @@ void InertialSensorNode::autonPeriodic() {
                 m_yaw = current_angle * m_gyro_offset_angle.inverse();
             }
     }
+
+    Logger::logInfo("Robot angle: " + std::to_string(getYaw().angle()));
 }
 
 InertialSensorNode::~InertialSensorNode () {

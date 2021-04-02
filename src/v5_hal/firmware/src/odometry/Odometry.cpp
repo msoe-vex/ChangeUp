@@ -21,6 +21,7 @@ Pose Odometry::GetPose(){
 
 void Odometry::SetCurrentPose(Pose current_pose) {
     m_robot_pose = current_pose;
+    m_gyro_offset = current_pose.angle;
     m_pose_reset = true;
 }
 

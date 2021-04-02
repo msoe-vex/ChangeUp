@@ -1,33 +1,40 @@
 #include "auton/auton_actions/FollowPathAction.h"
 
-// FollowPathAction::FollowPathAction(TankDriveNode* tank_drive, OdometryNode* odom_node, Path path, bool reversed, double wheelDiameter,
-//         double fixedLookahead, double pathCompletionTolerance, bool gradualStop) :
-//         m_odom_node(odom_node), m_controller(fixedLookahead, 20, 20, 0.05, path, reversed, pathCompletionTolerance, gradualStop, wheelDiameter) {
-//     m_tank_drive = tank_drive;
-// }
+FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, Path path, bool reset_pose) :
+        m_drive_node(drive_node),
+        m_odom_node(odom_node), 
+        m_holonomic_pursuit(path),
+        m_path(path),
+        m_reset_pose(reset_pose) {
 
-// void FollowPathAction::ActionInit() {
+}
 
-// }
+void FollowPathAction::ActionInit() {
+    if (m_reset_pose) {
+        m_odom_node->setCurrentPose(m_path.getPathPoints().at(0).getPose());
+    }
 
-// AutonAction::actionStatus FollowPathAction::Action() {
-//     Pose pose = m_odom_node->getCurrentPose();
-//     auto command = m_controller.Update(pose, pros::millis() / 1000.0);  
+    m_holonomic_pursuit.startPursuit();
+}
 
-//     m_printString = "Current Pose X: " + to_string(pose.position(0)) + " Y: " + to_string(pose.position(1)) + " Rot: " + to_string(pose.angle.angle()) + 
-//         " Remaining: " + to_string(m_controller.getRemainingLength()) + "\n";
+AutonAction::actionStatus FollowPathAction::Action() {
+    HolonomicPursuit::TargetVelocity target_velocity = m_holonomic_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
 
-//     m_tank_drive->Node::m_handle->logwarn(m_printString.c_str());
+    //Logger::logInfo("Desired velocity | x: " + std::to_string(target_velocity.linear_velocity.x()) + " | y: " + std::to_string(target_velocity.linear_velocity.y()));
 
-//     m_tank_drive->setDriveVelocity(command.left, command.right); 
+    m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
 
-//     if(m_controller.isDone()) {
-//         return END;
-//     } else {
-//         return CONTINUE;
-//     }
-// }
+    if (m_timer.Get() == 0 && target_velocity.end_of_path) {
+        m_timer.Start();
+    } else if (m_timer.Get() > 0 && !target_velocity.end_of_path) {
+        m_timer.Reset();
+    } else if (m_timer.Get() > 0.5) {
+        return END;
+    }
 
-// void FollowPathAction::ActionEnd() {
-//     m_tank_drive->setDriveVelocity(0, 0);
-// }
+    return CONTINUE;
+}
+
+void FollowPathAction::ActionEnd() {
+    m_drive_node->setDriveVelocity(0, 0, 0);
+}

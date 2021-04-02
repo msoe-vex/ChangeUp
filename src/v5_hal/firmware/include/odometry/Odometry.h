@@ -4,6 +4,7 @@
 #include "math/Pose.h"
 #include "math/Math.h"
 #include "util/Encoders.h"
+#include "util/Constants.h"
 
 class Odometry {
 protected:
@@ -18,6 +19,8 @@ protected:
 
     double m_last_encoder_1_dist;
     double m_last_encoder_2_dist;
+
+    Rotation2Dd m_gyro_offset = Rotation2Dd(GYRO_OFFSET);
 
 public:
     Odometry(EncoderConfig encoder_1_config, EncoderConfig encoder_2_config, Pose current_pose=Pose());

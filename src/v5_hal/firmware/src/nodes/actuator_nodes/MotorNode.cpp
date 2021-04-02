@@ -29,6 +29,19 @@ void MotorNode::m_moveMotorVoltage(const std_msgs::Int8& msg) {
     moveVoltage((int)voltage);
 }
 
+int MotorNode::m_getMaxRPM() {
+    switch (m_motor.get_gearing()) {
+        case pros::E_MOTOR_GEARSET_06:
+            return 600;
+        case pros::E_MOTOR_GEARSET_18:
+            return 200;
+        case pros::E_MOTOR_GEARSET_36:
+            return 100;
+        default:
+            return 200;
+    }
+}
+
 void MotorNode::initialize() {
     // Initialize the handler, and set up data to publish
     Node::m_handle->advertise(*m_publisher);
@@ -52,7 +65,8 @@ void MotorNode::moveVoltage(int voltage) {
 }
 
 void MotorNode::moveVelocity(float velocity) {
-    m_motor.move_velocity(velocity);
+    float rpm = (velocity / MAX_VELOCITY) * m_getMaxRPM();
+    m_motor.move_velocity(rpm);
 }
 
 void MotorNode::moveAbsolute(double position, int max_velocity) {

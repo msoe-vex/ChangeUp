@@ -91,24 +91,15 @@ void ConveyorNode::initialize() {
 }
 
 void ConveyorNode::teleopPeriodic() {
-    if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) { 
+    if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L1)) { 
         setConveyorState(SCORING);
-        m_enable_holding = false;
-    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         setConveyorState(REVERSE);
-        m_enable_holding = false;
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
         setConveyorState(DEPLOY);
-        m_enable_holding = false;
-    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_UP) && !m_enable_holding) {
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
         setConveyorState(HOLDING);
-        m_enable_holding = true;
-        pros::delay(150);
-    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_UP) && m_enable_holding) {
-        setConveyorState(STOPPED);
-        m_enable_holding = false;
-        pros::delay(150);
-    } else if (!m_enable_holding) {
+    } else {
         setConveyorState(STOPPED);
     }
 
@@ -126,7 +117,7 @@ void ConveyorNode::teleopPeriodic() {
             setConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
         break;
         case DEPLOY:
-            setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+            setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
             setTopConveyorVoltage(0);
         break;
     }
