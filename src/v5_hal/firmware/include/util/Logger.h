@@ -15,15 +15,15 @@ using namespace std;
 
 class Logger {
 public:
-    enum loggingLevel {
+    enum LoggingLevel {
         INFO,
         WARNING,
         ERROR
     };
     static void logInfo(string message);
-    static void setConsoleLoggingLevel(loggingLevel level);
+    static void setConsoleLoggingLevel(LoggingLevel level);
     static void giveNodeManager(NodeManager * node_manager);
 private:
-    static loggingLevel m_consoleLoggingLevel;
+    static LoggingLevel m_console_logging_level;
     static NodeManager * m_node_manager;
 };

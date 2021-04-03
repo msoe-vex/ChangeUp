@@ -1,9 +1,9 @@
 #include "util/Logger.h"
 
-Logger::loggingLevel Logger::m_consoleLoggingLevel;
-NodeManager * Logger::m_node_manager = nullptr;
+Logger::LoggingLevel Logger::m_console_logging_level;
+NodeManager* Logger::m_node_manager = nullptr;
 
-void Logger::giveNodeManager(NodeManager * node_manager) {
+void Logger::giveNodeManager(NodeManager* node_manager) {
     m_node_manager = node_manager;
 }
 
@@ -14,6 +14,6 @@ void Logger::logInfo(string message) {
     }
 }
 
-void Logger::setConsoleLoggingLevel(Logger::loggingLevel level) {
-    m_consoleLoggingLevel = level;
+void Logger::setConsoleLoggingLevel(Logger::LoggingLevel level) {
+    m_console_logging_level = level;
 }
