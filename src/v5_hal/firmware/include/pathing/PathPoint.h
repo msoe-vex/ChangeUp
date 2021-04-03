@@ -2,7 +2,7 @@
 
 #include "eigen/Eigen/Dense"
 #include "math/Pose.h"
-#include "adaptive_pursuit_controller/Logger.h"
+#include "util/Logger.h"
 
 class PathPoint {
 public:
