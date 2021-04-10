@@ -8,7 +8,7 @@
 #include "pathing/PathPoint.h"
 #include "3rdparty/json.hpp"
 #include "math/Math.h"
-#include "adaptive_pursuit_controller/Logger.h"
+#include "util/Logger.h"
 
 using namespace nlohmann;
 using namespace std;

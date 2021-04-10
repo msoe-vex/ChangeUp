@@ -1,5 +1,4 @@
 #include "auton/auton_actions/DriveToPoseAction.h"
-#include <math.h>
 
 DriveToPoseAction::DriveToPoseAction(IDriveNode* drive_node, OdometryNode* odom_node, Pose end_pose) :
         m_drive_node(drive_node),

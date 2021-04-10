@@ -7,7 +7,7 @@
 #include "util/PID.h"
 #include "util/Constants.h"
 #include "math/Pose.h"
-#include "adaptive_pursuit_controller/Logger.h"
+#include "util/Logger.h"
 
 using namespace Eigen;
 

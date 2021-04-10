@@ -4,9 +4,9 @@
 #include "auton/Auton.h"
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
-#include "pursuit/HolonomicPursuit.h"
+#include "pursuit/holonomic_pursuit/HolonomicPursuit.h"
 #include "math/Pose.h"
-#include "adaptive_pursuit_controller/Logger.h"
+#include "util/Logger.h"
 
 class FollowPathAction : public AutonAction {
 private:

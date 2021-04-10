@@ -1,4 +1,4 @@
-#include "pursuit/HolonomicPursuit.h"
+#include "pursuit/holonomic_pursuit/HolonomicPursuit.h"
 
 HolonomicPursuit::HolonomicPursuit(Path path, Timer timer) : 
         m_path(path),

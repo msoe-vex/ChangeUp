@@ -4,7 +4,7 @@
 #include "api.h"
 #include "ros_lib/ros.h"
 #include "ros_lib/v5_hal/RollPitchYaw.h"
-#include "adaptive_pursuit_controller/Logger.h"
+#include "util/Logger.h"
 #include "eigen/Eigen/Dense"
 
 class InertialSensorNode : public Node {

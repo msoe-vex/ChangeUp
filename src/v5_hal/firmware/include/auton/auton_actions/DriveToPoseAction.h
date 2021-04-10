@@ -5,8 +5,10 @@
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
-#include "pursuit/HolonomicPosePursuit.h"
+#include "pursuit/holonomic_pursuit/HolonomicPosePursuit.h"
 #include "math/Pose.h"
+
+#include <math.h>
 
 class DriveToPoseAction : public AutonAction {
 private:

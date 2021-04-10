@@ -63,7 +63,7 @@
 #include "auton/auton_routines/ProgrammingSkillsAuton.h"
 #include "eigen/Eigen/Dense"
 #include "pathing/PathManager.h"
-#include "adaptive_pursuit_controller/Logger.h"
+#include "util/Logger.h"
 
    /**
     * You should add more #includes here
