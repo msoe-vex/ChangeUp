@@ -3,6 +3,8 @@
 #include "odometry/Odometry.h"
 #include "util/Constants.h"
 
+#include <math.h>
+
 class FollowerOdometry : public Odometry {
 private:
     
