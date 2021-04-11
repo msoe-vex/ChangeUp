@@ -5,6 +5,9 @@
 #define BALL_PRESENT_THRESHOLD 2700 // Threshold for Indexing Sensor to detect ball
 #define MAX_MOTOR_VOLTAGE 12000 // Max voltage value for a motor
 #define DELAY_TIME_MILLIS 5 // Standard delay time used in NodeManager
+
+// Offset to apply to get the gyro into our correct frame of reference
+// Forward is M_PI_2, so we rotate the gyro angle to match
 #define GYRO_OFFSET (M_PI_2)
 #define MAX_WHEEL_SPEED 1.1526 // Wheel speed for Holonomic Drive in m/s 
 

@@ -39,15 +39,21 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double x_delta = x_encoder_delta - (x_encoder_location.norm() * phi.angle() * sin(atan(x_encoder_location.y() / x_encoder_location.x())));
     double y_delta = y_encoder_delta - (y_encoder_location.norm() * phi.angle() * cos(atan(y_encoder_location.y() / y_encoder_location.x())));
 
+    // Logger::logInfo("Encoder: " + std::to_string(x_encoder_delta) + 
+    //                 " | Modified: " + std::to_string(x_delta) + 
+    //                 " | Change in angle: " + std::to_string(phi.angle()));
+
     // Convert the x and y deltas into a translation vector
     Vector2d robot_translation(x_delta, y_delta);
 
     // Update the current angle of the robot position
-    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Rotation2Dd(m_gyro_offset);
-    //Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Rotation2Dd(GYRO_OFFSET);
+    // Find the difference of the current angle to the initial angle
+    // Rotate this difference by the M_PI_2 offset to put it back in the correct frame of reference
+    Odometry::m_robot_pose.angle = gyro_angle * Odometry::m_gyro_initial_angle.inverse() * Odometry::m_gyro_offset;
 
     // Rotate the translation vector by the current angle rotation matrix
-    robot_translation = Odometry::m_robot_pose.angle * robot_translation;
+    // We need to rotate this back, as our encoders are oriented with 0 being forward
+    robot_translation = (Odometry::m_robot_pose.angle * Odometry::m_gyro_offset.inverse()) * robot_translation;
 
     // Add the current translation onto the robot position vector
     Odometry::m_robot_pose.position += robot_translation;

@@ -2,6 +2,7 @@
 
 #include "odometry/Odometry.h"
 #include "util/Constants.h"
+#include "util/Logger.h"
 
 #include <math.h>
 

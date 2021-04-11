@@ -83,7 +83,8 @@
         "*.ipp": "cpp",
         "core": "cpp",
         "forward_list": "cpp",
-        "dense": "cpp"
+        "dense": "cpp",
+        "*.txx": "cpp"
     },
     "C_Cpp.clang_format_fallbackStyle": "Google"
 }
