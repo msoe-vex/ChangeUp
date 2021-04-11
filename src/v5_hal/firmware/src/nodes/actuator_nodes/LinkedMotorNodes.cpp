@@ -1,9 +1,9 @@
 #pragma once
-#include "nodes/LinkedMotorNodes.h"
+#include "nodes/actuator_nodes/LinkedMotorNodes.h"
 
 LinkedMotorNodes::LinkedMotorNodes(MotorNode* m1, MotorNode* m2) {
-    addMotor(m1);
-    addMotor(m2);
+    add_motor(m1);
+    add_motor(m2);
 }
 
 void LinkedMotorNodes::add_motor(MotorNode* m) {
@@ -13,7 +13,7 @@ void LinkedMotorNodes::add_motor(MotorNode* m) {
 //Overwritten Motor_node functions
 void LinkedMotorNodes::resetEncoder() {
     for (auto& m : motor_nodes) {
-        m.tare_position();
+        m.resetEncoder();
     }
 }
 
