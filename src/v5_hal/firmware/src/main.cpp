@@ -72,8 +72,8 @@ void initialize() {
 									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
 
 	/* Define the intake components */
-	left_intake = new MotorNode(node_manager, 5, "leftIntake", false);
-	right_intake = new MotorNode(node_manager, 6, "rightIntake", true);
+	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
 
 	intake_deploy = new ADIDigitalOutNode(node_manager, "intakeDeploy", 'H', false);
 	intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
