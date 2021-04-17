@@ -48,8 +48,9 @@ Pose OdometryNode::getCurrentPose() {
 void OdometryNode::teleopPeriodic() {
     m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), m_inertial_sensor_node->getYaw());
 
-    Logger::logInfo("Robot position: " + std::to_string(m_odom->GetPose().position.x()) + " " + 
-                   std::to_string(m_odom->GetPose().position.y()) + " | Robot angle: " + std::to_string(m_odom->GetPose().angle.angle()));
+    // Logger::logInfo("Robot position: " + std::to_string(m_odom->GetPose().position.x()) + " " + 
+    //                std::to_string(m_odom->GetPose().position.y()) + " | Robot angle: " + std::to_string(m_odom->GetPose().angle.angle()));
+    //Logger::logInfo("x Encoder: " + std::to_string(m_odom_encoder_1->getValue()) + " | y Encoder: " + std::to_string(m_odom_encoder_2->getValue()));
 }
 
 void OdometryNode::autonPeriodic() {

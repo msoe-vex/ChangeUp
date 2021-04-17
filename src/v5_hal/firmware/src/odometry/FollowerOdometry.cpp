@@ -34,17 +34,28 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     // Calculate the change in position of each encoder since the last check
     double x_encoder_delta = x_encoder_dist - Odometry::m_last_encoder_1_dist;
     double y_encoder_delta = y_encoder_dist - Odometry::m_last_encoder_2_dist;
-    Rotation2Dd phi = gyro_angle * m_robot_pose.angle.inverse(); // Find change in angle
+    Rotation2Dd angle_delta = gyro_angle * m_robot_pose.angle.inverse(); // Find change in angle
 
-    double x_delta = x_encoder_delta - (x_encoder_location.norm() * phi.angle() * sin(atan(x_encoder_location.y() / x_encoder_location.x())));
-    double y_delta = y_encoder_delta - (y_encoder_location.norm() * phi.angle() * cos(atan(y_encoder_location.y() / y_encoder_location.x())));
+    double x_delta = x_encoder_delta - (x_encoder_location.norm() * angle_delta.angle() * fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x()))));
+    double y_delta = y_encoder_delta - (-1 * y_encoder_location.norm() * angle_delta.angle() * fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x()))));
+
+    total_x = total_x + x_encoder_delta;
+    total_y = total_y + y_encoder_delta;
+
+    turn_x = turn_x + (x_encoder_location.norm() * angle_delta.angle() * fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x()))));
+    turn_y = turn_y + (y_encoder_location.norm() * angle_delta.angle() * fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x()))));
 
     // Logger::logInfo("Encoder: " + std::to_string(x_encoder_delta) + 
     //                 " | Modified: " + std::to_string(x_delta) + 
-    //                 " | Change in angle: " + std::to_string(phi.angle()));
+    //                 " | Change in angle: " + std::to_string(angle_delta.angle()));
+
+    Logger::logInfo("Total X: " + std::to_string(total_x) + 
+                    " | Total Y: " + std::to_string(total_y) + 
+                    " | Turn X: " + std::to_string(turn_x) + 
+                    " | Turn Y: " + std::to_string(turn_y));
 
     // Convert the x and y deltas into a translation vector
-    Vector2d robot_translation(x_delta, y_delta);
+    Vector2d robot_translation(x_encoder_delta, y_encoder_delta);
 
     // Update the current angle of the robot position
     // Find the difference of the current angle to the initial angle
