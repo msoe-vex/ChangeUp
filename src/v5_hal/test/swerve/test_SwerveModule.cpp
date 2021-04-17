@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "swerve_controller/SwerveModule.h"
+#include "swerve/SwerveModule.h"
 
 class SimpleForwardModule : public ::testing::Test {
 protected:
@@ -9,7 +9,7 @@ protected:
         // Swerve Module centered in x direction, and 1 meter forward in y direction
         // Threshold for full power rotation of pi/3 (60 deg)
         // Max velocity of 100 m/s, max module rotational speed of 100 RPM
-        swerveModule = new SwerveModule(Eigen::Vector2d(0, 1), 1., 1., 1.);
+        swerveModule = new SwerveModule(Eigen::Vector2d(0, 1), 1, 1, 1);
     }
 
     virtual void TearDown() {

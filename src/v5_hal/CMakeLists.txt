@@ -121,14 +121,14 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  firmware/include
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/change_up_robot_code.cpp
-# )
+# Declare a C++ library
+add_library(${PROJECT_NAME}
+  firmware/src/swerve/SwerveModule.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -202,11 +202,13 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_change_up_robot_code.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
+catkin_add_gtest(test-${PROJECT_NAME}
+  test/swerve/test_SwerveModule.cpp
+)
 
+if(TARGET ${PROJECT_NAME}-test)
+  target_link_libraries(test-${PROJECT_NAME} ${PROJECT_NAME})
+endif()
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 

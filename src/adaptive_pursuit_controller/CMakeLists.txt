@@ -208,17 +208,17 @@ add_library(${PROJECT_NAME}
 #############
 
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(${PROJECT_NAME}-test 
-  test/test_Main.cpp
-  test/test_AdaptivePurePursuitController.cpp
-  test/test_Path.cpp
-  test/test_PathSegment.cpp
-  test/test_TankOdometry.cpp
-)
+# catkin_add_gtest(${PROJECT_NAME}-test 
+#   test/test_Main.cpp
+#   test/test_AdaptivePurePursuitController.cpp
+#   test/test_Path.cpp
+#   test/test_PathSegment.cpp
+#   test/test_TankOdometry.cpp
+# )
 
-if(TARGET ${PROJECT_NAME}-test)
-  target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-endif()
+# if(TARGET ${PROJECT_NAME}-test)
+#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+# endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
