@@ -3,7 +3,7 @@
 
 class SimpleForwardModule : public ::testing::Test {
 protected:
-    SwerveModule * swerveModule;
+    SwerveModule* swerveModule;
 
     virtual void SetUp() {
         // Swerve Module centered in x direction, and 1 meter forward in y direction

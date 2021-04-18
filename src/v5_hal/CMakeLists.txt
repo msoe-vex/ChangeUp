@@ -202,12 +202,12 @@ add_library(${PROJECT_NAME}
 #############
 
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(test-${PROJECT_NAME}
+catkin_add_gtest(${PROJECT_NAME}_test
   test/swerve/test_SwerveModule.cpp
 )
 
-if(TARGET ${PROJECT_NAME}-test)
-  target_link_libraries(test-${PROJECT_NAME} ${PROJECT_NAME})
+if(TARGET ${PROJECT_NAME}_test)
+  target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})
 endif()
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
