@@ -41,10 +41,10 @@ catkin_make run_tests_navx_publisher
 Testing output should print as follows:
 
 ```
-[----------] Global test environment tear-down<br>
-[==========] 10 tests from 1 test suite ran. (6 ms total)<br>
-[  PASSED  ] 8 tests.<br>
-[  FAILED  ] 2 tests, listed below:<br>
+[----------] Global test environment tear-down
+[==========] 10 tests from 1 test suite ran. (6 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 2 tests, listed below:
 [  FAILED  ] TestSuite.TestForSpecificActionOne
 [  FAILED  ] TestSuite.TestForSpecificActionTwo
 ```
