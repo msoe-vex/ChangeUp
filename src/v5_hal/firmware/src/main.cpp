@@ -50,7 +50,7 @@ ConnectionCheckerNode* connection_checker_node;
 void initialize() {
 	Logger::giveNodeManager(node_manager);
 
-	// Define all nodes used by the robot here
+	/* Define all nodes used by the robot here */
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
 	/* Define the drivetrain components */
@@ -64,12 +64,40 @@ void initialize() {
 	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
 	right_rear_drive_2 = new MotorNode(node_manager, 9, "rightRearTopDrive", true);
 
-    holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
-	    HolonomicDriveNode::HolonomicEightMotors { left_front_drive, left_front_drive_2, left_rear_drive, left_rear_drive_2, 
-			right_front_drive, right_front_drive_2, right_rear_drive, right_rear_drive_2 },
-		HolonomicDriveKinematics(EncoderConfig { 0, 360, 3.75 }, 
-								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-5.48, 5.48), Vector2d(-5.48, -5.48), 
-									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
+	/* Define the motors in the holonomic drive system */
+	HolonomicDriveNode::HolonomicEightMotors holonomic_drive_motors = {
+		left_front_drive,
+		left_front_drive_2,
+		left_rear_drive,
+		left_rear_drive_2,
+		right_front_drive,
+		right_front_drive_2,
+		right_rear_drive,
+		right_rear_drive_2
+	};
+
+	/* Define the odometry wheel configuration */
+	EncoderConfig drive_wheel_config = {0, 360, 3.75};
+
+	/* Define the holonomic drive kinematics */
+	HolonomicDriveKinematics holonomic_drive_kinematics(
+		drive_wheel_config,
+		HolonomicDriveKinematics::HolonomicWheelLocations {
+			Vector2d(-5.48, 5.48), 
+			Vector2d(-5.48, -5.48), 
+			Vector2d(5.48, 5.48), 
+			Vector2d(5.48, -5.48)
+		}
+	);
+
+	/* Define the holonomic drive node */
+    holonomic_drive_node = new HolonomicDriveNode(
+		node_manager, 
+		"drivetrain", 
+		primary_controller,
+	    holonomic_drive_motors,
+		holonomic_drive_kinematics
+	);
 
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
