@@ -5,6 +5,7 @@
 #include "api.h"
 #include "ros_lib/ros.h"
 #include "util/Constants.h"
+#include "util/Logger.h"
 
 class Node;
 
