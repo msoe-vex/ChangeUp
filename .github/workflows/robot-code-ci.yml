@@ -34,7 +34,7 @@ jobs:
         cache-name: ros-build
       with:
         path: $HOME/${{ github.event.repository.name }}
-        
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
   test-swerve:
     needs: build
     runs-on: 
