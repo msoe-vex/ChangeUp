@@ -54,7 +54,7 @@ void initialize() {
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
 	/* Define the drivetrain components */
-	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
+	left_front_drive = new MotorNode(node_manager, 12, "leftFrontDrive", true);
 	left_front_drive_2 = new MotorNode(node_manager, 14, "leftFrontTopDrive", false);
 	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
 	left_rear_drive_2 = new MotorNode(node_manager, 10, "leftRearTopDrive", false);
@@ -73,7 +73,7 @@ void initialize() {
 
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
+	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
 
 	intake_deploy = new ADIDigitalOutNode(node_manager, "intakeDeploy", 'H', false);
 	intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
@@ -82,8 +82,8 @@ void initialize() {
 		right_intake, intake_deploy, intake_open);	
 
 	/* Define the conveyor components */
-	bottom_conveyor = new MotorNode(node_manager, 11, "bottomConveyor", true);
-	top_conveyor = new MotorNode(node_manager, 12, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
+	bottom_conveyor = new MotorNode(node_manager, 6, "bottomConveyor", true);
+	top_conveyor = new MotorNode(node_manager, 1, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
