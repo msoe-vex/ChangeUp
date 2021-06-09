@@ -14,10 +14,10 @@ sudo apt-get install python3 python-is-python3 python3-pip ros-noetic-desktop-fu
 echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
 
 # Install gcc-arm compiler
-cd ~
+mkdir ~/downloads && sudo mkdir /gcc && cd ~/downloads
 wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 --no-check-certificate
-tar -xjvf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
-echo 'export PATH=$PATH:~/gcc-arm-none-eabi-9-2020-q2-update/bin/' >> ~/.bashrc
+sudo tar -xjvf gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 -C /gcc
+echo 'export PATH=$PATH:/gcc/gcc-arm-none-eabi-9-2020-q2-update/bin/' >> ~/.bashrc
 source ~/.bashrc
 arm-none-eabi-gcc --version
 
