@@ -1,10 +1,9 @@
-name: ROS Noetic and PROS Build CI
+name: ROS Noetic and PROS CI
 on: [push, pull_request]
 jobs:
   build:
-    name: ROS and PROS Build
     runs-on: ubuntu-20.04
-    container: ros:noetic-ros-base-focal
+    container: ros:noetic-ros-base
     steps:
     - name: Updating Git Version
       run: |
@@ -29,3 +28,13 @@ jobs:
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && rosdep update && rosdep install tf && catkin_make v5_hal_firmware_build"
+    - name: Cache ROS Build
+      uses: actions/cache@v2
+      env:
+        cache-name: ros-build
+      with:
+        path: $HOME/${{ github.event.repository.name }}
+        
+  test-swerve:
+    needs: build
+    runs-on: 
