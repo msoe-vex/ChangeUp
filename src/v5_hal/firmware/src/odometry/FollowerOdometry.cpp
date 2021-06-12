@@ -48,16 +48,15 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double x_delta = x_encoder_delta - x_encoder_turning_component;
     double y_delta = y_encoder_delta - y_encoder_turning_component;
 
-    double calculated_x_coef = x_encoder_delta / x_arc_length;
-    double calculated_y_coef = y_encoder_delta / y_arc_length;
+    double calculated_x_coef = x_encoder_dist / (x_encoder_location.norm() * gyro_angle.angle());
+    double calculated_y_coef = y_encoder_dist / (y_encoder_location.norm() * gyro_angle.angle());
 
     Logger::logInfo("x_encoder_delta: " + std::to_string(total_x) + 
-                    "\nx_encoder_turning_component: " + std::to_string(total_y) +
-                    "\nx_coefficient: " + std::to_string(calculated_x_coef) +
-                    "\ny_encoder_delta: " + std::to_string(turn_x) + 
-                    "\ny_coefficient: " + std::to_string(turn_y) +
-                    "\ny_coefficient: " + std::to_string(calculated_x_coef) +
-                    "\n");
+                    " | x_encoder_turning_component: " + std::to_string(total_y) +
+                    " | x_coefficient: " + std::to_string(calculated_x_coef) +
+                    " | y_encoder_delta: " + std::to_string(turn_x) + 
+                    " | y_coefficient: " + std::to_string(turn_y) +
+                    " | y_coefficient: " + std::to_string(calculated_y_coef));
 
     // total_x = total_x + x_encoder_delta;
     // total_y = total_y + y_encoder_delta;
