@@ -2,7 +2,7 @@
 
 #include "eigen/Eigen/Dense"
 #include "math/Pose.h"
-#include "util/Logger.h"
+// #include "util/Logger.h"
 
 class PathPoint {
 public:
@@ -17,6 +17,8 @@ public:
     float getRotationalVelocity();
 
     PathPoint interpolateTo(PathPoint other, float time);
+
+    bool equals(PathPoint* that);
 private:
     Pose m_pose;
     float m_time;
