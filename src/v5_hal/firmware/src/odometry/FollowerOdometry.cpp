@@ -57,8 +57,8 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double x_encoder_turning_component = x_arc_length * x_position_coef;
     double y_encoder_turning_component = y_arc_length * y_position_coef;
 
-    double x_delta = x_encoder_delta - x_encoder_turning_component;
-    double y_delta = y_encoder_delta - y_encoder_turning_component;
+    double x_delta = x_encoder_delta * x_encoder_turning_component;
+    double y_delta = y_encoder_delta * y_encoder_turning_component;
 
     double calculated_x_coef = x_encoder_dist / (x_encoder_location.norm() * gyro_angle.angle()); 
     double calculated_y_coef = y_encoder_dist / (y_encoder_location.norm() * gyro_angle.angle()); 
