@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "pathing/PathPoint.h"
 
-class xChangeConstantVelModule : public ::testing::test {
+class xChangeConstantVelModule : public ::testing::Test {
     protected:
         PathPoint firstPoint;
         PathPoint secondPoint;

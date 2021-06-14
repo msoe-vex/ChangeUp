@@ -128,6 +128,7 @@ include_directories(
 # Declare a C++ library
 add_library(${PROJECT_NAME}
   firmware/src/swerve/SwerveModule.cpp
+  firmware/src/pathing/PathPoint.cpp
 )
 
 ## Add cmake target dependencies of the library
