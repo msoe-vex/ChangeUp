@@ -36,58 +36,41 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double y_encoder_delta = y_encoder_dist - Odometry::m_last_encoder_2_dist;
     Rotation2Dd angle_delta = gyro_angle * m_robot_pose.angle.inverse(); // Find change in angle
 
+    // Determine the arc length of the turn from the center of each encoder
     double x_arc_length = x_encoder_location.norm() * angle_delta.angle();
     double y_arc_length = y_encoder_location.norm() * angle_delta.angle();
 
-    // Need to create a dist to ticks
-    // double x_arc_length_ticks = x_arc_length
+    // double x_arc_length = x_encoder_location.norm() * (gyro_angle * Odometry::m_gyro_initial_angle.inverse()).angle();
+    // double y_arc_length = y_encoder_location.norm() * (gyro_angle * Odometry::m_gyro_initial_angle.inverse()).angle();
 
-    double x_position_coef = fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x()))); // 48.14252608888209 for 90 deg
-    double y_position_coef = fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x()))); // 28.99733373232959 for 90 deg
-
-    // -6.8475
-    // -1.42578274 rad
-    // -0.98950394259
-
-    // 2.2422857
-    // 1.15129588 rad
-    // 0.40730426569
+    // Determine the tangential component of each encoder relative to the circle of rotation
+    double x_position_coef = fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x())));
+    double y_position_coef = fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x())));
 
     // Translate to encoder value
+
+    // TODO add piecewise logic for different cases (positive and negative portions of the circle)
     double x_encoder_turning_component = x_arc_length * x_position_coef;
-    double y_encoder_turning_component = y_arc_length * y_position_coef;
+    double y_encoder_turning_component = y_arc_length * y_position_coef * -1;
 
-    double x_delta = x_encoder_delta * x_encoder_turning_component;
-    double y_delta = y_encoder_delta * y_encoder_turning_component;
+    // Calculate the true encoder delta when factoring in contributions from turning
+    double x_delta = x_encoder_delta - x_encoder_turning_component;
+    double y_delta = y_encoder_delta - y_encoder_turning_component;
 
-    double calculated_x_coef = x_encoder_dist / (x_encoder_location.norm() * gyro_angle.angle()); 
-    double calculated_y_coef = y_encoder_dist / (y_encoder_location.norm() * gyro_angle.angle()); 
+    // Logger::logInfo("x_arc_length: " + std::to_string(x_arc_length) +
+    //                 " | y_arc_length: " + std::to_string(y_arc_length) +
+    //                 " | x turning coef: " + std::to_string(x_encoder_turning_component) +
+    //                 " | y turning coef: " + std::to_string(y_encoder_turning_component) +
+    //                 " | x enc: " + std::to_string(x_encoder_dist) +
+    //                 " | y enc: " + std::to_string(y_encoder_dist) +
+    //                 " | angle:" + std::to_string(gyro_angle.angle()));
 
-    Logger::logInfo("x_encoder_dist: " + std::to_string(x_encoder_dist) + 
-                    " | x_encoder_turning_component: " + std::to_string(x_encoder_turning_component) +
-                    " | x_coefficient: " + std::to_string(calculated_x_coef) +
-                    " | y_encoder_dist: " + std::to_string(y_encoder_dist) + 
-                    " | y_encoder_turning_component: " + std::to_string(y_encoder_turning_component) +
-                    " | y_coefficient: " + std::to_string(calculated_y_coef) + 
+    Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
+                    " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
                     " | angle:" + std::to_string(gyro_angle.angle()));
 
-    // total_x = total_x + x_encoder_delta;
-    // total_y = total_y + y_encoder_delta;
-
-    // turn_x = turn_x + (x_encoder_location.norm() * angle_delta.angle() * fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x()))));
-    // turn_y = turn_y + (y_encoder_location.norm() * angle_delta.angle() * fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x()))));
-
-    // // Logger::logInfo("Encoder: " + std::to_string(x_encoder_delta) + 
-    // //                 " | Modified: " + std::to_string(x_delta) + 
-    // //                 " | Change in angle: " + std::to_string(angle_delta.angle()));
-
-    // Logger::logInfo("Total X: " + std::to_string(total_x) + 
-    //                 " | Total Y: " + std::to_string(total_y) + 
-    //                 " | Turn X: " + std::to_string(turn_x) + 
-    //                 " | Turn Y: " + std::to_string(turn_y));
-
     // Convert the x and y deltas into a translation vector
-    Vector2d robot_translation(x_encoder_delta, y_encoder_delta);
+    Vector2d robot_translation(x_delta, y_delta);
 
     // Update the current angle of the robot position
     // Find the difference of the current angle to the initial angle
