@@ -36,20 +36,45 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double y_encoder_delta = y_encoder_dist - Odometry::m_last_encoder_2_dist;
     Rotation2Dd angle_delta = gyro_angle * m_robot_pose.angle.inverse(); // Find change in angle
 
+    if (gyro_angle.angle() < 0) {
+        // Handle positive to negative angle roll-over
+        if ((gyro_angle.angle() < (-(M_PI) / 4) && m_previously_positive)) {
+            // Find the positive component of the turn
+            Rotation2Dd positive_angle_delta = m_robot_pose.angle * Rotation2Dd(GYRO_ROLLOVER_ANGLE).inverse();
+
+            // Find the negative component of the turn
+            Rotation2Dd negative_angle_delta = Rotation2Dd(-GYRO_ROLLOVER_ANGLE) * gyro_angle.inverse();
+
+            // Overwrite the angle_delta value with the sum of both components
+            angle_delta = positive_angle_delta * negative_angle_delta; // TODO this should always be positive
+        }
+
+        m_previously_positive = false;
+    } else {
+        // Handle negative to positive angle roll-over
+        if ((gyro_angle.angle() > ((M_PI) / 4) && !m_previously_positive)) {
+            // Find the positive component of the turn
+            Rotation2Dd positive_angle_delta = m_robot_pose.angle * Rotation2Dd(-GYRO_ROLLOVER_ANGLE).inverse();
+
+            // Find the negative component of the turn
+            Rotation2Dd negative_angle_delta = Rotation2Dd(GYRO_ROLLOVER_ANGLE) * gyro_angle.inverse();
+
+            // Overwrite the angle_delta value with the sum of both components
+            angle_delta = positive_angle_delta * negative_angle_delta; // TODO this should always be negative
+        }
+
+        m_previously_positive = true;
+    }
+
     // Determine the arc length of the turn from the center of each encoder
     double x_arc_length = x_encoder_location.norm() * angle_delta.angle();
     double y_arc_length = y_encoder_location.norm() * angle_delta.angle();
-
-    // double x_arc_length = x_encoder_location.norm() * (gyro_angle * Odometry::m_gyro_initial_angle.inverse()).angle();
-    // double y_arc_length = y_encoder_location.norm() * (gyro_angle * Odometry::m_gyro_initial_angle.inverse()).angle();
 
     // Determine the tangential component of each encoder relative to the circle of rotation
     double x_position_coef = fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x())));
     double y_position_coef = fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x())));
 
     // Translate to encoder value
-
-    // TODO add piecewise logic for different cases (positive and negative portions of the circle)
     double x_encoder_turning_component = x_arc_length * x_position_coef;
     double y_encoder_turning_component = y_arc_length * y_position_coef * -1;
 
@@ -65,9 +90,9 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     //                 " | y enc: " + std::to_string(y_encoder_dist) +
     //                 " | angle:" + std::to_string(gyro_angle.angle()));
 
-    Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
-                    " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
-                    " | angle:" + std::to_string(gyro_angle.angle()));
+    // Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
+    //                 " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
+    //                 " | angle:" + std::to_string(gyro_angle.angle()));
 
     // Convert the x and y deltas into a translation vector
     Vector2d robot_translation(x_delta, y_delta);

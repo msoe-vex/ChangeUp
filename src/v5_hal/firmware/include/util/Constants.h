@@ -38,4 +38,6 @@
 #define ODOM_PARALLEL_X -1.75
 #define ODOM_PARALLEL_Y -3.924
 
+#define GYRO_ROLLOVER_ANGLE (M_PI * 3) / 2
+
 #endif
