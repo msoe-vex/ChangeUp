@@ -42,16 +42,16 @@ PathPoint PathPoint::interpolateTo(PathPoint other, float time) {
 }
 
 // Not robust, used for testing
-bool PathPoint::equals(PathPoint* that) {
-    if(that == nullptr) {
+bool PathPoint::equals(PathPoint* other_point) {
+    if (other_point == nullptr) {
         return false;
-    } else if(this == that) {
+    } else if(this == other_point) {
         return true;
     } else {
-        return this->m_time == that->m_time && 
-        this->m_pose.position == that->m_pose.position && 
-        this->m_pose.angle.angle() == that->m_pose.angle.angle() && 
-        this->m_linear_velocity == that->m_linear_velocity && 
-        this->m_rotational_velocity == that->m_rotational_velocity;
+        return this->m_time == other_point->m_time && 
+            this->m_pose.position == other_point->m_pose.position && 
+            this->m_pose.angle.angle() == other_point->m_pose.angle.angle() && 
+            this->m_linear_velocity == other_point->m_linear_velocity && 
+            this->m_rotational_velocity == other_point->m_rotational_velocity;
     }
 }
