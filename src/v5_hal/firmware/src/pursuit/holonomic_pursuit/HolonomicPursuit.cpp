@@ -16,15 +16,6 @@ void HolonomicPursuit::startPursuit() {
 HolonomicPursuit::TargetVelocity HolonomicPursuit::getTargetVelocity(Pose current_pose) {
     Pose next_pose = m_path.update(m_timer.Get());
 
-    // Logger::logInfo("Current pose: " + std::to_string(m_odom->GetPose().position.x()) + " " + 
-    //                 std::to_string(m_odom->GetPose().position.y()) + " | Robot angle: " + std::to_string(m_odom->GetPose().angle.angle()));
-    Logger::logInfo("Current pose | x: " + std::to_string(current_pose.position.x()) + 
-                    " | y: " + std::to_string(current_pose.position.y()) + 
-                    " | theta: " + std::to_string(current_pose.angle.angle()));
-    Logger::logInfo("Next pose | x: " + std::to_string(next_pose.position.x()) + 
-                    " | y: " + std::to_string(next_pose.position.y()) + 
-                    " | theta: " + std::to_string(next_pose.angle.angle()));
-
     Vector2d linear_error = (current_pose.angle.inverse() * Rotation2Dd(M_PI_2)) * (next_pose.position - current_pose.position);
     float theta_error = (next_pose.angle * current_pose.angle.inverse()).smallestAngle();
 

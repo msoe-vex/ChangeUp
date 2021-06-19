@@ -62,14 +62,6 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     //                 " | y enc: " + std::to_string(y_encoder_dist) +
     //                 " | angle:" + std::to_string(gyro_angle.angle()));
 
-    Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
-                    " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
-                    " | real angle:" + std::to_string(gyro_angle.angle()) +
-                    " | Pose angle:" + std::to_string(m_robot_pose.angle.angle()) + 
-                    " | angle delta:" + std::to_string(angle_delta.angle()) + 
-                    " | initial angle:" + std::to_string(m_gyro_initial_angle.angle()) + 
-                    " | offset angle:" + std::to_string(m_gyro_offset.angle()));
-
     // Convert the x and y deltas into a translation vector
     Vector2d robot_translation(x_delta, y_delta);
 
