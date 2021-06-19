@@ -25,6 +25,8 @@ public:
 
     bool isAtAngle(Eigen::Rotation2Dd angle);
     
+    void reset();
+
     void teleopPeriodic();
 
     void autonPeriodic();
@@ -43,4 +45,6 @@ private:
     ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub;
 
     void m_handleSensorMsg(const v5_hal::RollPitchYaw& msg);
+
+    Eigen::Rotation2Dd m_getV5Yaw();
 };

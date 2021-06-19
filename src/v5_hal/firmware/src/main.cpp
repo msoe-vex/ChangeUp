@@ -54,15 +54,15 @@ void initialize() {
 	primary_controller = new ControllerNode(node_manager, "primary");
 	
 	/* Define the drivetrain components */
-	left_front_drive = new MotorNode(node_manager, 1, "leftFrontDrive", true);
-	left_front_drive_2 = new MotorNode(node_manager, 14, "leftFrontTopDrive", false);
-	left_rear_drive = new MotorNode(node_manager, 2, "leftRearDrive", true);
+	left_front_drive = new MotorNode(node_manager, 16, "leftFrontDrive", true);
+	left_front_drive_2 = new MotorNode(node_manager, 15, "leftFrontTopDrive", false);
+	left_rear_drive = new MotorNode(node_manager, 9, "leftRearDrive", true);
 	left_rear_drive_2 = new MotorNode(node_manager, 10, "leftRearTopDrive", false);
 
-	right_front_drive = new MotorNode(node_manager, 3, "rightFrontDrive", false);
+	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", false);
 	right_front_drive_2 = new MotorNode(node_manager, 13, "rightFrontTopDrive", true);
-	right_rear_drive = new MotorNode(node_manager, 4, "rightRearDrive", false);
-	right_rear_drive_2 = new MotorNode(node_manager, 9, "rightRearTopDrive", true);
+	right_rear_drive = new MotorNode(node_manager, 2, "rightRearDrive", false);
+	right_rear_drive_2 = new MotorNode(node_manager, 3, "rightRearTopDrive", true);
 
     holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller,
 	    HolonomicDriveNode::HolonomicEightMotors { left_front_drive, left_front_drive_2, left_rear_drive, left_rear_drive_2, 
@@ -72,8 +72,8 @@ void initialize() {
 									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
 
 	/* Define the intake components */
-	left_intake = new MotorNode(node_manager, 5, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 6, "rightIntake", false);
+	left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
+	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
 
 	intake_deploy = new ADIDigitalOutNode(node_manager, "intakeDeploy", 'H', false);
 	intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
@@ -82,8 +82,8 @@ void initialize() {
 		right_intake, intake_deploy, intake_open);	
 
 	/* Define the conveyor components */
-	bottom_conveyor = new MotorNode(node_manager, 11, "bottomConveyor", true);
-	top_conveyor = new MotorNode(node_manager, 12, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
+	bottom_conveyor = new MotorNode(node_manager, 4, "bottomConveyor", true);
+	top_conveyor = new MotorNode(node_manager, 5, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
@@ -92,10 +92,10 @@ void initialize() {
 		bottom_conveyor_sensor, top_conveyor_sensor);
 
 	/* Define the odometry components */
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "xOdomEncoder", false);
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "yOdomEncoder", true);
+	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 15); // Port 15
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
 
 	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
@@ -104,7 +104,7 @@ void initialize() {
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
 	/* Define autonomous components */
-	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
+	//auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();

@@ -2,7 +2,7 @@
 
 OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, 
         ADIEncoderNode* odom_encoder_1, ADIEncoderNode* odom_encoder_2, InertialSensorNode* inertial_sensor_node, 
-        OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name),
+        OdomConfig odom_config) : Node(node_manager, 50), m_handle_name(handle_name),
         m_odom_encoder_1(odom_encoder_1), m_odom_encoder_2(odom_encoder_2), m_inertial_sensor_node(inertial_sensor_node),
         m_current_angle_offset(0), m_odom_config(odom_config) {
     m_odom = m_getOdomClass(odom_config);
@@ -10,7 +10,7 @@ OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name,
 
 OdometryNode::OdometryNode(NodeManager* node_manager, std::string handle_name, 
         MotorNode* motor_1, MotorNode* motor_2, InertialSensorNode* inertial_sensor_node, 
-        OdomConfig odom_config) : Node(node_manager, 10), m_handle_name(handle_name),
+        OdomConfig odom_config) : Node(node_manager, 50), m_handle_name(handle_name),
         m_motor_1(motor_1), m_motor_2(motor_2), m_inertial_sensor_node(inertial_sensor_node),
         m_current_angle_offset(0), m_odom_config(odom_config) {
     m_odom = m_getOdomClass(odom_config);
@@ -32,7 +32,9 @@ Odometry* OdometryNode::m_getOdomClass(OdomConfig config) {
 }
 
 void OdometryNode::initialize() {
-
+    // Calibrate the gyro, and reset the orientation with the correct gyro angle
+    m_inertial_sensor_node->reset();
+	setCurrentPose(Pose(Vector2d(0, 0), m_inertial_sensor_node->getYaw()));
 }
 
 void OdometryNode::setCurrentPose(Pose pose) {
@@ -44,20 +46,11 @@ Pose OdometryNode::getCurrentPose() {
 }
 
 void OdometryNode::teleopPeriodic() {
-    Rotation2Dd current_angle(m_inertial_sensor_node->getYaw());
-
-    m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), current_angle);
-    //m_odom->Update(m_motor_1->getPosition(), m_motor_2->getPosition(), current_angle);
-
-    // Logger::logInfo("Robot position: " + std::to_string(m_odom->GetPose().position.x()) + " " + 
-    //                 std::to_string(m_odom->GetPose().position.y()) + " | Robot angle: " + std::to_string(m_odom->GetPose().angle.angle()));
+    m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), m_inertial_sensor_node->getYaw());
 }
 
 void OdometryNode::autonPeriodic() {
-    Rotation2Dd current_angle(m_inertial_sensor_node->getYaw());
-
-    m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), current_angle);
-    //m_odom->Update(m_motor_1->getPosition(), m_motor_2->getPosition(), current_angle);
+    m_odom->Update(m_odom_encoder_1->getValue(), m_odom_encoder_2->getValue(), m_inertial_sensor_node->getYaw());
 }
 
 OdometryNode::~OdometryNode() {
