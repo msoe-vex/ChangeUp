@@ -15,7 +15,7 @@
 
 class AutonManagerNode : public Node {
 private:
-    Auton* m_programming_skills_auton;
+    Auton* m_test_path_auton;
 
 public:
     AutonManagerNode(NodeManager* node_manager, IDriveNode* drive_node, ConveyorNode* conveyor_node, IntakeNode* intake_node, 
