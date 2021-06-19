@@ -36,39 +36,39 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double y_encoder_delta = y_encoder_dist - Odometry::m_last_encoder_2_dist;
     Rotation2Dd angle_delta = gyro_angle * m_robot_pose.angle.inverse(); // Find change in angle
 
-    if (gyro_angle.angle() < 0) {
-        // Handle positive to negative angle roll-over
-        if ((gyro_angle.angle() < (-(M_PI) / 4) && m_previously_positive)) {
-            // Find the positive component of the turn
-            Rotation2Dd positive_angle_delta = m_robot_pose.angle * Rotation2Dd(GYRO_ROLLOVER_ANGLE).inverse();
+    // if (gyro_angle.angle() < 0) {
+    //     // Handle positive to negative angle roll-over
+    //     if ((gyro_angle.angle() < (-(M_PI) / 4) && m_previously_positive)) {
+    //         // Find the positive component of the turn
+    //         Rotation2Dd positive_angle_delta = m_robot_pose.angle * Rotation2Dd(GYRO_ROLLOVER_ANGLE).inverse();
 
-            // Find the negative component of the turn
-            Rotation2Dd negative_angle_delta = Rotation2Dd(-GYRO_ROLLOVER_ANGLE) * gyro_angle.inverse();
+    //         // Find the negative component of the turn
+    //         Rotation2Dd negative_angle_delta = Rotation2Dd(-GYRO_ROLLOVER_ANGLE) * gyro_angle.inverse();
 
-            // Overwrite the angle_delta value with the sum of both components
-            angle_delta = positive_angle_delta * negative_angle_delta; // TODO this should always be positive
-        }
+    //         // Overwrite the angle_delta value with the sum of both components
+    //         angle_delta = positive_angle_delta * negative_angle_delta; // TODO this should always be positive
+    //     }
 
-        m_previously_positive = false;
-    } else {
-        // Handle negative to positive angle roll-over
-        if ((gyro_angle.angle() > ((M_PI) / 4) && !m_previously_positive)) {
-            // Find the positive component of the turn
-            Rotation2Dd positive_angle_delta = m_robot_pose.angle * Rotation2Dd(-GYRO_ROLLOVER_ANGLE).inverse();
+    //     m_previously_positive = false;
+    // } else {
+    //     // Handle negative to positive angle roll-over
+    //     if ((gyro_angle.angle() > ((M_PI) / 4) && !m_previously_positive)) {
+    //         // Find the positive component of the turn
+    //         Rotation2Dd positive_angle_delta = m_robot_pose.angle * Rotation2Dd(-GYRO_ROLLOVER_ANGLE).inverse();
 
-            // Find the negative component of the turn
-            Rotation2Dd negative_angle_delta = Rotation2Dd(GYRO_ROLLOVER_ANGLE) * gyro_angle.inverse();
+    //         // Find the negative component of the turn
+    //         Rotation2Dd negative_angle_delta = Rotation2Dd(GYRO_ROLLOVER_ANGLE) * gyro_angle.inverse();
 
-            // Overwrite the angle_delta value with the sum of both components
-            angle_delta = positive_angle_delta * negative_angle_delta; // TODO this should always be negative
-        }
+    //         // Overwrite the angle_delta value with the sum of both components
+    //         angle_delta = positive_angle_delta * negative_angle_delta; // TODO this should always be negative
+    //     }
 
-        m_previously_positive = true;
-    }
+    //     m_previously_positive = true;
+    // }
 
     // Determine the arc length of the turn from the center of each encoder
-    double x_arc_length = x_encoder_location.norm() * angle_delta.angle();
-    double y_arc_length = y_encoder_location.norm() * angle_delta.angle();
+    double x_arc_length = x_encoder_location.norm() * angle_delta.smallestAngle();
+    double y_arc_length = y_encoder_location.norm() * angle_delta.smallestAngle();
 
     // Determine the tangential component of each encoder relative to the circle of rotation
     double x_position_coef = fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x())));
