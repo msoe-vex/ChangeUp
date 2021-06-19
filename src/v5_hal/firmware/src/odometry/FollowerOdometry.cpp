@@ -41,8 +41,9 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     double y_arc_length = y_encoder_location.norm() * angle_delta.smallestAngle();
 
     // Determine the tangential component of each encoder relative to the circle of rotation
-    double x_position_coef = fabs(sin(atan(x_encoder_location.y() / x_encoder_location.x())));
-    double y_position_coef = fabs(cos(atan(y_encoder_location.y() / y_encoder_location.x())));
+    // TODO update to a vector projection
+    double x_position_coef = fabs(sin(atan2(x_encoder_location.y(), x_encoder_location.x())));
+    double y_position_coef = fabs(cos(atan2(y_encoder_location.y(), y_encoder_location.x())));
 
     // Translate to encoder value
     double x_encoder_turning_component = x_arc_length * x_position_coef;
@@ -60,9 +61,9 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     //                 " | y enc: " + std::to_string(y_encoder_dist) +
     //                 " | angle:" + std::to_string(gyro_angle.angle()));
 
-    // Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
-    //                 " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
-    //                 " | angle:" + std::to_string(gyro_angle.angle()));
+    Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
+                    " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
+                    " | angle:" + std::to_string(gyro_angle.angle()));
 
     // Convert the x and y deltas into a translation vector
     Vector2d robot_translation(x_delta, y_delta);
