@@ -17,7 +17,7 @@ void TestPathAuton::AddNodes() {
     Logger::logInfo("Set current pose of the robot to x:" + std::to_string(start_pose.position.x()) + 
                     " | y:" + std::to_string(start_pose.position.y()) + " | angle:" + std::to_string(start_pose.angle.angle()));
 
-    m_path_node = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, path, true));
+    m_path_node = new AutonNode(20, new FollowPathAction(m_drive_node, m_odom_node, path, true));
 
     Auton::AddFirstNode(m_path_node);
 }

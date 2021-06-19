@@ -37,7 +37,7 @@ bool PathManager::LoadPaths(json loadedJson) {
             for (auto point : pathJson["points"]) {
                 Vector2d linear_velocity(point["vx"], point["vy"]);
                 float time = point["time"];
-                float rotational_velocity = point["omega"];
+                float rotational_velocity = point["omega"]; //TODO toRadians?
                 Rotation2Dd rotation(toRadians(point["theta"]));
                 Vector2d position(point["x"], point["y"]);
                 pathPoints.push_back(PathPoint(time, Pose(position, rotation), linear_velocity, rotational_velocity));
