@@ -34,7 +34,8 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     // Calculate the change in position of each encoder since the last check
     double x_encoder_delta = x_encoder_dist - Odometry::m_last_encoder_1_dist;
     double y_encoder_delta = y_encoder_dist - Odometry::m_last_encoder_2_dist;
-    Rotation2Dd angle_delta = gyro_angle * m_robot_pose.angle.inverse(); // Find change in angle
+    Rotation2Dd angle_delta = (gyro_angle * Odometry::m_gyro_initial_angle.inverse()) 
+        * Odometry::m_gyro_offset * Odometry::m_robot_pose.angle.inverse(); // Find change in angle
 
     // Determine the arc length of the turn from the center of each encoder
     double x_arc_length = x_encoder_location.norm() * angle_delta.smallestAngle();
@@ -61,10 +62,6 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
     //                 " | y enc: " + std::to_string(y_encoder_dist) +
     //                 " | angle:" + std::to_string(gyro_angle.angle()));
 
-    Logger::logInfo("Pose X: " + std::to_string(Odometry::m_robot_pose.position.x()) +
-                    " | Pose Y: " + std::to_string(Odometry::m_robot_pose.position.y()) +
-                    " | angle:" + std::to_string(gyro_angle.angle()));
-
     // Convert the x and y deltas into a translation vector
     Vector2d robot_translation(x_delta, y_delta);
 
@@ -75,7 +72,7 @@ void FollowerOdometry::Update(double x_encoder_raw_ticks, double y_encoder_raw_t
 
     // Rotate the translation vector by the current angle rotation matrix
     // We need to rotate this back, as our encoders are oriented with 0 being forward
-    robot_translation = (Odometry::m_robot_pose.angle * Odometry::m_gyro_offset.inverse()) * robot_translation;
+    robot_translation = (Odometry::m_robot_pose.angle.inverse() * Rotation2Dd(M_PI_2)).inverse() * robot_translation;
 
     // Add the current translation onto the robot position vector
     Odometry::m_robot_pose.position += robot_translation;

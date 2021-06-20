@@ -59,10 +59,10 @@ void HolonomicDriveKinematics::updateForwardKinematics(IDriveNode::FourMotorDriv
 
 IDriveKinematics::FourMotorPercentages HolonomicDriveKinematics::inverseKinematics(
         float x, float y, float theta, float max) {
-    float front_left = y + x + theta;
-    float back_left = y - x + theta;
-    float front_right = y - x - theta;
-    float back_right = y + x - theta;
+    float front_left = y + x - theta;
+    float back_left = y - x - theta;
+    float front_right = y - x + theta;
+    float back_right = y + x + theta;
 
     float max_val = std::max({fabs(front_left), fabs(back_left), fabs(front_right), fabs(back_right), max});
 

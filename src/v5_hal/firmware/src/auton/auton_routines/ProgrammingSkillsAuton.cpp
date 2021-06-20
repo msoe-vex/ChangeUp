@@ -12,9 +12,13 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(IDriveNode* drive_node, OdometryN
 
 void ProgrammingSkillsAuton::AddNodes() {
     // Define Auton nodes, actions, and sequences here
-    m_deploy_node = new AutonNode(1, new DeployAction(m_conveyor_node, m_intake_node));
+    //m_deploy_node = new AutonNode(1, new DeployAction(m_conveyor_node, m_intake_node));
 
     AutonNode* path1 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
+    
+    // Sequence nodes here
+    Auton::AddFirstNode(path1);
+    
     // path1->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
     // path1->AddAction(new OpenIntakesAction(m_intake_node, true));
     // path1->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
@@ -110,7 +114,4 @@ void ProgrammingSkillsAuton::AddNodes() {
     // goal_sequence3->AddNext(path15);
 
     // AutonNode* goal_sequence4 = getGoalScoringSequence(path20, m_intake_node, m_conveyor_node);
-
-	// Sequence nodes here
-    Auton::AddFirstNode(m_deploy_node);
 }
