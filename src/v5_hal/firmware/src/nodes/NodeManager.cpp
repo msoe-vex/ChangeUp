@@ -19,6 +19,7 @@ void NodeManager::initialize() {
     for (auto node_structure : m_node_structures) {
         node_structure.node->initialize();
     }
+    Logger::initialize();
 }
 
 void NodeManager::reset() {
