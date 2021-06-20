@@ -128,6 +128,7 @@ include_directories(
 # Declare a C++ library
 add_library(${PROJECT_NAME}
   firmware/src/swerve/SwerveModule.cpp
+  firmware/src/pathing/PathPoint.cpp
 )
 
 ## Add cmake target dependencies of the library
@@ -204,6 +205,7 @@ add_library(${PROJECT_NAME}
 ## Add gtest based cpp test target and link libraries
 catkin_add_gtest(${PROJECT_NAME}_test
   test/swerve/test_SwerveModule.cpp
+  test/pathing/test_PathPoint.cpp
 )
 
 if(TARGET ${PROJECT_NAME}_test)
