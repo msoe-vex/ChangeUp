@@ -27,7 +27,7 @@ PathPoint PathPoint::interpolateTo(PathPoint other, float time) {
     float t = time - getTime();
     float deltaTime = other.getTime() - getTime();
 
-    Eigen::Vector2d acceleration = deltaTime == 0. ? Eigen::Vector2d(0., 0.) : (other.getLinearVelocity() - getLinearVelocity()) / deltaTime;
+    Eigen::Vector2d acceleration = deltaTime == 0. ? Eigen::Vector2d(0., 0.) : ((other.getLinearVelocity() - getLinearVelocity()) / deltaTime);
     Eigen::Vector2d position = 0.5 * acceleration * (t * t) + getLinearVelocity() * t + getPose().position;
     Eigen::Vector2d velocity = acceleration * t + getLinearVelocity();
 
