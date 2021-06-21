@@ -4,7 +4,7 @@
 #include "auton/Auton.h"
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 
-class DriveAction : public AutonAction {
+class DriveStraightAction : public AutonAction {
 private:
     IDriveNode* m_drive_node;
     Timer m_timer;
@@ -18,7 +18,7 @@ private:
     double m_feedForward;
 
 public:
-    DriveAction(IDriveNode* drive_node, double distance, double max_velocity, 
+    DriveStraightAction(IDriveNode* drive_node, double distance, double max_velocity, 
         double max_accel);
 
     void ActionInit();
