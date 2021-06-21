@@ -83,7 +83,7 @@ void initialize() {
 
 	/* Define the conveyor components */
 	bottom_conveyor = new MotorNode(node_manager, 4, "bottomConveyor", true);
-	top_conveyor = new MotorNode(node_manager, 5, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
+	top_conveyor = new MotorNode(node_manager, 6, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
