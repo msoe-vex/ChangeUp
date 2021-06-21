@@ -13,7 +13,7 @@
 #include "auton/auton_actions/UpdateConveyorStateAction.h"
 #include "auton/auton_actions/TurnToAngleAction.h"
 #include "auton/auton_actions/OpenIntakesAction.h"
-#include "auton/auton_actions/DriveAction.h"
+#include "auton/auton_actions/DriveStraightAction.h"
 #include "eigen/Eigen/Dense"
 #include "util/Constants.h"
 #include "auton/AutonSequencePresets.h"

@@ -10,13 +10,15 @@ void DeployAction::ActionInit() {
     m_timer.Start();
 
     m_conveyor_node->setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
+    m_intake_node->setIntakeVoltage(MAX_MOTOR_VOLTAGE);
     m_intake_node->deployIntakes(1);
-    pros::delay(1500);
 }
 
 AutonAction::actionStatus DeployAction::Action() {
-    if (m_timer.Get() > 3) {
+    if (m_timer.Get() > 0.5) {
         m_conveyor_node->setBottomConveyorVoltage(0);
+        m_intake_node->setIntakeVoltage(0);
+        m_intake_node->deployIntakes(0);
         return END;
     }
 
@@ -26,4 +28,6 @@ AutonAction::actionStatus DeployAction::Action() {
 void DeployAction::ActionEnd() {
     m_timer.Stop();
     m_conveyor_node->setBottomConveyorVoltage(0);
+    m_intake_node->setIntakeVoltage(0);
+    m_intake_node->deployIntakes(0);
 }
