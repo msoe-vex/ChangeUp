@@ -31,6 +31,4 @@ private:
     ConveyorNode* m_conveyor_node;
     IntakeNode* m_intake_node;
     InertialSensorNode* m_inertial_sensor_node;
-
-    AutonNode* m_deploy_node;
 };
