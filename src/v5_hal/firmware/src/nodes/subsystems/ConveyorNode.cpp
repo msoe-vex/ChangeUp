@@ -95,7 +95,7 @@ void ConveyorNode::teleopPeriodic() {
         setConveyorState(SCORING);
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         setConveyorState(REVERSE);
-    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
         setConveyorState(DEPLOY);
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
         setConveyorState(HOLDING);
@@ -120,6 +120,9 @@ void ConveyorNode::teleopPeriodic() {
             setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
             setTopConveyorVoltage(0);
         break;
+        case SPLIT:
+            setConveyorVoltage(0);
+        break;
     }
 }
 
@@ -138,8 +141,12 @@ void ConveyorNode::autonPeriodic() {
             setConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
         break;
         case DEPLOY:
-            setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+            setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
             setTopConveyorVoltage(0);
+        break;
+        case SPLIT:
+            setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+            setBottomConveyorVoltage(-0.5 * MAX_MOTOR_VOLTAGE);
         break;
     }
 }
