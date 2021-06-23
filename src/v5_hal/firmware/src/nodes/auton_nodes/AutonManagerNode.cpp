@@ -8,7 +8,7 @@ AutonManagerNode::AutonManagerNode(NodeManager* node_manager, IDriveNode* drive_
 }
 
 void AutonManagerNode::initialize() {
-    PathManager::GetInstance()->LoadPathsFile("/usd/path.json");
+    PathManager::GetInstance()->LoadPathsFile("/usd/path2.json");
 }
 
 void AutonManagerNode::autonPeriodic() {
