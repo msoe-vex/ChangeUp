@@ -14,6 +14,7 @@
 #include "auton/auton_actions/TurnToAngleAction.h"
 #include "auton/auton_actions/OpenIntakesAction.h"
 #include "auton/auton_actions/DriveStraightAction.h"
+#include "auton/auton_actions/ScoreSingleBallAction.h"
 #include "eigen/Eigen/Dense"
 #include "util/Constants.h"
 #include "auton/AutonSequencePresets.h"
