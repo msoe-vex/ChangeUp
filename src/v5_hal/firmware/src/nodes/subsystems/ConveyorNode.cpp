@@ -72,6 +72,10 @@ void ConveyorNode::setConveyorState(ConveyorState conveyorState) {
     m_current_conveyor_state = conveyorState;
 }
 
+bool ConveyorNode::isBallInTopPosition() {
+    return m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD;
+}
+
 int ConveyorNode::getNumBallsStored() {
     int ballsStored = 0;
 

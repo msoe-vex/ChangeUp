@@ -32,6 +32,8 @@ public:
 
     void setConveyorState(ConveyorState conveyorState);
 
+    bool isBallInTopPosition();
+
     int getNumBallsStored();
 
     void initialize();

@@ -17,4 +17,5 @@ public:
     void Stop();
     void Reset();
     void Start();
+    bool isStarted();
 };
