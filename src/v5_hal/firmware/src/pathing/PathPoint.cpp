@@ -3,8 +3,8 @@
 PathPoint::PathPoint(float time, Pose pose, Vector2d linear_velocity, float rotational_velocity) {
     m_time = time;
     m_pose = pose;
-    // m_linear_velocity = linear_velocity;
-    // m_rotational_velocity = rotational_velocity;
+    m_linear_velocity = linear_velocity;
+    m_rotational_velocity = rotational_velocity;
 }
 
 float PathPoint::getTime() {

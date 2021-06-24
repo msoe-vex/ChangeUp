@@ -12,7 +12,7 @@
 class ConveyorNode : public Node {
 public:
     enum ConveyorState {
-        STOPPED, HOLDING, SCORING, REVERSE, DEPLOY, SPLIT
+        STOPPED, HOLDING, SCORING, REVERSE, DEPLOY, SPLIT, HOLDING_TOP, SCORING_TOP
     };
 
     ConveyorNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* bottom_conveyor_motor, 
@@ -60,5 +60,5 @@ private:
     bool m_capture_sequence;
     Timer m_ball_hold_timer;
 
-    void m_updateConveyorHoldingState();
+    void m_updateConveyorHoldingState(bool top_roller_only=false);
 };

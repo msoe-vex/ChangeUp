@@ -20,8 +20,6 @@ void FollowPathAction::ActionInit() {
 AutonAction::actionStatus FollowPathAction::Action() {
     HolonomicPursuit::TargetVelocity target_velocity = m_holonomic_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
 
-    //Logger::logInfo("Desired velocity | x: " + std::to_string(target_velocity.linear_velocity.x()) + " | y: " + std::to_string(target_velocity.linear_velocity.y()));
-
     m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
 
     if (m_timer.Get() == 0 && target_velocity.end_of_path) {
