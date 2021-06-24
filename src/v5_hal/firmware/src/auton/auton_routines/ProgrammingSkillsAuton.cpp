@@ -22,47 +22,32 @@ void ProgrammingSkillsAuton::AddNodes() {
     // path1->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
 
     // AutonNode* descoreGoal4 = getSingleGoalScoringSequence(path1, m_intake_node, m_conveyor_node);
-    
-
 
     AutonNode* Goal3ToGoal6 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Goal3ToGoal6"), true)); 
     Auton::AddFirstNode(Goal3ToGoal6);
-    Goal3ToGoal6->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING)); // Start the conveyor in holding state and start intake wide
-    Goal3ToGoal6->AddAction(new WaitAction(1.5));
+    Goal3ToGoal6->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::STOPPED)); // Stop the conveyor from the beginning
 
-    AutonNode* test = new AutonNode(10, new OpenIntakesAction(m_intake_node));
-    Goal3ToGoal6->AddNext(test);
-    test->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
-
-
-
-    // AutonNode* Goal3ToGoal6 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Goal3ToGoal6"), true)); 
-    // Auton::AddFirstNode(Goal3ToGoal6);
-    // Goal3ToGoal6->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::STOPPED)); // Stop the conveyor from the beginning
-
-    // AutonNode* delayForOutake = new AutonNode(0.25, new WaitAction(0.25)); 
-    // Auton::AddFirstNode(delayForOutake); // wait 0.25 seconds before outaking current balls
+    AutonNode* delayForOutake = new AutonNode(0.25, new WaitAction(0.25)); 
+    Auton::AddFirstNode(delayForOutake); // wait 0.25 seconds before outaking current balls
        
-    // AutonNode* outakeBlueBalls = new AutonNode(0.5, new IntakeAction(m_intake_node, -1 * MAX_MOTOR_VOLTAGE, 0.5));
-    // delayForOutake->AddNext(outakeBlueBalls); 
-    // outakeBlueBalls->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE, 0.5)); // Outake for 0.5 seconds
+    AutonNode* outakeBlueBalls = new AutonNode(0.5, new IntakeAction(m_intake_node, -1 * MAX_MOTOR_VOLTAGE, 0.5));
+    delayForOutake->AddNext(outakeBlueBalls); 
+    outakeBlueBalls->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE, 0.5)); // Outake for 0.5 seconds
 
-    // AutonNode* startIntake = new AutonNode(1, new OpenIntakesAction(m_intake_node));
-    // outakeBlueBalls->AddNext(startIntake);
-    // startIntake->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE, 1)); // Start and open the intakes for 1 second
-    // outakeBlueBalls->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
+    AutonNode* startIntake = new AutonNode(1, new OpenIntakesAction(m_intake_node));
+    outakeBlueBalls->AddNext(startIntake);
+    startIntake->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE, 1)); // Start and open the intakes for 1 second
+    outakeBlueBalls->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
 
-    // AutonNode* grabBall1 = new AutonNode(0.5, new OpenIntakesAction(m_intake_node, false));
-    // startIntake->AddNext(grabBall1); 
-    // grabBall1->AddAction(new WaitAction(0.5)); // Close the intakes to grab the first ball and wait 0.5 seconds
+    AutonNode* grabBall1 = new AutonNode(0.5, new OpenIntakesAction(m_intake_node, false));
+    startIntake->AddNext(grabBall1); 
+    grabBall1->AddAction(new WaitAction(0.5)); // Close the intakes to grab the first ball and wait 0.5 seconds
 
-    // AutonNode* grabBall2 = new AutonNode(1.5, new OpenIntakesAction(m_intake_node));
-    // grabBall1->AddNext(grabBall2);
-    // grabBall2->AddAction(new WaitAction(1.5)); 
-    // grabBall2->AddAction(new OpenIntakesAction(m_intake_node, false)); // Open the intakes and wait 1.5 seconds before closing them again
-
-
-
+    AutonNode* grabBall2 = new AutonNode(1.5, new OpenIntakesAction(m_intake_node));
+    grabBall1->AddNext(grabBall2);
+    grabBall2->AddAction(new WaitAction(1.5)); 
+    grabBall2->AddAction(new OpenIntakesAction(m_intake_node, false)); // Open the intakes and wait 1.5 seconds before closing them again
+    
     // path1->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
     // path1->AddAction(new OpenIntakesAction(m_intake_node, true));
     // path1->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
