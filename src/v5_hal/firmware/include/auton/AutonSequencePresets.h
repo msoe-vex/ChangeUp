@@ -10,6 +10,8 @@
 #include "auton/auton_actions/IntakeAction.h"
 #include "auton/auton_actions/UpdateConveyorStateAction.h"
 #include "auton/auton_actions/TurnToAngleAction.h"
+#include "auton/auton_actions/DriveToPoseAction.h"
+#include "auton/auton_actions/LiftGoalPlateAction.h"
 
 /**
  * This function is used to generate a sequence to score balls in a goal.
@@ -18,6 +20,8 @@
 AutonNode* getSingleGoalScoringSequence(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node);
 
 AutonNode* getDoubleGoalScoringSequence(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node);
+
+AutonNode* getMiddleGoalScoringSequence(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node);
 
 AutonNode* addActionsToPath_Goal4ToGoal1(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node);
 
