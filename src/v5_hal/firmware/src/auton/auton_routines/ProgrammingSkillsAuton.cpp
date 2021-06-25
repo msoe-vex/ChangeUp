@@ -49,6 +49,13 @@ void ProgrammingSkillsAuton::AddNodes() {
 
     addActionsToPath_Goal2ToGoal3(descoreGoal2, m_intake_node, m_conveyor_node);
 
+    AutonNode* descoreGoal3 = getDoubleGoalScoringSequence(path_goal2ToGoal3, m_intake_node, m_conveyor_node);
+
+    AutonNode* path_goal3ToGoal6 = new AutonNode(7.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal3ToGoal6"), true));
+    descoreGoal3->AddNext(path_goal3ToGoal6);
+
+    addActionsToPath_Goal3ToGoal6(descoreGoal3, m_intake_node, m_conveyor_node);
+
     // AutonNode* path_goal4ToGoal1 = new AutonNode(4.75, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Goal4ToGoal1")));
     // descoreGoal4->AddNext(path_goal4ToGoal1);
 

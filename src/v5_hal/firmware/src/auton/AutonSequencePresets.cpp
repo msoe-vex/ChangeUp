@@ -81,3 +81,7 @@ AutonNode* addActionsToPath_Goal1ToGoal2(AutonNode* initial_node, IntakeNode* in
 AutonNode* addActionsToPath_Goal2ToGoal3(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node) {
     return nullptr;
 }
+
+AutonNode* addActionsToPath_Goal3ToGoal6(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node) {
+    return nullptr;
+}
