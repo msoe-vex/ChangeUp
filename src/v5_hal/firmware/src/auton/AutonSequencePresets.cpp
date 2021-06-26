@@ -20,7 +20,7 @@ AutonNode* getSingleGoalScoringSequence(AutonNode* initial_node, IntakeNode* int
 }
 
 AutonNode* getDoubleGoalScoringSequence(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node) {
-    AutonNode* scoreFirstBall = new AutonNode(0.2, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::SCORING, 0.2));
+    AutonNode* scoreFirstBall = new AutonNode(0.27, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::SCORING, 0.27));
     initial_node->AddNext(scoreFirstBall);
 
     // AutonNode* intakeOff = new AutonNode(0.1, new IntakeAction(intake_node, 0));
@@ -31,12 +31,14 @@ AutonNode* getDoubleGoalScoringSequence(AutonNode* initial_node, IntakeNode* int
     scoreFirstBall->AddNext(holdSecondBall);
 
 
-    AutonNode* splitConveyor = new AutonNode(0.5, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::SPLIT, 0.5));
-    holdSecondBall->AddNext(splitConveyor);
+    AutonNode* reverseRollersToPushBlueDown = new AutonNode(0.1, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::REVERSE, 0.1));
+    holdSecondBall->AddNext(reverseRollersToPushBlueDown);
+
+    AutonNode* splitConveyor = new AutonNode(0.50, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::SCORING_TOP, 0.50));
+    reverseRollersToPushBlueDown->AddNext(splitConveyor);
 
     // AutonNode* waitForIntake = new AutonNode(0.7, new WaitAction(0.7));
     // intakeOff->AddNext(waitForIntake);
-
 
     AutonNode* holdBlueBalls = new AutonNode(0.5, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::HOLDING_TOP, 0.5));
     splitConveyor->AddNext(holdBlueBalls);
@@ -71,7 +73,15 @@ AutonNode* getMiddleGoalScoringSequence(AutonNode* initial_node, IntakeNode* int
     closeIntake2->AddAction(new OpenIntakesAction(intake_node, false));
     openIntake2->AddNext(closeIntake2);
 
-    AutonNode* waitToScore = new AutonNode(1.0, new WaitAction(1.0));
+    AutonNode* openIntake3 = new AutonNode(0.35, new WaitAction(0.35));
+    openIntake3->AddAction(new OpenIntakesAction(intake_node));
+    closeIntake2->AddNext(openIntake3);
+
+    AutonNode* closeIntake3 = new AutonNode(0.4, new WaitAction(0.4));
+    closeIntake3->AddAction(new OpenIntakesAction(intake_node, false));
+    openIntake3->AddNext(closeIntake3);
+
+    AutonNode* waitToScore = new AutonNode(2.5, new WaitAction(2.5));
     initial_node->AddNext(waitToScore);
 
     AutonNode* score = new AutonNode(1.0, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::SCORING));
@@ -79,13 +89,13 @@ AutonNode* getMiddleGoalScoringSequence(AutonNode* initial_node, IntakeNode* int
 
     AutonNode* openTurnOffIntakes = new AutonNode(0.1, new IntakeAction(intake_node, 0));
     openTurnOffIntakes->AddAction(new OpenIntakesAction(intake_node));
-    closeIntake2->AddNext(openTurnOffIntakes);
+    closeIntake3->AddNext(openTurnOffIntakes);
 
     return openTurnOffIntakes;
 }
 
 AutonNode* addActionsToPath_Goal4ToGoal1(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node) {
-    AutonNode* delayedOuttakeGoal4 = new AutonNode(1.4, new WaitAction(1.4));
+    AutonNode* delayedOuttakeGoal4 = new AutonNode(1.45, new WaitAction(1.45));
     initial_node->AddNext(delayedOuttakeGoal4);
     
     AutonNode* outtakeGoal4 = new AutonNode(0.5, new IntakeAction(intake_node, -MAX_MOTOR_VOLTAGE, 0.5));
@@ -101,14 +111,14 @@ AutonNode* addActionsToPath_Goal4ToGoal1(AutonNode* initial_node, IntakeNode* in
     delayedOpenIntakeAfterGoal4->AddAction(new UpdateConveyorStateAction(conveyor_node, ConveyorNode::HOLDING));
     openIntakeAfterGoal4->AddNext(delayedOpenIntakeAfterGoal4);
 
-    AutonNode* closeIntakesOnBallAfterGoal4 = new AutonNode(2.0, new WaitAction(2.0));
+    AutonNode* closeIntakesOnBallAfterGoal4 = new AutonNode(1.7, new WaitAction(1.7));
     closeIntakesOnBallAfterGoal4->AddAction(new OpenIntakesAction(intake_node, false));
     delayedOpenIntakeAfterGoal4->AddNext(closeIntakesOnBallAfterGoal4);
 
-    AutonNode* stopBottomRollerBeforeGoal1 = new AutonNode(0.1, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::HOLDING_TOP));
-    closeIntakesOnBallAfterGoal4->AddNext(stopBottomRollerBeforeGoal1);
+    AutonNode* stopBottomRoller = new AutonNode(0.1, new UpdateConveyorStateAction(conveyor_node, ConveyorNode::HOLDING_TOP));
+    closeIntakesOnBallAfterGoal4->AddNext(stopBottomRoller);
 
-    return stopBottomRollerBeforeGoal1;
+    return stopBottomRoller;
 }
 
 AutonNode* addActionsToPath_Goal1ToGoal2(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node) {
@@ -132,11 +142,11 @@ AutonNode* addActionsToPath_Goal1ToGoal2(AutonNode* initial_node, IntakeNode* in
     closeIntakesOnBall1AfterGoal1->AddAction(new OpenIntakesAction(intake_node, false));
     delayedOpenIntakeAfterGoal1->AddNext(closeIntakesOnBall1AfterGoal1);
 
-    AutonNode* openIntakesAfterBall1Goal1 = new AutonNode(0.7, new WaitAction(0.7));
+    AutonNode* openIntakesAfterBall1Goal1 = new AutonNode(0.4, new WaitAction(0.4));
     openIntakesAfterBall1Goal1->AddAction(new OpenIntakesAction(intake_node));
     closeIntakesOnBall1AfterGoal1->AddNext(openIntakesAfterBall1Goal1);
 
-    AutonNode* closeIntakesOnBall2AfterGoal1 = new AutonNode(0.4, new WaitAction(0.4));
+    AutonNode* closeIntakesOnBall2AfterGoal1 = new AutonNode(0.6, new WaitAction(0.6));
     closeIntakesOnBall2AfterGoal1->AddAction(new OpenIntakesAction(intake_node, false));
     openIntakesAfterBall1Goal1->AddNext(closeIntakesOnBall2AfterGoal1);
 
@@ -172,7 +182,7 @@ AutonNode* addActionsToPath_Goal2ToGoal3(AutonNode* initial_node, IntakeNode* in
     openIntakesAfterBall1Goal2->AddAction(new OpenIntakesAction(intake_node));
     closeIntakesOnBall1AfterGoal2->AddNext(openIntakesAfterBall1Goal2);
 
-    AutonNode* closeIntakesOnBall2AfterGoal2 = new AutonNode(0.4, new WaitAction(0.4));
+    AutonNode* closeIntakesOnBall2AfterGoal2 = new AutonNode(0.9, new WaitAction(0.9));
     closeIntakesOnBall2AfterGoal2->AddAction(new OpenIntakesAction(intake_node, false));
     openIntakesAfterBall1Goal2->AddNext(closeIntakesOnBall2AfterGoal2);
 
@@ -212,7 +222,7 @@ AutonNode* addActionsToPath_Goal3ToGoal6(AutonNode* initial_node, IntakeNode* in
 }
 
 AutonNode* addActionsToPath_Goal6ToGoal9(AutonNode* initial_node, IntakeNode* intake_node, ConveyorNode* conveyor_node) {
-    AutonNode* delayedOuttakeGoal6 = new AutonNode(0.3, new WaitAction(0.3));
+    AutonNode* delayedOuttakeGoal6 = new AutonNode(0.45, new WaitAction(0.45));
     initial_node->AddNext(delayedOuttakeGoal6);
     
     AutonNode* outtakeGoal6 = new AutonNode(0.4, new IntakeAction(intake_node, -MAX_MOTOR_VOLTAGE, 0.4));

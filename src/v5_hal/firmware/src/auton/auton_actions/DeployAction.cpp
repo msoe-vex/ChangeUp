@@ -10,7 +10,7 @@ void DeployAction::ActionInit() {
     m_timer.Start();
 
     m_conveyor_node->setConveyorState(ConveyorNode::DEPLOY);
-    m_intake_node->setIntakeVoltage(MAX_MOTOR_VOLTAGE);
+    m_intake_node->setIntakeVoltage(-MAX_MOTOR_VOLTAGE);
     m_intake_node->openIntakes(1);
     m_intake_node->liftGoalPlate(1);
 }
