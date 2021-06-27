@@ -11,9 +11,11 @@ public:
 
     AutonSequence(AutonNode* initialNode);
 
-    void AddNext(AutonNode* node);
+    void AddNext(AutonNode* source, AutonNode* node);
 
     void AddAction(AutonAction* action);
+
+    void SetTailNode(AutonNode* tail);
 
     AutonSequenceList GetSequence();
     

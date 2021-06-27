@@ -35,3 +35,7 @@ void Timer::Start() {
 double Timer::getTime() {
   return pros::millis() / 1000.0;
 }
+
+bool Timer::isStarted() {
+    return m_started;
+}

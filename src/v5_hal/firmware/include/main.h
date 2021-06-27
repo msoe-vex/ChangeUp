@@ -56,7 +56,7 @@
 #include "nodes/subsystems/IntakeNode.h"
 #include "nodes/auton_nodes/AutonManagerNode.h"
 #include "auton/auton_actions/DeployAction.h"
-#include "auton/auton_actions/DriveAction.h"
+#include "auton/auton_actions/DriveStraightAction.h"
 #include "auton/auton_actions/IntakeAction.h"
 #include "auton/auton_actions/UpdateConveyorStateAction.h"
 #include "auton/auton_actions/FollowPathAction.h"

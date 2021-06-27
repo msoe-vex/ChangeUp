@@ -12,7 +12,7 @@ private:
     pros::Controller* m_controller;
     MotorNode* m_left_intake;
     MotorNode* m_right_intake;
-    ADIDigitalOutNode* m_intake_deploy;
+    ADIDigitalOutNode* m_goal_plate;
     ADIDigitalOutNode* m_intake_open;
 
     std::string m_handle_name;
@@ -21,13 +21,13 @@ private:
 
 public:
     IntakeNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, MotorNode* left_intake,
-        MotorNode* right_intake, ADIDigitalOutNode* intake_deploy, ADIDigitalOutNode* intake_open);
+        MotorNode* right_intake, ADIDigitalOutNode* goal_plate, ADIDigitalOutNode* intake_open);
 
     void setIntakeVoltage(int voltage);
 
     void openIntakes(int open);
 
-    void deployIntakes(int open);
+    void liftGoalPlate(int open);
 
     void initialize();
 
