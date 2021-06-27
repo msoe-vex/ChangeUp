@@ -82,7 +82,7 @@ void initialize() {
 		right_intake, goal_plate, intake_open);	
 
 	/* Define the conveyor components */
-	bottom_conveyor = new MotorNode(node_manager, 4, "bottomConveyor", true);
+	bottom_conveyor = new MotorNode(node_manager, 5, "bottomConveyor", true);
 	top_conveyor = new MotorNode(node_manager, 6, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
@@ -178,9 +178,12 @@ void autonomous() {
 void opcontrol() {
 	// Reset all nodes to default configuration
 	node_manager->reset();
+
+	// Reset the chosen autonomous and initialize
+	auton_manager_node->selected_auton->AutonInit();
 	
 	// Execute teleop code
 	while (true) {
-		node_manager->executeTeleop();
+		node_manager->executeAuton();
 	}
 }
