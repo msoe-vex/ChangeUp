@@ -180,10 +180,11 @@ void opcontrol() {
 	node_manager->reset();
 
 	// Reset the chosen autonomous and initialize
-	auton_manager_node->selected_auton->AutonInit();
+	// auton_manager_node->selected_auton->AutonInit();
 	
 	// Execute teleop code
 	while (true) {
-		node_manager->executeAuton();
+		//node_manager->executeAuton();
+		node_manager->executeTeleop();
 	}
 }
