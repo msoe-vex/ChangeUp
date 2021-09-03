@@ -57,6 +57,11 @@ private:
 
     HolonomicDriveKinematics m_kinematics;
 
+    Eigen::Vector2d controller_target_velocity;
+    Eigen::Vector2d field_target_velocity;
+    Eigen::Rotation2Dd robot_angle = Eigen::Rotation2Dd(0);
+    double rotation_velocity;
+
     void m_setLeftFrontVoltage(int voltage);
 
     void m_setLeftRearVoltage(int voltage);

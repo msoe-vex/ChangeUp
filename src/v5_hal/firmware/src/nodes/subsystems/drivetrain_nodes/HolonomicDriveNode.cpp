@@ -112,13 +112,12 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, fl
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
-    int left_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
-    int left_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
-    
-    int right_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
-    int right_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
+    controller_target_velocity(0) = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_VELOCITY;
+    controller_target_velocity(1) = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_VELOCITY;
+    rotation_velocity = -(m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_ROTATIONAL_VELOCITY;
 
-    setDriveVoltage(left_x, left_y, right_x, right_y);
+    field_target_velocity = robot_angle.inverse() * controller_target_velocity;
+    setDriveVelocity(field_target_velocity.x(), field_target_velocity.y(), rotation_velocity);
 }
 
 void HolonomicDriveNode::autonPeriodic() {
