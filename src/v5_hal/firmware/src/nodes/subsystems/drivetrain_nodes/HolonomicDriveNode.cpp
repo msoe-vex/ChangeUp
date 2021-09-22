@@ -60,7 +60,13 @@ void HolonomicDriveNode::m_fieldOrientedControl() {
 }
 
 void HolonomicDriveNode::m_tankControl() {
+    int left_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
+    int left_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
+    
+    int right_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
+    int right_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
 
+    setDriveVoltage(left_x, left_y, right_x, right_y);
 }
 
 void HolonomicDriveNode::initialize() {
