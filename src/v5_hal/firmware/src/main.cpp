@@ -52,6 +52,15 @@ void initialize() {
 
 	// Define all nodes used by the robot here
 	primary_controller = new ControllerNode(node_manager, "primary");
+
+	/* Define the odometry components */
+	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
+	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
+
+	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
+
+	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
+		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 	
 	/* Define the drivetrain components */
 	left_front_drive = new MotorNode(node_manager, 16, "leftFrontDrive", true);
@@ -69,7 +78,8 @@ void initialize() {
 			right_front_drive, right_front_drive_2, right_rear_drive, right_rear_drive_2 },
 		HolonomicDriveKinematics(EncoderConfig { 0, 360, 3.75 }, 
 								 HolonomicDriveKinematics::HolonomicWheelLocations { Vector2d(-5.48, 5.48), Vector2d(-5.48, -5.48), 
-									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }));
+									Vector2d(5.48, 5.48), Vector2d(5.48, -5.48) }),
+		inertial_sensor);
 
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
@@ -90,15 +100,6 @@ void initialize() {
 
 	conveyor_node = new ConveyorNode(node_manager, "conveyorNode", primary_controller, bottom_conveyor, top_conveyor, 
 		bottom_conveyor_sensor, top_conveyor_sensor);
-
-	/* Define the odometry components */
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
-
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
-
-	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
-		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 	
     /* Define other components */
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
