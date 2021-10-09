@@ -52,7 +52,7 @@ public:
 private:
     pros::Controller* m_controller;
 
-    InertialSensorNode* m_intertial_sensor;
+    InertialSensorNode* m_inertial_sensor;
 
     std::string m_handle_name;
 
