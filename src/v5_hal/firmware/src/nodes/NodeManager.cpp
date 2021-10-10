@@ -57,4 +57,7 @@ void NodeManager::executeAuton() {
     pros::c::delay(DELAY_TIME_MILLIS);
 }
 
-NodeManager::~NodeManager() { m_node_structures.clear(); }
+NodeManager::~NodeManager() { 
+    m_node_structures.clear();
+    delete m_handle;
+}

@@ -38,4 +38,5 @@ void HelloWorldNode::m_populateMessage() {
 
 HelloWorldNode::~HelloWorldNode() { 
     delete m_publisher;
+    delete m_publish_data_sub;
  }
