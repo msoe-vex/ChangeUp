@@ -3,11 +3,14 @@
 # Installs ROS, PROS and gcc-arm compiler for V5 builds
 
 # Install ROS
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install curl -y
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | sudo apt-key add -
-sudo apt update
-sudo apt upgrade -y
-sudo apt install python3 python-is-python3 python3-pip ros-noetic-desktop-full -y
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install python3 python-is-python3 python3-pip ros-noetic-desktop-full -y
 echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
 
 # Install gcc-arm compiler
