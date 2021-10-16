@@ -28,7 +28,7 @@ Odometry* OdometryNode::m_getOdomClass(OdomConfig config) {
         default:
             Node::m_handle->logerror("Error creating odometry instance in OdometryNode.cpp");
             return new FollowerOdometry(adi_encoder_config, adi_encoder_config);
-    }
+    } 
 }
 
 void OdometryNode::initialize() {
