@@ -11,9 +11,7 @@ jobs:
         submodules: recursive
     - name: Build Project
       run: |
-        cd $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make v5_hal_firmware_build"
     - name: Execute v5_hal Unit Tests
       run: |
-        cd $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make run_tests_v5_hal"
