@@ -64,8 +64,6 @@ private:
     Eigen::Vector2d field_target_velocity;
     double rotation_velocity;
 
-    InertialSensorNode* m_inertial_sensor;
-
     void m_setLeftFrontVoltage(int voltage);
 
     void m_setLeftRearVoltage(int voltage);
