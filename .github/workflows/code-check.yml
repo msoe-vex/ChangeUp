@@ -17,6 +17,7 @@ jobs:
         path: $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         key: ${{ runner.os }}-build-${{ env.cache-name }}
   build:
+    needs: setup
     runs-on: ubuntu-20.04
     container: raiderrobotics/container-registry:rr-noetic-base
     steps:
