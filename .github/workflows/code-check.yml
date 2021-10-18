@@ -14,7 +14,7 @@ jobs:
       env:
         cache-name: repository
       with:
-        path: $HOME/${{ github.event.repository.name }}
+        path: $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         key: ${{ runner.os }}-build-${{ env.cache-name }}
   build:
     runs-on: ubuntu-20.04
@@ -22,9 +22,7 @@ jobs:
     steps:
     - name: Build Project
       run: |
-        cd $HOME/
-        cp -r $GITHUB_WORKSPACE .
-        cd ${{ github.event.repository.name }}
+        cd $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make v5_hal_firmware_build"
   test:
     needs: build
@@ -33,7 +31,5 @@ jobs:
     steps:
     - name: Execute v5_hal Unit Tests
       run: |
-        cd $HOME/
-        cp -r $GITHUB_WORKSPACE .
-        cd ${{ github.event.repository.name }}
+        cd $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash  && catkin_make run_tests_v5_hal"
