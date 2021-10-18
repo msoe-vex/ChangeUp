@@ -1,7 +1,7 @@
 name: Robot Code Checks
 on: [push, pull_request]
 jobs:
-  setup:
+  code-check:
     runs-on: ubuntu-20.04
     container: raiderrobotics/container-registry:rr-noetic-base
     steps:
@@ -9,32 +9,11 @@ jobs:
       uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Move Repository
-      run: | 
-        cd $HOME/
-        cp -r $GITHUB_WORKSPACE .
-    - name: Cache Repository
-      uses: actions/cache@v2
-      env:
-        cache-name: repository
-      with:
-        path: $HOME/${{ github.event.repository.name }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
-  build:
-    needs: setup
-    runs-on: ubuntu-20.04
-    container: raiderrobotics/container-registry:rr-noetic-base
-    steps:
     - name: Build Project
       run: |
-        cd $HOME/${{ github.event.repository.name }}
+        cd $GITHUB_WORKSPACE/${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make v5_hal_firmware_build"
-  test:
-    needs: build
-    runs-on: ubuntu-20.04
-    container: raiderrobotics/container-registry:rr-noetic-base
-    steps:
     - name: Execute v5_hal Unit Tests
       run: |
-        cd $HOME/${{ github.event.repository.name }}
-        /bin/bash -c "source /opt/ros/noetic/setup.bash  && catkin_make run_tests_v5_hal"
+        cd $GITHUB_WORKSPACE/${{ github.event.repository.name }}
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make run_tests_v5_hal"
