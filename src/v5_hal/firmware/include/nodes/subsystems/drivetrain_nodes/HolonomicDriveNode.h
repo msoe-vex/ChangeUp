@@ -24,8 +24,8 @@ public:
         MotorNode* right_rear_motor_2;
     };
 
-    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-        HolonomicEightMotors motors, HolonomicDriveKinematics kinematics, InertialSensorNode* inertial_sensor);
+    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, InertialSensorNode* inerrtial_sensor,
+        HolonomicEightMotors motors, HolonomicDriveKinematics kinematics);
 
     void initialize();
 
@@ -63,6 +63,8 @@ private:
     Eigen::Vector2d controller_target_velocity;
     Eigen::Vector2d field_target_velocity;
     double rotation_velocity;
+
+    InertialSensorNode* m_inertial_sensor;
 
     void m_setLeftFrontVoltage(int voltage);
 

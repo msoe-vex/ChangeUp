@@ -1,12 +1,12 @@
 #include "nodes/subsystems/drivetrain_nodes/HolonomicDriveNode.h"
 
-HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller,
-    HolonomicEightMotors motors, HolonomicDriveKinematics kinematics, InertialSensorNode* inertial_sensor) : 
+HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
+    InertialSensorNode* inertial_sensor, HolonomicEightMotors motors, HolonomicDriveKinematics kinematics) : 
         IDriveNode(node_manager), 
         m_controller(controller->getController()),
+        m_inertial_sensor(inertial_sensor),
         m_motors(motors),
-        m_kinematics(kinematics),
-        m_inertial_sensor(inertial_sensor) {
+        m_kinematics(kinematics) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
