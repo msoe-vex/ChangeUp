@@ -1,6 +1,21 @@
 name: Robot Code Checks
 on: [push, pull_request]
 jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    container: raiderrobotics/container-registry:rr-noetic-base
+    steps:
+    - name: Checkout Repository and Submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Cache Repository
+      uses: actions/cache@v2
+      env:
+        cache-name: repository
+      with:
+        path: $HOME/${{ github.event.repository.name }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
   build:
     runs-on: ubuntu-20.04
     container: raiderrobotics/container-registry:rr-noetic-base
@@ -11,13 +26,6 @@ jobs:
         cp -r $GITHUB_WORKSPACE .
         cd ${{ github.event.repository.name }}
         /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make v5_hal_firmware_build"
-    - name: Cache ROS Build
-      uses: actions/cache@v2
-      env:
-        cache-name: ros-build
-      with:
-        path: $HOME/${{ github.event.repository.name }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
   test:
     needs: build
     runs-on: ubuntu-20.04
