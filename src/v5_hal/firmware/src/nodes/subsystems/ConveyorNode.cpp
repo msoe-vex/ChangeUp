@@ -14,7 +14,7 @@ ConveyorNode::ConveyorNode(NodeManager* node_manager, std::string handle_name, C
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
-void ConveyorNode::m_updateConveyorHoldingState() {
+void ConveyorNode::m_updateConveyorHoldingState(bool top_roller_only) {
     bool is_ball_at_top = (m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD);
     bool is_ball_at_bottom = (m_bottom_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD);
 
@@ -39,7 +39,7 @@ void ConveyorNode::m_updateConveyorHoldingState() {
         }
     }
 
-    setBottomConveyorVoltage(is_ball_at_top && is_ball_at_bottom ? 0 : MAX_MOTOR_VOLTAGE);
+    setBottomConveyorVoltage((is_ball_at_top && is_ball_at_bottom) || top_roller_only ? 0 : MAX_MOTOR_VOLTAGE);
 }
 
 void ConveyorNode::setBottomConveyorVoltage(int voltage) {
@@ -72,6 +72,10 @@ void ConveyorNode::setConveyorState(ConveyorState conveyorState) {
     m_current_conveyor_state = conveyorState;
 }
 
+bool ConveyorNode::isBallInTopPosition() {
+    return m_top_conveyor_sensor->getValue() <= BALL_PRESENT_THRESHOLD;
+}
+
 int ConveyorNode::getNumBallsStored() {
     int ballsStored = 0;
 
@@ -95,7 +99,7 @@ void ConveyorNode::teleopPeriodic() {
         setConveyorState(SCORING);
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
         setConveyorState(REVERSE);
-    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+    } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
         setConveyorState(DEPLOY);
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
         setConveyorState(HOLDING);
@@ -120,6 +124,9 @@ void ConveyorNode::teleopPeriodic() {
             setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
             setTopConveyorVoltage(0);
         break;
+        case SPLIT:
+            setConveyorVoltage(0);
+        break;
     }
 }
 
@@ -131,15 +138,26 @@ void ConveyorNode::autonPeriodic() {
         case HOLDING:
             m_updateConveyorHoldingState();
         break;
+        case HOLDING_TOP:
+            m_updateConveyorHoldingState(true);
+        break;
         case SCORING:
             setConveyorVoltage(MAX_MOTOR_VOLTAGE);
+        break;
+        case SCORING_TOP:
+            setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+            setBottomConveyorVoltage(0);
         break;
         case REVERSE:
             setConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
         break;
         case DEPLOY:
-            setBottomConveyorVoltage(-1 * MAX_MOTOR_VOLTAGE);
+            setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
             setTopConveyorVoltage(0);
+        break;
+        case SPLIT:
+            setTopConveyorVoltage(MAX_MOTOR_VOLTAGE);
+            setBottomConveyorVoltage(-0.5 * MAX_MOTOR_VOLTAGE);
         break;
     }
 }

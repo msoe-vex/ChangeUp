@@ -13,27 +13,23 @@ Path::Path(vector<PathPoint> pathPoints) :
 }
 
 Pose Path::update(float time) {
-    // Remove any points that have been passed
-    for (auto it = m_pathPoints.begin(); it != m_pathPoints.end(); it++) {
-        if(time > (it + 1)->getTime()) { // Point has been passed
-            m_pathPoints.erase(it);
-        } else { // Point not yet reached 
-            break;
-        }
-    }
-
-    Pose next_pose;
-
-    if (m_pathPoints.size() == 0) {
-        next_pose = m_last_point.getPose();
+    if (m_pathPoints.size() == 0 || m_pathPoints.size() == 1) {
         m_is_complete = true;
+        return m_last_point.getPose();
     } else {
-        //Interpolate between the first point and the next point
-        auto path_point = m_pathPoints.begin()->interpolateTo(*(m_pathPoints.begin() + 1), time);
-        next_pose = path_point.getPose();
-    }
+        // Remove any points that have been passed
+        for (auto it = m_pathPoints.begin(); it != m_pathPoints.end(); it++) {
+            if(time > (it + 1)->getTime()) { // Point has been passed
+                m_pathPoints.erase(it);
+            } else { // Point not yet reached 
+                break;
+            }
+        }
 
-    return next_pose;
+        auto path_point = m_pathPoints.begin()->interpolateTo(*(m_pathPoints.begin() + 1), time);
+        //return path_point.getPose();
+        return (m_pathPoints.begin() + 1)->getPose(); // Temporary fix until interpolation works
+    }
 }
 
 vector<PathPoint> Path::getPathPoints() {

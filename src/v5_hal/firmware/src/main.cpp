@@ -17,7 +17,7 @@ HolonomicDriveNode* holonomic_drive_node;
 
 MotorNode* left_intake;
 MotorNode* right_intake;
-ADIDigitalOutNode* intake_deploy;
+ADIDigitalOutNode* goal_plate;
 ADIDigitalOutNode* intake_open;
 IntakeNode* intake_node;
 
@@ -75,15 +75,15 @@ void initialize() {
 	left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
 
-	intake_deploy = new ADIDigitalOutNode(node_manager, "intakeDeploy", 'H', false);
+	goal_plate = new ADIDigitalOutNode(node_manager, "goalPlate", 'H', false);
 	intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
 	
 	intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
-		right_intake, intake_deploy, intake_open);	
+		right_intake, goal_plate, intake_open);	
 
 	/* Define the conveyor components */
-	bottom_conveyor = new MotorNode(node_manager, 4, "bottomConveyor", true);
-	top_conveyor = new MotorNode(node_manager, 5, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
+	bottom_conveyor = new MotorNode(node_manager, 5, "bottomConveyor", true);
+	top_conveyor = new MotorNode(node_manager, 6, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
 	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
 	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");

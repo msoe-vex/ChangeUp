@@ -13,7 +13,8 @@
 #include "auton/auton_actions/UpdateConveyorStateAction.h"
 #include "auton/auton_actions/TurnToAngleAction.h"
 #include "auton/auton_actions/OpenIntakesAction.h"
-#include "auton/auton_actions/DriveAction.h"
+#include "auton/auton_actions/DriveStraightAction.h"
+#include "auton/auton_actions/ScoreSingleBallAction.h"
 #include "eigen/Eigen/Dense"
 #include "util/Constants.h"
 #include "auton/AutonSequencePresets.h"
@@ -31,6 +32,4 @@ private:
     ConveyorNode* m_conveyor_node;
     IntakeNode* m_intake_node;
     InertialSensorNode* m_inertial_sensor_node;
-
-    AutonNode* m_deploy_node;
 };

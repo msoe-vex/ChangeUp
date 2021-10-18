@@ -12,106 +12,85 @@ ProgrammingSkillsAuton::ProgrammingSkillsAuton(IDriveNode* drive_node, OdometryN
 
 void ProgrammingSkillsAuton::AddNodes() {
     // Define Auton nodes, actions, and sequences here
-    //m_deploy_node = new AutonNode(1, new DeployAction(m_conveyor_node, m_intake_node));
+    AutonNode* deploy = new AutonNode(0.5, new DeployAction(m_conveyor_node, m_intake_node));
+    Auton::AddFirstNode(deploy);
 
-    AutonNode* path1 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("TestPath")));
+    AutonNode* path_deployWall2ToGoal4 = new AutonNode(1.75, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("DeployWall2ToGoal4"), true));
+    deploy->AddNext(path_deployWall2ToGoal4);
+
+    AutonNode* getPreloadToTop = new AutonNode(0.6, new WaitAction(0.6));
+    getPreloadToTop->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
+    getPreloadToTop->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
+    deploy->AddNext(getPreloadToTop);
+
+    AutonNode* stopBottomRollerBeforeGoal4 = new AutonNode(0.1, new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING_TOP));
+    getPreloadToTop->AddNext(stopBottomRollerBeforeGoal4);
+
+    AutonNode* descoreGoal4 = getSingleGoalScoringSequence(path_deployWall2ToGoal4, m_intake_node, m_conveyor_node);
     
-    // Sequence nodes here
-    Auton::AddFirstNode(path1);
-    
-    // path1->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
-    // path1->AddAction(new OpenIntakesAction(m_intake_node, true));
-    // path1->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
+    AutonNode* path_goal4ToGoal1 = new AutonNode(6.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal4ToGoal1")));
+    descoreGoal4->AddNext(path_goal4ToGoal1);
 
-    // AutonNode* path2 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(75))));
-    // path2->AddAction(new IntakeAction(m_intake_node, 0));
+    addActionsToPath_Goal4ToGoal1(descoreGoal4, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path3 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path3")));
+    AutonNode* descoreGoal1 = getDoubleGoalScoringSequence(path_goal4ToGoal1, m_intake_node, m_conveyor_node);
 
-    // path2->AddNext(path3);
-    // path1->AddNext(path2);
-    // m_deploy_node->AddNext(path1);
 
-    // AutonNode* goal_sequence1 = getGoalScoringSequence(path3, m_intake_node, m_conveyor_node);
+    AutonNode* path_goal1ToGoal2 = new AutonNode(6.5, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal1ToGoal2")));
+    descoreGoal1->AddNext(path_goal1ToGoal2);
 
-    // AutonNode* path4 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path4")));
-    // path4->AddAction(new IntakeAction(m_intake_node, -MAX_MOTOR_VOLTAGE));
-    // path4->AddAction(new OpenIntakesAction(m_intake_node, true));
-    // path4->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE));
+    addActionsToPath_Goal1ToGoal2(descoreGoal1, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path5 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(135))));
-    // path5->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
-    // path5->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
+    AutonNode* descoreGoal2 = getDoubleGoalScoringSequence(path_goal1ToGoal2, m_intake_node, m_conveyor_node);
 
-    // AutonNode* forbidden_path = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("ForbiddenPath")));
 
-    // AutonNode* forbidden_turn = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(-90))));
+    AutonNode* path_goal2ToGoal3 = new AutonNode(6.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal2ToGoal3")));
+    descoreGoal2->AddNext(path_goal2ToGoal3);
 
-    // AutonNode* path6 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path6")));
-    
-    // AutonNode* path7 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path7")));
-    // path7->AddAction(new IntakeAction(m_intake_node, 0));
+    addActionsToPath_Goal2ToGoal3(descoreGoal2, m_intake_node, m_conveyor_node);
 
-    // path6->AddNext(path7);
-    // forbidden_turn->AddNext(path6);
-    // forbidden_path->AddNext(forbidden_turn);
-    // path5->AddNext(forbidden_path);
-    // path4->AddNext(path5);
-    // goal_sequence1->AddNext(path4);
+    AutonNode* descoreGoal3 = getDoubleGoalScoringSequence(path_goal2ToGoal3, m_intake_node, m_conveyor_node);
 
-    // AutonNode* goal_sequence2 = getGoalScoringSequence(path7, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path8 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path8")));
+    AutonNode* path_goal3ToGoal6 = new AutonNode(5.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal3ToGoal6"), true));
+    descoreGoal3->AddNext(path_goal3ToGoal6);
 
-    // AutonNode* path9 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(-45))));
-    // path9->AddAction(new OpenIntakesAction(m_intake_node, true));
-    // path9->AddAction(new IntakeAction(m_intake_node, -MAX_MOTOR_VOLTAGE, 1.0));
-    // path9->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE));
+    addActionsToPath_Goal3ToGoal6(descoreGoal3, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path11 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(165))));
-    
-    // AutonNode* path12 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path12")));
-    // path5->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
-    // path5->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
-    
-    // AutonNode* path13 = new AutonNode(10, new TurnToAngleAction(m_drive_node, m_inertial_sensor_node, Eigen::Rotation2Dd(toRadians(-75))));
+    AutonNode* descoreGoal6 = getSingleGoalScoringSequence(path_goal3ToGoal6, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path14 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("Path14")));
-    // path14->AddAction(new IntakeAction(m_intake_node, 0));
 
-    // path13->AddNext(path14);
-    // path12->AddNext(path13);
-    // path11->AddNext(path12);
-    // path9->AddNext(path11);
-    // path8->AddNext(path9);
-    // goal_sequence2->AddNext(path8);
+    AutonNode* path_goal6ToGoal9 = new AutonNode(5.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal6ToGoal9"), true));
+    descoreGoal6->AddNext(path_goal6ToGoal9);
 
-    // AutonNode* goal_sequence3 = getGoalScoringSequence(path14, m_intake_node, m_conveyor_node);
+    addActionsToPath_Goal6ToGoal9(descoreGoal6, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path15 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("FinalPath")));
-    // path15->AddAction(new IntakeAction(m_intake_node, -MAX_MOTOR_VOLTAGE));
-    // path15->AddAction(new OpenIntakesAction(m_intake_node, true));
-    // path15->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::REVERSE));
+    AutonNode* descoreGoal9 = getDoubleGoalScoringSequence(path_goal6ToGoal9, m_intake_node, m_conveyor_node);
 
-    // AutonNode* path16 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, Path()));
-    // path16->AddAction(new IntakeAction(m_intake_node, MAX_MOTOR_VOLTAGE));
-    // path16->AddAction(new UpdateConveyorStateAction(m_conveyor_node, ConveyorNode::HOLDING));
 
-    // AutonNode* path17 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, Path()));
-    
-    // AutonNode* path18 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, Path()));
-    
-    // AutonNode* path19 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, Path()));
-    
-    // AutonNode* path20 = new AutonNode(10, new FollowPathAction(m_drive_node, m_odom_node, Path()));
-    // path20->AddAction(new IntakeAction(m_intake_node, 0));
+    AutonNode* path_goal9ToGoal8 = new AutonNode(6.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal9ToGoal8"), true));
+    descoreGoal9->AddNext(path_goal9ToGoal8);
 
-    // path19->AddNext(path20);
-    // path18->AddNext(path19);
-    // path17->AddNext(path18);
-    // path16->AddNext(path17);
-    // path15->AddNext(path16);
-    // goal_sequence3->AddNext(path15);
+    addActionsToPath_Goal9ToGoal8(descoreGoal9, m_intake_node, m_conveyor_node);
 
-    // AutonNode* goal_sequence4 = getGoalScoringSequence(path20, m_intake_node, m_conveyor_node);
+    AutonNode* descoreGoal8 = getDoubleGoalScoringSequence(path_goal9ToGoal8, m_intake_node, m_conveyor_node);
+
+
+    AutonNode* path_goal8ToGoal7 = new AutonNode(5.5, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal8ToGoal7"), true));
+    descoreGoal8->AddNext(path_goal8ToGoal7);
+
+    addActionsToPath_Goal8ToGoal7(descoreGoal8, m_intake_node, m_conveyor_node);
+
+    AutonNode* descoreGoal7 = getDoubleGoalScoringSequence(path_goal8ToGoal7, m_intake_node, m_conveyor_node);
+
+
+    AutonNode* path_goal7ToGoal5 = new AutonNode(3.5, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-Goal7ToGoal5"), true));
+    descoreGoal7->AddNext(path_goal7ToGoal5);
+
+    addActionsToPath_Goal7ToGoal5(descoreGoal7, m_intake_node, m_conveyor_node);
+
+    AutonNode* descoreGoal5 = getMiddleGoalScoringSequence(path_goal7ToGoal5, m_intake_node, m_conveyor_node);
+
+    AutonNode* backAwayAndPrayToGod = new AutonNode(7.0, new FollowPathAction(m_drive_node, m_odom_node, PathManager::GetInstance()->GetPath("V2-BackUp")));
+    descoreGoal5->AddNext(backAwayAndPrayToGod);
 }

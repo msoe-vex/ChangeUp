@@ -1,12 +1,12 @@
 #include "nodes/subsystems/IntakeNode.h"
 
 IntakeNode::IntakeNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-        MotorNode* left_intake, MotorNode* right_intake, ADIDigitalOutNode* intake_deploy, 
+        MotorNode* left_intake, MotorNode* right_intake, ADIDigitalOutNode* goal_plate, 
         ADIDigitalOutNode* intake_open) : Node(node_manager, 10), 
         m_controller(controller->getController()),
         m_left_intake(left_intake),
         m_right_intake(right_intake),
-        m_intake_deploy(intake_deploy),
+        m_goal_plate(goal_plate),
         m_intake_open(intake_open) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
@@ -20,8 +20,8 @@ void IntakeNode::openIntakes(int open) {
     m_intake_open->setValue(open);
 }
 
-void IntakeNode::deployIntakes(int open) {
-    m_intake_deploy->setValue(open);
+void IntakeNode::liftGoalPlate(int open) {
+    m_goal_plate->setValue(open);
 }
 
 void IntakeNode::initialize() {
@@ -44,9 +44,9 @@ void IntakeNode::teleopPeriodic() {
     }
 
     if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-        deployIntakes(1);
+        liftGoalPlate(0);
     } else if (m_controller->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) {
-        deployIntakes(0);
+        liftGoalPlate(1);
     }
 }
 
@@ -57,6 +57,6 @@ void IntakeNode::autonPeriodic() {
 IntakeNode::~IntakeNode() {
     delete m_left_intake;
     delete m_right_intake;
-    delete m_intake_deploy;
+    delete m_goal_plate;
     delete m_intake_open;
 }

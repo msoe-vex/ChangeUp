@@ -9,14 +9,17 @@ DeployAction::DeployAction(ConveyorNode* conveyor_node, IntakeNode* intake_node)
 void DeployAction::ActionInit() {
     m_timer.Start();
 
-    m_conveyor_node->setBottomConveyorVoltage(MAX_MOTOR_VOLTAGE);
-    m_intake_node->deployIntakes(1);
-    pros::delay(1500);
+    m_conveyor_node->setConveyorState(ConveyorNode::DEPLOY);
+    m_intake_node->setIntakeVoltage(-MAX_MOTOR_VOLTAGE);
+    m_intake_node->openIntakes(1);
+    m_intake_node->liftGoalPlate(1);
 }
 
 AutonAction::actionStatus DeployAction::Action() {
-    if (m_timer.Get() > 3) {
-        m_conveyor_node->setBottomConveyorVoltage(0);
+    if (m_timer.Get() > 0.5) {
+        m_conveyor_node->setConveyorState(ConveyorNode::STOPPED);
+        m_intake_node->setIntakeVoltage(0);
+        m_intake_node->openIntakes(0);
         return END;
     }
 
@@ -25,5 +28,7 @@ AutonAction::actionStatus DeployAction::Action() {
 
 void DeployAction::ActionEnd() {
     m_timer.Stop();
-    m_conveyor_node->setBottomConveyorVoltage(0);
+    m_conveyor_node->setConveyorState(ConveyorNode::STOPPED);
+    m_intake_node->setIntakeVoltage(0);
+    m_intake_node->openIntakes(0);
 }

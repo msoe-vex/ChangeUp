@@ -1,19 +1,19 @@
-#include "auton/auton_actions/DriveAction.h"
+#include "auton/auton_actions/DriveStraightAction.h"
 #include <math.h>
 
-DriveAction::DriveAction(IDriveNode* drive_node, double distance, double max_velocity, 
+DriveStraightAction::DriveStraightAction(IDriveNode* drive_node, double distance, double max_velocity, 
         double max_accel) :
         m_drive_node(drive_node), m_distance(distance), 
         m_max_velocity(max_velocity), m_max_accel(max_accel), m_lastSpeed(0), m_feedForward(4.91) {
 
 }
 
-void DriveAction::ActionInit() {
+void DriveStraightAction::ActionInit() {
     m_timer.Start();
     m_drive_node->resetEncoders();
 }
 
-AutonAction::actionStatus DriveAction::Action() {
+AutonAction::actionStatus DriveStraightAction::Action() {
     double dt = m_timer.Get() - m_lastTime;
     double speed = m_max_velocity;
 
@@ -51,6 +51,6 @@ AutonAction::actionStatus DriveAction::Action() {
     }
 }
 
-void DriveAction::ActionEnd() {
+void DriveStraightAction::ActionEnd() {
     m_drive_node->setDriveVelocity(0, 0);
 }
