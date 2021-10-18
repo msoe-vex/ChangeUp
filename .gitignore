@@ -19,5 +19,9 @@ temp.log
 temp.errors
 *.ini
 .d/
-.vscode/settings.json
+
+# VSCode
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
 .history/
