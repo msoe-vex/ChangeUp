@@ -5,6 +5,7 @@
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/actuator_nodes/MotorNode.h"
 #include "nodes/sensor_nodes/ControllerNode.h"
+#include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "kinematics/HolonomicDriveKinematics.h"
 #include "eigen/Eigen/Dense"
 #include <algorithm>
@@ -23,7 +24,7 @@ public:
         MotorNode* right_rear_motor_2;
     };
 
-    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
+    HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, InertialSensorNode* inerrtial_sensor,
         HolonomicEightMotors motors, HolonomicDriveKinematics kinematics);
 
     void initialize();
@@ -51,11 +52,17 @@ public:
 private:
     pros::Controller* m_controller;
 
+    InertialSensorNode* m_inertial_sensor;
+
     std::string m_handle_name;
 
     HolonomicEightMotors m_motors;
 
     HolonomicDriveKinematics m_kinematics;
+
+    Eigen::Vector2d controller_target_velocity;
+    Eigen::Vector2d field_target_velocity;
+    double rotation_velocity;
 
     void m_setLeftFrontVoltage(int voltage);
 
@@ -72,4 +79,8 @@ private:
     void m_setRightFrontVelocity(float velocity);
 
     void m_setRightRearVelocity(float velocity);
+
+    void m_fieldOrientedControl();
+
+    void m_tankControl();
 };

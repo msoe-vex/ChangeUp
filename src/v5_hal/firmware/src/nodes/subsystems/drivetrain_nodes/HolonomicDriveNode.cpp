@@ -1,9 +1,10 @@
 #include "nodes/subsystems/drivetrain_nodes/HolonomicDriveNode.h"
 
-HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller,
-    HolonomicEightMotors motors, HolonomicDriveKinematics kinematics) : 
+HolonomicDriveNode::HolonomicDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
+    InertialSensorNode* inertial_sensor, HolonomicEightMotors motors, HolonomicDriveKinematics kinematics) : 
         IDriveNode(node_manager), 
         m_controller(controller->getController()),
+        m_inertial_sensor(inertial_sensor),
         m_motors(motors),
         m_kinematics(kinematics) {
     m_handle_name = handle_name.insert(0, "robot/");
@@ -47,6 +48,25 @@ void HolonomicDriveNode::m_setRightFrontVelocity(float velocity) {
 void HolonomicDriveNode::m_setRightRearVelocity(float velocity) {
     m_motors.right_rear_motor->moveVelocity(velocity);
     m_motors.right_rear_motor_2->moveVelocity(velocity);
+}
+
+void HolonomicDriveNode::m_fieldOrientedControl() {
+    controller_target_velocity(0) = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_VELOCITY;
+    controller_target_velocity(1) = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_VELOCITY;
+    rotation_velocity = -(m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_VELOCITY;
+
+    field_target_velocity = m_inertial_sensor->getYaw().inverse() * Rotation2Dd(GYRO_OFFSET) *  controller_target_velocity;
+    setDriveVelocity(field_target_velocity.x(), field_target_velocity.y(), rotation_velocity);
+}
+
+void HolonomicDriveNode::m_tankControl() {
+    int left_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
+    int left_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
+    
+    int right_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
+    int right_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
+
+    setDriveVoltage(left_x, left_y, right_x, right_y);
 }
 
 void HolonomicDriveNode::initialize() {
@@ -112,13 +132,7 @@ void HolonomicDriveNode::setDriveVelocity(float x_velocity, float y_velocity, fl
 }
 
 void HolonomicDriveNode::teleopPeriodic() {
-    int left_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
-    int left_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
-    
-    int right_x = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0) * MAX_MOTOR_VOLTAGE;
-    int right_y = (m_controller->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) / 127.0) * MAX_MOTOR_VOLTAGE;
-
-    setDriveVoltage(left_x, left_y, right_x, right_y);
+    m_fieldOrientedControl();
 }
 
 void HolonomicDriveNode::autonPeriodic() {

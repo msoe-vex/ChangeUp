@@ -21,7 +21,7 @@ void NodeManager::initialize() {
     }
 }
 
-void NodeManager::reset() {
+void NodeManager::reset() { 
     for (auto& node_structure : m_node_structures) {
         node_structure.last_executed_millis = 0;
     }
