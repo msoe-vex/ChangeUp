@@ -43,6 +43,33 @@
             "problemMatcher": []
         },
         {
+            "label": "v5_hal Firmware Test",
+            "type": "shell",
+            "command": "catkin_make run_tests_v5_hal",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": {
+                "owner": "prosv5",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+): +(warning|error): +(.*)",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "v5_hal Firmware WSL Upload",
             "type": "shell",
             "command": "catkin_make v5_hal_firmware_wsl_upload",
