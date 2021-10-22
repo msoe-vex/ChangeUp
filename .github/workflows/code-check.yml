@@ -1,0 +1,26 @@
+name: Robot Code Checks
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container: raiderrobotics/container-registry:rr-noetic-base
+    steps:
+    - name: ✔️ Checkout Repository and Submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: 🔨 Build Project
+      run: |
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make v5_hal_firmware_build"
+  test:
+    needs: build
+    runs-on: ubuntu-20.04
+    container: raiderrobotics/container-registry:rr-noetic-base
+    steps:
+    - name: ✔️ Checkout Repository and Submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: 🧪 Execute v5_hal Unit Tests
+      run: |
+        /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make run_tests_v5_hal"
