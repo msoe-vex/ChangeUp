@@ -16,3 +16,7 @@ void AutonManagerNode::autonPeriodic() {
         selected_auton->AutonPeriodic();
     }
 }
+
+AutonManagerNode::~AutonManagerNode() {
+    delete m_test_path_auton;
+}
