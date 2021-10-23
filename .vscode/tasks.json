@@ -9,7 +9,7 @@
         {
             "label": "v5_hal Firmware Build",
             "type": "shell",
-            "command": "catkin_make v5_hal_firmware_build",
+            "command": "docker run -it -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base sh -c 'cd /root/ChangeUp;  [ ! -e src/CMakeLists.txt] || rm src/CMakeLists.txt; catkin_make v5_hal_firmware_build'",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -70,11 +70,11 @@
             }
         },
         {
-            "label": "v5_hal Firmware WSL Upload",
+            "label": "v5_hal Firmware Upload",
             "type": "shell",
-            "command": "catkin_make v5_hal_firmware_wsl_upload",
+            "command": "prosv5.exe upload",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}/src/v5_hal/firmware"
             },
             "problemMatcher": {
                 "owner": "prosv5",
