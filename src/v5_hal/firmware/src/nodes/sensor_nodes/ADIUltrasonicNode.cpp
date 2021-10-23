@@ -43,4 +43,5 @@ void ADIUltrasonicNode::m_populateMessage() {
 
 ADIUltrasonicNode::~ADIUltrasonicNode() { 
     delete m_publisher;
+    delete m_publish_data_sub;
 }

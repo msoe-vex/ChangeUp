@@ -42,4 +42,5 @@ void ADIDigitalInNode::m_populateMessage() {
 
 ADIDigitalInNode::~ADIDigitalInNode() { 
     delete m_publisher;
+    delete m_publish_data_sub;
  }

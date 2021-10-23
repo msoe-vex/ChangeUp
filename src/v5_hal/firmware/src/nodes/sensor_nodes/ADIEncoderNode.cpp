@@ -43,4 +43,5 @@ void ADIEncoderNode::m_populateMessage() {
 
 ADIEncoderNode::~ADIEncoderNode() { 
     delete m_publisher;
+    delete m_publish_data_sub;
 }

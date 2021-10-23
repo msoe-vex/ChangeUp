@@ -12,8 +12,8 @@ private:
     v5_hal::CompetitionStatus m_comp_status_msg;
     std::string m_handle_name;
     std::string m_sub_publish_data_name;
-    ros::Publisher* m_publisher;
-    ros::Subscriber<std_msgs::Empty, CompetitionStatusNode>* m_publish_data_sub;
+    ros::Publisher* m_publisher = nullptr;
+    ros::Subscriber<std_msgs::Empty, CompetitionStatusNode>* m_publish_data_sub = nullptr;
 
     void m_populateMessage();
 
