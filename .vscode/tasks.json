@@ -9,7 +9,7 @@
         {
             "label": "v5_hal Firmware Build",
             "type": "shell",
-            "command": "docker run -it -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base sh -c 'cd /root/ChangeUp;  [ ! -e src/CMakeLists.txt] || rm src/CMakeLists.txt; catkin_make v5_hal_firmware_build'",
+            "command": "docker run --rm -it -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base sh -c 'cd /root/ChangeUp;  [ ! -e src/CMakeLists.txt] || rm src/CMakeLists.txt; catkin_make v5_hal_firmware_build'",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
