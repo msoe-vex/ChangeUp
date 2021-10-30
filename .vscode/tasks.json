@@ -9,7 +9,7 @@
         {
             "label": "v5_hal Firmware Build",
             "type": "shell",
-            "command": "./.vscode/build_script.ps1",
+            "command": "./scripts/build_script.ps1",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
