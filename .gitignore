@@ -3,6 +3,7 @@ build/
 devel/
 install/
 src/v5_hal/firmware/include/ros_lib/*
+src/CMakeLists.txt
 
 # Compiled Object files
 *.o
