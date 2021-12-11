@@ -19,4 +19,5 @@ void AutonManagerNode::autonPeriodic() {
 
 AutonManagerNode::~AutonManagerNode() {
     delete m_test_path_auton;
+    delete m_prog_skills;
 }
