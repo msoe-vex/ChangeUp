@@ -1,18 +1,43 @@
-$is_exited
-$is_not_first
-while(!$is_exited) {
-    $docker_command = -join("docker run -it -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base sh -c ", "'cd /root/ChangeUp;", $args[0], "'");
-    Invoke-Expression -Command $docker_command
-    if (!(docker ps -a -q -f ancestor=raiderrobotics/container-registry:rr-noetic-base -f status=exited)) {
-        if(!($is_not_first)) {
-            C:/Program` Files/Docker/Docker/Docker` Desktop.exe -WindowsStyle Minimized
-            $is_not_first = "True"
+$docker_command = "docker run -it"
+$docker_vol_location = " -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base"
+$docker_container_command = -join(" sh -c 'cd /root/ChangeUp;", $args[0], "'")
+
+if ($IsWindows) {
+    $is_not_first
+    $is_exited
+    $joined_cmd = -join($docker_command, $docker_vol_location, $docker_container_command)
+    while(!$is_exited) {
+	# run docker contianer
+        Invoke-Expression -Command $joined_cmd
+	# check if container has exited to see if it ran successfully (will fail if docker desktop is not running)
+        if (!(docker ps -a -q -f ancestor=raiderrobotics/container-registry:rr-noetic-base -f status=exited)) {
+	    # attempt to launch docker desktop only once
+            if(!($is_not_first)) {
+                C:/Program` Files/Docker/Docker/Docker` Desktop.exe -WindowsStyle Minimized
+                $is_not_first = "True"
+            }
+            Write-Host "Docker Desktop Not Running"
+            Start-Sleep -Seconds 1
         }
-        Write-Output "Docker Desktop Not Running"
-        Start-Sleep -Seconds 1
+        else {
+	    # remove container after it exits
+            docker rm $(docker ps --filter status=exited -q)
+            $is_exited = "True"
+        }
     }
-    else {
-        docker rm $(docker ps --filter status=exited -q)
-        $is_exited = "True"
+}
+elseif ($IsLinux) {
+    # rootless podman permission workaround
+    $is_podman
+    if (Get-Command podman -erroraction 'silentlycontinue') {
+        $is_podman = " --privileged --net=host"
     }
+
+    # docker command with environment variables that enable X11 programs to work
+    $joined_cmd = -join($docker_command, " --rm", $is_podman, " --env DISPLAY='", `
+    [System.Environment]::GetEnvironmentVariable('DISPLAY'), "' --env='QT_X11_NO_MITSHM=1'", $docker_vol_location, $docker_container_command)
+    Invoke-Expression -Command $joined_cmd
+}
+elseif ($IsMacOS) {
+    Write-Host "macOS not supported"
 }
