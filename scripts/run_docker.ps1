@@ -2,7 +2,8 @@ $docker_command = "docker run -it"
 $docker_vol_location = " -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base"
 $docker_container_command = -join(" sh -c 'cd /root/ChangeUp;", $args[0], "'")
 
-if ($IsWindows) {
+# $IsWindows doesn't work because powershell 5.1 is too old
+if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
     $is_not_first
     $is_exited
     $joined_cmd = -join($docker_command, $docker_vol_location, $docker_container_command)
