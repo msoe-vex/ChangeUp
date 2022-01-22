@@ -1,5 +1,5 @@
 $docker_command = "docker run -it"
-$docker_vol_location = " -v $HOME/ChangeUp:/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base"
+$docker_vol_location = -join(" -v ", $PSScriptRoot.Replace("/scripts", ""), ":/root/ChangeUp raiderrobotics/container-registry:rr-noetic-base")
 $docker_container_command = -join(" sh -c 'cd /root/ChangeUp;", $args[0], "'")
 
 # $IsWindows doesn't work because powershell 5.1 is too old
