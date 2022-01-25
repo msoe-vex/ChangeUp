@@ -48,94 +48,95 @@ ConnectionCheckerNode* connection_checker_node;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	Logger::giveNodeManager(node_manager);
+	//Logger::giveNodeManager(node_manager);
 
 	// Define all nodes used by the robot here
-	primary_controller = new ControllerNode(node_manager, "primary");
+	/* Define the controller components */
+	//primary_controller = new ControllerNode(node_manager, "primary");
 
 	/* Define the odometry components */
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
+	//x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
+	//y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
+	//inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
 
-	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
-		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+	//odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
+	//	y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 	
 	/* Define the odometry components */
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
+	//x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
+	//y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
 
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
+	//inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
 
-	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
-	y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
+	//odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
+	//y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
 	/* Define the drivetrain components */
-	left_front_drive = new MotorNode(node_manager, 16, "leftFrontDrive", true);
-	left_front_drive_2 = new MotorNode(node_manager, 15, "leftFrontTopDrive", false);
-	left_rear_drive = new MotorNode(node_manager, 9, "leftRearDrive", true);
-	left_rear_drive_2 = new MotorNode(node_manager, 10, "leftRearTopDrive", false);
+	// left_front_drive = new MotorNode(node_manager, 16, "leftFrontDrive", true);
+	// left_front_drive_2 = new MotorNode(node_manager, 15, "leftFrontTopDrive", false);
+	// left_rear_drive = new MotorNode(node_manager, 9, "leftRearDrive", true);
+	// left_rear_drive_2 = new MotorNode(node_manager, 10, "leftRearTopDrive", false);
 
-	right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", false);
-	right_front_drive_2 = new MotorNode(node_manager, 13, "rightFrontTopDrive", true);
-	right_rear_drive = new MotorNode(node_manager, 2, "rightRearDrive", false);
-	right_rear_drive_2 = new MotorNode(node_manager, 3, "rightRearTopDrive", true);
+	// right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", false);
+	// right_front_drive_2 = new MotorNode(node_manager, 13, "rightFrontTopDrive", true);
+	// right_rear_drive = new MotorNode(node_manager, 2, "rightRearDrive", false);
+	// right_rear_drive_2 = new MotorNode(node_manager, 3, "rightRearTopDrive", true);
 
-	HolonomicDriveNode::HolonomicEightMotors holonomic_drive_motors = {
-		left_front_drive, 
-		left_front_drive_2,
-		left_rear_drive,
-		left_rear_drive_2, 
-		right_front_drive,
-		right_front_drive_2,
-		right_rear_drive,
-		right_rear_drive_2 
-	};
+	// HolonomicDriveNode::HolonomicEightMotors holonomic_drive_motors = {
+	// 	left_front_drive, 
+	// 	left_front_drive_2,
+	// 	left_rear_drive,
+	// 	left_rear_drive_2, 
+	// 	right_front_drive,
+	// 	right_front_drive_2,
+	// 	right_rear_drive,
+	// 	right_rear_drive_2 
+	// };
 
-	EncoderConfig holonomic_encoder_config = {
-		0, // Initial ticks
-		360, // Ticks per RPM
-		3.75 // Wheel diameter
-	};
+	// EncoderConfig holonomic_encoder_config = {
+	// 	0, // Initial ticks
+	// 	360, // Ticks per RPM
+	// 	3.75 // Wheel diameter
+	// };
 
-	HolonomicDriveKinematics::HolonomicWheelLocations holonomic_wheel_locations = {
-		Vector2d(-5.48, 5.48), // Left front
-		Vector2d(-5.48, -5.48), // Left rear
-		Vector2d(5.48, 5.48), // Right front
-		Vector2d(5.48, -5.48) // Right rear
-	};
+	// HolonomicDriveKinematics::HolonomicWheelLocations holonomic_wheel_locations = {
+	// 	Vector2d(-5.48, 5.48), // Left front
+	// 	Vector2d(-5.48, -5.48), // Left rear
+	// 	Vector2d(5.48, 5.48), // Right front
+	// 	Vector2d(5.48, -5.48) // Right rear
+	// };
 
-	HolonomicDriveKinematics holonomic_drive_kinematics(holonomic_encoder_config, holonomic_wheel_locations);
+	//HolonomicDriveKinematics holonomic_drive_kinematics(holonomic_encoder_config, holonomic_wheel_locations);
 
-    holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller, inertial_sensor,
-	    holonomic_drive_motors,	holonomic_drive_kinematics);
+    // holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller, inertial_sensor,
+	//     holonomic_drive_motors,	holonomic_drive_kinematics);
 
 	/* Define the intake components */
-	left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
-	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
+	// left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
+	// right_intake = new MotorNode(node_manager, 11, "rightIntake", false);
 
-	goal_plate = new ADIDigitalOutNode(node_manager, "goalPlate", 'H', false);
-	intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
+	// goal_plate = new ADIDigitalOutNode(node_manager, "goalPlate", 'H', false);
+	// intake_open = new ADIDigitalOutNode(node_manager, "intakeOpen", 'G', false);
 	
-	intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
-		right_intake, goal_plate, intake_open);	
+	// intake_node = new IntakeNode(node_manager, "intake", primary_controller, left_intake,
+	// 	right_intake, goal_plate, intake_open);	
 
 	/* Define the conveyor components */
-	bottom_conveyor = new MotorNode(node_manager, 5, "bottomConveyor", true);
-	top_conveyor = new MotorNode(node_manager, 6, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
+	// bottom_conveyor = new MotorNode(node_manager, 5, "bottomConveyor", true);
+	// top_conveyor = new MotorNode(node_manager, 6, "topConveyor", true, pros::E_MOTOR_GEARSET_06);
 
-	bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
-	top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
+	// bottom_conveyor_sensor = new ADIAnalogInNode(node_manager, 'E', "bottomConveyorSensor");
+	// top_conveyor_sensor = new ADIAnalogInNode(node_manager, 'F', "topConveyorSensor");
 
-	conveyor_node = new ConveyorNode(node_manager, "conveyorNode", primary_controller, bottom_conveyor, top_conveyor, 
-		bottom_conveyor_sensor, top_conveyor_sensor);
+	// conveyor_node = new ConveyorNode(node_manager, "conveyorNode", primary_controller, bottom_conveyor, top_conveyor, 
+	// 	bottom_conveyor_sensor, top_conveyor_sensor);
 	
     /* Define other components */
-	connection_checker_node = new ConnectionCheckerNode(node_manager);
+	//connection_checker_node = new ConnectionCheckerNode(node_manager);
 
 	/* Define autonomous components */
-	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
+	//auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
