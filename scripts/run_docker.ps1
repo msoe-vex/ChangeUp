@@ -8,11 +8,12 @@ if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
     $is_exited
     $joined_cmd = -join($docker_command, $docker_vol_location, $docker_container_command)
     while(!$is_exited) {
-	# run docker contianer
+        # run docker container
         Invoke-Expression -Command $joined_cmd
-	# check if container has exited to see if it ran successfully (will fail if docker desktop is not running)
-        if (!(docker ps -a -q -f ancestor=raiderrobotics/container-registry:rr-noetic-base -f status=exited)) {
-	    # attempt to launch docker desktop only once
+        # check if container has exited to see if it ran successfully (will fail if docker desktop is not running)
+        $container_status = docker ps -a -q -f ancestor=raiderrobotics/container-registry:rr-noetic-base -f status=exited
+        if (!$container_status) {
+	        # attempt to launch docker desktop only once
             if(!($is_not_first)) {
                 C:/Program` Files/Docker/Docker/Docker` Desktop.exe -WindowsStyle Minimized
                 $is_not_first = "True"
@@ -21,8 +22,8 @@ if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
             Start-Sleep -Seconds 1
         }
         else {
-	    # remove container after it exits
-            docker rm $(docker ps --filter status=exited -q)
+	        # remove container after it exits
+            docker rm $container_status
             $is_exited = "True"
         }
     }
