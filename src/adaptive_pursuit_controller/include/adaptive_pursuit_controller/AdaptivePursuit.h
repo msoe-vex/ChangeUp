@@ -11,6 +11,7 @@ public:
     VelocityPair(double l, double r);
     double left;
     double right;
+    bool end_of_path;
 };
 
 class AdaptivePursuit{
