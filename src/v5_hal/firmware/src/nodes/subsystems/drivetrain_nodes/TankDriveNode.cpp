@@ -1,55 +1,85 @@
 #include "nodes/subsystems/drivetrain_nodes/TankDriveNode.h"
 
 TankDriveNode::TankDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-    MotorNode* left_front_motor, MotorNode* left_rear_motor, MotorNode* right_front_motor, 
-    MotorNode* right_rear_motor) : Node(node_manager, 10), m_controller(controller->getController()), m_left_front_motor(left_front_motor), 
-    m_left_rear_motor(left_rear_motor), m_right_front_motor(right_front_motor), m_right_rear_motor(right_rear_motor) {
+    TankEightMotors motors) : Node(node_manager, 10), m_controller(controller->getController()), m_motors(motors) {
     m_handle_name = handle_name.insert(0, "robot/");
 }
 
 void TankDriveNode::resetEncoders() {
-    m_left_front_motor->resetEncoder();
-    m_left_rear_motor->resetEncoder();
-    m_right_front_motor->resetEncoder();
-    m_right_rear_motor->resetEncoder();
+    // m_left_front_motor->resetEncoder();
+    // m_left_rear_motor->resetEncoder();
+    // m_right_front_motor->resetEncoder();
+    // m_right_rear_motor->resetEncoder();
+    m_motors.left_motor_1->resetEncoder();
+    m_motors.left_motor_2->resetEncoder();
+    m_motors.left_motor_3->resetEncoder();
+    m_motors.left_motor_4->resetEncoder();
+    m_motors.right_motor_1->resetEncoder();
+    m_motors.right_motor_2->resetEncoder();
+    m_motors.right_motor_3->resetEncoder();
+    m_motors.right_motor_4->resetEncoder();
 }
 
 void TankDriveNode::m_setLeftVoltage(int voltage) {
-    m_left_front_motor->moveVoltage(voltage);
-    m_left_rear_motor->moveVoltage(voltage);
+    // m_left_front_motor->moveVoltage(voltage);
+    // m_left_rear_motor->moveVoltage(voltage);
+    m_motors.left_motor_1->moveVoltage(voltage);
+    m_motors.left_motor_2->moveVoltage(voltage);
+    m_motors.left_motor_3->moveVoltage(voltage);
+    m_motors.left_motor_4->moveVoltage(voltage);
 }
 
 void TankDriveNode::m_setRightVoltage(int voltage) {
-    m_right_front_motor->moveVoltage(voltage);
-    m_right_rear_motor->moveVoltage(voltage);
+    // m_right_front_motor->moveVoltage(voltage);
+    // m_right_rear_motor->moveVoltage(voltage);
+    m_motors.right_motor_1->moveVoltage(voltage);
+    m_motors.right_motor_2->moveVoltage(voltage);
+    m_motors.right_motor_3->moveVoltage(voltage);
+    m_motors.right_motor_4->moveVoltage(voltage);
 }
 
 void TankDriveNode::m_setLeftVelocity(float velocity) {
-    m_left_front_motor->moveVelocity(velocity);
-    m_left_rear_motor->moveVelocity(velocity);
+    // m_left_front_motor->moveVelocity(velocity);
+    // m_left_rear_motor->moveVelocity(velocity);
+    m_motors.left_motor_1->moveVelocity(velocity);
+    m_motors.left_motor_2->moveVelocity(velocity);
+    m_motors.left_motor_3->moveVelocity(velocity);
+    m_motors.left_motor_4->moveVelocity(velocity);
 }
 
 void TankDriveNode::m_setRightVelocity(float velocity) {
-    m_right_front_motor->moveVelocity(velocity);
-    m_right_rear_motor->moveVelocity(velocity);
+    // m_right_front_motor->moveVelocity(velocity);
+    // m_right_rear_motor->moveVelocity(velocity);
+    m_motors.right_motor_1->moveVelocity(velocity);
+    m_motors.right_motor_2->moveVelocity(velocity);
+    m_motors.right_motor_3->moveVelocity(velocity);
+    m_motors.right_motor_4->moveVelocity(velocity);
 }
 
 void TankDriveNode::m_setLeftDistancePID(double distance, int max_velocity) {
-    m_left_front_motor->moveAbsolute(distance, max_velocity);
-    m_left_rear_motor->moveAbsolute(distance, max_velocity);
+    // m_left_front_motor->moveAbsolute(distance, max_velocity);
+    // m_left_rear_motor->moveAbsolute(distance, max_velocity);
+    m_motors.left_motor_1->moveAbsolute(distance, max_velocity);
+    m_motors.left_motor_2->moveAbsolute(distance, max_velocity);
+    m_motors.left_motor_3->moveAbsolute(distance, max_velocity);
+    m_motors.left_motor_4->moveAbsolute(distance, max_velocity);
 }
 
 int TankDriveNode::getLeftDistancePID() {
-    return m_left_front_motor->getPosition();
+    return m_motors.left_motor_1->getPosition();
 }
 
 int TankDriveNode::getRightDistancePID() {
-    return m_right_front_motor->getPosition();
+    return m_motors.right_motor_1->getPosition();
 }
 
 void TankDriveNode::m_setRightDistancePID(double distance, int max_velocity) {
-    m_right_front_motor->moveAbsolute(distance, max_velocity);
-    m_right_rear_motor->moveAbsolute(distance, max_velocity);
+    // m_right_front_motor->moveAbsolute(distance, max_velocity);
+    // m_right_rear_motor->moveAbsolute(distance, max_velocity);
+    m_motors.right_motor_1->moveAbsolute(distance, max_velocity);
+    m_motors.right_motor_2->moveAbsolute(distance, max_velocity);
+    m_motors.right_motor_3->moveAbsolute(distance, max_velocity);
+    m_motors.right_motor_4->moveAbsolute(distance, max_velocity);
 }
 
 void TankDriveNode::initialize() {
@@ -82,8 +112,16 @@ void TankDriveNode::autonPeriodic() {
 }
 
 TankDriveNode::~TankDriveNode() {
-    delete m_left_front_motor;
-    delete m_left_rear_motor;
-    delete m_right_front_motor;
-    delete m_right_rear_motor;
+    // delete m_left_front_motor;
+    // delete m_left_rear_motor;
+    // delete m_right_front_motor;
+    // delete m_right_rear_motor;
+    delete m_motors.left_motor_1;
+    delete m_motors.left_motor_2;
+    delete m_motors.left_motor_3;
+    delete m_motors.left_motor_4;
+    delete m_motors.right_motor_1;
+    delete m_motors.right_motor_2;
+    delete m_motors.right_motor_3;
+    delete m_motors.right_motor_4;
 }

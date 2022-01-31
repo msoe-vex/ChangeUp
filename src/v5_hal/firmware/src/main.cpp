@@ -102,6 +102,17 @@ void initialize() {
 	// 	right_rear_drive_2 
 	// };
 
+	TankDriveNode::TankEightMotors tank_drive_motors = {
+		left_drive_1,
+		left_drive_2,
+		left_drive_3,
+		left_drive_4,
+		right_drive_1,
+		right_drive_2,
+		right_drive_3,
+		right_drive_4
+	};
+
 	EncoderConfig holonomic_encoder_config = {
 		0, // Initial ticks
 		360, // Ticks per RPM
@@ -120,8 +131,8 @@ void initialize() {
     // holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller, inertial_sensor,
 	//     holonomic_drive_motors,	holonomic_drive_kinematics);
 
-	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, 
-	
+	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, tank_drive_motors);
+
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
 	right_intake = new MotorNode(node_manager, 11, "rightIntake", false);

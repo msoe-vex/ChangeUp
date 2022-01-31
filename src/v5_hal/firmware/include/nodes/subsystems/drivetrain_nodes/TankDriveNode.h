@@ -8,11 +8,8 @@
 class TankDriveNode : public Node {
 private:
     pros::Controller* m_controller;
-
-    MotorNode* m_left_front_motor;
-    MotorNode* m_left_rear_motor;
-    MotorNode* m_right_front_motor;
-    MotorNode* m_right_rear_motor;
+    
+    TankEightMotors m_motors
 
     std::string m_handle_name;
 
@@ -29,9 +26,19 @@ private:
     void m_setRightDistancePID(double distance, int max_velocity);
 
 public: 
+    struct TankEightMotors {
+        MotorNode* left_motor_1
+        MotorNode* left_motor_2
+        MotorNode* left_motor_3
+        MotorNode* left_motor_4
+        MotorNode* right_motor_1
+        MotorNode* right_motor_2
+        MotorNode* right_motor_3
+        MotorNode* right_motor_4
+    }
+
     TankDriveNode(NodeManager* node_manager, std::string handle_name, ControllerNode* controller, 
-        MotorNode* left_front_motor, MotorNode* left_rear_motor, MotorNode* right_front_motor,
-        MotorNode* right_rear_motor);
+        TankEightMotors motors);
 
     void initialize();
 
