@@ -96,7 +96,7 @@ VelocityPair AdaptivePursuit::Update(Pose robotPos) {
         return VelocityPair(rv.dx, rv.dx);
     }
     double deltaV = m_wheelDiameter * rv.dtheta / (2 * 0.15);
-    return VelocityPair(rv.dx + deltaV, rv.dx - deltaV);
+    return VelocityPair(rv.dx + deltaV, rv.dx - deltaV, m_path.isComplete());
 }
 
 bool AdaptivePursuit::checkEvent(std::string event) {
