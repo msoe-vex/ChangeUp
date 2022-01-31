@@ -7,7 +7,7 @@ VelocityPair::VelocityPair(double l, double r) {
 
 AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double maxDeccel,
                                  double nominalDt, Path path, bool reversed,
-                                 double pathCompletionTolerance, bool gradualStop, double wheelDiameter):
+                                 double pathCompletionTolerance, bool gradualStop, double wheelDiameter, Timer timer):
         m_lastCommand(0,0,0) {
     m_fixedLookahead = fixedLookahead;
     m_maxAccel = maxAccel;
@@ -18,6 +18,7 @@ AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double 
     m_lastTime = 0.0;
     m_gradualStop = gradualStop;
     m_wheelDiameter = wheelDiameter;
+    m_timer = timer;
 }
 
 bool AdaptivePursuit::isDone() {
@@ -29,7 +30,11 @@ double AdaptivePursuit::getRemainingLength() {
     return m_path.getRemainingLength();
 }
 
-VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
+void AdaptivePursuit::startPursuit() {
+    m_timer.start();
+}
+
+VelocityPair AdaptivePursuit::Update(Pose robotPos) {
     Position2d pos = Position2d({-robotPos.position.y(), robotPos.position.x()}, Rotation2d::fromRadians(robotPos.angle.angle()));
     if (m_reversed){
         pos = Position2d(pos.getTranslation(),
@@ -54,7 +59,7 @@ VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
         speed *= -1;
     }
 
-    double dt = now - m_lastTime;
+    double dt = m_timer.Get() - m_lastTime;
     if (!m_hasRun){
         m_lastCommand = Position2d::Delta(0,0,0);
         dt = m_dt;
@@ -84,7 +89,7 @@ VelocityPair AdaptivePursuit::Update(Pose robotPos, double now) {
     } else {
         rv = Position2d::Delta(speed, 0, 0);
     }
-    m_lastTime = now;
+    m_lastTime = m_timer.Get();
     m_lastCommand = rv;
 
     if(fabs(rv.dtheta) < kE){

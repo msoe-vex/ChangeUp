@@ -4,6 +4,7 @@
 #include <optional>
 #include "Path.h"
 #include "Logger.h"
+#include "util/Timer.h"
 
 class VelocityPair {
 public:
@@ -25,10 +26,11 @@ private:
     double m_pathCompletionTolerance;
     bool m_hasRun = false;
     bool m_gradualStop = true;
+    Timer m_timer;
 
 public:
     AdaptivePursuit(double fixedLookahead, double maxAccel, double maxDeccel, double nominalDt, Path path,
-                    bool reversed, double pathCompletionTolerance, bool gradualStop, double wheelDiameter);
+                    bool reversed, double pathCompletionTolerance, bool gradualStop, double wheelDiameter, Timer timer = Timer());
 
     bool isDone();
 
