@@ -14,6 +14,7 @@ MotorNode* right_front_drive_2;
 MotorNode* right_rear_drive;
 MotorNode* right_rear_drive_2;
 HolonomicDriveNode* holonomic_drive_node;
+TankDriveNode* tank_drive_node;
 
 MotorNode* left_intake;
 MotorNode* right_intake;
@@ -157,7 +158,7 @@ void initialize() {
 	connection_checker_node = new ConnectionCheckerNode(node_manager);
 
 	/* Define autonomous components */
-	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
+	auton_manager_node = new AutonManagerNode(node_manager, tank_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
 
 	// Call the node manager to initialize all of the nodes above
 	node_manager->initialize();
