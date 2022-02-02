@@ -1,6 +1,6 @@
-#include "auton/auton_actions/FollowPathAction.h"
+#include "auton/auton_actions/TankFollowPathAction.h"
 
-FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, Path path, bool reset_pose) :
+TankFollowPathAction::TankFollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, Path path, bool reset_pose) :
         m_drive_node(drive_node),
         m_odom_node(odom_node), 
         m_holonomic_pursuit(path),
@@ -9,7 +9,7 @@ FollowPathAction::FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_no
 
 }
 
-void FollowPathAction::ActionInit() {
+void TankFollowPathAction::ActionInit() {
     if (m_reset_pose) {
         m_odom_node->setCurrentPose(m_path.getPathPoints().at(0).getPose());
     }
@@ -17,7 +17,7 @@ void FollowPathAction::ActionInit() {
     m_holonomic_pursuit.startPursuit();
 }
 
-AutonAction::actionStatus FollowPathAction::Action() {
+AutonAction::actionStatus TankFollowPathAction::Action() {
     HolonomicPursuit::TargetVelocity target_velocity = m_holonomic_pursuit.getTargetVelocity(m_odom_node->getCurrentPose());
 
     m_drive_node->setDriveVelocity(target_velocity.linear_velocity.x(), target_velocity.linear_velocity.y(), target_velocity.rotational_velocity);
@@ -33,6 +33,6 @@ AutonAction::actionStatus FollowPathAction::Action() {
     return CONTINUE;
 }
 
-void FollowPathAction::ActionEnd() {
+void TankFollowPathAction::ActionEnd() {
     m_drive_node->setDriveVelocity(0, 0, 0);
 }
