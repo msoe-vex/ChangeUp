@@ -5,12 +5,15 @@
 # Install ROS
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install curl wget -y
+sudo apt-get install curl wget apt-transport-https software-properties-common -y
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | sudo apt-key add -
+wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb
+DEBIAN_FRONTEND=noninteractive sudo dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install python3 python-is-python3 python3-pip ros-noetic-desktop-full -y
+sudo apt-get install python3 python-is-python3 python3-pip ros-noetic-desktop-full powershell -y
 echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
 
 # Install gcc-arm compiler
