@@ -8,7 +8,7 @@
 #include "math/Pose.h"
 #include "util/Logger.h"
 
-class FollowPathAction : public AutonAction {
+class TankFollowPathAction : public AutonAction {
 private:
     IDriveNode* m_drive_node;
     OdometryNode* m_odom_node;
@@ -18,7 +18,7 @@ private:
     Timer m_timer;
 
 public:
-    FollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, Path path, bool reset_pose=false);
+    TankFollowPathAction(IDriveNode* drive_node, OdometryNode* odom_node, Path path, bool reset_pose=false);
 
     void ActionInit();
 
