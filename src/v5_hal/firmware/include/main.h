@@ -47,6 +47,7 @@
 #include "nodes/system_nodes/CompetitionStatusNode.h"
 #include "nodes/system_nodes/ProsTimeNode.h"
 #include "nodes/system_nodes/BatteryNode.h"
+#include "nodes/system_nodes/HelloWorldNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
 #include "nodes/subsystems/drivetrain_nodes/SwerveDriveNode.h"
 #include "nodes/system_nodes/ConnectionCheckerNode.h"
