@@ -27,4 +27,6 @@ public:
     void initialize();
 
     void autonPeriodic();
+
+    ~AutonManagerNode();
 };

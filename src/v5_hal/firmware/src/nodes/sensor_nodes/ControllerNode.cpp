@@ -79,4 +79,5 @@ void ControllerNode::m_populateMessage() {
 ControllerNode::~ControllerNode() {
     delete m_publisher;
     delete m_rumble_controller_sub;
+    delete m_publish_data_sub;
 }

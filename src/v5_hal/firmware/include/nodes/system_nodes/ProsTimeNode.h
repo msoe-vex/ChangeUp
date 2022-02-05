@@ -11,8 +11,8 @@ private:
     std_msgs::UInt32 m_pros_time_msg;
     std::string m_handle_name;
     std::string m_sub_publish_data_name;
-    ros::Publisher* m_publisher;
-    ros::Subscriber<std_msgs::Empty, ProsTimeNode>* m_publish_data_sub;
+    ros::Publisher* m_publisher = nullptr;
+    ros::Subscriber<std_msgs::Empty, ProsTimeNode>* m_publish_data_sub = nullptr;
 
     void m_populateMessage();
 

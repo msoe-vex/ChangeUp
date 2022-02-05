@@ -15,9 +15,9 @@ private:
     std::string m_handle_name; //Creates a handle name to specify between objects
     std::string m_sub_publish_data_name;
     std::string m_sub_controller_rumble_name;
-    ros::Publisher* m_publisher; //Creates a new publisher object that will prepare messages for sending
+    ros::Publisher* m_publisher = nullptr; //Creates a new publisher object that will prepare messages for sending
     ros::Subscriber<std_msgs::String, ControllerNode>* m_rumble_controller_sub;
-    ros::Subscriber<std_msgs::Empty, ControllerNode>* m_publish_data_sub;
+    ros::Subscriber<std_msgs::Empty, ControllerNode>* m_publish_data_sub = nullptr;
 
     void m_populateMessage();
 

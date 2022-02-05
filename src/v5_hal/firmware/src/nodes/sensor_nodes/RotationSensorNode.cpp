@@ -50,4 +50,5 @@ void RotationSensorNode::m_populateMessage() {
 
 RotationSensorNode::~RotationSensorNode () {
     delete m_publisher;
+    delete m_publish_data_sub;
 }

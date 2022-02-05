@@ -78,11 +78,12 @@ void InertialSensorNode::autonPeriodic() {
     }
 }
 
-InertialSensorNode::~InertialSensorNode () {
-    switch (m_config) {
-        case V5:
+InertialSensorNode::~InertialSensorNode() {
+        if(m_inertial_sensor != nullptr) {
             delete m_inertial_sensor;
-        case ROS:
+        }
+
+        if(m_inertial_sensor_sub != nullptr) {
             delete m_inertial_sensor_sub;
-    }
+        }
 }

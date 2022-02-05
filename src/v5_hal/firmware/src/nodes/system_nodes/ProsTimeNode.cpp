@@ -39,4 +39,5 @@ void ProsTimeNode::m_populateMessage() {
 
 ProsTimeNode::~ProsTimeNode() {
     delete m_publisher;
+    delete m_publish_data_sub;
 }

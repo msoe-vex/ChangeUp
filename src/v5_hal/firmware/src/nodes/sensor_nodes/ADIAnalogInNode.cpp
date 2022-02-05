@@ -46,4 +46,5 @@ void ADIAnalogInNode::m_populateMessage() {
 
 ADIAnalogInNode::~ADIAnalogInNode() { 
     delete m_publisher; 
+    delete m_publish_data_sub;
 }

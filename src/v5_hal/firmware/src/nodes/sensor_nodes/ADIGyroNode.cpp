@@ -41,4 +41,5 @@ void ADIGyroNode::m_populateMessage() {
 
 ADIGyroNode::~ADIGyroNode() { 
     delete m_publisher;
+    delete m_publish_data_sub;
 }

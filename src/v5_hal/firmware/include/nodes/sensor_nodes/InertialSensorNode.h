@@ -42,7 +42,7 @@ private:
     Eigen::Rotation2Dd m_yaw;
     Eigen::Rotation2Dd m_gyro_offset_angle; 
 
-    ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub;
+    ros::Subscriber<v5_hal::RollPitchYaw, InertialSensorNode>* m_inertial_sensor_sub = nullptr;
 
     void m_handleSensorMsg(const v5_hal::RollPitchYaw& msg);
 
