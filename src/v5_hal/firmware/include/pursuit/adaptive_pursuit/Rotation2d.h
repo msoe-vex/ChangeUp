@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/Math.h"
+#include "Math/Math.h"
 
 class Rotation2d{
 protected:
