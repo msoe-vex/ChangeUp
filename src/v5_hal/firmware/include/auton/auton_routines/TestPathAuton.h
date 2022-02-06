@@ -2,7 +2,7 @@
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "auton/auton_actions/TurnToAngleAction.h"
-#include "auton/auton_actions/FollowPathAction.h"
+#include "auton/auton_actions/HolonomicFollowPathAction.h"
 #include "pathing/PathManager.h"
 #include "pathing/Path.h"
 #include "eigen/Eigen/Dense"

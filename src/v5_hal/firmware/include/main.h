@@ -59,7 +59,7 @@
 #include "auton/auton_actions/DriveStraightAction.h"
 #include "auton/auton_actions/IntakeAction.h"
 #include "auton/auton_actions/UpdateConveyorStateAction.h"
-#include "auton/auton_actions/FollowPathAction.h"
+#include "auton/auton_actions/HolonomicFollowPathAction.h"
 #include "auton/auton_routines/ProgrammingSkillsAuton.h"
 #include "eigen/Eigen/Dense"
 #include "pathing/PathManager.h"

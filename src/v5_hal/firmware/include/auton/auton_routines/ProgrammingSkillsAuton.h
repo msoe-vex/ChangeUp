@@ -7,7 +7,7 @@
 #include "nodes/subsystems/ConveyorNode.h"
 #include "nodes/subsystems/IntakeNode.h"
 #include "nodes/sensor_nodes/InertialSensorNode.h"
-#include "auton/auton_actions/FollowPathAction.h"
+#include "auton/auton_actions/HolonomicFollowPathAction.h"
 #include "auton/auton_actions/DeployAction.h"
 #include "auton/auton_actions/IntakeAction.h"
 #include "auton/auton_actions/UpdateConveyorStateAction.h"
