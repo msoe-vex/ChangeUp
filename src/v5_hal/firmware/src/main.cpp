@@ -5,15 +5,14 @@ NodeManager* node_manager = new NodeManager(pros::millis);
 // Declare all nodes here
 ControllerNode* primary_controller;
 
-MotorNode* left_front_drive;
-MotorNode* left_front_drive_2;
-MotorNode* left_rear_drive;
-MotorNode* left_rear_drive_2;
-MotorNode* right_front_drive;
-MotorNode* right_front_drive_2;
-MotorNode* right_rear_drive;
-MotorNode* right_rear_drive_2;
-HolonomicDriveNode* holonomic_drive_node;
+MotorNode* left_drive_1;
+MotorNode* left_drive_2;
+MotorNode* left_drive_3;
+MotorNode* left_drive_4;
+MotorNode* right_drive_1;
+MotorNode* right_drive_2;
+MotorNode* right_drive_3;
+MotorNode* right_drive_4;
 TankDriveNode* tank_drive_node;
 
 MotorNode* left_intake;
@@ -73,16 +72,6 @@ void initialize() {
 	y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
 	/* Define the drivetrain components */
-	// left_front_drive = new MotorNode(node_manager, 16, "leftFrontDrive", true);
-	// left_front_drive_2 = new MotorNode(node_manager, 15, "leftFrontTopDrive", false);
-	// left_rear_drive = new MotorNode(node_manager, 9, "leftRearDrive", true);
-	// left_rear_drive_2 = new MotorNode(node_manager, 10, "leftRearTopDrive", false);
-
-	// right_front_drive = new MotorNode(node_manager, 1, "rightFrontDrive", false);
-	// right_front_drive_2 = new MotorNode(node_manager, 13, "rightFrontTopDrive", true);
-	// right_rear_drive = new MotorNode(node_manager, 2, "rightRearDrive", false);
-	// right_rear_drive_2 = new MotorNode(node_manager, 3, "rightRearTopDrive", true);
-
 	left_drive_1 = new MotorNode(node_manager, 1, "leftDrive1", false);
 	left_drive_2 = new MotorNode(node_manager, 2, "leftDrive2", true);
 	left_drive_3 = new MotorNode(node_manager, 3, "leftDrive3", true);
@@ -91,17 +80,6 @@ void initialize() {
 	right_drive_2 = new MotorNode(node_manager, 6, "rightDrive2", false);
 	right_drive_3 = new MotorNode(node_manager, 7, "rightDrive3", false);
 	right_drive_4 = new MotorNode(node_manager, 8, "rightDrive4", true);
-
-	// HolonomicDriveNode::HolonomicEightMotors holonomic_drive_motors = {
-	// 	left_front_drive, 
-	// 	left_front_drive_2,
-	// 	left_rear_drive,
-	// 	left_rear_drive_2, 
-	// 	right_front_drive,
-	// 	right_front_drive_2,
-	// 	right_rear_drive,
-	// 	right_rear_drive_2 
-	// };
 
 	TankDriveNode::TankEightMotors tank_drive_motors = {
 		left_drive_1,
@@ -114,25 +92,22 @@ void initialize() {
 		right_drive_4
 	};
 
-	EncoderConfig holonomic_encoder_config = {
-		0, // Initial ticks
-		360, // Ticks per RPM
-		3.75 // Wheel diameter
-	};
+	// EncoderConfig holonomic_encoder_config = {
+	// 	0, // Initial ticks
+	// 	360, // Ticks per RPM
+	// 	3.75 // Wheel diameter
+	// };
 
-	HolonomicDriveKinematics::HolonomicWheelLocations holonomic_wheel_locations = {
-		Vector2d(-5.48, 5.48), // Left front
-		Vector2d(-5.48, -5.48), // Left rear
-		Vector2d(5.48, 5.48), // Right front
-		Vector2d(5.48, -5.48) // Right rear
-	};
+	// HolonomicDriveKinematics::HolonomicWheelLocations holonomic_wheel_locations = {
+	// 	Vector2d(-5.48, 5.48), // Left front
+	// 	Vector2d(-5.48, -5.48), // Left rear
+	// 	Vector2d(5.48, 5.48), // Right front
+	// 	Vector2d(5.48, -5.48) // Right rear
+	// };
 
-	HolonomicDriveKinematics holonomic_drive_kinematics(holonomic_encoder_config, holonomic_wheel_locations);
+	// HolonomicDriveKinematics holonomic_drive_kinematics(holonomic_encoder_config, holonomic_wheel_locations);
 
-    // holonomic_drive_node = new HolonomicDriveNode(node_manager, "drivetrain", primary_controller, inertial_sensor,
-	//     holonomic_drive_motors,	holonomic_drive_kinematics);
-
-	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, tank_drive_motors);
+	tank_drive_node = new TankDriveNode(node_manager, "drivetrain", primary_controller, inertial_sensor, tank_drive_motors);
 
 	/* Define the intake components */
 	left_intake = new MotorNode(node_manager, 8, "leftIntake", true);
