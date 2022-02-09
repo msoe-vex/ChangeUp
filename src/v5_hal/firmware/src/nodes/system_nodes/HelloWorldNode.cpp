@@ -20,6 +20,7 @@ void HelloWorldNode::m_publishData(const std_msgs::Empty& msg) {
 
 void HelloWorldNode::initialize() {
     // Initialize the handler, and set up data to publish
+    printf("We are in the hello world init \n");
     Node::m_handle->advertise(*m_publisher);
 }
 

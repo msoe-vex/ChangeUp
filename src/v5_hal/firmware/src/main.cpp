@@ -41,6 +41,8 @@ AutonManagerNode* auton_manager_node;
 
 ConnectionCheckerNode* connection_checker_node;
 
+
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -137,7 +139,10 @@ void initialize() {
 	/* Define autonomous components */
 	auton_manager_node = new AutonManagerNode(node_manager, holonomic_drive_node, conveyor_node, intake_node, odom_node, inertial_sensor);
 
+	printf("Testing printing 1\n");
+
 	// Call the node manager to initialize all of the nodes above
+	HelloWorldNode* hwNode = new HelloWorldNode(node_manager, "hwNode");
 	node_manager->initialize();
 }
 
@@ -189,6 +194,7 @@ void autonomous() {
 	}
 }
 
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -209,7 +215,7 @@ void autonomous() {
 void opcontrol() {
 	// Reset all nodes to default configuration
 	node_manager->reset();
-	
+
 	// Execute teleop code
 	while (true) {
 		node_manager->executeTeleop();
