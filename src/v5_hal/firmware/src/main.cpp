@@ -61,15 +61,6 @@ void initialize() {
 
 	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
 		y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
-	
-	/* Define the odometry components */
-	x_odom_encoder = new ADIEncoderNode(node_manager, 'A', 'B', "xOdomEncoder", false);
-	y_odom_encoder = new ADIEncoderNode(node_manager, 'C', 'D', "yOdomEncoder", false);
-
-	inertial_sensor = new InertialSensorNode(node_manager, "inertialSensor", 14); // Port 14
-
-	odom_node = new OdometryNode(node_manager, "odometry", x_odom_encoder, 
-	y_odom_encoder, inertial_sensor, OdometryNode::FOLLOWER);
 
 	/* Define the drivetrain components */
 	left_front_drive = new MotorNode(node_manager, 16, "leftFrontDrive", true);

@@ -5,6 +5,7 @@
 #include "auton/auton_routines/TestPathAuton.h"
 #include "auton/auton_routines/TestPoseAuton.h"
 #include "auton/auton_routines/TestTurnAuton.h"
+#include "auton/auton_routines/TestProfiledTurnAuton.h"
 #include "nodes/subsystems/drivetrain_nodes/IDriveNode.h"
 #include "nodes/odometry_nodes/OdometryNode.h"
 #include "nodes/subsystems/ConveyorNode.h"
@@ -15,7 +16,8 @@
 
 class AutonManagerNode : public Node {
 private:
-    Auton* m_test_path_auton;
+    // Auton* m_test_path_auton;
+    Auton* m_test_profiled_turn_auton;
     Auton* m_prog_skills;
 
 public:
