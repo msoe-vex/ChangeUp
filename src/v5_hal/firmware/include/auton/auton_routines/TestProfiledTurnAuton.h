@@ -5,11 +5,11 @@
 #include "util/Constants.h"
 #include "eigen/Eigen/Dense"
 
-class TestProfiledTurnAction : public Auton {
+class TestProfiledTurnAuton : public Auton {
 public:
-    TestProfiledTurnAction(IDriveNode* drive_node, InertialSensorNode* inertial_sensor_node);
+    TestProfiledTurnAuton(IDriveNode* drive_node, InertialSensorNode* inertial_sensor_node);
 
-    void AddNodes();
+    void AddNodes() override;
 
 private:
     IDriveNode* m_drive_node;

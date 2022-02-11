@@ -16,7 +16,7 @@
 
 class AutonManagerNode : public Node {
 private:
-    // Auton* m_test_path_auton;
+    Auton* m_test_path_auton;
     Auton* m_test_profiled_turn_auton;
     Auton* m_prog_skills;
 
